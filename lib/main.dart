@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -16,27 +15,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages/ActivatePage.dart';
 import 'Pages/Activation.dart';
 import 'Pages/LoginPageWeb.dart';
+import 'Pages/Student_home.dart';
 import 'Provider/LoginProvider.dart';
 import 'package:path_provider/path_provider.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isAndroid) {
+    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((value) => runApp(GjInfoTech()));
 
- Future<void> main() async {
- WidgetsFlutterBinding.ensureInitialized();
- if (Platform.isAndroid) {
-   await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
- }
- SystemChrome.setPreferredOrientations([
-   DeviceOrientation.portraitUp,
-   DeviceOrientation.portraitDown,
- ]).then((value) => runApp(GjInfoTech()));
+  await FlutterDownloader.initialize(debug: true);
+  await Permission.storage.request();
 
- await FlutterDownloader.initialize(
-     debug: true
- );
- await Permission.storage.request();
-
-    runApp(GjInfoTech());
- }
+  runApp(GjInfoTech());
+}
 
 class GjInfoTech extends StatefulWidget {
   // This widget is the root of your application.
@@ -72,9 +69,9 @@ class _GjInfoTechState extends State<GjInfoTech> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-       // ChangeNotifierProvider(create: (context) => StudentNotification()),
+        // ChangeNotifierProvider(create: (context) => StudentNotification()),
         // ChangeNotifierProvider(create: (context)=>StudentNotificationProvider()),
-       // ChangeNotifierProvider(create: (context) => HomeProvider()),
+        // ChangeNotifierProvider(create: (context) => HomeProvider()),
         //ChangeNotifierProvider(create: (context) => StaffNotification()),
       ],
       child: MaterialApp(
@@ -98,7 +95,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ),
         // home: MyHomePage(title: 'Flutter Demo Home Page'),
         routes: routes,
-        home: SplashFuturePage(),
+        //home: SplashFuturePage(),
+        home: StudentHome(),
         debugShowCheckedModeBanner: false,
         //home : MyHomepage(),
         //home:LoginSecondPage(),
@@ -122,7 +120,6 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
       if (prefs.getString('accesstoken') != null) {
         var data = await parseJWT();
         return Future.value(LoginPageWeb());
-
       } else {
         return Future.value(LoginPageWeb());
       }

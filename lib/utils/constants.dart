@@ -18,10 +18,8 @@ class UIGuide {
   static const String check = "assets/check-square.svg";
   static const String profile = "assets/Profile.png";
 
-
   static const String reportcard = "assets/Reportcard.png";
   static const String baseURL = "https://api.esstestonline.in";
-
 
   static const Color WHITE = Colors.white;
   static const Color BLACK = Colors.black;
