@@ -1,16 +1,11 @@
-
 import 'package:flutter/material.dart';
 
-import 'Pages/ActivatePage.dart';
-
-import 'Pages/Activation.dart';
-import 'Pages/LoginPageWeb.dart';
+import 'Presentation/Login_Activation/ActivatePage.dart';
+import 'Presentation/Login_Activation/LoginPageWeb.dart';
 
 Map<String, WidgetBuilder> routes = {
   routeActivation: (context) => ActivatePage(),
-
   routeLoginWeb: (context) => LoginPageWeb(),
-
 };
 
 ///route name constants

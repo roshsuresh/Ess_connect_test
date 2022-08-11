@@ -12,11 +12,12 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Pages/ActivatePage.dart';
-import 'Pages/Activation.dart';
-import 'Pages/LoginPageWeb.dart';
-import 'Pages/Student_home.dart';
-import 'Provider/LoginProvider.dart';
+import 'Application/LoginProvider.dart';
+
+import 'Presentation/Login_Activation/ActivatePage.dart';
+import 'Presentation/Login_Activation/LoginPageWeb.dart';
+import 'Presentation/user/Student_home.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {

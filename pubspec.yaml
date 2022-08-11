@@ -78,6 +78,9 @@ flutter:
   assets:
     - assets/studentLogo.png
     - assets/Profile.png
+    - assets/notification.png
+    - assets/Reportcard.png
+    - assets/pay.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

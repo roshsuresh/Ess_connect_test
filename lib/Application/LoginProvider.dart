@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/activation_model.dart';
 import '../utils/constants.dart';
 
 class LoginProvider with ChangeNotifier {
@@ -25,7 +25,7 @@ class LoginProvider with ChangeNotifier {
         body: json.encode(params),
         headers: headers);
     if (response.statusCode == 200) {
-     // print("corect");
+      // print("corect");
 
       var jsonData = json.decode(response.body);
       ActivationModel ac = ActivationModel.fromJson(jsonData);
@@ -39,11 +39,10 @@ class LoginProvider with ChangeNotifier {
     } else {
       //print("wrong");
     }
-  print(response.statusCode);
+    print(response.statusCode);
     return response.statusCode;
-
-
   }
+
   Future getToken(BuildContext context) async {
     Map<String, dynamic> data = await parseJWT();
 
@@ -59,7 +58,7 @@ class LoginProvider with ChangeNotifier {
       "MobileToken": token,
       "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
       "StudentPresentDetailsId":
-      data.containsKey('PresentDetailId') ? data["PresentDetailId"] : null,
+          data.containsKey('PresentDetailId') ? data["PresentDetailId"] : null,
       "GuardianId": data['GuardianId'],
       "Type": data['role'] == "Guardian" ? "Student" : "Staff"
     });
@@ -77,6 +76,3 @@ class LoginProvider with ChangeNotifier {
     }
   }
 }
-
-
-
