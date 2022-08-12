@@ -1,3 +1,4 @@
+import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -131,31 +132,41 @@ class StudentHome extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/notification.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Stud_Notification()),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/notification.png',
+                                        ),
                                       ),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Notification',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  Text(
+                                    'Notification',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
@@ -651,121 +662,125 @@ class Profile_Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var width = size.width;
     return SafeArea(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 4.0, right: 4),
-            child: Container(
-              height: 120,
-              decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 0.5,
-                    )
-                  ],
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
-                  )),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          // opacity: 20,
-                          image: AssetImage(
-                            'assets/studentLogo.png',
+          SizedBox(
+            height: 2,
+          ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30),
+              child: Container(
+                height: 120,
+                decoration: const BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 0.5,
+                      )
+                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    )),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            // opacity: 20,
+                            image: AssetImage(
+                              'assets/studentLogo.png',
+                            ),
                           ),
-                        ),
-                        shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(blurRadius: 10)]),
-                    width: 70,
-                    height: 120,
-                  ),
-                  const SizedBox(
-                    width: 30,
-                    height: 30,
-                  ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                          shape: BoxShape.circle,
+                          boxShadow: [BoxShadow(blurRadius: 10)]),
+                      width: 70,
+                      height: 120,
+                    ),
+                    const SizedBox(
+                      width: 30,
+                      height: 30,
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          kheight20,
+                          Row(
+                            children: const [
+                              Text(
+                                'Name : ',
+                                style: TextStyle(
+                                    color: Colors.purple,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                'Arun ',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w900),
+                              )
+                            ],
+                          ),
+                          kheight,
+                          Row(
+                            children: const [
+                              Text(
+                                'Adm no : ',
+                                style: TextStyle(
+                                    color: Colors.purple,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                '5246 ',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w900),
+                              )
+                            ],
+                          ),
+                          kheight,
+                          Row(
+                            children: const [
+                              Text(
+                                'Class : ',
+                                style: TextStyle(
+                                    color: Colors.purple,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                'VI',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w900),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        kheight20,
-                        Row(
-                          children: const [
-                            Text(
-                              'Name : ',
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              'Arun ',
-                              style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w900),
-                            )
-                          ],
-                        ),
-                        kheight,
-                        Row(
-                          children: const [
-                            Text(
-                              'Adm no : ',
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              '5246 ',
-                              style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w900),
-                            )
-                          ],
-                        ),
-                        kheight,
-                        Row(
-                          children: const [
-                            Text(
-                              'Class : ',
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              'VI',
-                              style: TextStyle(
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w900),
-                            )
-                          ],
-                        ),
+                        IconButton(
+                            onPressed: (() {}),
+                            icon: const Icon(
+                              Icons.switch_account_outlined,
+                              size: 30,
+                            ))
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  Spacer(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                          onPressed: (() {}),
-                          icon: const Icon(
-                            Icons.switch_account_outlined,
-                            size: 30,
-                          ))
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

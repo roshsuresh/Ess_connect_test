@@ -16,7 +16,7 @@ import 'Application/LoginProvider.dart';
 
 import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
-import 'Presentation/user/Student_home.dart';
+import 'Presentation/Student/Student_home.dart';
 
 import 'package:path_provider/path_provider.dart';
 

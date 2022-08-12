@@ -4,7 +4,7 @@ import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
 
 Map<String, WidgetBuilder> routes = {
-  routeActivation: (context) => ActivatePage(),
+  routeActivation: (context) => const ActivatePage(),
   routeLoginWeb: (context) => LoginPageWeb(),
 };
 

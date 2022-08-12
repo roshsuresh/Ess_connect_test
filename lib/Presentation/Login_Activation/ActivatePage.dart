@@ -53,7 +53,7 @@ class _ActivatePageState extends State<ActivatePage>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Welcome",
                             style: TextStyle(
                                 color: Colors.black,
@@ -95,7 +95,7 @@ class _ActivatePageState extends State<ActivatePage>
                                 decoration: BoxDecoration(
                                     color: UIGuide.primary4,
                                     borderRadius: BorderRadius.circular(15)),
-                                child: Center(
+                                child: const Center(
                                   child: Text(
                                     'Continue',
                                     style: TextStyle(color: Colors.white),
@@ -104,7 +104,7 @@ class _ActivatePageState extends State<ActivatePage>
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                         ],

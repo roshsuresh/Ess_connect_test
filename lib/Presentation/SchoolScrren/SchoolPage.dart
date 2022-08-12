@@ -22,14 +22,14 @@ class _SchoolPageState extends State<SchoolPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.network(provider.imageUrl),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     provider.schoolName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
