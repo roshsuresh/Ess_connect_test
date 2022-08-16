@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:flutter/material.dart';
+
 ///constant Strings
 const String login = "Login";
 const String forgotPass = "Forgot Password";
@@ -19,3 +21,29 @@ const String loginTabBackground = "assets/login_tab_back.png";
 ///error
 const String activationError = "Enter a Valid Code to Continue";
 const String loginError = "Wrong  Username or Password";
+
+//sized box
+const kWidth = SizedBox(
+  width: 10,
+);
+const kheight10 = SizedBox(
+  height: 10,
+);
+const kheight20 = SizedBox(
+  height: 20,
+);
+//     TEXT    overflow//
+
+//                      Flexible(
+//                         child: RichText(
+//                           overflow: TextOverflow.ellipsis,
+//                           strutStyle: StrutStyle(fontSize: 12.0),
+//                           text: TextSpan(
+//                               style: TextStyle(color: Colors.black),
+//                               text: 'Ravidranath@gmail.com'),
+//                         ),
+//
+//
+//                  ),
+
+const Color UniformColor = Color.fromARGB(255, 73, 39, 197);

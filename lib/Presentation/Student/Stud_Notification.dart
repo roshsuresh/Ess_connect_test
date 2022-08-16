@@ -16,6 +16,15 @@ class Stud_Notification extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notification'),
+        titleSpacing: 00.0,
+        centerTitle: true,
+        toolbarHeight: 60.2,
+        toolbarOpacity: 0.8,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+        ),
       ),
       body: ListView.builder(
           itemCount: 5,
@@ -32,7 +41,7 @@ class Stud_Notification extends StatelessWidget {
                           blurRadius: 2,
                         )
                       ],
-                      color: Color.fromARGB(255, 228, 224, 224),
+                      color: Color.fromARGB(255, 239, 231, 245),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),

@@ -1,3 +1,11 @@
+import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
+import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
+import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
+import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
+import 'package:Ess_Conn/Presentation/Student/Stud_Calender.dart';
+
+import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
+import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +51,8 @@ class StudentHome extends StatelessWidget {
                   velocity: 40.0,
                   pauseAfterRound: Duration(seconds: 1),
                   showFadingOnlyWhenScrolling: true,
-                  fadingEdgeStartFraction: 0.1,
-                  fadingEdgeEndFraction: 0.1,
+                  fadingEdgeStartFraction: 0.3,
+                  fadingEdgeEndFraction: 0.3,
                   numberOfRounds: 2000,
                   startPadding: 10.0,
                   accelerationDuration: Duration(seconds: 1),
@@ -105,31 +113,42 @@ class StudentHome extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profile_Info()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
+                                      // borderRadius: BorderRadius.circular(10),
                                     ),
-                                    // borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Profile',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Profile',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           GestureDetector(
@@ -169,31 +188,42 @@ class StudentHome extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Attendence()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
+                                      // borderRadius: BorderRadius.circular(10),
                                     ),
-                                    // borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Attendence',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Attendence',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
@@ -230,30 +260,41 @@ class StudentHome extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NoticeBoard()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Extras',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Notice Board',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
@@ -285,33 +326,170 @@ class StudentHome extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Stud_Calender()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Events',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Calender',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
                       kheight, kheight20,
+                      Container(
+                        color: Color.fromARGB(255, 218, 212, 212),
+                        height: 150,
+                        width: width,
+                        child: Column(
+                          children: [
+                            kheight,
+                            Row(children: const <Widget>[
+                              Expanded(child: Text("")),
+                              Text(
+                                " * Urgent & Important * ",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 129, 125, 129),
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              Expanded(child: Text("")),
+                            ]),
+                            kheight,
+                            kheight,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PayFee()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/pay.png',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        kheight,
+                                        const Text(
+                                          'Pay Fee',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/Profile.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight,
+                                      const Text(
+                                        'Events',
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.black38),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          image: const DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/pay.png',
+                                            ),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      kheight,
+                                      const Text(
+                                        'Fee Structure',
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.black38),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
 
                       Row(children: <Widget>[
                         Expanded(
@@ -399,56 +577,78 @@ class StudentHome extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AdvancePay()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Advance Pay ',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Advance Pay ',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PaymentHistory()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Payment \n History',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Payment \n History',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -643,15 +843,15 @@ class StudentHome extends StatelessWidget {
               )
             ],
           ),
-          Profile_Info(kheight20: kheight20, kheight: kheight),
+          ProfileHome(kheight20: kheight20, kheight: kheight),
         ],
       ),
     );
   }
 }
 
-class Profile_Info extends StatelessWidget {
-  Profile_Info({
+class ProfileHome extends StatelessWidget {
+  ProfileHome({
     Key? key,
     required this.kheight20,
     required this.kheight,
@@ -672,7 +872,7 @@ class Profile_Info extends StatelessWidget {
           ),
           Container(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 30),
+              padding: const EdgeInsets.only(left: 10.0, right: 10),
               child: Container(
                 height: 120,
                 decoration: const BoxDecoration(
