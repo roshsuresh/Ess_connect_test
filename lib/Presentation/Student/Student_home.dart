@@ -905,7 +905,7 @@ class ProfileHome extends StatelessWidget {
                       height: 120,
                     ),
                     const SizedBox(
-                      width: 30,
+                      width: 10,
                       height: 30,
                     ),
                     Container(
@@ -914,19 +914,23 @@ class ProfileHome extends StatelessWidget {
                         children: [
                           kheight20,
                           Row(
-                            children: const [
+                            children: [
                               Text(
                                 'Name : ',
                                 style: TextStyle(
                                     color: Colors.purple,
                                     fontWeight: FontWeight.w700),
                               ),
-                              Text(
-                                'Arun ',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.w900),
-                              )
+                              RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                strutStyle: StrutStyle(fontSize: 12.0),
+                                text: TextSpan(
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w900),
+                                    text: 'Arun   '),
+                              ),
                             ],
                           ),
                           kheight,

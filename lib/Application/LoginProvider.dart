@@ -26,7 +26,6 @@ class LoginProvider with ChangeNotifier {
         headers: headers);
     if (response.statusCode == 200) {
       // print("corect");
-
       var jsonData = json.decode(response.body);
       ActivationModel ac = ActivationModel.fromJson(jsonData);
       //imageUrl = ac.logoUrl;

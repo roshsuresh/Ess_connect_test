@@ -60,8 +60,8 @@ class PayFee extends StatelessWidget {
                       )),
                 ),
               ),
-              isAlwaysShown: true,
-              showTrackOnHover: true,
+              thumbVisibility: true,
+              // showTrackOnHover: true,
               thickness: 6,
               radius: Radius.circular(20),
             ),
@@ -122,9 +122,6 @@ class InstallmentPage extends StatelessWidget {
       children: const [
         ListTile(
           visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-          // minVerticalPadding: 1,
-          // minLeadingWidth: 1,
-          // horizontalTitleGap: 10,
           leading: Text(
             'Term',
             style: TextStyle(fontSize: 16),

@@ -1,4 +1,5 @@
 import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rect_getter/rect_getter.dart';
@@ -171,7 +172,7 @@ class _ActivatePageState extends State<ActivatePage>
     //     .push(FadeRouteBuilder(page: LoginPageWeb()))
     Navigator.of(context)
         .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
-      return new LoginPageWeb();
+      return new LoginPage();
     })).then((_) => setState(() => rect = null));
   }
 
@@ -320,8 +321,8 @@ class _ActivatePageState extends State<ActivatePage>
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           image: DecorationImage(
-                                              image:
-                                                  AssetImage(activationButton),
+                                              image: AssetImage(
+                                                  'assets/act_button.png'),
                                               fit: BoxFit.fill)),
                                     ),
                                   );

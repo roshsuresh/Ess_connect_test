@@ -34,16 +34,14 @@ const kheight20 = SizedBox(
 );
 //     TEXT    overflow//
 
-//                      Flexible(
-//                         child: RichText(
-//                           overflow: TextOverflow.ellipsis,
-//                           strutStyle: StrutStyle(fontSize: 12.0),
-//                           text: TextSpan(
-//                               style: TextStyle(color: Colors.black),
-//                               text: 'Ravidranath@gmail.com'),
-//                         ),
-//
-//
-//                  ),
+//  Flexible(
+//     child: RichText(
+//     overflow: TextOverflow.ellipsis,
+//     strutStyle: StrutStyle(fontSize: 12.0),
+//     text: TextSpan(
+//     style: TextStyle(color: Colors.black),
+//     text: 'Ravidranath@gmail.com'),
+//      ),
+//   ),
 
 const Color UniformColor = Color.fromARGB(255, 73, 39, 197);

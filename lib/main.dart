@@ -16,6 +16,7 @@ import 'Application/LoginProvider.dart';
 
 import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
+import 'Presentation/Login_Activation/Login_page.dart';
 import 'Presentation/Student/Student_home.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -79,15 +80,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         title: 'Ess Connect',
         theme: ThemeData(
           primaryColor: UIGuide.PRIMARY,
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
+
           inputDecorationTheme: InputDecorationTheme(
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -96,8 +89,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ),
         // home: MyHomePage(title: 'Flutter Demo Home Page'),
         routes: routes,
-        //home: SplashFuturePage(),
-        home: StudentHome(),
+        home: SplashFuturePage(),
+        // home: LoginPage(),
         debugShowCheckedModeBanner: false,
         //home : MyHomepage(),
         //home:LoginSecondPage(),
@@ -120,9 +113,9 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
     if (prefs.getBool('activated') != null) {
       if (prefs.getString('accesstoken') != null) {
         var data = await parseJWT();
-        return Future.value(LoginPageWeb());
+        return Future.value(LoginPage());
       } else {
-        return Future.value(LoginPageWeb());
+        return Future.value(LoginPage());
       }
     } else {
       return Future.value(ActivatePage());

@@ -82,6 +82,33 @@ class Attendence extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
+                  '55',
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '88%',
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+              ]),
+              TableRow(children: [
+                Text(
+                  'February',
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '65',
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  '60',
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
                   '5',
                   style: TextStyle(fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
@@ -91,7 +118,7 @@ class Attendence extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
-              ])
+              ]),
             ],
           )
         ],

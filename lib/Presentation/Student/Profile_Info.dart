@@ -452,78 +452,6 @@ class Profile_Info extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // TableRow(
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         Row(
-                      //           children: [
-                      //             Icon(
-                      //               Icons.subtitles,
-                      //               size: 22,
-                      //             ),
-                      //             kWidth,
-                      //             Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.start,
-                      //               children: [
-                      //                 Text(
-                      //                   '5648932564785',
-                      //                   style: TextStyle(
-                      //                       color: Color.fromARGB(
-                      //                           255, 43, 34, 158)),
-                      //                 ),
-                      //                 Text(
-                      //                   'UID',
-                      //                   style: TextStyle(
-                      //                       color: Colors.black38,
-                      //                       fontSize: 12),
-                      //                 )
-                      //               ],
-                      //             )
-                      //           ],
-                      //         ),
-                      //         kheight10,
-                      //       ],
-                      //     ),
-                      //     Column(
-                      //       children: [
-                      //         Row(
-                      //           children: [
-                      //             Row(
-                      //               children: [
-                      //                 const Icon(
-                      //                   Icons.location_on,
-                      //                   size: 22,
-                      //                 ),
-                      //                 kWidth,
-                      //                 Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: const [
-                      //                     Text(
-                      //                       'Thrissur',
-                      //                       style: TextStyle(
-                      //                           color: Color.fromARGB(
-                      //                               255, 43, 34, 158)),
-                      //                     ),
-                      //                     Text(
-                      //                       'Birthplace',
-                      //                       style: TextStyle(
-                      //                           color: Colors.black38,
-                      //                           fontSize: 12),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         kheight10,
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   ),
                   Padding(
@@ -541,29 +469,26 @@ class Profile_Info extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               ' Permenent Address',
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.w400),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 2.5,
                             ),
-
                             Flexible(
                               child: RichText(
                                 overflow: TextOverflow.ellipsis,
-                                strutStyle: StrutStyle(fontSize: 11.5),
+                                strutStyle: const StrutStyle(fontSize: 11.5),
                                 maxLines: 5,
-                                text: TextSpan(
+                                text: const TextSpan(
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 44, 43, 43)),
                                     text:
                                         'house number & details\n address details  near places \n near city,near location \n phone \n'),
                               ),
                             ),
-                            // Text(
-                            //     'house number & details\n address details  near places \n near city,near location \n phone ')
                           ],
                         ),
                       ),
@@ -577,22 +502,22 @@ class Profile_Info extends StatelessWidget {
             items: [
               Container(
                 width: width,
-                margin: EdgeInsets.all(6.0),
+                margin: const EdgeInsets.all(6.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    border:
-                        Border.all(color: Color.fromARGB(255, 210, 199, 240)),
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 210, 199, 240)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Father (Guardian)',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
                     ),
                     //kheight10,
-                    Center(
+                    const Center(
                         child: Text(
                       "Ravidranath",
                       style: TextStyle(fontWeight: FontWeight.w500),
@@ -601,7 +526,7 @@ class Profile_Info extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.email_outlined,
                           size: 14,
                         ),
@@ -609,8 +534,8 @@ class Profile_Info extends StatelessWidget {
                           //overflow
                           child: RichText(
                             overflow: TextOverflow.ellipsis,
-                            strutStyle: StrutStyle(fontSize: 12.0),
-                            text: TextSpan(
+                            strutStyle: const StrutStyle(fontSize: 12.0),
+                            text: const TextSpan(
                                 style: TextStyle(color: Colors.black),
                                 text: 'Ravidranath@gmail.com'),
                           ),
@@ -629,9 +554,10 @@ class Profile_Info extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border.all(
-                                    color: Color.fromARGB(255, 210, 199, 240)),
+                                    color: const Color.fromARGB(
+                                        255, 210, 199, 240)),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                                    const BorderRadius.all(Radius.circular(5))),
                             child: Image.asset(
                               'assets/studentLogo.png',
                               fit: BoxFit.cover,
