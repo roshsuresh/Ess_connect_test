@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Application/LoginProvider.dart';
+import '../../Application/ProfileProvider.dart';
 import '../../Domain/LoginModel.dart';
 import '../../utils/constants.dart';
 import 'LoginPageWeb.dart';
@@ -22,107 +23,132 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = false;
-  TextEditingController _username = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  bool isLoading = false;
+  final _formKey = GlobalKey<FormState>();
+  final _username = TextEditingController();
+  final _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(15),
-              color: Color.fromARGB(31, 222, 245, 248)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: _username,
-                  decoration: InputDecoration(
-                      focusColor: Color.fromARGB(255, 213, 215, 218),
-                      prefixIcon: Icon(
-                        Icons.person_outline_rounded,
-                        color: Colors.grey,
-                      ),
-                      // errorText: "Please enter valid username",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.blue, width: 1.0),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      fillColor: Colors.grey,
-                      hintText: "Enter Your User Name",
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 16,
-                        fontFamily: "verdana_regular",
-                        fontWeight: FontWeight.w400,
-                      ),
-                      labelText: 'Username'),
-                ),
-                kheight10,
-                TextFormField(
-                  obscureText: !_isObscure,
-                  controller: _password,
-                  decoration: InputDecoration(
-                    focusColor: Color.fromARGB(255, 213, 215, 218),
-                    prefixIcon: Icon(
-                      Icons.password_outlined,
-                      color: Colors.grey,
-                    ),
-                    // errorText: "Please enter valid username",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 1.0),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    fillColor: Colors.grey,
-                    hintText: "Enter Your Password",
-                    hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                      fontFamily: "verdana_regular",
-                      fontWeight: FontWeight.w400,
-                    ),
-                    labelText: 'Password',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isObscure ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isObscure = !_isObscure;
-                        });
-                      },
+      body: isLoading
+          ? Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color.fromARGB(31, 222, 245, 248)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          controller: _username,
+                          decoration: InputDecoration(
+                              focusColor: Color.fromARGB(255, 213, 215, 218),
+                              prefixIcon: Icon(
+                                Icons.person_outline_rounded,
+                                color: Colors.grey,
+                              ),
+                              // errorText: "Please enter valid username",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Colors.blue, width: 1.0),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              fillColor: Colors.grey,
+                              hintText: "Enter Your User Name",
+                              hintStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                                fontFamily: "verdana_regular",
+                                fontWeight: FontWeight.w400,
+                              ),
+                              labelText: 'Username'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                        ),
+                        kheight10,
+                        TextFormField(
+                          obscureText: !_isObscure,
+                          controller: _password,
+                          decoration: InputDecoration(
+                            focusColor: Color.fromARGB(255, 213, 215, 218),
+                            prefixIcon: Icon(
+                              Icons.password_outlined,
+                              color: Colors.grey,
+                            ),
+                            // errorText: "Please enter valid username",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fillColor: Colors.grey,
+                            hintText: "Enter Your Password",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontFamily: "verdana_regular",
+                              fontWeight: FontWeight.w400,
+                            ),
+                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscure
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                        ),
+                        kheight20,
+                        ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                checkLogin(_username.text, _password.text);
+
+                                print(_username);
+                                print(_password);
+                              } else {
+                                print("Enter some value");
+                              }
+                            },
+                            child: Text('Login ->'))
+                      ],
                     ),
                   ),
                 ),
-                kheight20,
-                ElevatedButton(
-                    onPressed: () {
-                      if (_username.text.isNotEmpty &&
-                          _password.text.isNotEmpty) {
-                        checkLogin(_username.toString(), _password.toString());
-                        print(_username);
-                        print(_password);
-                      } else {
-                        print("Enter some value");
-                      }
-                    },
-                    child: Text('Login ->'))
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -145,11 +171,12 @@ class _LoginPageState extends State<LoginPage> {
       // SharedPreferences prefs = await SharedPreferences.getInstance();
       LoginModel res = LoginModel.fromJson(data);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("accesstoken", res.accessToken);
-      print(res.accessToken);
-      //Provider.of<LoginProvider>(context, listen: false).getToken(context);
+      prefs.setString('accesstoken', res.accessToken);
+      //  print(res.accessToken);
+      Provider.of<ProfileProvider>(context, listen: false).ProfileData();
+      //  Provider.of<LoginProvider>(context, listen: false).getToken(context);
       var parsedResponse = await parseJWT();
-      if (parsedResponse['Role'] == "Guardian") {
+      if (parsedResponse['role'] == "Guardian") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
       } else {

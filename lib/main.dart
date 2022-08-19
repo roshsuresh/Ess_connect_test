@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:Ess_Conn/Application/ProfileProvider.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   if (Platform.isAndroid) {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
@@ -71,7 +74,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        // ChangeNotifierProvider(create: (context) => StudentNotification()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
         // ChangeNotifierProvider(create: (context)=>StudentNotificationProvider()),
         // ChangeNotifierProvider(create: (context) => HomeProvider()),
         //ChangeNotifierProvider(create: (context) => StaffNotification()),
@@ -113,7 +116,7 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
     if (prefs.getBool('activated') != null) {
       if (prefs.getString('accesstoken') != null) {
         var data = await parseJWT();
-        return Future.value(LoginPage());
+        return Future.value(StudentHome());
       } else {
         return Future.value(LoginPage());
       }

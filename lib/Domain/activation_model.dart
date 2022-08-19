@@ -1,9 +1,7 @@
-
 import 'dart:convert';
 
-ActivationModel activationModelFromJson(String str) => ActivationModel.fromJson(json.decode(str));
-
-
+ActivationModel activationModelFromJson(String str) =>
+    ActivationModel.fromJson(json.decode(str));
 
 class ActivationModel {
   final String? subDomain;
@@ -11,13 +9,12 @@ class ActivationModel {
   final String? logoUrl;
   final String? schoolId;
 
-  ActivationModel(
-      {
-      this.subDomain,
-       this.schoolName,
-       this.logoUrl,
-         this.schoolId,
-      });
+  ActivationModel({
+    this.subDomain,
+    this.schoolName,
+    this.logoUrl,
+    this.schoolId,
+  });
 
   factory ActivationModel.fromJson(Map<String, dynamic> json) {
     return ActivationModel(

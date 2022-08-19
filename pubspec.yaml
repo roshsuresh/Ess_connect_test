@@ -32,7 +32,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   dependencies: null
   easy_splash_screen: any
+  firebase: ^9.0.3
   firebase_messaging: any
+  firebase_core: ^1.20.0
   flutter:
     sdk: flutter
   flutter_downloader: any
