@@ -25,12 +25,14 @@ class LoginProvider with ChangeNotifier {
         body: json.encode(params),
         headers: headers);
     if (response.statusCode == 200) {
-      // print("corect");
+      print("corect");
       var jsonData = json.decode(response.body);
+      print(jsonData);
       ActivationModel ac = ActivationModel.fromJson(jsonData);
       //imageUrl = ac.logoUrl;
       schoolName = ac.schoolName!;
       subDomain = ac.subDomain!;
+      print(schoolName);
       SharedPreferences _pref = await SharedPreferences.getInstance();
       _pref.setString("schoolId", ac.schoolId!);
       notifyListeners();

@@ -173,8 +173,8 @@ class _LoginPageState extends State<LoginPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('accesstoken', res.accessToken);
       //  print(res.accessToken);
-      Provider.of<ProfileProvider>(context, listen: false).ProfileData();
-      //  Provider.of<LoginProvider>(context, listen: false).getToken(context);
+      Provider.of<ProfileProvider>(context, listen: false).profileData();
+      Provider.of<LoginProvider>(context, listen: false).getToken(context);
       var parsedResponse = await parseJWT();
       if (parsedResponse['role'] == "Guardian") {
         Navigator.push(
