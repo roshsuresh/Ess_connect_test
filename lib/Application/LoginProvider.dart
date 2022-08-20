@@ -36,11 +36,11 @@ class LoginProvider with ChangeNotifier {
       SharedPreferences _pref = await SharedPreferences.getInstance();
       _pref.setString("schoolId", ac.schoolId!);
       notifyListeners();
-      print(response.body);
+      //  print(response.body);
     } else {
-      //print("wrong");
+      print("Error in API calling");
     }
-    print(response.statusCode);
+    // print(response.statusCode);
     return response.statusCode;
   }
 

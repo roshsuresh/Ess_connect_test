@@ -14,18 +14,35 @@ Map? dataResponse;
 class ProfileProvider with ChangeNotifier {
   String? studName;
   String? admissionNo;
-
-  dynamic studentDetailsClass;
   String? division;
+
+  String? rollNo;
+  dynamic studentDetailsClass;
+
   dynamic bloodGroup;
   dynamic houseGroup;
+  String? classTeacher;
+  dynamic dob;
+  dynamic studentPhoto;
+  dynamic studentPhotoId;
+  String? gender;
+  String? height;
+  String? weight;
+  String? address;
+  String? fatherName;
+  dynamic fatherMail;
+  String? fatherMobileno;
+  String? motherName;
+  dynamic motherMailId;
+  String? motherMobileno;
   Future profileData() async {
+    Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    print(headers);
+    // print(headers);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
         headers: headers);
@@ -33,21 +50,39 @@ class ProfileProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         // print("corect");
         var jsonData = json.decode(response.body);
-        print(jsonData);
-        print("corect..........");
+        // print(jsonData);
+        //  print("corect..........");
         mapResponse = json.decode(response.body);
         dataResponse = mapResponse!['studentDetails'];
-        print(dataResponse);
+        // print(dataResponse);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);
         studName = std.studentName;
         admissionNo = std.admissionNo;
         division = std.division;
-        print(admissionNo);
+        rollNo = std.rollNo;
+        dob = std.dob;
+        gender = std.gender;
+        height = std.height;
+        weight = std.weight;
+        address = std.address;
+        fatherName = std.fatherName;
+        fatherMail = std.fatherMail;
+        fatherMobileno = std.fatherMobileno;
+        motherName = std.motherName;
+        motherMailId = std.motherMailId;
+        motherMobileno = std.motherMobileno;
+        address = std.address;
 
-        print(studName);
-        print("corect2..........");
-        // notifyListeners();
+        bloodGroup = std.bloodGroup;
+        houseGroup = std.houseGroup;
+        classTeacher = std.classTeacher;
+
+        // print(address);
+
+        // print(studName);
+        // print("corect2..........");
+        notifyListeners();
 
         // print(response.body);
       } else {

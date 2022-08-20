@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
         'POST',
         Uri.parse(
             '${UIGuide.baseURL}/login?id=${_pref.getString('schoolId')}'));
-    print(request);
+    // print(request);
     request.body = json.encode({"email": username, "password": password});
     print(request.body);
     request.headers.addAll(headers);
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('accesstoken', res.accessToken);
       //  print(res.accessToken);
-      Provider.of<ProfileProvider>(context, listen: false).profileData();
+      // await  Provider.of<ProfileProvider>(context).profileData();
       Provider.of<LoginProvider>(context, listen: false).getToken(context);
       var parsedResponse = await parseJWT();
       if (parsedResponse['role'] == "Guardian") {

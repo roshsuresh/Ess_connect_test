@@ -24,10 +24,6 @@ class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
   var size, height, width, kheight, kheight20;
   bool isLoading = false;
-  _saveSession(String subDomain) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('studname', subDomain);
-  }
 
   @override
   Widget build(BuildContext context) {
