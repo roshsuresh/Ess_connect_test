@@ -24,8 +24,14 @@ class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
   var size, height, width, kheight, kheight20;
   bool isLoading = false;
+  _saveSession(String subDomain) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('studname', subDomain);
+  }
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileProvider>(context, listen: false).profileData();
     // Provider.of<ProfileProvider>(context, listen: false).ProfileData();
 
     size = MediaQuery.of(context).size;
@@ -934,6 +940,7 @@ class ProfileHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileProvider>(context, listen: false).profileData();
     var size = MediaQuery.of(context).size;
     var width = size.width;
     return SafeArea(
@@ -942,24 +949,24 @@ class ProfileHome extends StatelessWidget {
           SizedBox(
             height: 2,
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0, right: 10),
-              child: Container(
-                height: 120,
-                decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 0.5,
-                      )
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    )),
-                child: Consumer<ProfileProvider>(
-                  builder: ((context, value, child) {
-                    return Row(
+          Consumer<ProfileProvider>(
+            builder: (_, value, child) {
+              return Container(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: Container(
+                    height: 120,
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 0.5,
+                          )
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        )),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
@@ -989,55 +996,75 @@ class ProfileHome extends StatelessWidget {
                               kheight20,
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Name : ',
                                     style: TextStyle(
                                         color: Colors.purple,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w700),
                                   ),
+
                                   RichText(
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
-                                    strutStyle: StrutStyle(fontSize: 12.0),
+                                    strutStyle: StrutStyle(fontSize: 8.0),
                                     text: TextSpan(
-                                      style: TextStyle(
-                                          color: Colors.black54,
-                                          fontWeight: FontWeight.w900),
-                                      text: value.studentName,
-                                    ),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.w900),
+                                        text: value.studName
+
+                                        // dataResponse == null
+                                        //     ? '---'
+                                        //     : dataResponse!['studentName']
+
+                                        ),
                                   ),
+                                  // dataResponse==null
+                                  // ? Container(): dataResponse?['studentName'].text
                                 ],
                               ),
                               kheight,
                               Row(
-                                children: const [
+                                children: [
                                   Text(
                                     'Adm no : ',
                                     style: TextStyle(
                                         color: Colors.purple,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    '5246 ',
+                                    value.admissionNo == null
+                                        ? '--'
+                                        : value.admissionNo.toString()
+                                    //  dataResponse?['admissionNo'].noSuchMethod(),
+                                    ,
                                     style: TextStyle(
                                         color: Colors.black54,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w900),
                                   )
                                 ],
                               ),
                               kheight,
                               Row(
-                                children: const [
+                                children: [
                                   Text(
                                     'Class : ',
                                     style: TextStyle(
                                         color: Colors.purple,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w700),
                                   ),
                                   Text(
-                                    'VI',
+                                    value.division == null
+                                        ? '--'
+                                        : value.division.toString(),
                                     style: TextStyle(
                                         color: Colors.black54,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w900),
                                   )
                                 ],
@@ -1047,23 +1074,29 @@ class ProfileHome extends StatelessWidget {
                         ),
                         Spacer(),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          // crossAxisAlignment: CrossAxisAlignment.end,
+                          // mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            IconButton(
-                                onPressed: (() {}),
-                                icon: const Icon(
-                                  Icons.switch_account_outlined,
-                                  size: 30,
-                                ))
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: (() {}),
+                                    icon: const Icon(
+                                      Icons.switch_account_outlined,
+                                      size: 30,
+                                    )),
+                              ],
+                            )
                           ],
                         ),
                       ],
-                    );
-                  }),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           const SizedBox(
             height: 10,
