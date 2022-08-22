@@ -52,12 +52,14 @@ class PayFee extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20.0, right: 8),
                 child: LimitedBox(
                   maxHeight: 160,
-                  child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: List.generate(
-                        5,
-                        (index) => InstallmentPage(),
-                      )),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    controller: _controller,
+                    itemCount: 10,
+                    itemBuilder: ((context, index) {
+                      return BusFee();
+                    }),
+                  ),
                 ),
               ),
               thumbVisibility: true,
@@ -80,14 +82,14 @@ class PayFee extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, right: 8),
                 child: LimitedBox(
-                  maxHeight: 280,
-                  child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: List.generate(
-                        10,
-                        (index) => BusFee(),
-                      )),
-                ),
+                    maxHeight: 280,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _controller2,
+                        itemCount: 10,
+                        itemBuilder: ((context, index) {
+                          return InstallmentPage();
+                        }))),
               ),
               isAlwaysShown: true,
               showTrackOnHover: true,

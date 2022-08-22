@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../utils/constants.dart';
+
 class Stud_Notification extends StatelessWidget {
   Stud_Notification({Key? key}) : super(key: key);
   var size, height, width;
@@ -22,9 +24,11 @@ class Stud_Notification extends StatelessWidget {
         toolbarOpacity: 0.8,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25)),
+            bottomRight: Radius.circular(25),
+            bottomLeft: Radius.circular(25),
+          ),
         ),
+        backgroundColor: UIGuide.light_Purple,
       ),
       body: ListView.builder(
         itemCount: 5,

@@ -9,6 +9,7 @@ import 'package:Ess_Conn/Presentation/Student/Stud_Calender.dart';
 import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
 import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
+import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class StudentHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<ProfileProvider>(context, listen: false).profileData();
-    // Provider.of<ProfileProvider>(context, listen: false).ProfileData();
+    Provider.of<ProfileProvider>(context, listen: false)
+        .flashNewsProvider(context);
 
     size = MediaQuery.of(context).size;
     height = size.height;
@@ -54,30 +56,38 @@ class StudentHome extends StatelessWidget {
                     SizedBox(
                       height: 120,
                     ),
-                    Container(
-                      height: 30,
-                      width: size.width,
-                      child: Marquee(
-                        text:
-                            'Submit the online Enquiry Form from this link or visit the school admissions office.  ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.grey),
-                        scrollAxis: Axis.horizontal,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        blankSpace: 20.0,
-                        velocity: 40.0,
-                        pauseAfterRound: Duration(seconds: 1),
-                        showFadingOnlyWhenScrolling: true,
-                        fadingEdgeStartFraction: 0.3,
-                        fadingEdgeEndFraction: 0.3,
-                        numberOfRounds: 2000,
-                        startPadding: 10.0,
-                        accelerationDuration: Duration(seconds: 1),
-                        accelerationCurve: Curves.linear,
-                        decelerationDuration: Duration(milliseconds: 500),
-                        decelerationCurve: Curves.easeOut,
-                      ),
-                    ),
+                    Flashnews(),
+                    // ListView.builder(
+                    //     itemCount:
+                    //         dataRsponse == null ? 0 : dataRsponse!.length,
+                    //     itemBuilder: (context, index) {
+                    //       return Container(
+                    //         height: 30,
+                    //         width: 30,
+                    //         child: Marquee(
+                    //           //scrolling  text
+                    //           text: dataRsponse![index]['flashNews'].toString(),
+                    //           style: TextStyle(
+                    //               fontWeight: FontWeight.bold,
+                    //               color: Colors.grey,
+                    //               fontSize: 12),
+                    //           scrollAxis: Axis.horizontal,
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           blankSpace: 20.0,
+                    //           velocity: 40.0,
+                    //           pauseAfterRound: Duration(seconds: 1),
+                    //           showFadingOnlyWhenScrolling: true,
+                    //           fadingEdgeStartFraction: 0.3,
+                    //           fadingEdgeEndFraction: 0.3,
+                    //           numberOfRounds: 2000,
+                    //           startPadding: 10.0,
+                    //           accelerationDuration: Duration(seconds: 1),
+                    //           accelerationCurve: Curves.linear,
+                    //           decelerationDuration: Duration(milliseconds: 500),
+                    //           decelerationCurve: Curves.easeOut,
+                    //         ),
+                    //       );
+                    //     }),
                     SingleChildScrollView(
                       child: Container(
                         // width: width,
@@ -249,33 +259,43 @@ class StudentHome extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/Profile.png',
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Timetable()),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Profile.png',
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Timetable',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
+                                        kheight,
+                                        const Text(
+                                          'Timetable',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -918,6 +938,7 @@ class StudentHome extends StatelessWidget {
                   ],
                 ),
                 ProfileHome(kheight20: kheight20, kheight: kheight),
+                //Flashnews(),
               ],
             ),
     );
@@ -940,165 +961,222 @@ class ProfileHome extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var width = size.width;
     return SafeArea(
-      child: Column(
+      child: Stack(
         children: [
-          SizedBox(
-            height: 2,
-          ),
-          Consumer<ProfileProvider>(
-            builder: (_, value, child) {
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10),
-                  child: Container(
-                    height: 120,
-                    decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 0.5,
-                          )
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        )),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                // opacity: 20,
-                                image: AssetImage(
-                                  'assets/studentLogo.png',
-                                ),
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [BoxShadow(blurRadius: 10)]),
-                          width: 70,
-                          height: 120,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                          height: 30,
-                        ),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              kheight20,
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Name : ',
-                                    style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-
-                                  RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    strutStyle: StrutStyle(fontSize: 8.0),
-                                    text: TextSpan(
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w900),
-                                        text: value.studName
-
-                                        // dataResponse == null
-                                        //     ? '---'
-                                        //     : dataResponse!['studentName']
-
-                                        ),
-                                  ),
-                                  // dataResponse==null
-                                  // ? Container(): dataResponse?['studentName'].text
-                                ],
-                              ),
-                              kheight,
-                              Row(
-                                children: [
-                                  Text(
-                                    'Adm no : ',
-                                    style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    value.admissionNo == null
-                                        ? '--'
-                                        : value.admissionNo.toString()
-                                    //  dataResponse?['admissionNo'].noSuchMethod(),
-                                    ,
-                                    style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w900),
-                                  )
-                                ],
-                              ),
-                              kheight,
-                              Row(
-                                children: [
-                                  Text(
-                                    'Class : ',
-                                    style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Text(
-                                    value.division == null
-                                        ? '--'
-                                        : value.division.toString(),
-                                    style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w900),
-                                  )
-                                ],
-                              ),
+          Column(
+            children: [
+              SizedBox(
+                height: 2,
+              ),
+              Consumer<ProfileProvider>(
+                builder: (_, value, child) {
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: Container(
+                        height: 120,
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 0.5,
+                              )
                             ],
-                          ),
-                        ),
-                        Spacer(),
-                        Row(
-                          // crossAxisAlignment: CrossAxisAlignment.end,
-                          // mainAxisAlignment: MainAxisAlignment.end,
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            )),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    // opacity: 20,
+                                    image: AssetImage(
+                                      'assets/studentLogo.png',
+                                    ),
+                                  ),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [BoxShadow(blurRadius: 10)]),
+                              width: 70,
+                              height: 120,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                              height: 30,
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  kheight20,
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Name : ',
+                                        style: TextStyle(
+                                            color: Colors.purple,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+
+                                      RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        strutStyle: StrutStyle(fontSize: 8.0),
+                                        text: TextSpan(
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w900),
+                                            text: value.studName == null
+                                                ? "--"
+                                                : value.studName
+
+                                            // dataResponse == null
+                                            //     ? '---'
+                                            //     : dataResponse!['studentName']
+
+                                            ),
+                                      ),
+                                      // dataResponse==null
+                                      // ? Container(): dataResponse?['studentName'].text
+                                    ],
+                                  ),
+                                  kheight,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Adm no : ',
+                                        style: TextStyle(
+                                            color: Colors.purple,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        value.admissionNo == null
+                                            ? '--'
+                                            : value.admissionNo.toString()
+                                        //  dataResponse?['admissionNo'].noSuchMethod(),
+                                        ,
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w900),
+                                      )
+                                    ],
+                                  ),
+                                  kheight,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Class : ',
+                                        style: TextStyle(
+                                            color: Colors.purple,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        value.division == null
+                                            ? '--'
+                                            : value.division.toString(),
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w900),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Spacer(),
+                            Row(
+                              // crossAxisAlignment: CrossAxisAlignment.end,
+                              // mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                IconButton(
-                                    onPressed: (() {}),
-                                    icon: const Icon(
-                                      Icons.switch_account_outlined,
-                                      size: 30,
-                                    )),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: (() {}),
+                                        icon: const Icon(
+                                          Icons.switch_account_outlined,
+                                          size: 30,
+                                        )),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Flashnews()
+            ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          //Flashnews()
         ],
       ),
+    );
+  }
+}
+
+class Flashnews extends StatelessWidget {
+  const Flashnews({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<ProfileProvider>(context, listen: false)
+        .flashNewsProvider(context);
+
+    var size = MediaQuery.of(context).size;
+    return Consumer<ProfileProvider>(
+      builder: (context, value, child) {
+        return ListView.builder(
+            shrinkWrap: true,
+            itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
+            itemBuilder: (context, index) {
+              return Container(
+                height: 30,
+                width: 30,
+                child: Marquee(
+                  //scrolling  text
+                  text: dataRsponse![index]['flashNews'] == null
+                      ? ''
+                      : dataRsponse![index]['flashNews'].toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                      fontSize: 12),
+                  scrollAxis: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  blankSpace: 20.0,
+                  velocity: 40.0,
+                  pauseAfterRound: Duration(seconds: 1),
+                  showFadingOnlyWhenScrolling: true,
+                  fadingEdgeStartFraction: 0.3,
+                  fadingEdgeEndFraction: 0.3,
+                  numberOfRounds: 2000,
+                  startPadding: 10.0,
+                  accelerationDuration: Duration(seconds: 1),
+                  accelerationCurve: Curves.linear,
+                  decelerationDuration: Duration(milliseconds: 500),
+                  decelerationCurve: Curves.easeOut,
+                ),
+              );
+            });
+      },
     );
   }
 }
