@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:http/http.dart' as http;
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
@@ -31,11 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+          ? LoadingIcon()
           : Center(
               child: Container(
                 decoration: BoxDecoration(
@@ -132,12 +129,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         kheight20,
                         ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 checkLogin(_username.text, _password.text);
 
                                 print(_username);
                                 print(_password);
+                                if (isLoading) return;
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await Future.delayed(Duration(seconds: 8));
                               } else {
                                 print("Enter some value");
                               }

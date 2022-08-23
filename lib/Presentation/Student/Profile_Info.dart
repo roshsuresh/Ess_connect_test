@@ -31,7 +31,7 @@ class Profile_Info extends StatelessWidget {
       body: Consumer<ProfileProvider>(
         builder: (_, provider, child) {
           String dateofb = provider.dob.toString();
-          String result = dateofb.substring(0, dateofb.lastIndexOf(' '));
+          String result = dateofb.replaceRange(10, 19, '');
           print('dob $result');
 
           return ListView(
@@ -143,10 +143,12 @@ class Profile_Info extends StatelessWidget {
                           ],
                         )),
                   ),
-                  const Center(
+                  Center(
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(
-                        'assets/studentLogo.png',
+                      backgroundImage: NetworkImage(
+                        provider.studPhoto == null
+                            ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
+                            : provider.studPhoto.toString(),
                       ),
                       radius: 65,
                       backgroundColor: UIGuide.BLACK,

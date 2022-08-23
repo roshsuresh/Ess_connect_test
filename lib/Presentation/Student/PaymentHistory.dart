@@ -27,34 +27,76 @@ class PaymentHistory extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: Column(
+      body: ListView(
         children: [
           kheight10,
-          Center(
-            child: Container(
-              height: 160,
-              width: width - 120,
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 252, 250, 250),
-                  border: Border.all(),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: ListView(children: [
-                RadioButtonForPayment(),
-                Center(
-                  child: MaterialButton(
-                    onPressed: () {
-                      view();
-                      //  ViewPaymentHistory();
-                    },
-                    child: Text('👁️ View'),
-                  ),
-                )
-              ]),
-            ),
-          ),
+          // Center(
+          //   child: Container(
+          //     height: 160,
+          //     width: width - 120,
+          //     decoration: BoxDecoration(
+          //         color: Color.fromARGB(255, 252, 250, 250),
+          //         border: Border.all(),
+          //         borderRadius: BorderRadius.all(Radius.circular(20))),
+          //     child: ListView(children: [
+          //       RadioButtonForPayment(),
+          //       Center(
+          //         child: MaterialButton(
+          //           onPressed: () {
+          //             // view();
+          //             //  ViewPaymentHistory();
+          //           },
+          //           child: Text('👁️ View'),
+          //         ),
+          //       )
+          //     ]),
+          //   ),
+          // ),
           kheight20,
-          view(),
+          //  view(),
           //  ViewPaymentHistory(),
+          Table(
+            //  border: TableBorder.all(),
+            children: const [
+              TableRow(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 196, 210, 235),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
+                  children: [
+                    Center(child: Text('Bill No.')),
+                    Center(child: Text('Bill Date')),
+                    Center(child: Text('Amount \n paid')),
+                    Center(child: Text('Receipt'))
+                  ]),
+            ],
+          ),
+          ListView.builder(
+              itemCount: 5,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Table(
+                  //  border: TableBorder.all(),
+                  children: [
+                    TableRow(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 230, 227, 227),
+                        ),
+                        children: [
+                          Center(child: Text('\nar7875df')),
+                          Center(child: Text('\n18/10/2022')),
+                          Center(child: Text('\n2000')),
+                          IconButton(
+                            icon: Icon(Icons.download),
+                            onPressed: () {},
+                          )
+                        ]),
+                  ],
+                );
+              })
         ],
       ),
     );
@@ -116,78 +158,51 @@ class _RadioButtonForPaymentState extends State<RadioButtonForPayment> {
 Widget view() {
   print('fgj');
   return Padding(
-    padding: const EdgeInsets.all(4.0),
-    child: Table(
-      //  border: TableBorder.all(),
-      children: [
-        const TableRow(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 196, 210, 235),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
-            ),
+      padding: const EdgeInsets.all(4.0),
+      child: ListView(
+        children: [
+          Table(
+            //  border: TableBorder.all(),
             children: [
-              Center(child: Text('Bill No.')),
-              Center(child: Text('Bill Date')),
-              Center(child: Text('Amount \n paid')),
-              Center(child: Text('Receipt'))
-            ]),
-        TableRow(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 230, 227, 227),
-            ),
-            children: [
-              Center(child: Text('\nar7875df')),
-              Center(child: Text('\n18/10/2022')),
-              Center(child: Text('\n2000')),
-              IconButton(
-                icon: Icon(Icons.download),
-                onPressed: () {},
-              )
-            ]),
-        TableRow(
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 245, 240, 240),
-            ),
-            children: [
-              const Center(child: Text('\nar7875df')),
-              const Center(child: Text('\n18/10/2022')),
-              const Center(child: Text('\n2000')),
-              IconButton(
-                icon: Icon(Icons.download),
-                onPressed: () {},
-              )
-            ]),
-        TableRow(
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 230, 227, 227),
-            ),
-            children: [
-              const Center(child: Text('\nar7875df')),
-              const Center(child: Text('\n18/10/2022')),
-              const Center(child: Text('\n2000')),
-              IconButton(
-                icon: Icon(Icons.download),
-                onPressed: () {},
-              )
-            ]),
-        TableRow(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 230, 227, 227),
+              const TableRow(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 196, 210, 235),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
+                  children: [
+                    Center(child: Text('Bill No.')),
+                    Center(child: Text('Bill Date')),
+                    Center(child: Text('Amount \n paid')),
+                    Center(child: Text('Receipt'))
+                  ]),
+            ],
           ),
-          children: [
-            const Center(child: Text('\nar7875df')),
-            const Center(child: Text('\n18/10/2022')),
-            const Center(child: Text('\n2000')),
-            IconButton(
-              icon: Icon(Icons.download),
-              onPressed: () {},
-            )
-          ],
-        ),
-      ],
-    ),
-  );
+          ListView.builder(
+              itemCount: 10,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Table(
+                  //  border: TableBorder.all(),
+                  children: [
+                    TableRow(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 230, 227, 227),
+                        ),
+                        children: [
+                          Center(child: Text('\nar7875df')),
+                          Center(child: Text('\n18/10/2022')),
+                          Center(child: Text('\n2000')),
+                          IconButton(
+                            icon: Icon(Icons.download),
+                            onPressed: () {},
+                          )
+                        ]),
+                  ],
+                );
+              })
+        ],
+      ));
 }

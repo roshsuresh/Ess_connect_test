@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:Ess_Conn/utils/constants.dart';
@@ -11,6 +12,7 @@ import '../Domain/profileModel.dart';
 
 Map? mapResponse;
 Map? dataResponse;
+Map? studResponse;
 List? dataRsponse;
 
 class ProfileProvider with ChangeNotifier {
@@ -37,6 +39,8 @@ class ProfileProvider with ChangeNotifier {
   String? motherName;
   dynamic motherMailId;
   String? motherMobileno;
+  String? studPhoto;
+
   Future profileData() async {
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -52,13 +56,20 @@ class ProfileProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         // print("corect");
         var jsonData = json.decode(response.body);
-        // print(jsonData);
+        //  log(jsonData.toString());
         //  print("corect..........");
         mapResponse = json.decode(response.body);
         dataResponse = mapResponse!['studentDetails'];
-        // print(dataResponse);
+        studResponse = dataResponse!['studentPhoto'];
+        // print(studResponse);
+        // print("corect..........");
+        //  print(dataResponse);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);
+        StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
+        studPhoto = asa.url;
+
+        // log(studPhoto.toString());
         studName = std.studentName;
         admissionNo = std.admissionNo;
         division = std.division;

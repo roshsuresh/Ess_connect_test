@@ -63,7 +63,7 @@ class LoginProvider with ChangeNotifier {
       "GuardianId": data['GuardianId'],
       "Type": data['role'] == "Guardian" ? "Student" : "Staff"
     });
-
+    print('Responde body  ${request.body}');
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

@@ -11,6 +11,7 @@ import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
 import 'package:Ess_Conn/routes.dart';
+import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -43,11 +44,7 @@ class StudentHome extends StatelessWidget {
     );
     return Scaffold(
       body: isLoading
-          ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+          ? LoadingIcon()
           : Stack(
               children: [
                 ListView(
@@ -57,37 +54,6 @@ class StudentHome extends StatelessWidget {
                       height: 120,
                     ),
                     Flashnews(),
-                    // ListView.builder(
-                    //     itemCount:
-                    //         dataRsponse == null ? 0 : dataRsponse!.length,
-                    //     itemBuilder: (context, index) {
-                    //       return Container(
-                    //         height: 30,
-                    //         width: 30,
-                    //         child: Marquee(
-                    //           //scrolling  text
-                    //           text: dataRsponse![index]['flashNews'].toString(),
-                    //           style: TextStyle(
-                    //               fontWeight: FontWeight.bold,
-                    //               color: Colors.grey,
-                    //               fontSize: 12),
-                    //           scrollAxis: Axis.horizontal,
-                    //           crossAxisAlignment: CrossAxisAlignment.start,
-                    //           blankSpace: 20.0,
-                    //           velocity: 40.0,
-                    //           pauseAfterRound: Duration(seconds: 1),
-                    //           showFadingOnlyWhenScrolling: true,
-                    //           fadingEdgeStartFraction: 0.3,
-                    //           fadingEdgeEndFraction: 0.3,
-                    //           numberOfRounds: 2000,
-                    //           startPadding: 10.0,
-                    //           accelerationDuration: Duration(seconds: 1),
-                    //           accelerationCurve: Curves.linear,
-                    //           decelerationDuration: Duration(milliseconds: 500),
-                    //           decelerationCurve: Curves.easeOut,
-                    //         ),
-                    //       );
-                    //     }),
                     SingleChildScrollView(
                       child: Container(
                         // width: width,
@@ -264,8 +230,7 @@ class StudentHome extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Timetable()),
+                                          builder: (context) => Timetable()),
                                     );
                                   },
                                   child: Padding(
@@ -992,15 +957,18 @@ class ProfileHome extends StatelessWidget {
                               width: 10,
                             ),
                             Container(
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
                                   image: DecorationImage(
                                     // opacity: 20,
-                                    image: AssetImage(
-                                      'assets/studentLogo.png',
+                                    image: NetworkImage(
+                                      value.studPhoto == null
+                                          ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
+                                          : value.studPhoto.toString(),
                                     ),
                                   ),
                                   shape: BoxShape.circle,
-                                  boxShadow: [BoxShadow(blurRadius: 10)]),
+                                  boxShadow: [BoxShadow(blurRadius: 1)]),
                               width: 70,
                               height: 120,
                             ),
