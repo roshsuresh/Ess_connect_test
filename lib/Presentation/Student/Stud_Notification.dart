@@ -77,7 +77,7 @@ class Stud_Notification extends StatelessWidget {
                             style: TextStyle(color: Colors.grey, fontSize: 12),
                           ),
                           Text(
-                            'Teacher',
+                            'Teacher name',
                             style: TextStyle(
                                 color: Color.fromARGB(255, 49, 47, 47),
                                 fontSize: 12),

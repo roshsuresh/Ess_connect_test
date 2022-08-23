@@ -117,14 +117,10 @@ class ProfileProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body.toString());
         dataRsponse = data['flashNews'];
-        print(data);
-        print(dataRsponse);
+        // print(data);
+        // print(dataRsponse);
         flashNewsModel = FlashNewsModel.fromJson(data);
         notifyListeners();
-        //  FlashNewsModel flash = FlashNewsModel.fromJson(data!['studentDetails']);
-        // print(flash);
-        // flashNews = flash.flashNews as String?;
-        // print(flashNews);
       } else {
         print("Something went wrong");
       }
@@ -135,44 +131,3 @@ class ProfileProvider with ChangeNotifier {
     //return flash;
   }
 }
-
-
-   // StudentProfileModel pro = StudentProfileModel.fromJson(jsonData);
-      // studentName = pro.studentName!;
-      // print(studentName);
-      // print("corect2..........");
-      // subDomain = ac.subDomain!;
-      // SharedPreferences _pref = await SharedPreferences.getInstance();
-      // _pref.setString("schoolId", ac.schoolId!);
-
-// print(response.statusCode);
-    // return response.statusCode;
-
-//
-    //
-    // print('Response.........');
-    // Map<String, dynamic> data = await parseJWT();
-    // SharedPreferences _pref = await SharedPreferences.getInstance();
-    // var headers = {
-    //   'Content-Type': 'application/json',
-    //   'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    // };
-    // print(headers);
-    // var request = await http.Request(
-    //   'GET',
-    //   Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
-    // );
-    // request.body = json.encode({"studentName": data["studentName"]});
-    // print("${request.body}");
-    // request.headers.addAll(headers);
-    // http.StreamedResponse response = await request.send();
-    // if (response.statusCode == 200 || response.statusCode == 201) {
-    //   print("Response............");
-    //   //var dh = StudentProfileModel.fromJson(jsonDecode(request.body));
-    //   // print(dh);
-    //   var jsonData = json.decode(request.body);
-    //   StudentProfileModel prof = StudentProfileModel.fromJson(jsonData);
-    //   studentName = prof.studentName;
-    //   print(studentName);
-    //   print("Response$response");
-    // }
