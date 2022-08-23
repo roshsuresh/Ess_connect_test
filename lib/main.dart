@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Application/LoginProvider.dart';
 
+import 'Application/NoticProvider.dart';
 import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
 import 'Presentation/Login_Activation/Login_page.dart';
@@ -75,6 +76,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => NoticeProvider()),
         // ChangeNotifierProvider(create: (context)=>StudentNotificationProvider()),
         // ChangeNotifierProvider(create: (context) => HomeProvider()),
         //ChangeNotifierProvider(create: (context) => StaffNotification()),

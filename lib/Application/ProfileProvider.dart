@@ -14,8 +14,6 @@ Map? dataResponse;
 List? dataRsponse;
 
 class ProfileProvider with ChangeNotifier {
-  late FlashNewsModel flashNewsModel;
-
   String? studName;
   String? admissionNo;
   String? division;
@@ -39,8 +37,6 @@ class ProfileProvider with ChangeNotifier {
   String? motherName;
   dynamic motherMailId;
   String? motherMobileno;
-
-  String? flashNews;
   Future profileData() async {
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -92,7 +88,7 @@ class ProfileProvider with ChangeNotifier {
 
         // print(response.body);
       } else {
-        print("Something went wrong");
+        print("wrong");
       }
     } catch (e) {
       print(e);

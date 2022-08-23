@@ -1,14 +1,17 @@
+import 'package:Ess_Conn/Application/NoticProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class NoticeBoard extends StatelessWidget {
   NoticeBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<NoticeProvider>(context, listen: false).getnoticeList();
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -46,92 +49,107 @@ class NoticeBoard extends StatelessWidget {
           //   'Our Upcoming Events......',
           //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
           // ),
-          ListView.builder(
-        itemCount: 5,
-        itemBuilder: (BuildContext context, index) {
-          return Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: width,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 245, 241, 241),
-                      border:
-                          Border.all(color: Color.fromARGB(255, 167, 166, 166)),
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Row(
+          Consumer<NoticeProvider>(
+        builder: (_, value, child) {
+          return Container(
+            child: ListView.builder(
+              itemCount:noticeresponse==null?0:noticeresponse!.length,
+              itemBuilder: (BuildContext context, index) {
+                return Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: width,
+                        height: 200,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 245, 241, 241),
+                            border:
+                            Border.all(color: Color.fromARGB(255, 167, 166, 166)),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            kWidth,
-                            Text('📌  '),
-                            Flexible(
-                              child: RichText(
-                                overflow: TextOverflow.ellipsis,
-                                strutStyle: StrutStyle(fontSize: 14.0),
-                                text: TextSpan(
-                                    style: TextStyle(color: Colors.black),
-                                    text: 'Upcomming Events'),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                children: [
+                                  kWidth,
+                                  Text('📌  '),
+                                  Flexible(
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      strutStyle: StrutStyle(fontSize: 14.0),
+                                      text: TextSpan(
+                                          style: TextStyle(color: Colors.black),
+                                          text: noticeresponse![index]['title'].toString()
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                height: 132,
+                                width: width - 15,
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 230, 225, 230),
+                                    border: Border.all(
+                                        color: Color.fromARGB(
+                                            255, 215, 207, 236)),
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Flexible(
+                                      child: RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        strutStyle: StrutStyle(fontSize: 12.0),
+                                        maxLines: 7,
+                                        text:  TextSpan(
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 15),
+                                          text:noticeresponse![index]['matter'].toString(),
+
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                kWidth,
+                                Text(
+                                  noticeresponse![index]['entryDate'].toString()
+                                ),
+                                Spacer(),
+                                Text(
+                                noticeresponse![index]['staffName'].toString()
+                                ),
+                                Spacer(),
+                                Icon(Icons.attach_file_outlined),
+                                kWidth
+                              ],
+                            )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          height: 132,
-                          width: width - 15,
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 230, 225, 230),
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 215, 207, 236)),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  strutStyle: StrutStyle(fontSize: 12.0),
-                                  maxLines: 7,
-                                  text: const TextSpan(
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 15),
-                                    text:
-                                        'Posters and flyers have the power to turn heads in the corridor, while social media images and Snapchat filters can stop people from scrolling and make them pay attention to your event. That split-second glance could be all you need to get someone to attend!',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          kWidth,
-                          Text('20 JAN 2022'),
-                          Spacer(),
-                          Icon(Icons.attach_file_outlined),
-                          kWidth
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                    ),
+                  ],
+                );
+              },
+            ),
           );
-        },
-      ),
+
+        }
+          ),
     );
   }
 }
