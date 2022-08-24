@@ -15,7 +15,7 @@ class Profile_Info extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
-    final Color background = Colors.white;
+    const Color background = Colors.white;
     final Color fill1 = Color.fromARGB(255, 79, 97, 197);
     final Color fill2 = Color.fromARGB(255, 180, 103, 216);
     final List<Color> gradient = [
@@ -82,7 +82,7 @@ class Profile_Info extends StatelessWidget {
                               provider.studName == null
                                   ? '--'
                                   : provider.studName.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 14),
                             ),
                             kheight10,
@@ -91,14 +91,15 @@ class Profile_Info extends StatelessWidget {
                               child: Table(
                                 // defaultColumnWidth: FixedColumnWidth(120.0),
                                 border: TableBorder.all(
-                                    color: Color.fromARGB(255, 213, 213, 243),
+                                    color: const Color.fromARGB(
+                                        255, 213, 213, 243),
                                     style: BorderStyle.solid,
                                     width: 2),
                                 children: [
                                   TableRow(children: [
                                     Column(
                                       children: [
-                                        Text('Class',
+                                        const Text('Class',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.grey)),
@@ -106,12 +107,13 @@ class Profile_Info extends StatelessWidget {
                                             provider.division == null
                                                 ? '--'
                                                 : provider.division.toString(),
-                                            style: TextStyle(fontSize: 16.0)),
+                                            style: const TextStyle(
+                                                fontSize: 16.0)),
                                       ],
                                     ),
                                     Column(
                                       children: [
-                                        Text('Roll No',
+                                        const Text('Roll No',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.grey)),
@@ -119,12 +121,13 @@ class Profile_Info extends StatelessWidget {
                                             provider.rollNo == null
                                                 ? '--'
                                                 : provider.rollNo.toString(),
-                                            style: TextStyle(fontSize: 16.0)),
+                                            style: const TextStyle(
+                                                fontSize: 16.0)),
                                       ],
                                     ),
                                     Column(
                                       children: [
-                                        Text('Adm No',
+                                        const Text('Adm No',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 color: Colors.grey)),
@@ -133,7 +136,8 @@ class Profile_Info extends StatelessWidget {
                                                 ? '--'
                                                 : provider.admissionNo
                                                     .toString(),
-                                            style: TextStyle(fontSize: 16.0)),
+                                            style: const TextStyle(
+                                                fontSize: 16.0)),
                                       ],
                                     ),
                                   ])
@@ -145,13 +149,14 @@ class Profile_Info extends StatelessWidget {
                   ),
                   Center(
                     child: CircleAvatar(
+                      // foregroundColor: Colors.white,
                       backgroundImage: NetworkImage(
                         provider.studPhoto == null
                             ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
                             : provider.studPhoto.toString(),
                       ),
                       radius: 65,
-                      backgroundColor: UIGuide.BLACK,
+                      backgroundColor: UIGuide.WHITE,
                     ),
                   )
                 ],
@@ -167,7 +172,7 @@ class Profile_Info extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           kWidth,
                           Icon(Icons.person_outline_outlined),
                           kWidth,
@@ -193,7 +198,7 @@ class Profile_Info extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.cake_outlined,
                                         size: 22,
                                       ),
@@ -204,11 +209,11 @@ class Profile_Info extends StatelessWidget {
                                         children: [
                                           Text(
                                             result == null ? '--' : result,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 43, 34, 158)),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Birthday',
                                             style: TextStyle(
                                                 color: Colors.black38,
@@ -227,7 +232,7 @@ class Profile_Info extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.person_outlined,
                                             size: 22,
                                           ),
@@ -238,11 +243,11 @@ class Profile_Info extends StatelessWidget {
                                             children: [
                                               Text(
                                                 provider.gender.toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 43, 34, 158)),
                                               ),
-                                              Text(
+                                              const Text(
                                                 'Gender',
                                                 style: TextStyle(
                                                     color: Colors.black38,
@@ -265,7 +270,7 @@ class Profile_Info extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.bloodtype_outlined,
                                         size: 22,
                                       ),
@@ -279,11 +284,11 @@ class Profile_Info extends StatelessWidget {
                                                 ? '--'
                                                 : provider.bloodGroup
                                                     .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 43, 34, 158)),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Blood Group',
                                             style: TextStyle(
                                                 color: Colors.black38,
@@ -302,7 +307,7 @@ class Profile_Info extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.flag_outlined,
                                             size: 22,
                                           ),
@@ -316,11 +321,11 @@ class Profile_Info extends StatelessWidget {
                                                     ? '--'
                                                     : provider.houseGroup
                                                         .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 43, 34, 158)),
                                               ),
-                                              Text(
+                                              const Text(
                                                 'House Group',
                                                 style: TextStyle(
                                                     color: Colors.black38,
@@ -343,7 +348,7 @@ class Profile_Info extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.height_outlined,
                                         size: 22,
                                       ),
@@ -356,11 +361,11 @@ class Profile_Info extends StatelessWidget {
                                             provider.height == null
                                                 ? '0.00'
                                                 : provider.height.toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 43, 34, 158)),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Height',
                                             style: TextStyle(
                                                 color: Colors.black38,
@@ -379,7 +384,7 @@ class Profile_Info extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.line_weight_outlined,
                                             size: 22,
                                           ),
@@ -393,11 +398,11 @@ class Profile_Info extends StatelessWidget {
                                                     ? '0.00'
                                                     : provider.weight
                                                         .toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color.fromARGB(
                                                         255, 43, 34, 158)),
                                               ),
-                                              Text(
+                                              const Text(
                                                 'Weight',
                                                 style: TextStyle(
                                                     color: Colors.black38,
@@ -420,7 +425,7 @@ class Profile_Info extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.sticky_note_2_outlined,
                                         size: 22,
                                       ),
@@ -434,11 +439,11 @@ class Profile_Info extends StatelessWidget {
                                                 ? '--'
                                                 : provider.classTeacher
                                                     .toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 43, 34, 158)),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Class Teacher',
                                             style: TextStyle(
                                                 color: Colors.black38,
@@ -522,7 +527,7 @@ class Profile_Info extends StatelessWidget {
                                     strutStyle: const StrutStyle(fontSize: 13),
                                     maxLines: 4,
                                     text: TextSpan(
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             color: Color.fromARGB(
                                                 255, 44, 43, 43)),
@@ -566,7 +571,7 @@ class Profile_Info extends StatelessWidget {
                           provider.fatherName == null
                               ? '---'
                               : provider.fatherName.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12),
                         )),
                         Row(
@@ -583,7 +588,7 @@ class Profile_Info extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: const StrutStyle(fontSize: 12.0),
                                 text: TextSpan(
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                     text: provider.fatherMail == null
                                         ? '--'
                                         : provider.fatherMail),
@@ -632,7 +637,7 @@ class Profile_Info extends StatelessWidget {
                                 Row(
                                   // crossAxisAlignment: CrossAxisAlignment.start,
                                   // mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
+                                  children: const [
                                     Icon(Icons.phone_android_outlined),
                                     Text('+91 ----')
                                   ],
@@ -650,12 +655,13 @@ class Profile_Info extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
-                            color: Color.fromARGB(255, 210, 199, 240)),
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                            color: const Color.fromARGB(255, 210, 199, 240)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5))),
                     child: Column(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Mother',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -667,14 +673,14 @@ class Profile_Info extends StatelessWidget {
                           provider.motherName == null
                               ? '---'
                               : provider.motherName.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 12),
                         )),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.email_outlined,
                               size: 14,
                             ),
@@ -687,7 +693,7 @@ class Profile_Info extends StatelessWidget {
                             Flexible(
                               child: RichText(
                                 overflow: TextOverflow.ellipsis,
-                                strutStyle: StrutStyle(fontSize: 12.0),
+                                strutStyle: const StrutStyle(fontSize: 12.0),
                                 text: TextSpan(
                                     style: TextStyle(color: Colors.black),
                                     text: provider.motherMailId == null
@@ -709,14 +715,15 @@ class Profile_Info extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                        color:
-                                            Color.fromARGB(255, 210, 199, 240)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
+                                        color: const Color.fromARGB(
+                                            255, 210, 199, 240)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5))),
                                 child: Image.asset(
                                   'assets/account-profile.png',
-                                  color: Color.fromARGB(255, 151, 148, 148)
-                                      .withOpacity(0.8),
+                                  color:
+                                      const Color.fromARGB(255, 151, 148, 148)
+                                          .withOpacity(0.8),
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -728,7 +735,7 @@ class Profile_Info extends StatelessWidget {
                                 kheight10,
                                 Row(
                                   children: [
-                                    Icon(Icons.phone_android_outlined),
+                                    const Icon(Icons.phone_android_outlined),
                                     Text(provider.motherMobileno == null
                                         ? '+91 ----'
                                         : '+91 ${provider.motherMobileno.toString()}')

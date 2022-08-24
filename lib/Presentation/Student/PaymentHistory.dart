@@ -163,8 +163,8 @@ Widget view() {
         children: [
           Table(
             //  border: TableBorder.all(),
-            children: [
-              const TableRow(
+            children: const [
+              TableRow(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 196, 210, 235),
                     borderRadius: BorderRadius.only(

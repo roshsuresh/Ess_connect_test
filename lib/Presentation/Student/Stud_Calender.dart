@@ -12,9 +12,9 @@ class Stud_Calender extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 110, 95, 241),
+        backgroundColor: const Color.fromARGB(255, 110, 95, 241),
         title: Row(
-          children: [
+          children: const [
             Icon(Icons.calendar_month_outlined),
             Text(' Calender'),
           ],
@@ -83,7 +83,7 @@ class Stud_Calender extends StatelessWidget {
                       child: RichText(
                         overflow: TextOverflow.ellipsis,
                         strutStyle: StrutStyle(fontSize: 16.0),
-                        text: TextSpan(
+                        text: const TextSpan(
                             style: TextStyle(color: Colors.black),
                             text: 'Independence Day'),
                       ),
