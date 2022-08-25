@@ -1,3 +1,4 @@
+import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,6 +11,7 @@ class Stud_Notification extends StatelessWidget {
   var kheight = const SizedBox(
     height: 8,
   );
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -38,7 +40,7 @@ class Stud_Notification extends StatelessWidget {
               kheight,
               Container(
                 width: width - 4,
-                height: 150,
+                // height: 150,
                 decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -54,9 +56,9 @@ class Stud_Notification extends StatelessWidget {
                     children: [
                       const Text('Exam Reminder 🔔'),
                       kheight,
-                      const Text(
-                        '  SSC CGL exam is conducted in Tiers. Tier-I & II will be conducted online. On the other hand, Tier-III & IV will be conducted in offline mode. The candidate has to clear every tier and score cut-off marks, decided by the SSC board, to proceed further in this exam. ',
-                        style: TextStyle(fontSize: 12),
+                      TextWrapper(
+                        text:
+                            '  SSC CGL exam is conducted in Tiers. Tier-I & II will be conducted online. On the other hand, Tier-III & IV will be conducted in offline mode. The candidate has to clear every tier and score cut-off marks, decided by the SSC board, to proceed further in this exam. ',
                       ),
                       kheight,
                       Row(

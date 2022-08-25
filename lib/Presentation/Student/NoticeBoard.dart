@@ -1,9 +1,13 @@
 import 'package:Ess_Conn/Application/NoticProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_Conn/utils/LoadingIndication.dart';
+import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
 import 'package:Ess_Conn/utils/constants.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:pdfdownloader/pdfdownloader.dart';
 import 'package:provider/provider.dart';
 
 class NoticeBoard extends StatelessWidget {
@@ -48,13 +52,16 @@ class NoticeBoard extends StatelessWidget {
           child: ListView.builder(
             itemCount: noticeresponse == null ? 0 : noticeresponse!.length,
             itemBuilder: (BuildContext context, index) {
+              var noticeattach = noticeresponse![index]['noticeId'];
+              // Provider.of<NoticeProvider>(context, listen: false)
+              //     .noticeAttachement(noticeattach); //passing noticeID
               return Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       width: width,
-                      height: 200,
+                      //   height: 200,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 245, 241, 241),
                           border: Border.all(
@@ -74,18 +81,24 @@ class NoticeBoard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     strutStyle: StrutStyle(fontSize: 14.0),
                                     text: TextSpan(
-                                        style: TextStyle(color: Colors.black),
-                                        text: noticeresponse![index]['title']
-                                            .toString()),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                        text: noticeresponse![index]['title'] ==
+                                                null
+                                            ? '---'
+                                            : noticeresponse![index]['title']
+                                                .toString()),
                                   ),
                                 ),
+                                //Spacer(),
                               ],
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
-                              height: 132,
+                              //height: 132,
                               width: width - 15,
                               decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 230, 225, 230),
@@ -97,36 +110,94 @@ class NoticeBoard extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Flexible(
-                                    child: RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      strutStyle: StrutStyle(fontSize: 12.0),
-                                      maxLines: 7,
-                                      text: TextSpan(
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 15),
-                                        text: noticeresponse![index]['matter']
-                                            .toString(),
-                                      ),
-                                    ),
-                                  ),
+                                  TextWrapper(
+                                      text: noticeresponse![index]['matter'] ==
+                                              null
+                                          ? '------'
+                                          : noticeresponse![index]['matter']
+                                              .toString())
                                 ],
                               ),
                             ),
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              kWidth,
-                              Text(noticeresponse![index]['entryDate']
-                                  .toString()),
+                              //kWidth,
+                              Text(
+                                noticeresponse![index]['entryDate'] == null
+                                    ? '--'
+                                    : noticeresponse![index]['entryDate']
+                                        .toString(),
+                                style: TextStyle(fontSize: 12),
+                              ),
                               Spacer(),
-                              Text(noticeresponse![index]['staffName']
-                                  .toString()),
+                              Text(
+                                noticeresponse![index]['staffName']
+                                            .toString() ==
+                                        null
+                                    ? '--'
+                                    : noticeresponse![index]['staffName']
+                                        .toString(),
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              //kWidth
                               Spacer(),
-                              Icon(Icons.attach_file_outlined),
-                              kWidth
+                              GestureDetector(
+                                  onTap: () {
+                                    Provider.of<NoticeProvider>(context,
+                                            listen: false)
+                                        .noticeAttachement(noticeattach);
+                                    if (value.extension.toString() == '.pdf') {
+                                      final result = value.url.toString();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PdfViewPage(
+                                                  result: result,
+                                                )),
+                                      );
+                                    } else if (value.extension.toString() ==
+                                        '.jpg') {
+                                      final imgResult = value.url.toString();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ImageView(
+                                                  result: imgResult,
+                                                )),
+                                      );
+                                    } else if (value.extension.toString() ==
+                                        'png') {
+                                      final imgResult2 = value.url.toString();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ImageView(
+                                                  result: imgResult2,
+                                                )),
+                                      );
+                                    } else if (value.extension.toString() ==
+                                        'jpeg') {
+                                      final imgResult3 = value.url.toString();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ImageView(
+                                                  result: imgResult3,
+                                                )),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                NoExtention()),
+                                      );
+                                    }
+                                  },
+                                  child: Icon(Icons.file_download))
                             ],
                           )
                         ],
@@ -139,6 +210,178 @@ class NoticeBoard extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+
+  // loadDocument(String result) {
+  //   //document = PDFDocument.fromURL(result) as PDFDocument?;
+  //   Scaffold(
+  //     appBar: AppBar(
+  //       title: Text('PDF DownLoand Page'),
+  //       backgroundColor: Color(0xff003cb3),
+  //       actions: [
+  //         Padding(
+  //           padding: const EdgeInsets.only(right: 15.0),
+  //           child: DownloandPdf(
+  //             isUseIcon: true,
+  //             pdfUrl: result,
+  //             fileNames: 'TestDownload.pdf',
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //     body: Center(
+  //       child: DownloandPdf(
+  //         pdfUrl: result,
+  //         fileNames: 'TestDownload.pdf',
+  //         color: Color.fromARGB(31, 122, 120, 120),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // imageview(String result) {
+  //   return Scaffold(
+  //     body: Center(
+  //       child: Container(
+  //         child: Image.network(
+  //           result,
+  //           fit: BoxFit.cover,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+}
+
+class PdfViewPage extends StatelessWidget {
+  PdfViewPage({Key? key, required this.result}) : super(key: key);
+  PDFDocument? document;
+  late bool isLoading = false;
+
+  final String result;
+  loadDocument(String result) async {
+    document = await PDFDocument.fromURL(result);
+    Scaffold(
+      appBar: AppBar(
+        title: Text('PDF DownLoand Page'),
+        backgroundColor: Color(0xff003cb3),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: DownloandPdf(
+              isUseIcon: true,
+              pdfUrl: result,
+              fileNames: 'TestDownload.pdf',
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+      body: Center(
+        child: DownloandPdf(
+          pdfUrl: loadDocument(result),
+          fileNames: 'TestDownload.pdf',
+          color: Color.fromARGB(31, 122, 120, 120),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('PDF DownLoand Page'),
+        backgroundColor: Color(0xff003cb3),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15.0),
+            child: DownloandPdf(
+              isUseIcon: true,
+              pdfUrl: result,
+              fileNames: 'TestDownload.pdf',
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+      body: Center(
+        child: DownloandPdf(
+          pdfUrl: result,
+          fileNames: 'TestDownload.pdf',
+          color: Color.fromARGB(31, 122, 120, 120),
+        ),
+      ),
+    );
+    // return Consumer<NoticeProvider>(builder: (context, provider, _) {
+    //   if (provider.extension.toString() == '.pdf') {
+    //     final result = provider.url.toString();
+    //     return loadDocument(result);
+    //   } else if (provider.extension.toString() == '.jpg') {
+    //     final imgResult = provider.url.toString();
+    //     return imageview(imgResult);
+    //   } else if (provider.extension.toString() == 'png') {
+    //     final imgResult2 = provider.url.toString();
+    //     return imageview(imgResult2);
+    //   } else if (provider.extension.toString() == 'jpeg') {
+    //     final imgResult3 = provider.url.toString();
+    //     return imageview(imgResult3);
+    //   } else if (provider.extension.toString() == null) {
+    //     return Scaffold(
+    //       body: Center(
+    //         child: Text(
+    //           'No Attachment ',
+    //           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+    //         ),
+    //       ),
+    //     );
+    //   }
+    //   return Scaffold(
+    //     body: isLoading
+    //         ? LoadingIcon()
+    //         : Center(
+    //             child: Text(
+    //               'No Attachment Found',
+    //               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+    //             ),
+    //           ),
+    //   );
+    // });
+  }
+}
+
+class ImageView extends StatelessWidget {
+  const ImageView({Key? key, required this.result}) : super(key: key);
+  final String result;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Image.network(
+            result,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NoExtention extends StatelessWidget {
+  const NoExtention({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'No Attachment Found',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+      ),
     );
   }
 }
