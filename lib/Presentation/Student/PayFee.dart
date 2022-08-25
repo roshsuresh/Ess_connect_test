@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:Ess_Conn/Application/FeesProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 
@@ -121,20 +123,28 @@ class InstallmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-          leading: Text(
-            'Term',
-            style: TextStyle(fontSize: 16),
-          ),
-          title: Text(
-            '2900',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-          trailing: CheckBoxButton(),
+      children: [
+        Consumer<FeesProvider>(
+        builder: (_, provider, child) {
+          child:
+          return ListTile(
+            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+            leading: Text(
+              provider.installment,
+              style: TextStyle(fontSize: 16),
+            ),
+            title: Text(
+              provider.amount.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500),
+            ),
+            trailing: CheckBoxButton(),
+          );
+
+        }
         ),
         Divider(
           height: 0,

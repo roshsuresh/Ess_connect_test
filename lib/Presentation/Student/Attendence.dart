@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
+import 'package:provider/provider.dart';
 import '../../utils/constants.dart';
 
 class Attendence extends StatelessWidget {
@@ -165,3 +165,5 @@ class Attendence extends StatelessWidget {
         ));
   }
 }
+
+
