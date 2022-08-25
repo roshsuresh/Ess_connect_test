@@ -261,8 +261,8 @@ class PdfViewPage extends StatelessWidget {
   late bool isLoading = false;
 
   final String result;
-  loadDocument(String result) async {
-    document = await PDFDocument.fromURL(result);
+  loadDocument(String result) {
+    // document = await PDFDocument.fromURL(result);
     Scaffold(
       appBar: AppBar(
         title: Text('PDF DownLoand Page'),
