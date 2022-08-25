@@ -1,14 +1,15 @@
 import 'dart:convert';
+<<<<<<< HEAD
 import 'dart:developer';
 
 import 'package:Ess_Conn/Domain/Noticeattachmentmodel.dart';
 import 'package:Ess_Conn/Domain/activation_model.dart';
+=======
+>>>>>>> 07144b55251c808794e2ffbc7517e988018f57da
 import 'package:Ess_Conn/utils/constants.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Domain/NoticeModel.dart';
 
 List? noticeresponse;
 Map? attachResponse;

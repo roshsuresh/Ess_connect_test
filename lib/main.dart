@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Application/AttendenceProvider.dart';
+import 'Application/FeesProvider.dart';
 import 'Application/LoginProvider.dart';
 
 import 'Application/NoticProvider.dart';
@@ -79,6 +80,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => NoticeProvider()),
         ChangeNotifierProvider(create: (context) => AttendenceProvider()),
+        ChangeNotifierProvider(create: (context) => FeesProvider()),
         // ChangeNotifierProvider(create: (context) => HomeProvider()),
         //ChangeNotifierProvider(create: (context) => StaffNotification()),
       ],

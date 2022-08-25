@@ -31,6 +31,7 @@ class _ActivatePageState extends State<ActivatePage>
     await prefs.setBool('activated', true);
   }
 
+
   showBottomDialogSchool() {
     showModalBottomSheet(
         context: context,
