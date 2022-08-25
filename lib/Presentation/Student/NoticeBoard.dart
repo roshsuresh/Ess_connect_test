@@ -3,11 +3,12 @@ import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
 import 'package:Ess_Conn/utils/constants.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pdfdownloader/pdfdownloader.dart';
+
 import 'package:provider/provider.dart';
 
 class NoticeBoard extends StatelessWidget {
@@ -257,12 +258,12 @@ class NoticeBoard extends StatelessWidget {
 
 class PdfViewPage extends StatelessWidget {
   PdfViewPage({Key? key, required this.result}) : super(key: key);
-  PDFDocument? document;
+  //PDFDocument? document;
   late bool isLoading = false;
 
   final String result;
   loadDocument(String result) async {
-    document = await PDFDocument.fromURL(result);
+    //document = await PDFDocument.fromURL(result);
     Scaffold(
       appBar: AppBar(
         title: Text('PDF DownLoand Page'),

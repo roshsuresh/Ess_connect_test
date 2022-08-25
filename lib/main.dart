@@ -10,8 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:permission_handler/permission_handler.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Application/AttendenceProvider.dart';
@@ -30,7 +29,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   if (Platform.isAndroid) {
-    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+    //await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -38,7 +37,7 @@ Future<void> main() async {
   ]).then((value) => runApp(GjInfoTech()));
 
   await FlutterDownloader.initialize(debug: true);
-  await Permission.storage.request();
+  //await Permission.storage.request();
 
   runApp(GjInfoTech());
 }

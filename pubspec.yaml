@@ -27,8 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  advance_pdf_viewer: ^2.0.1
   awesome_notifications: any
+  pdfdownloader: ^0.0.1
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   dependencies: null
@@ -39,20 +39,14 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_downloader: any
-  flutter_inappwebview: ^5.1.0+1
-<<<<<<< HEAD
-  flutter_local_notifications: ^9.8.0+1
-  flutter_spinkit: ^5.1.0
-=======
->>>>>>> 07144b55251c808794e2ffbc7517e988018f57da
-  flutter_webview_plugin:
-    git: https://github.com/nuc134r/flutter_webview_plugin.git
+#  flutter_inappwebview: ^5.1.0+1
+#  flutter_webview_plugin:
+#    git: https://github.com/nuc134r/flutter_webview_plugin.git
   http: ^0.13.4
   jwt_decoder: ^2.0.1
   marquee: ^2.2.3
   path_provider: any
-  pdfdownloader: ^0.0.1
-  permission_handler: any
+#  permission_handler: any
   provider: any
   rect_getter: ^1.1.0
   shared_preferences: ^2.0.9
