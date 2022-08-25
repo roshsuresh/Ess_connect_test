@@ -3,11 +3,12 @@ import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
 import 'package:Ess_Conn/utils/constants.dart';
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pdfdownloader/pdfdownloader.dart';
+
 import 'package:provider/provider.dart';
 
 class NoticeBoard extends StatelessWidget {
@@ -149,53 +150,11 @@ class NoticeBoard extends StatelessWidget {
                                     Provider.of<NoticeProvider>(context,
                                             listen: false)
                                         .noticeAttachement(noticeattach);
-                                    if (value.extension.toString() == '.pdf') {
-                                      final result = value.url.toString();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => PdfViewPage(
-                                                  result: result,
-                                                )),
-                                      );
-                                    } else if (value.extension.toString() ==
-                                        '.jpg') {
-                                      final imgResult = value.url.toString();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ImageView(
-                                                  result: imgResult,
-                                                )),
-                                      );
-                                    } else if (value.extension.toString() ==
-                                        'png') {
-                                      final imgResult2 = value.url.toString();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ImageView(
-                                                  result: imgResult2,
-                                                )),
-                                      );
-                                    } else if (value.extension.toString() ==
-                                        'jpeg') {
-                                      final imgResult3 = value.url.toString();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ImageView(
-                                                  result: imgResult3,
-                                                )),
-                                      );
-                                    } else {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                NoExtention()),
-                                      );
-                                    }
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PdfViewPage()),
+                                    );
                                   },
                                   child: Icon(Icons.file_download))
                             ],
@@ -256,16 +215,14 @@ class NoticeBoard extends StatelessWidget {
 }
 
 class PdfViewPage extends StatelessWidget {
-  PdfViewPage({Key? key, required this.result}) : super(key: key);
-  PDFDocument? document;
-  late bool isLoading = false;
+  PdfViewPage({Key? key}) : super(key: key);
 
-  final String result;
-  loadDocument(String result) {
-    // document = await PDFDocument.fromURL(result);
+  late bool isLoading = false;
+  loadDocument(String result, String name) {
+    //document = await PDFDocument.fromURL(result);
     Scaffold(
       appBar: AppBar(
-        title: Text('PDF DownLoand Page'),
+        title: Text('Download PDF'),
         backgroundColor: Color(0xff003cb3),
         actions: [
           Padding(
@@ -273,35 +230,7 @@ class PdfViewPage extends StatelessWidget {
             child: DownloandPdf(
               isUseIcon: true,
               pdfUrl: result,
-              fileNames: 'TestDownload.pdf',
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: DownloandPdf(
-          pdfUrl: loadDocument(result),
-          fileNames: 'TestDownload.pdf',
-          color: Color.fromARGB(31, 122, 120, 120),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('PDF DownLoand Page'),
-        backgroundColor: Color(0xff003cb3),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: DownloandPdf(
-              isUseIcon: true,
-              pdfUrl: result,
-              fileNames: 'TestDownload.pdf',
+              fileNames: name,
               color: Colors.white,
             ),
           ),
@@ -310,53 +239,14 @@ class PdfViewPage extends StatelessWidget {
       body: Center(
         child: DownloandPdf(
           pdfUrl: result,
-          fileNames: 'TestDownload.pdf',
+          fileNames: name,
           color: Color.fromARGB(31, 122, 120, 120),
         ),
       ),
     );
-    // return Consumer<NoticeProvider>(builder: (context, provider, _) {
-    //   if (provider.extension.toString() == '.pdf') {
-    //     final result = provider.url.toString();
-    //     return loadDocument(result);
-    //   } else if (provider.extension.toString() == '.jpg') {
-    //     final imgResult = provider.url.toString();
-    //     return imageview(imgResult);
-    //   } else if (provider.extension.toString() == 'png') {
-    //     final imgResult2 = provider.url.toString();
-    //     return imageview(imgResult2);
-    //   } else if (provider.extension.toString() == 'jpeg') {
-    //     final imgResult3 = provider.url.toString();
-    //     return imageview(imgResult3);
-    //   } else if (provider.extension.toString() == null) {
-    //     return Scaffold(
-    //       body: Center(
-    //         child: Text(
-    //           'No Attachment ',
-    //           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-    //         ),
-    //       ),
-    //     );
-    //   }
-    //   return Scaffold(
-    //     body: isLoading
-    //         ? LoadingIcon()
-    //         : Center(
-    //             child: Text(
-    //               'No Attachment Found',
-    //               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-    //             ),
-    //           ),
-    //   );
-    // });
   }
-}
 
-class ImageView extends StatelessWidget {
-  const ImageView({Key? key, required this.result}) : super(key: key);
-  final String result;
-  @override
-  Widget build(BuildContext context) {
+  imageview(String result) {
     return Scaffold(
       body: Center(
         child: Container(
@@ -368,20 +258,112 @@ class ImageView extends StatelessWidget {
       ),
     );
   }
-}
-
-class NoExtention extends StatelessWidget {
-  const NoExtention({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'No Attachment Found',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('PDF DownLoand Page'),
+    //     backgroundColor: Color(0xff003cb3),
+    //     actions: [
+    //       Padding(
+    //         padding: const EdgeInsets.only(right: 15.0),
+    //         child: DownloandPdf(
+    //           isUseIcon: true,
+    //           pdfUrl: result,
+    //           fileNames: 'TestDownload.pdf',
+    //           color: Colors.white,
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   body: Center(
+    //     child: DownloandPdf(
+    //       pdfUrl: result,
+    //       fileNames: 'TestDownload.pdf',
+    //       color: Color.fromARGB(31, 122, 120, 120),
+    //     ),
+    //   ),
+    // );
+    return Consumer<NoticeProvider>(builder: (context, provider, _) {
+      if (provider.extension.toString() == '.pdf') {
+        if (provider.url.toString() != null) {
+          final result = provider.url.toString();
+          final name = provider.name.toString();
+          return loadDocument(result, name);
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: Text(
+                'No Attachment ',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ),
+          );
+        }
+      } else if (provider.extension.toString() == '.jpg') {
+        final imgResult = provider.url.toString();
+        return imageview(imgResult);
+      } else if (provider.extension.toString() == 'png') {
+        final imgResult2 = provider.url.toString();
+        return imageview(imgResult2);
+      } else if (provider.extension.toString() == 'jpeg') {
+        final imgResult3 = provider.url.toString();
+        return imageview(imgResult3);
+      } else if (provider.extension.toString() == null) {
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              'No Attachment ',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ),
+        );
+      }
+      return Scaffold(
+        body: isLoading
+            ? LoadingIcon()
+            : Center(
+                child: Text(
+                  'No Attachment Found',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+              ),
+      );
+    });
   }
 }
+
+// class ImageView extends StatelessWidget {
+//   const ImageView({Key? key, required this.result}) : super(key: key);
+//   final String result;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Container(
+//           child: Image.network(
+//             result,
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class NoExtention extends StatelessWidget {
+//   const NoExtention({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Text(
+//           'No Attachment Found',
+//           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'dart:developer';
-
 import 'package:Ess_Conn/Domain/Noticeattachmentmodel.dart';
 import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:Ess_Conn/utils/constants.dart';
@@ -18,6 +17,7 @@ class NoticeProvider with ChangeNotifier {
   DateTime? date;
   String noticeId = "";
   String? extension;
+  String? name;
 
   String? url;
   Future getnoticeList() async {
@@ -66,6 +66,7 @@ class NoticeProvider with ChangeNotifier {
         AttachmentModel attach = AttachmentModel.fromJson(data);
         extension = attach.extension;
         url = attach.url;
+        name = attach.name;
         print("object  $extension");
         notifyListeners();
       } else {
