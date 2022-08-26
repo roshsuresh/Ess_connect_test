@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../Domain/FeesModel.dart';
+
 List? attend;
 
 class AttendenceProvider with ChangeNotifier {
@@ -27,6 +29,7 @@ class AttendenceProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
+
         print(data);
         attend = data['monthwiseAttendence'];
         print(attend);

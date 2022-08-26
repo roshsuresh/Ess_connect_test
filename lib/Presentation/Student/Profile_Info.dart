@@ -30,9 +30,9 @@ class Profile_Info extends StatelessWidget {
     return Scaffold(
       body: Consumer<ProfileProvider>(
         builder: (_, provider, child) {
-          String dateofb = provider.dob.toString();
-          String result = dateofb.replaceRange(10, 19, '');
-          print('dob $result');
+          // String dateofb = provider.dob.toString();
+          // String result = dateofb.replaceRange(10, 11, '');
+          // print('dob $result');
 
           return ListView(
             children: [
@@ -208,7 +208,9 @@ class Profile_Info extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            result == null ? '--' : result,
+                                            provider.dob.toString() == null
+                                                ? '--'
+                                                : provider.dob.toString(),
                                             style: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 43, 34, 158)),

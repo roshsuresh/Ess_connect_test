@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
                           controller: _username,
                           decoration: InputDecoration(
                               focusColor: Color.fromARGB(255, 213, 215, 218),
@@ -60,21 +61,22 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                    color: Colors.blue, width: 1.0),
+                                    color: Color.fromARGB(255, 144, 196, 238),
+                                    width: 1.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               fillColor: Colors.grey,
-                              hintText: "Enter Your User Name",
-                              hintStyle: TextStyle(
+                              hintText: "Enter Your registered Email",
+                              hintStyle: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
                                 fontFamily: "verdana_regular",
                                 fontWeight: FontWeight.w400,
                               ),
-                              labelText: 'Username'),
+                              labelText: 'Email'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return 'Please enter Email';
                             }
                             return null;
                           },
@@ -95,12 +97,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Colors.blue, width: 1.0),
+                                  color: Color.fromARGB(255, 123, 181, 228),
+                                  width: 1.0),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             fillColor: Colors.grey,
                             hintText: "Enter Your Password",
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 16,
                               fontFamily: "verdana_regular",
@@ -128,23 +131,24 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         kheight20,
-                        ElevatedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                checkLogin(_username.text, _password.text);
+                        SizedBox(
+                          width: 150,
+                          height: 50,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color.fromARGB(255, 38, 142, 228)),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  checkLogin(_username.text, _password.text);
 
-                                print(_username);
-                                print(_password);
-                                if (isLoading) return;
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                await Future.delayed(Duration(seconds: 8));
-                              } else {
-                                print("Enter some value");
-                              }
-                            },
-                            child: Text('Login ->'))
+                                  print(_username);
+                                  print(_password);
+                                } else {
+                                  print("Enter some value");
+                                }
+                              },
+                              child: Text('Login ->')),
+                        )
                       ],
                     ),
                   ),
@@ -179,6 +183,11 @@ class _LoginPageState extends State<LoginPage> {
       Provider.of<LoginProvider>(context, listen: false).getToken(context);
       var parsedResponse = await parseJWT();
       if (parsedResponse['role'] == "Guardian") {
+        if (isLoading) return;
+        setState(() {
+          isLoading = true;
+        });
+        await Future.delayed(Duration(seconds: 3));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
       } else {

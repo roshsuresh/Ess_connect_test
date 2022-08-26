@@ -10,6 +10,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:pdfdownloader/pdfdownloader.dart';
 
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class NoticeBoard extends StatelessWidget {
   NoticeBoard({Key? key}) : super(key: key);
@@ -146,15 +148,57 @@ class NoticeBoard extends StatelessWidget {
                               //kWidth
                               Spacer(),
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
                                     Provider.of<NoticeProvider>(context,
                                             listen: false)
                                         .noticeAttachement(noticeattach);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => PdfViewPage()),
-                                    );
+                                    if (value.extension.toString() == '.pdf') {
+                                      final result = await value.url.toString();
+                                      final name = await value.name.toString();
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PDFDownload()),
+                                      );
+                                    }
+                                    // } else if (value.extension.toString() ==
+                                    //     '.jpg') {
+                                    //   final imgResult = value.url.toString();
+                                    //   Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => PdfViewPage()
+                                    //             .imageview(imgResult)),
+                                    //   );
+                                    // } else if (value.extension.toString() ==
+                                    //     'png') {
+                                    //   final imgResult2 = value.url.toString();
+                                    //   return PdfViewPage()
+                                    //       .imageview(imgResult2);
+                                    // } else if (value.extension.toString() ==
+                                    //     'jpeg') {
+                                    //   final imgResult3 = value.url.toString();
+                                    //   return PdfViewPage()
+                                    //       .imageview(imgResult3);
+                                    // } else {
+                                    //   Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             PdfViewPage()),
+                                    //   );
+                                    // }
+
+                                    else {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PdfViewPage()),
+                                      );
+                                    }
                                   },
                                   child: Icon(Icons.file_download))
                             ],
@@ -171,96 +215,111 @@ class NoticeBoard extends StatelessWidget {
       }),
     );
   }
+}
 
-  // loadDocument(String result) {
-  //   //document = PDFDocument.fromURL(result) as PDFDocument?;
-  //   Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('PDF DownLoand Page'),
-  //       backgroundColor: Color(0xff003cb3),
-  //       actions: [
-  //         Padding(
-  //           padding: const EdgeInsets.only(right: 15.0),
-  //           child: DownloandPdf(
-  //             isUseIcon: true,
-  //             pdfUrl: result,
-  //             fileNames: 'TestDownload.pdf',
-  //             color: Colors.white,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //     body: Center(
-  //       child: DownloandPdf(
-  //         pdfUrl: result,
-  //         fileNames: 'TestDownload.pdf',
-  //         color: Color.fromARGB(31, 122, 120, 120),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // imageview(String result) {
-  //   return Scaffold(
-  //     body: Center(
-  //       child: Container(
-  //         child: Image.network(
-  //           result,
-  //           fit: BoxFit.cover,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+class PDFDownload extends StatelessWidget {
+  PDFDownload({
+    Key? key,
+  }) : super(key: key);
+  // final String result;
+  // final String name;
+  @override
+  Widget build(BuildContext context) {
+    //Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
+    return Consumer<NoticeProvider>(
+      builder: (context, value, child) => Scaffold(
+        appBar: AppBar(
+          title: Text('Download PDF'),
+          backgroundColor: Color(0xff003cb3),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: DownloandPdf(
+                isUseIcon: true,
+                pdfUrl: value.url.toString(),
+                fileNames: value.name.toString(),
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        body: Center(
+          child: DownloandPdf(
+            titleDownload: 'Tap to Download',
+            pdfUrl: value.url.toString(),
+            fileNames: value.name.toString(),
+            color: Color.fromARGB(31, 122, 120, 120),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class PdfViewPage extends StatelessWidget {
   PdfViewPage({Key? key}) : super(key: key);
 
-  late bool isLoading = false;
+  bool isLoading = false;
   loadDocument(String result, String name) {
     //document = await PDFDocument.fromURL(result);
     Scaffold(
-      appBar: AppBar(
-        title: Text('Download PDF'),
-        backgroundColor: Color(0xff003cb3),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0),
-            child: DownloandPdf(
-              isUseIcon: true,
-              pdfUrl: result,
-              fileNames: name,
-              color: Colors.white,
+      // appBar: AppBar(
+      //   title: Text('Download PDF'),
+      //   backgroundColor: Color(0xff003cb3),
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 15.0),
+      //       child: DownloandPdf(
+      //         isUseIcon: true,
+      //         pdfUrl: result,
+      //         fileNames: name,
+      //         color: Colors.white,
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      body: isLoading
+          ? LoadingIcon()
+          : Center(
+              child: DownloandPdf(
+                pdfUrl: result,
+                fileNames: name,
+                color: Color.fromARGB(31, 122, 120, 120),
+              ),
             ),
-          ),
-        ],
-      ),
-      body: Center(
-        child: DownloandPdf(
-          pdfUrl: result,
-          fileNames: name,
-          color: Color.fromARGB(31, 122, 120, 120),
-        ),
-      ),
     );
   }
 
   imageview(String result) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Image.network(
-            result,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
+      body: isLoading
+          ? LoadingIcon()
+          : Center(
+              child: Container(
+                child: Image.network(
+                  result,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    //Provider.of<NoticeProvider>(context, listen: true).noticeAttachement('');
+//     return Scaffold(
+//       body: isLoading
+//           ? LoadingIcon()
+//           : Center(
+//               child: Text(
+//                 'No Attachment Found',
+//                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+//               ),
+//             ),
+//     );
+//   }
+// }
     // return Scaffold(
     //   appBar: AppBar(
     //     title: Text('PDF DownLoand Page'),
@@ -286,22 +345,12 @@ class PdfViewPage extends StatelessWidget {
     //   ),
     // );
     return Consumer<NoticeProvider>(builder: (context, provider, _) {
-      if (provider.extension.toString() == '.pdf') {
-        if (provider.url.toString() != null) {
-          final result = provider.url.toString();
-          final name = provider.name.toString();
-          return loadDocument(result, name);
-        } else {
-          return const Scaffold(
-            body: Center(
-              child: Text(
-                'No Attachment ',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-              ),
-            ),
-          );
-        }
-      } else if (provider.extension.toString() == '.jpg') {
+      // if (provider.extension.toString() == '.pdf') {
+      //   final result = provider.url.toString();
+      //   final name = provider.name.toString();
+      //   return loadDocument(result, name);
+      // } else
+      if (provider.extension.toString() == '.jpg') {
         final imgResult = provider.url.toString();
         return imageview(imgResult);
       } else if (provider.extension.toString() == 'png') {
@@ -310,7 +359,7 @@ class PdfViewPage extends StatelessWidget {
       } else if (provider.extension.toString() == 'jpeg') {
         final imgResult3 = provider.url.toString();
         return imageview(imgResult3);
-      } else if (provider.extension.toString() == null) {
+      } else {
         return const Scaffold(
           body: Center(
             child: Text(
@@ -320,16 +369,16 @@ class PdfViewPage extends StatelessWidget {
           ),
         );
       }
-      return Scaffold(
-        body: isLoading
-            ? LoadingIcon()
-            : Center(
-                child: Text(
-                  'No Attachment Found',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                ),
-              ),
-      );
+      // return Scaffold(
+      //   body: isLoading
+      //       ? LoadingIcon()
+      //       : Center(
+      //           child: Text(
+      //             'No Attachment Found',
+      //             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+      //           ),
+      //         ),
+      // );
     });
   }
 }

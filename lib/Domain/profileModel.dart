@@ -120,7 +120,7 @@ class StudentProfileModel {
     required this.division,
     this.bloodGroup,
     this.houseGroup,
-    this.classTeacher,
+    required this.classTeacher,
     required this.dob,
     required this.studentPhoto,
     required this.studentPhotoId,
@@ -142,7 +142,7 @@ class StudentProfileModel {
   late final String division;
   late final Null bloodGroup;
   late final Null houseGroup;
-  late final Null classTeacher;
+  late final String classTeacher;
   late final String dob;
   late final StudentPhoto studentPhoto;
   late final String studentPhotoId;
@@ -165,7 +165,7 @@ class StudentProfileModel {
     division = json['division'];
     bloodGroup = null;
     houseGroup = null;
-    classTeacher = null;
+    classTeacher = json['classTeacher'];
     dob = json['dob'];
     studentPhoto = StudentPhoto.fromJson(json['studentPhoto']);
     studentPhotoId = json['studentPhotoId'];

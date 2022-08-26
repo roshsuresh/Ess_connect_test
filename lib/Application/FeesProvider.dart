@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,18 +6,18 @@ import 'package:http/http.dart' as http;
 import '../Domain/FeesModel.dart';
 import '../utils/constants.dart';
 
-Map? mapResponse;
-Map? dataResponse;
-Map? feeResponse;
-Map? busfeeResponse;
-List? dataRsponse;
+Map? mapResponses;
+Map? dataResponss;
+List? feeResponse;
+List? busfeeResponse;
+//List? listResponses;
 
 class FeesProvider with ChangeNotifier {
-
-  late String installment;
-  late double amount;
+  late String installmentTerm;
+  late int installamount;
 
   Future feesData() async {
+    late FeeFeesInstallments feeFeesInstallments;
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -34,20 +33,21 @@ class FeesProvider with ChangeNotifier {
         // print("corect");
         var jsonData = json.decode(response.body);
         //  log(jsonData.toString());
-        //  print("corect..........");
-        mapResponse = json.decode(response.body);
-        dataResponse = mapResponse!['onlineFeePaymentStudentDetails'];
-        feeResponse = dataResponse!['feeFeesInstallments'];
+        print("corect..........");
+        mapResponses = json.decode(response.body);
+        dataResponss = mapResponses!['onlineFeePaymentStudentDetails'];
+        feeResponse = dataResponss!['feeFeesInstallments'];
+        busfeeResponse = dataResponss!['feeBusInstallments'];
+        //  print(dataResponss);
+        // print('Bus Response     $busfeeResponse');
 
-        FeesModel fee =
-        FeesModel.fromJson(mapResponse!['onlineFeePaymentStudentDetails']);
-        FeesInstallment feesdata = FeesInstallment.fromJson(
-            dataResponse!['feeFeesInstallments']);
-
-        installment = feesdata.installmentName;
-        amount = feesdata.netDue;
+        print('fee Response      $feeResponse');
+        OnlineFeePayModel fee = OnlineFeePayModel.fromJson(
+            mapResponses!['onlineFeePaymentStudentDetails']);
+        // FeeFeesInstallments feesdata = FeeFeesInstallments.fromJson(data);
+        // installmentTerm = feesdata.installmentName.toString();
+        // print(installmentTerm);
         notifyListeners();
-
         // print(response.body);
       } else {
         print("wrong");
