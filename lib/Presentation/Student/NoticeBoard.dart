@@ -137,9 +137,7 @@ class NoticeBoard extends StatelessWidget {
                               ),
                               Spacer(),
                               Text(
-                                noticeresponse![index]['staffName']
-                                            .toString() ==
-                                        null
+                                noticeresponse![index]['staffName'] == null
                                     ? '--'
                                     : noticeresponse![index]['staffName']
                                         .toString(),
@@ -148,13 +146,13 @@ class NoticeBoard extends StatelessWidget {
                               //kWidth
                               Spacer(),
                               GestureDetector(
-                                  onTap: () async {
+                                  onTap: () {
                                     Provider.of<NoticeProvider>(context,
                                             listen: false)
                                         .noticeAttachement(noticeattach);
                                     if (value.extension.toString() == '.pdf') {
-                                      final result = await value.url.toString();
-                                      final name = await value.name.toString();
+                                      final result = value.url.toString();
+                                      final name = value.name.toString();
 
                                       Navigator.push(
                                         context,
@@ -192,7 +190,7 @@ class NoticeBoard extends StatelessWidget {
                                     // }
 
                                     else {
-                                      await Navigator.push(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Ess_Conn/Application/GalleryProvider.dart';
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
@@ -80,7 +81,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => NoticeProvider()),
         ChangeNotifierProvider(create: (context) => AttendenceProvider()),
         ChangeNotifierProvider(create: (context) => FeesProvider()),
-        // ChangeNotifierProvider(create: (context) => HomeProvider()),
+        ChangeNotifierProvider(create: (context) => GalleryProvider()),
         //ChangeNotifierProvider(create: (context) => StaffNotification()),
       ],
       child: MaterialApp(

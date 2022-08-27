@@ -2,8 +2,10 @@ import 'package:Ess_Conn/Application/ProfileProvider.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
+import 'package:Ess_Conn/Presentation/Student/Gallery.dart';
 import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
 import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
+import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Calender.dart';
 
 import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
@@ -312,32 +314,41 @@ class StudentHome extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/notification.png',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Gallery()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/notification.png',
+                                              ),
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Meetings',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
+                                        kheight,
+                                        const Text(
+                                          'Gallery',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -753,32 +764,41 @@ class StudentHome extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/Reportcard.png',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ReportCard()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Reportcard.png',
+                                              ),
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Report Card',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
+                                        kheight,
+                                        const Text(
+                                          'Report Card',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(

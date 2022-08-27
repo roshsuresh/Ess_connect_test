@@ -41,87 +41,36 @@ class PayFee extends StatelessWidget {
         body: isLoading
             ? LoadingIcon()
             : Consumer<FeesProvider>(builder: (_, value, child) {
-                return ListView(
+                return Stack(
                   children: [
-                    kheight20,
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 10),
-                      child: Text(
-                        'Installment',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: UIGuide.light_Purple),
-                      ),
-                    ),
-                    Scrollbar(
-                      controller: _controller,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 8),
-                        child: LimitedBox(
-                          maxHeight: 160,
-                          child: Consumer<FeesProvider>(
-                            builder: (context, value, child) {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                controller: _controller,
-                                itemCount: feeResponse == null
-                                    ? 0
-                                    : feeResponse!.length,
-                                itemBuilder: ((context, index) {
-                                  return Table(
-                                    //  border: TableBorder.all(),
-                                    children: [
-                                      TableRow(
-                                          decoration: BoxDecoration(
-                                              // color: Color.fromARGB(
-                                              //     255, 230, 227, 227),
-                                              ),
-                                          children: [
-                                            Text(
-                                                "\n${feeResponse![index]['installmentName']}"),
-                                            Center(
-                                                child: Text(
-                                                    '\n${feeResponse![index]['installmentNetDue'].toString()}')),
-                                            Center(child: CheckBoxButton()),
-                                          ]),
-                                    ],
-                                  );
-                                }),
-                              );
-                            },
+                    ListView(
+                      children: [
+                        kheight20,
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20, bottom: 10),
+                          child: Text(
+                            'Installment',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: UIGuide.light_Purple),
                           ),
                         ),
-                      ),
-                      thumbVisibility: true,
-                      // showTrackOnHover: true,
-                      thickness: 6,
-                      radius: Radius.circular(20),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-                      child: Text(
-                        'Bus Fee',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: UIGuide.light_Purple),
-                      ),
-                    ),
-                    Scrollbar(
-                      controller: _controller2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 8),
-                        child: LimitedBox(
-                            maxHeight: 280,
-                            child: Consumer<FeesProvider>(
-                              builder: (context, value, child) {
-                                return ListView.builder(
+                        Scrollbar(
+                          controller: _controller,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, right: 8),
+                            child: LimitedBox(
+                              maxHeight: 160,
+                              child: Consumer<FeesProvider>(
+                                builder: (context, value, child) {
+                                  return ListView.builder(
                                     shrinkWrap: true,
-                                    controller: _controller2,
-                                    itemCount: busfeeResponse == null
+                                    controller: _controller,
+                                    itemCount: feeResponse == null
                                         ? 0
-                                        : busfeeResponse!.length,
+                                        : feeResponse!.length,
                                     itemBuilder: ((context, index) {
                                       return Table(
                                         //  border: TableBorder.all(),
@@ -133,40 +82,105 @@ class PayFee extends StatelessWidget {
                                                   ),
                                               children: [
                                                 Text(
-                                                    '\n${busfeeResponse![index]['installmentName']}'),
+                                                    "\n${feeResponse![index]['installmentName']}"),
                                                 Center(
                                                     child: Text(
-                                                        '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+                                                        '\n${feeResponse![index]['installmentNetDue'].toString()}')),
                                                 Center(child: CheckBoxButton()),
                                               ]),
                                         ],
                                       );
-                                    }));
-                              },
-                            )),
-                      ),
-                      thumbVisibility: true,
-                      thickness: 6,
-                      radius: Radius.circular(20),
-                    ),
-                    // kheight20, kheight20,
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 50, left: 10, right: 10),
-                      child: MaterialButton(
-                        height: 60,
-                        onPressed: () {},
-                        child: Text(
-                          'Proceed to Pay',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16),
+                                    }),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          thumbVisibility: true,
+                          // showTrackOnHover: true,
+                          thickness: 6,
+                          radius: Radius.circular(20),
                         ),
-                        color: UIGuide.light_Purple,
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 20, bottom: 10, top: 10),
+                          child: Text(
+                            'Bus Fee',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: UIGuide.light_Purple),
+                          ),
+                        ),
+                        Scrollbar(
+                          controller: _controller2,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, right: 8),
+                            child: LimitedBox(
+                                maxHeight: 280,
+                                child: Consumer<FeesProvider>(
+                                  builder: (context, value, child) {
+                                    return ListView.builder(
+                                        shrinkWrap: true,
+                                        controller: _controller2,
+                                        itemCount: busfeeResponse == null
+                                            ? 0
+                                            : busfeeResponse!.length,
+                                        itemBuilder: ((context, index) {
+                                          return Table(
+                                            //  border: TableBorder.all(),
+                                            children: [
+                                              TableRow(
+                                                  decoration: BoxDecoration(
+                                                      // color: Color.fromARGB(
+                                                      //     255, 230, 227, 227),
+                                                      ),
+                                                  children: [
+                                                    Text(
+                                                        '\n${busfeeResponse![index]['installmentName']}'),
+                                                    Center(
+                                                        child: Text(
+                                                            '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+                                                    const Center(
+                                                        child:
+                                                            CheckBoxButton()),
+                                                  ]),
+                                            ],
+                                          );
+                                        }));
+                                  },
+                                )),
+                          ),
+                          thumbVisibility: true,
+                          thickness: 6,
+                          radius: const Radius.circular(20),
+                        ),
+                        // kheight20, kheight20,
+
+                        //kheight20
+                      ],
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      left: 10,
+                      right: 10,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 50, left: 10, right: 10),
+                        child: MaterialButton(
+                          height: 60,
+                          onPressed: () {},
+                          child: const Text(
+                            'Proceed to Pay',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16),
+                          ),
+                          color: UIGuide.light_Purple,
+                        ),
                       ),
                     ),
-                    //kheight20
                   ],
                 );
               }));
