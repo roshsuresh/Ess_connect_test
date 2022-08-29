@@ -22,7 +22,9 @@ import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Application/GalleryProvider.dart';
 import '../../Application/LoginProvider.dart';
+import '../../Application/NoticProvider.dart';
 
 class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
@@ -34,6 +36,9 @@ class StudentHome extends StatelessWidget {
     Provider.of<ProfileProvider>(context, listen: false).profileData();
     Provider.of<ProfileProvider>(context, listen: false)
         .flashNewsProvider(context);
+    Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
+    // Provider.of<NoticeProvider>(context, listen: false).getnoticeList();
+    // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
 
     size = MediaQuery.of(context).size;
     height = size.height;

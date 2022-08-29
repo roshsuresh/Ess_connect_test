@@ -28,7 +28,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   awesome_notifications: any
-  pdfdownloader: ^0.0.1
+  pdfdownload: ^0.0.2
+# pdfdownloader: ^0.0.1
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   dependencies: null

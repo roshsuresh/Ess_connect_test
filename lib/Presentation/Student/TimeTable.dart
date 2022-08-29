@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
 import 'package:flutter/material.dart';
-import 'package:pdfdownloader/pdfdownloader.dart';
 
 class Timetable extends StatefulWidget {
   Timetable({Key? key}) : super(key: key);

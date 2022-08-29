@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingIcon extends StatelessWidget {
@@ -8,7 +6,7 @@ class LoadingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
           child: SpinKitWave(
               color: Color.fromARGB(255, 121, 110, 243),

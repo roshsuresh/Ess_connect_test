@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Ess_Conn/Application/GalleryProvider.dart';
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/ReportCardProvider.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -82,7 +83,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => AttendenceProvider()),
         ChangeNotifierProvider(create: (context) => FeesProvider()),
         ChangeNotifierProvider(create: (context) => GalleryProvider()),
-        //ChangeNotifierProvider(create: (context) => StaffNotification()),
+        ChangeNotifierProvider(create: (context) => ReportCardProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

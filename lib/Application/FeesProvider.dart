@@ -18,7 +18,7 @@ class FeesProvider with ChangeNotifier {
 
   Future feesData() async {
     late FeeFeesInstallments feeFeesInstallments;
-    Map<String, dynamic> data = await parseJWT();
+    //Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',

@@ -394,13 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.7"
-  pdfdownloader:
+  pdfdownload:
     dependency: "direct main"
     description:
-      name: pdfdownloader
+      name: pdfdownload
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   permission_handler:
     dependency: transitive
     description:

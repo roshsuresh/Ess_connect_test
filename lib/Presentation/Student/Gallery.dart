@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../../Application/GalleryProvider.dart';
 import '../../utils/constants.dart';
 
 class Gallery extends StatelessWidget {
@@ -33,90 +34,219 @@ class Gallery extends StatelessWidget {
         children: [
           ListView.builder(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: galleryResponse == null ? 0 : galleryResponse!.length,
               itemBuilder: ((context, index) {
-                return Column(
-                  children: [
-                    kheight20,
-                    Container(
-                      height: 120,
-                      width: size.width - 30,
-                      decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(2, 6),
-                              blurRadius: 20,
-                              color: Color.fromRGBO(0, 0, 0, 0.16),
-                            )
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Row(
-                        children: [
-                          kWidth,
-                          Center(
-                              child: Container(
-                            width: 120,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkgXWUMr_Vcw6KhaHLTy0SNSljgWrMIi5rFQ&usqp=CAU',
-                                  ),
-                                  fit: BoxFit.fill),
-                              color: Colors.white12,
-                              border: Border.all(
-                                  color: Color.fromARGB(255, 219, 215, 215)),
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(0),
-                                  bottomRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0),
-                                  bottomLeft: Radius.circular(0.0)),
-                            ),
-                          )),
-                          kWidth,
-                          Expanded(
-                            child: Container(
-                                // color: Colors.black26,
-                                height: 110,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Onam Celebration',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12),
-                                      maxLines: 2,
-                                    ),
-                                    kheight10,
-                                    Text(
-                                      'y eryre reter ertr erte fgrt hrfg',
-                                      maxLines: 3,
-                                      style: TextStyle(),
-                                    ),
-                                    kheight10,
-                                    Expanded(
-                                      child: Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: Text(
-                                          'Date: 12/12/31   ',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 10),
+                return Consumer<GalleryProvider>(
+                  builder: (context, value, child) {
+                    return Column(
+                      children: [
+                        kheight20,
+                        GestureDetector(
+                          child: Container(
+                            height: 120,
+                            width: size.width - 30,
+                            decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(2, 6),
+                                    blurRadius: 20,
+                                    color: Color.fromRGBO(0, 0, 0, 0.16),
+                                  )
+                                ],
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Row(
+                              children: [
+                                kWidth,
+                                Center(
+                                    child: Container(
+                                  width: 120,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          galleryResponse![index]['url'] ??
+                                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgOinP1I4DJR8UXKbif9pXj4UTa1dar-CfGBr4mmSXNfOySMXxPfwa023_n0gvkdK4mig&usqp=CAU',
                                         ),
-                                      ),
-                                    ),
-                                  ],
+                                        fit: BoxFit.fill),
+                                    color: Colors.white12,
+                                    border: Border.all(
+                                        color:
+                                            Color.fromARGB(255, 219, 215, 215)),
+                                    borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(0),
+                                        bottomRight: Radius.circular(40.0),
+                                        topLeft: Radius.circular(40.0),
+                                        bottomLeft: Radius.circular(0.0)),
+                                  ),
                                 )),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                                kWidth,
+                                Expanded(
+                                  child: Container(
+                                      // color: Colors.black26,
+                                      height: 110,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            galleryResponse![index]['title'] ??
+                                                '---',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12),
+                                            maxLines: 2,
+                                          ),
+                                          kheight10,
+                                          Text(
+                                            galleryResponse![index]
+                                                    ['caption'] ??
+                                                '---',
+                                            maxLines: 3,
+                                            style: TextStyle(),
+                                          ),
+                                          kheight10,
+                                          const Expanded(
+                                            child: Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: Text(
+                                                'Date: 12/12/31   ',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: 10),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                )
+                              ],
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GalleryonTap()),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 );
               })),
         ],
+      ),
+    );
+  }
+}
+
+class GalleryonTap extends StatelessWidget {
+  const GalleryonTap({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<GalleryProvider>(context, listen: false)
+        .getGalleyList(); //provider
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: GridView.count(
+            crossAxisCount: 3,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 4,
+            children: List.generate(
+                galleryResponse == null ? 0 : galleryResponse!.length, (index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewImageOnTap(index: index)),
+                  );
+                },
+                child: Container(
+                  //
+                  height: 100,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(galleryResponse![index]['url'] ==
+                                  null
+                              ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgOinP1I4DJR8UXKbif9pXj4UTa1dar-CfGBr4mmSXNfOySMXxPfwa023_n0gvkdK4mig&usqp=CAU'
+                              : galleryResponse![index]['url']))),
+                ),
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ViewImageOnTap extends StatefulWidget {
+  ViewImageOnTap({Key? key, required this.index}) : super(key: key);
+  int index;
+
+  @override
+  State<ViewImageOnTap> createState() => _ViewImageOnTapState();
+}
+
+class _ViewImageOnTapState extends State<ViewImageOnTap> {
+  @override
+  Widget build(BuildContext context) {
+    var sze = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          children: [
+            Container(
+                height: sze.height - 80,
+                child: Image.network(galleryResponse![widget.index]['url'])),
+            SizedBox(
+              height: 10,
+            ),
+            Positioned(
+              bottom: 30,
+              left: 10,
+              right: 10,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FloatingActionButton(
+                    heroTag: "f1",
+                    onPressed: () {
+                      setState(() {
+                        if (galleryResponse!.length != 0) {
+                          widget.index--;
+                        }
+                      });
+                    },
+                    child: Icon(Icons.arrow_back_ios),
+                  ),
+                  FloatingActionButton(
+                    heroTag: "f2",
+                    onPressed: () {
+                      setState(() {
+                        if (widget != galleryResponse!.length) {
+                          widget.index++;
+                        }
+                      });
+                    },
+                    child: Icon(Icons.arrow_forward_ios),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

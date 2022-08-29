@@ -51,6 +51,7 @@ Future<Map<String, dynamic>> parseJWT() async {
     return {};
   } else {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    // print(decodedToken);
     return decodedToken;
   }
 }

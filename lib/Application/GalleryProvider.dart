@@ -9,15 +9,18 @@ import 'package:http/http.dart' as http;
 List? galleryResponse;
 
 class GalleryProvider with ChangeNotifier {
+  bool isLoading = false;
   Future getGalleyList() async {
+    isLoading = true;
+    GalleryModel gallery;
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    print('Headres   $headers');
+    // print('Headres   $headers');
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parent/gallery"),
+        Uri.parse("${UIGuide.baseURL}/mobileapp/parents/gallery"),
         headers: headers);
     //print(response);
     try {
@@ -25,12 +28,13 @@ class GalleryProvider with ChangeNotifier {
         // print("corect");
         final data = json.decode(response.body);
         //print(data);
-        // galleryResponse = item["gallerydetails"];
-        //result = GalleryModel.fromJson(item);
-        // print(result);
-        print(data);
+        galleryResponse = data["gallerydetails"];
+        // gallery = GalleryModel.fromJson(data);
+        // print(gallery);
+        print(galleryResponse);
 
         notifyListeners();
+        isLoading = false;
       } else {
         print("wrong2");
       }
