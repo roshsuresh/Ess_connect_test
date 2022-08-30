@@ -7,12 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 List? galleryResponse;
+List? galleryAttachResponse;
 
 class GalleryProvider with ChangeNotifier {
+  //late GalleryphotosModel photosModel;
+  late GalleryphotosModel galleryphotosModel;
+  // GalleryModel gallery;
   bool isLoading = false;
-  Future getGalleyList() async {
-    isLoading = true;
+  Future<GalleryModel?> getGalleyList() async {
     GalleryModel gallery;
+    isLoading = true;
+
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -27,11 +32,12 @@ class GalleryProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         // print("corect");
         final data = json.decode(response.body);
-        //print(data);
+        // print(data);
         galleryResponse = data["gallerydetails"];
+        // gallery = GalleryModel.fromJson(data["gallerydetails"]);
         // gallery = GalleryModel.fromJson(data);
-        // print(gallery);
-        print(galleryResponse);
+        // print(galleryResponse);
+        //  print(galleryResponse);
 
         notifyListeners();
         isLoading = false;
@@ -41,5 +47,38 @@ class GalleryProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<GalleryphotosModel> galleyAttachment(String galleryId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    String galleryid = galleryId.toString();
+    // print('Headres   $headers');
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/mobileapp/parents/gallery-photos/${galleryid}"),
+        headers: headers);
+    //print(response);
+    try {
+      if (response.statusCode == 200) {
+        // print("corect");
+        final data = json.decode(response.body);
+        print(data);
+        galleryAttachResponse = data["galleryphotos"];
+        galleryphotosModel = GalleryphotosModel.fromJson(data);
+
+        print(galleryAttachResponse);
+
+        notifyListeners();
+      } else {
+        print("wrong2");
+      }
+    } catch (e) {
+      print(e);
+    }
+    return galleryphotosModel;
   }
 }

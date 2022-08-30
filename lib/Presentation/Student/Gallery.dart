@@ -1,16 +1,19 @@
 import 'package:Ess_Conn/Application/GalleryProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 
 import '../../Application/GalleryProvider.dart';
 import '../../utils/constants.dart';
 
 class Gallery extends StatelessWidget {
-  const Gallery({Key? key}) : super(key: key);
-
+  Gallery({Key? key}) : super(key: key);
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -36,6 +39,8 @@ class Gallery extends StatelessWidget {
               shrinkWrap: true,
               itemCount: galleryResponse == null ? 0 : galleryResponse!.length,
               itemBuilder: ((context, index) {
+                var idd = galleryResponse![index]['galleryId'];
+
                 return Consumer<GalleryProvider>(
                   builder: (context, value, child) {
                     return Column(
@@ -124,11 +129,15 @@ class Gallery extends StatelessWidget {
                               ],
                             ),
                           ),
-                          onTap: () {
+                          onTap: () async {
+                            final postModel =
+                                await Provider.of<GalleryProvider>(context,
+                                        listen: false)
+                                    .galleyAttachment(idd);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const GalleryonTap()),
+                                  builder: (context) => GalleryonTap(id: idd)),
                             );
                           },
                         ),
@@ -144,110 +153,70 @@ class Gallery extends StatelessWidget {
 }
 
 class GalleryonTap extends StatelessWidget {
-  const GalleryonTap({Key? key}) : super(key: key);
-
+  GalleryonTap({Key? key, required String id}) : super(key: key);
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    Provider.of<GalleryProvider>(context, listen: false)
-        .getGalleyList(); //provider
+    // final postModel = Provider.of<GalleryProvider>(context, listen: false).galleyAttachment(id);
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.count(
-            crossAxisCount: 3,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 4,
-            children: List.generate(
-                galleryResponse == null ? 0 : galleryResponse!.length, (index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ViewImageOnTap(index: index)),
-                  );
-                },
-                child: Container(
-                  //
-                  height: 100,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(galleryResponse![index]['url'] ==
-                                  null
-                              ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgOinP1I4DJR8UXKbif9pXj4UTa1dar-CfGBr4mmSXNfOySMXxPfwa023_n0gvkdK4mig&usqp=CAU'
-                              : galleryResponse![index]['url']))),
+        body: isLoading
+            ? LoadingIcon()
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 4,
+                  children: List.generate(
+                      galleryResponse == null
+                          ? 0
+                          : galleryAttachResponse!.length, (index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewImageOntap()),
+                        );
+                      },
+                      child: Container(
+                        height: 100,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    galleryAttachResponse![index]['url'] == null
+                                        ? AssetImage('assets/nullimages.png')
+                                        : galleryAttachResponse![index]
+                                            ['url']))),
+                      ),
+                    );
+                  }),
                 ),
-              );
-            }),
-          ),
-        ),
+              ),
       ),
     );
   }
 }
 
-class ViewImageOnTap extends StatefulWidget {
-  ViewImageOnTap({Key? key, required this.index}) : super(key: key);
-  int index;
+class ViewImageOntap extends StatelessWidget {
+  const ViewImageOntap({Key? key}) : super(key: key);
 
-  @override
-  State<ViewImageOnTap> createState() => _ViewImageOnTapState();
-}
-
-class _ViewImageOnTapState extends State<ViewImageOnTap> {
   @override
   Widget build(BuildContext context) {
-    var sze = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            Container(
-                height: sze.height - 80,
-                child: Image.network(galleryResponse![widget.index]['url'])),
-            SizedBox(
-              height: 10,
-            ),
-            Positioned(
-              bottom: 30,
-              left: 10,
-              right: 10,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  FloatingActionButton(
-                    heroTag: "f1",
-                    onPressed: () {
-                      setState(() {
-                        if (galleryResponse!.length != 0) {
-                          widget.index--;
-                        }
-                      });
-                    },
-                    child: Icon(Icons.arrow_back_ios),
-                  ),
-                  FloatingActionButton(
-                    heroTag: "f2",
-                    onPressed: () {
-                      setState(() {
-                        if (widget != galleryResponse!.length) {
-                          widget.index++;
-                        }
-                      });
-                    },
-                    child: Icon(Icons.arrow_forward_ios),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: PhotoViewGallery.builder(
+          itemCount:
+              galleryAttachResponse == null ? 0 : galleryAttachResponse!.length,
+          builder: ((context, index) {
+            final imgUrl = galleryAttachResponse![index]['url'];
+            return PhotoViewGalleryPageOptions(
+                imageProvider: NetworkImage(imgUrl));
+          })),
     );
   }
 }

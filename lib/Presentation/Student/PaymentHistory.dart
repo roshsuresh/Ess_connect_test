@@ -156,7 +156,7 @@ class _RadioButtonForPaymentState extends State<RadioButtonForPayment> {
 // Widget build(BuildContext context) {
 
 Widget view() {
-  print('fgj');
+  // print('fgj');
   return Padding(
       padding: const EdgeInsets.all(4.0),
       child: ListView(

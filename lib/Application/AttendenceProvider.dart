@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:Ess_Conn/Domain/AttendenceModel.dart';
+
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../Domain/FeesModel.dart';
-
 List? attend;
+Map? attendenceRespo;
+Map? attendenceData;
 
 class AttendenceProvider with ChangeNotifier {
   double? workDays;
@@ -29,16 +30,21 @@ class AttendenceProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
+        attendenceRespo = json.decode(response.body);
+        attendenceData = attendenceRespo!['attendence'];
 
         print(data);
-        attend = data['monthwiseAttendence'];
-        print(attend);
-        AttendenceModel att = AttendenceModel.fromJson(data);
+        attend = attendenceData!['monthwiseAttendence'];
+        // print(attend);
+        AttendenceModel att =
+            AttendenceModel.fromJson(attendenceRespo!['attendence']);
         workDays = att.workDays;
         presentDays = att.presentDays;
         absentDays = att.absentDays;
         attendancePercentage = att.attendancePercentage;
-        print('presentDays $presentDays');
+        //print('presentDays $presentDays');
+        // print(workDays);
+
         notifyListeners();
       } else {
         print("Error in response");

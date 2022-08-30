@@ -165,5 +165,3 @@ class Attendence extends StatelessWidget {
         ));
   }
 }
-
-

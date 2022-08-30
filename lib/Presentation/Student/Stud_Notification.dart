@@ -85,7 +85,7 @@ class Stud_Notification extends StatelessWidget {
                                 fontSize: 12),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -15,7 +15,7 @@ List? busfeeResponse;
 class FeesProvider with ChangeNotifier {
   late String installmentTerm;
   late int installamount;
-
+  bool? allowPartialPayment;
   Future feesData() async {
     late FeeFeesInstallments feeFeesInstallments;
     //Map<String, dynamic> data = await parseJWT();
@@ -44,6 +44,8 @@ class FeesProvider with ChangeNotifier {
         print('fee Response      $feeResponse');
         OnlineFeePayModel fee = OnlineFeePayModel.fromJson(
             mapResponses!['onlineFeePaymentStudentDetails']);
+        allowPartialPayment = fee.allowPartialPayment;
+        print(allowPartialPayment);
         // FeeFeesInstallments feesdata = FeeFeesInstallments.fromJson(data);
         // installmentTerm = feesdata.installmentName.toString();
         // print(installmentTerm);

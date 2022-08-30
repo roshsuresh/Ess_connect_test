@@ -26,3 +26,28 @@ class GalleryModel {
     return _data;
   }
 }
+
+class GalleryphotosModel {
+  String? title;
+  String? galleryId;
+  String? caption;
+  String? url;
+
+  GalleryphotosModel({this.title, this.galleryId, this.caption, this.url});
+
+  GalleryphotosModel.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    galleryId = json['galleryId'];
+    caption = json['caption'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['galleryId'] = this.galleryId;
+    data['caption'] = this.caption;
+    data['url'] = this.url;
+    return data;
+  }
+}

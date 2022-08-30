@@ -39,7 +39,7 @@ class ReportCardModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['studentId'] = this.studentId;
     data['uploadedDate'] = this.uploadedDate;
     data['description'] = this.description;
