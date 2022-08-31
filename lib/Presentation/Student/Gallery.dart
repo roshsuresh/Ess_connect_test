@@ -51,16 +51,20 @@ class Gallery extends StatelessWidget {
                             height: 120,
                             width: size.width - 30,
                             decoration: const BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(2, 6),
-                                    blurRadius: 20,
-                                    color: Color.fromRGBO(0, 0, 0, 0.16),
-                                  )
-                                ],
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(2, 6),
+                                  blurRadius: 20,
+                                  color: Color.fromRGBO(0, 0, 0, 0.16),
+                                )
+                              ],
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(40.0),
+                                  bottomLeft: Radius.circular(0.0)),
+                            ),
                             child: Row(
                               children: [
                                 kWidth,
@@ -112,15 +116,28 @@ class Gallery extends StatelessWidget {
                                             style: TextStyle(),
                                           ),
                                           kheight10,
-                                          const Expanded(
-                                            child: Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Text(
-                                                'Date: 12/12/31   ',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w300,
-                                                    fontSize: 10),
-                                              ),
+                                          Expanded(
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Text(
+                                                    'Date: 12/12/31',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        fontSize: 10),
+                                                  ),
+                                                ),
+                                                kWidth,
+                                                kWidth,
+                                                kWidth
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -180,20 +197,28 @@ class GalleryonTap extends StatelessWidget {
                               builder: (context) => ViewImageOntap()),
                         );
                       },
-                      child: Container(
-                        height: 100,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    galleryAttachResponse![index]['url'] == null
-                                        ? AssetImage('assets/nullimages.png')
-                                        : galleryAttachResponse![index]
-                                            ['url']))),
-                      ),
+                      child: isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Container(
+                              height: 100,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          galleryAttachResponse![index]
+                                                      ['url'] ==
+                                                  null
+                                              ? AssetImage(
+                                                  'assets/nullimages.png')
+                                              : galleryAttachResponse![index]
+                                                  ['url']))),
+                            ),
                     );
                   }),
                 ),
@@ -204,19 +229,32 @@ class GalleryonTap extends StatelessWidget {
 }
 
 class ViewImageOntap extends StatelessWidget {
-  const ViewImageOntap({Key? key}) : super(key: key);
-
+  ViewImageOntap({Key? key}) : super(key: key);
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PhotoViewGallery.builder(
-          itemCount:
-              galleryAttachResponse == null ? 0 : galleryAttachResponse!.length,
-          builder: ((context, index) {
-            final imgUrl = galleryAttachResponse![index]['url'];
-            return PhotoViewGalleryPageOptions(
-                imageProvider: NetworkImage(imgUrl));
-          })),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : PhotoViewGallery.builder(
+              enableRotation: true,
+              itemCount: galleryAttachResponse == null
+                  ? 0
+                  : galleryAttachResponse!.length,
+              builder: ((context, index) {
+                final imgUrl = galleryAttachResponse![index]['url'];
+                return PhotoViewGalleryPageOptions(
+                    imageProvider: NetworkImage(imgUrl == null
+                        ? AssetImage('assets\nullimages.png')
+                        : imgUrl));
+              }),
+              loadingBuilder: (context, event) => Center(
+                child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    child: CircularProgressIndicator()),
+              ),
+            ),
     );
   }
 }

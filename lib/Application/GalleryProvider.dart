@@ -68,10 +68,10 @@ class GalleryProvider with ChangeNotifier {
         final data = json.decode(response.body);
         print(data);
         galleryAttachResponse = data["galleryphotos"];
-        galleryphotosModel = GalleryphotosModel.fromJson(data);
+        // galleryphotosModel = GalleryphotosModel.fromJson(data);
 
-        print(galleryAttachResponse);
-
+        // print(galleryAttachResponse);
+        // print(galleryphotosModel);
         notifyListeners();
       } else {
         print("wrong2");

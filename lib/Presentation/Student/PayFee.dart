@@ -76,7 +76,7 @@ class PayFee extends StatelessWidget {
                                         //  border: TableBorder.all(),
                                         children: [
                                           TableRow(
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                   // color: Color.fromARGB(
                                                   //     255, 230, 227, 227),
                                                   ),
@@ -131,7 +131,7 @@ class PayFee extends StatelessWidget {
                                             //  border: TableBorder.all(),
                                             children: [
                                               TableRow(
-                                                  decoration: BoxDecoration(
+                                                  decoration: const BoxDecoration(
                                                       // color: Color.fromARGB(
                                                       //     255, 230, 227, 227),
                                                       ),

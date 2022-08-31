@@ -65,7 +65,7 @@ class StudentProfileModel {
     admissionNo = json['admissionNo'];
     rollNo = json['rollNo'];
 
-    division = json['division'];
+    division = json['divisionName'];
     bloodGroup = null;
     houseGroup = null;
     classTeacher = json['classTeacher'];
@@ -90,7 +90,7 @@ class StudentProfileModel {
     _data['admissionNo'] = admissionNo;
     _data['rollNo'] = rollNo;
 
-    _data['division'] = division;
+    _data['divisionName'] = division;
     _data['bloodGroup'] = bloodGroup;
     _data['houseGroup'] = houseGroup;
     _data['classTeacher'] = classTeacher;
@@ -102,7 +102,7 @@ class StudentProfileModel {
     _data['weight'] = weight;
     _data['address'] = address;
     _data['fatherName'] = fatherName;
-    _data['fatherMail'] = fatherMail;
+    _data['fatherMailId'] = fatherMail;
     _data['fatherMobileno'] = fatherMobileno;
     _data['motherName'] = motherName;
     _data['motherMailId'] = motherMailId;
