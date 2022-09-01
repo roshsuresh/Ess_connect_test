@@ -21,6 +21,7 @@ class StudentProfileModel {
     required this.admissionNo,
     required this.rollNo,
     required this.division,
+    required this.divisionId,
     this.bloodGroup,
     this.houseGroup,
     required this.classTeacher,
@@ -43,6 +44,7 @@ class StudentProfileModel {
   late final String rollNo;
 
   late final String division;
+  late final String divisionId;
   late final Null bloodGroup;
   late final Null houseGroup;
   late final String classTeacher;
@@ -66,6 +68,7 @@ class StudentProfileModel {
     rollNo = json['rollNo'];
 
     division = json['divisionName'];
+    divisionId = json['divisionId'];
     bloodGroup = null;
     houseGroup = null;
     classTeacher = json['classTeacher'];
@@ -89,7 +92,7 @@ class StudentProfileModel {
     _data['studentName'] = studentName;
     _data['admissionNo'] = admissionNo;
     _data['rollNo'] = rollNo;
-
+    _data['divisionId'] = divisionId;
     _data['divisionName'] = division;
     _data['bloodGroup'] = bloodGroup;
     _data['houseGroup'] = houseGroup;

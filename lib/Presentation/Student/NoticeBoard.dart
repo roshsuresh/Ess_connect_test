@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pdfdownload/pdfdownload.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -196,34 +197,32 @@ class PDFDownload extends StatelessWidget {
     //Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
     return Consumer<NoticeProvider>(
       builder: (context, value, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('Download PDF'),
-          backgroundColor: Color(0xff003cb3),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: DownloandPdf(
-                isUseIcon: true,
-                pdfUrl:
-                    value.url.toString() == null ? '--' : value.url.toString(),
-                fileNames: value.name.toString() == null
-                    ? '---'
-                    : value.name.toString(),
-                color: Colors.white,
+          appBar: AppBar(
+            title: Text(''),
+            titleSpacing: 00.0,
+            centerTitle: true,
+            toolbarHeight: 50.2,
+            toolbarOpacity: 0.8,
+            backgroundColor: UIGuide.light_Purple,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: DownloandPdf(
+                  isUseIcon: true,
+                  pdfUrl: value.url.toString() == null
+                      ? '--'
+                      : value.url.toString(),
+                  fileNames: value.name.toString() == null
+                      ? '---'
+                      : value.name.toString(),
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
-        ),
-        body: Center(
-          child: DownloandPdf(
-            titleDownload: 'Tap to Download',
-            pdfUrl: value.url.toString() == null ? '--' : value.url.toString(),
-            fileNames:
-                value.name.toString() == null ? '---' : value.name.toString(),
-            color: Color.fromARGB(31, 122, 120, 120),
+            ],
           ),
-        ),
-      ),
+          body: SfPdfViewer.network(
+            value.url.toString() == null ? '--' : value.url.toString(),
+          )),
     );
   }
 }
@@ -239,13 +238,16 @@ class PdfViewPage extends StatelessWidget {
           ? LoadingIcon()
           : Center(
               child: Container(
-                child: Image.network(
+                  child: PhotoView(
+                loadingBuilder: (context, event) {
+                  return LoadingIcon();
+                },
+                imageProvider: NetworkImage(
                   result == null
                       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlmeGlXoJwwpbCE9jGgHgZ2XaE5nnPUSomkZz_vZT7&s'
                       : result,
-                  fit: BoxFit.cover,
                 ),
-              ),
+              )),
             ),
     );
   }

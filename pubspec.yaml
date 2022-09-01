@@ -49,7 +49,7 @@ dependencies:
   provider: any
   rect_getter: ^1.1.0
   shared_preferences: ^2.0.9
-  syncfusion_flutter_pdfviewer: ^20.2.45-beta
+  syncfusion_flutter_pdfviewer: ^20.2.46-beta
   url_launcher: any
   webview_flutter: any
 

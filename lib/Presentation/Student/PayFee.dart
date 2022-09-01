@@ -155,9 +155,6 @@ class PayFee extends StatelessWidget {
                           thickness: 6,
                           radius: const Radius.circular(20),
                         ),
-                        // kheight20, kheight20,
-
-                        //kheight20
                       ],
                     ),
                     Positioned(
@@ -184,70 +181,6 @@ class PayFee extends StatelessWidget {
                   ],
                 );
               }));
-  }
-}
-
-class InstallmentPage extends StatelessWidget {
-  const InstallmentPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<FeesProvider>(
-      builder: (context, value, child) {
-        return Column(
-          children: [
-            ListTile(
-              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-              leading: Text(
-                'trt',
-                style: TextStyle(fontSize: 16),
-              ),
-              title: Text(
-                '484',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500),
-              ),
-              trailing: CheckBoxButton(),
-            ),
-            Divider(
-              height: 0,
-            )
-          ],
-        );
-      },
-    );
-  }
-}
-
-class BusFee extends StatelessWidget {
-  const BusFee({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-          leading: Text(
-            'January',
-            style: TextStyle(fontSize: 16),
-          ),
-          title: Text(
-            '290',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),
-          ),
-          trailing: CheckBoxButton(),
-        ),
-        Divider(
-          height: 0,
-        )
-      ],
-    );
   }
 }
 

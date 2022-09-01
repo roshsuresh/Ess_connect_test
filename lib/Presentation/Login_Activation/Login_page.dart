@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           isLoading = true;
         });
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
       } else {

@@ -34,7 +34,7 @@ class GalleryProvider with ChangeNotifier {
         final data = json.decode(response.body);
         // print(data);
         galleryResponse = data["gallerydetails"];
-        // gallery = GalleryModel.fromJson(data["gallerydetails"]);
+        gallery = GalleryModel.fromJson(data);
         // gallery = GalleryModel.fromJson(data);
         // print(galleryResponse);
         //  print(galleryResponse);
@@ -49,7 +49,7 @@ class GalleryProvider with ChangeNotifier {
     }
   }
 
-  Future<GalleryphotosModel> galleyAttachment(String galleryId) async {
+  Future galleyAttachment(String galleryId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ class GalleryProvider with ChangeNotifier {
     // print('Headres   $headers');
     var response = await http.get(
         Uri.parse(
-            "${UIGuide.baseURL}/mobileapp/parents/gallery-photos/${galleryid}"),
+            "${UIGuide.baseURL}/mobileapp/parents/gallery-photos/$galleryid"),
         headers: headers);
     //print(response);
     try {
@@ -79,6 +79,5 @@ class GalleryProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    return galleryphotosModel;
   }
 }

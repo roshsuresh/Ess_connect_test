@@ -33,138 +33,147 @@ class Gallery extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: ListView(
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: galleryResponse == null ? 0 : galleryResponse!.length,
-              itemBuilder: ((context, index) {
-                var idd = galleryResponse![index]['galleryId'];
-
-                return Consumer<GalleryProvider>(
-                  builder: (context, value, child) {
-                    return Column(
-                      children: [
-                        kheight20,
-                        GestureDetector(
-                          child: Container(
-                            height: 120,
-                            width: size.width - 30,
-                            decoration: const BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(2, 6),
-                                  blurRadius: 20,
-                                  color: Color.fromRGBO(0, 0, 0, 0.16),
-                                )
-                              ],
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(0),
-                                  bottomRight: Radius.circular(40.0),
-                                  topLeft: Radius.circular(40.0),
-                                  bottomLeft: Radius.circular(0.0)),
-                            ),
-                            child: Row(
-                              children: [
-                                kWidth,
-                                Center(
-                                    child: Container(
-                                  width: 120,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                          galleryResponse![index]['url'] ??
-                                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgOinP1I4DJR8UXKbif9pXj4UTa1dar-CfGBr4mmSXNfOySMXxPfwa023_n0gvkdK4mig&usqp=CAU',
-                                        ),
-                                        fit: BoxFit.fill),
-                                    color: Colors.white12,
-                                    border: Border.all(
-                                        color:
-                                            Color.fromARGB(255, 219, 215, 215)),
-                                    borderRadius: const BorderRadius.only(
+      body: isLoading
+          ? LoadingIcon()
+          : ListView(
+              children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        galleryResponse == null ? 0 : galleryResponse!.length,
+                    itemBuilder: ((context, index) {
+                      var idd = galleryResponse![index]['galleryId'];
+                      return Consumer<GalleryProvider>(
+                        builder: (context, value, child) {
+                          return Column(
+                            children: [
+                              kheight20,
+                              GestureDetector(
+                                child: Container(
+                                  height: 120,
+                                  width: size.width - 30,
+                                  decoration: const BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(2, 6),
+                                        blurRadius: 20,
+                                        color: Color.fromRGBO(0, 0, 0, 0.16),
+                                      )
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(0),
                                         bottomRight: Radius.circular(40.0),
                                         topLeft: Radius.circular(40.0),
                                         bottomLeft: Radius.circular(0.0)),
                                   ),
-                                )),
-                                kWidth,
-                                Expanded(
-                                  child: Container(
-                                      // color: Colors.black26,
-                                      height: 110,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            galleryResponse![index]['title'] ??
-                                                '---',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12),
-                                            maxLines: 2,
-                                          ),
-                                          kheight10,
-                                          Text(
-                                            galleryResponse![index]
-                                                    ['caption'] ??
-                                                '---',
-                                            maxLines: 3,
-                                            style: TextStyle(),
-                                          ),
-                                          kheight10,
-                                          Expanded(
-                                            child: Row(
+                                  child: Row(
+                                    children: [
+                                      kWidth,
+                                      Center(
+                                          child: Container(
+                                        width: 120,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                galleryResponse![index]
+                                                        ['url'] ??
+                                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgOinP1I4DJR8UXKbif9pXj4UTa1dar-CfGBr4mmSXNfOySMXxPfwa023_n0gvkdK4mig&usqp=CAU',
+                                              ),
+                                              fit: BoxFit.fill),
+                                          color: Colors.white12,
+                                          border: Border.all(
+                                              color: Color.fromARGB(
+                                                  255, 219, 215, 215)),
+                                          borderRadius: const BorderRadius.only(
+                                              topRight: Radius.circular(0),
+                                              bottomRight:
+                                                  Radius.circular(40.0),
+                                              topLeft: Radius.circular(40.0),
+                                              bottomLeft: Radius.circular(0.0)),
+                                        ),
+                                      )),
+                                      kWidth,
+                                      Expanded(
+                                        child: Container(
+                                            // color: Colors.black26,
+                                            height: 110,
+                                            child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  child: Text(
-                                                    'Date: 12/12/31',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        fontSize: 10),
+                                                Text(
+                                                  galleryResponse![index]
+                                                          ['title'] ??
+                                                      '---',
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 12),
+                                                  maxLines: 2,
+                                                ),
+                                                kheight10,
+                                                Text(
+                                                  galleryResponse![index]
+                                                          ['caption'] ??
+                                                      '---',
+                                                  maxLines: 3,
+                                                  style: TextStyle(),
+                                                ),
+                                                kheight10,
+                                                Expanded(
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Text(
+                                                          'Date: 12/12/31',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              fontSize: 10),
+                                                        ),
+                                                      ),
+                                                      kWidth,
+                                                      kWidth,
+                                                      kWidth
+                                                    ],
                                                   ),
                                                 ),
-                                                kWidth,
-                                                kWidth,
-                                                kWidth
                                               ],
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                )
-                              ],
-                            ),
-                          ),
-                          onTap: () async {
-                            final postModel =
-                                await Provider.of<GalleryProvider>(context,
-                                        listen: false)
-                                    .galleyAttachment(idd);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GalleryonTap(id: idd)),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              })),
-        ],
-      ),
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                onTap: () async {
+                                  final postModel =
+                                      await Provider.of<GalleryProvider>(
+                                              context,
+                                              listen: false)
+                                          .galleyAttachment(idd);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GalleryonTap(id: idd)),
+                                  );
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    })),
+              ],
+            ),
     );
   }
 }
@@ -178,7 +187,7 @@ class GalleryonTap extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: isLoading
-            ? LoadingIcon()
+            ? const LoadingIcon()
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.count(
@@ -190,13 +199,6 @@ class GalleryonTap extends StatelessWidget {
                           ? 0
                           : galleryAttachResponse!.length, (index) {
                     return GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewImageOntap()),
-                        );
-                      },
                       child: isLoading
                           ? Center(
                               child: CircularProgressIndicator(),
@@ -215,10 +217,17 @@ class GalleryonTap extends StatelessWidget {
                                                       ['url'] ==
                                                   null
                                               ? AssetImage(
-                                                  'assets/nullimages.png')
+                                                  'assets/noimages.png')
                                               : galleryAttachResponse![index]
                                                   ['url']))),
                             ),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewImageOntap()),
+                        );
+                      },
                     );
                   }),
                 ),
@@ -231,13 +240,15 @@ class GalleryonTap extends StatelessWidget {
 class ViewImageOntap extends StatelessWidget {
   ViewImageOntap({Key? key}) : super(key: key);
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : PhotoViewGallery.builder(
-              enableRotation: true,
+              scrollPhysics: const BouncingScrollPhysics(),
+              enableRotation: false,
               itemCount: galleryAttachResponse == null
                   ? 0
                   : galleryAttachResponse!.length,
@@ -245,16 +256,13 @@ class ViewImageOntap extends StatelessWidget {
                 final imgUrl = galleryAttachResponse![index]['url'];
                 return PhotoViewGalleryPageOptions(
                     imageProvider: NetworkImage(imgUrl == null
-                        ? AssetImage('assets\nullimages.png')
-                        : imgUrl));
+                        ? AssetImage('assets/noimages.png')
+                        : imgUrl),
+                    initialScale: PhotoViewComputedScale.contained * 0.8,
+                    heroAttributes: PhotoViewHeroAttributes(
+                        tag: galleryAttachResponse![index]['url']));
               }),
-              loadingBuilder: (context, event) => Center(
-                child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    child: CircularProgressIndicator()),
-              ),
-            ),
+              loadingBuilder: (context, event) => LoadingIcon()),
     );
   }
 }

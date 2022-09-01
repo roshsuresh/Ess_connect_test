@@ -1,4 +1,5 @@
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/TimetableProvider.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -37,7 +38,7 @@ class StudentHome extends StatelessWidget {
     Provider.of<ProfileProvider>(context, listen: false)
         .flashNewsProvider(context);
     Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
-    // Provider.of<NoticeProvider>(context, listen: false).getnoticeList();
+    Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
     // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
 
     size = MediaQuery.of(context).size;
@@ -51,16 +52,16 @@ class StudentHome extends StatelessWidget {
     );
     return Scaffold(
       body: isLoading
-          ? LoadingIcon()
+          ? const LoadingIcon()
           : Stack(
               children: [
                 ListView(
                   children: [
                     kheight,
-                    SizedBox(
+                    const SizedBox(
                       height: 120,
                     ),
-                    Flashnews(),
+                    const Flashnews(),
                     SingleChildScrollView(
                       child: Container(
                         // width: width,
@@ -162,8 +163,8 @@ class StudentHome extends StatelessWidget {
                                     );
                                   },
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 10, right: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -172,9 +173,9 @@ class StudentHome extends StatelessWidget {
                                           height: 50,
                                           width: 40,
                                           decoration: BoxDecoration(
-                                            image: DecorationImage(
+                                            image: const DecorationImage(
                                               opacity: 20,
-                                              image: AssetImage(
+                                              image: const AssetImage(
                                                 'assets/notification.png',
                                               ),
                                             ),
@@ -183,7 +184,7 @@ class StudentHome extends StatelessWidget {
                                           ),
                                         ),
                                         kheight,
-                                        Text(
+                                        const Text(
                                           'Notification',
                                           style: TextStyle(
                                               fontSize: 11,
@@ -198,7 +199,8 @@ class StudentHome extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Attendence()),
+                                          builder: (context) =>
+                                              const Attendence()),
                                     );
                                   },
                                   child: Padding(
@@ -232,43 +234,55 @@ class StudentHome extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Timetable()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
+                                Consumer<ProfileProvider>(
+                                  builder: (context, value, child) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        var divId = value.divisionId == null
+                                            ? 'divId is null'
+                                            : value.divisionId.toString();
+                                        var divid = await Provider.of<
+                                                    Timetableprovider>(context,
+                                                listen: false)
+                                            .getTimeTable(divId);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Timetable(divid: divId)),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 40,
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                  opacity: 20,
+                                                  image: AssetImage(
+                                                    'assets/Profile.png',
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            kheight,
+                                            const Text(
+                                              'Timetable',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.black38),
+                                            )
+                                          ],
                                         ),
-                                        kheight,
-                                        const Text(
-                                          'Timetable',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -365,7 +379,7 @@ class StudentHome extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Stud_Calender()),
+                                                const Stud_Calender()),
                                       );
                                     },
                                     child: Column(
@@ -399,7 +413,7 @@ class StudentHome extends StatelessWidget {
                             ),
                             kheight, kheight20,
                             Container(
-                              color: Color.fromARGB(255, 218, 212, 212),
+                              color: const Color.fromARGB(255, 218, 212, 212),
                               height: 150,
                               width: width,
                               child: Column(
@@ -628,7 +642,8 @@ class StudentHome extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AdvancePay()),
+                                          builder: (context) =>
+                                              const AdvancePay()),
                                     );
                                   },
                                   child: Padding(
@@ -667,7 +682,7 @@ class StudentHome extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PaymentHistory()),
+                                              const PaymentHistory()),
                                     );
                                   },
                                   child: Padding(
@@ -709,7 +724,7 @@ class StudentHome extends StatelessWidget {
                                 child: Container(
                                     margin: const EdgeInsets.only(
                                         left: 10.0, right: 20.0),
-                                    child: Divider(
+                                    child: const Divider(
                                       color: Colors.black,
                                       height: 36,
                                     )),
@@ -725,7 +740,7 @@ class StudentHome extends StatelessWidget {
                                 child: Container(
                                     margin: const EdgeInsets.only(
                                         left: 20.0, right: 10.0),
-                                    child: Divider(
+                                    child: const Divider(
                                       color: Colors.black,
                                       height: 36,
                                     )),
@@ -774,7 +789,8 @@ class StudentHome extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => ReportCard()),
+                                            builder: (context) =>
+                                                const ReportCard()),
                                       );
                                     },
                                     child: Column(
@@ -955,7 +971,7 @@ class ProfileHome extends StatelessWidget {
         children: [
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 2,
               ),
               Consumer<ProfileProvider>(
@@ -993,7 +1009,7 @@ class ProfileHome extends StatelessWidget {
                                     ),
                                   ),
                                   shape: BoxShape.circle,
-                                  boxShadow: [BoxShadow(blurRadius: 1)]),
+                                  boxShadow: const [BoxShadow(blurRadius: 1)]),
                               width: 70,
                               height: 120,
                             ),
@@ -1019,15 +1035,14 @@ class ProfileHome extends StatelessWidget {
                                       RichText(
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
-                                        strutStyle: StrutStyle(fontSize: 8.0),
+                                        strutStyle:
+                                            const StrutStyle(fontSize: 8.0),
                                         text: TextSpan(
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black54,
                                                 fontWeight: FontWeight.w900),
-                                            text: value.studName == null
-                                                ? "--"
-                                                : value.studName
+                                            text: value.studName ?? "--"
 
                                             // dataResponse == null
                                             //     ? '---'
@@ -1042,7 +1057,7 @@ class ProfileHome extends StatelessWidget {
                                   kheight,
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Adm no : ',
                                         style: TextStyle(
                                             color: Colors.purple,
@@ -1055,7 +1070,7 @@ class ProfileHome extends StatelessWidget {
                                             : value.admissionNo.toString()
                                         //  dataResponse?['admissionNo'].noSuchMethod(),
                                         ,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.black54,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w900),
@@ -1065,7 +1080,7 @@ class ProfileHome extends StatelessWidget {
                                   kheight,
                                   Row(
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Class : ',
                                         style: TextStyle(
                                             color: Colors.purple,
@@ -1076,7 +1091,7 @@ class ProfileHome extends StatelessWidget {
                                         value.division == null
                                             ? '--'
                                             : value.division.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.black54,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w900),
@@ -1086,7 +1101,7 @@ class ProfileHome extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Row(
                               // crossAxisAlignment: CrossAxisAlignment.end,
                               // mainAxisAlignment: MainAxisAlignment.end,
@@ -1096,7 +1111,11 @@ class ProfileHome extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
-                                        onPressed: (() {}),
+                                        onPressed: (() {
+                                          var currentname = value.studName;
+                                          _displayNameOfSiblings(
+                                              context, currentname);
+                                        }),
                                         icon: const Icon(
                                           Icons.switch_account_outlined,
                                           size: 30,
@@ -1123,6 +1142,39 @@ class ProfileHome extends StatelessWidget {
       ),
     );
   }
+
+  _displayNameOfSiblings(BuildContext context, String? name) async {
+    final siblings = Provider.of<ProfileProvider>(context, listen: false);
+    siblings.siblingsAPI();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              content: Container(
+            decoration: BoxDecoration(border: Border.all()),
+            height: 70,
+            child: ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+                itemCount: 2,
+                itemBuilder: ((context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: GestureDetector(
+                              child: Text(siblinggResponse![index]['name']))),
+                      const Divider(
+                        height: 1,
+                        color: Colors.black54,
+                      )
+                    ],
+                  );
+                })),
+          ));
+        });
+  }
 }
 
 class Flashnews extends StatelessWidget {
@@ -1148,7 +1200,7 @@ class Flashnews extends StatelessWidget {
                   text: dataRsponse![index]['flashNews'] == null
                       ? ''
                       : dataRsponse![index]['flashNews'].toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
                       fontSize: 12),
@@ -1156,15 +1208,15 @@ class Flashnews extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   blankSpace: 20.0,
                   velocity: 40.0,
-                  pauseAfterRound: Duration(seconds: 1),
+                  pauseAfterRound: const Duration(seconds: 1),
                   showFadingOnlyWhenScrolling: true,
                   fadingEdgeStartFraction: 0.3,
                   fadingEdgeEndFraction: 0.3,
                   numberOfRounds: 2000,
                   startPadding: 10.0,
-                  accelerationDuration: Duration(seconds: 1),
+                  accelerationDuration: const Duration(seconds: 1),
                   accelerationCurve: Curves.linear,
-                  decelerationDuration: Duration(milliseconds: 500),
+                  decelerationDuration: const Duration(milliseconds: 500),
                   decelerationCurve: Curves.easeOut,
                 ),
               );

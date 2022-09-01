@@ -14,8 +14,7 @@ class Attendence extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<AttendenceProvider>(context, listen: false).attendenceList();
     var size = MediaQuery.of(context).size;
-    var height = size.height;
-    var width = size.width;
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Attendence'),

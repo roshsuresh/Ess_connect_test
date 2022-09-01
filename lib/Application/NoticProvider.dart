@@ -56,7 +56,7 @@ class NoticeProvider with ChangeNotifier {
     // print(headers);
     var response = await http.get(
         Uri.parse(
-            "${UIGuide.baseURL}/mobileapp/parent/noticeboard-attachment/${id}"),
+            "${UIGuide.baseURL}/mobileapp/parent/noticeboard-attachment/$id"),
         headers: headers);
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {

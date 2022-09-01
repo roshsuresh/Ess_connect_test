@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
 import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,13 @@ Map? mapResponse;
 Map? dataResponse;
 Map? studResponse;
 List? dataRsponse;
+Map? siblingResponse;
 
 class ProfileProvider with ChangeNotifier {
   String? studName;
   String? admissionNo;
   String? division;
+  String? divisionId;
 
   String? rollNo;
   dynamic studentDetailsClass;
@@ -73,6 +76,7 @@ class ProfileProvider with ChangeNotifier {
         studName = std.studentName;
         admissionNo = std.admissionNo;
         division = std.division;
+        divisionId = std.divisionId;
         rollNo = std.rollNo;
         dob = std.dob;
         gender = std.gender;
@@ -137,4 +141,30 @@ class ProfileProvider with ChangeNotifier {
 
     //return flash;
   }
+
+  Future siblingsAPI() async {
+    SiblingsNameModel siblingsNameModel;
+
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    final response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/parent-home/get-guardian-children"),
+        headers: headers);
+
+    if (response.statusCode == 200) {
+      siblinggResponse = json.decode(response.body);
+      print(siblinggResponse);
+      // return jsonResponse
+      //     .map((data) => SiblingsNameModel.fromJson(data))
+      //     .toList();
+    } else {
+      throw ("Something went wrong");
+    }
+  }
 }
+
+List? siblinggResponse;

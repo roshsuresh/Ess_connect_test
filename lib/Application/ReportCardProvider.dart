@@ -52,7 +52,7 @@ class ReportCardProvider with ChangeNotifier {
     // print('Headres   $headers');
     String file = fileId.toString();
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parents/preview/${file}"),
+        Uri.parse("${UIGuide.baseURL}/mobileapp/parents/preview/$file"),
         headers: headers);
     //print(response);
     try {

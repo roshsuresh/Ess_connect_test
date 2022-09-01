@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../utils/constants.dart';
 
@@ -162,7 +163,7 @@ class ReportCard extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                               Icons.remove_red_eye_outlined))),
                                 ]),
                           ],
@@ -188,34 +189,32 @@ class PdfDownload extends StatelessWidget {
     //Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
     return Consumer<ReportCardProvider>(
       builder: (context, value, child) => Scaffold(
-        appBar: AppBar(
-          title: Text('Download PDF'),
-          backgroundColor: Color.fromARGB(255, 58, 120, 245),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: DownloandPdf(
-                isUseIcon: true,
-                pdfUrl:
-                    value.url.toString() == null ? '--' : value.url.toString(),
-                fileNames: value.name.toString() == null
-                    ? '---'
-                    : value.name.toString(),
-                color: Colors.white,
+          appBar: AppBar(
+            title: Text('Report card'),
+            titleSpacing: 00.0,
+            centerTitle: true,
+            toolbarHeight: 50.2,
+            toolbarOpacity: 0.8,
+            backgroundColor: UIGuide.light_Purple,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: DownloandPdf(
+                  isUseIcon: true,
+                  pdfUrl: value.url.toString() == null
+                      ? '--'
+                      : value.url.toString(),
+                  fileNames: value.name.toString() == null
+                      ? '---'
+                      : value.name.toString(),
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
-        ),
-        body: Center(
-          child: DownloandPdf(
-            titleDownload: 'Tap to Download',
-            pdfUrl: value.url.toString() == null ? '--' : value.url.toString(),
-            fileNames:
-                value.name.toString() == null ? '---' : value.name.toString(),
-            color: Color.fromARGB(31, 122, 120, 120),
+            ],
           ),
-        ),
-      ),
+          body: SfPdfViewer.network(
+            value.url.toString() == null ? '--' : value.url.toString(),
+          )),
     );
   }
 }
