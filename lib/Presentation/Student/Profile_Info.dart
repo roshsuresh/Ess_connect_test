@@ -12,6 +12,7 @@ class Profile_Info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProfileProvider>(context, listen: false).profileData();
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -33,7 +34,7 @@ class Profile_Info extends StatelessWidget {
           // String dateofb = provider.dob.toString();
           // String result = dateofb.replaceRange(10, 11, '');
           // print('dob $result');
-
+          //Provider.of<ProfileProvider>(context, listen: false).profileData();
           return ListView(
             children: [
               Stack(

@@ -54,7 +54,7 @@ class ReportCardProvider with ChangeNotifier {
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/preview/$file"),
         headers: headers);
-    //print(response);
+    print(response);
     try {
       if (response.statusCode == 200) {
         // print("corect");

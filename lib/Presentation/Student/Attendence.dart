@@ -120,10 +120,7 @@ class Attendence extends StatelessWidget {
                     itemBuilder: ((context, index) {
                       String percentage =
                           attend![index]['percentage'].toString();
-                      String result = percentage.substring(
-                        0,
-                        4,
-                      );
+
                       return Table(
                         border: TableBorder.all(
                             color: Color.fromARGB(255, 245, 243, 243)),
@@ -150,7 +147,7 @@ class Attendence extends StatelessWidget {
                               textAlign: TextAlign.center,
                             ),
                             Text(
-                              '$result \n ',
+                              '$percentage \n ',
                               style: TextStyle(fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),

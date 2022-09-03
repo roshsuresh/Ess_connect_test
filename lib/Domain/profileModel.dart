@@ -1,10 +1,10 @@
-class AutoGenerate {
-  AutoGenerate({
+class StudProModel {
+  StudProModel({
     required this.studentDetails,
   });
   late final StudentProfileModel studentDetails;
 
-  AutoGenerate.fromJson(Map<String, dynamic> json) {
+  StudProModel.fromJson(Map<String, dynamic> json) {
     studentDetails = StudentProfileModel.fromJson(json['studentDetails']);
   }
 

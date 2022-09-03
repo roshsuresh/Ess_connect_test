@@ -1,7 +1,9 @@
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
 import 'package:Ess_Conn/Application/SiblingsProvider.dart';
 import 'package:Ess_Conn/Application/TimetableProvider.dart';
+import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
 import 'package:Ess_Conn/Domain/SiblingsTokenModel.dart';
+import 'package:Ess_Conn/Domain/profileModel.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -39,11 +41,11 @@ class StudentHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false).profileData();
+    // Provider.of<ProfileProvider>(context, listen: false).profileData();
     Provider.of<ProfileProvider>(context, listen: false)
         .flashNewsProvider(context);
     Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
-    Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
+    //Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
     // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
 
     size = MediaQuery.of(context).size;
@@ -961,9 +963,9 @@ class StudentHome extends StatelessWidget {
                                       print("accesstoken  $prefs");
                                       prefs.remove("accesstoken");
 
-                                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                                      //     routeLoginmain,
-                                      //     (Route<dynamic> route) => false);
+// Navigator.of(context).pushNamedAndRemoveUntil(
+//     routeLoginmain,
+//     (Route<dynamic> route) => false);
                                       Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -1000,10 +1002,11 @@ class ProfileHome extends StatelessWidget {
 
   var kheight20;
   var kheight;
+  late Future<List<SiblingsNameModel>> siblings;
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false).profileData();
+    Provider.of<ProfileProvider>(context, listen: false).getProfile();
     var size = MediaQuery.of(context).size;
     var width = size.width;
     return SafeArea(
@@ -1014,161 +1017,178 @@ class ProfileHome extends StatelessWidget {
               const SizedBox(
                 height: 2,
               ),
-              Consumer<ProfileProvider>(
-                builder: (_, value, child) {
-                  return Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10),
-                      child: Container(
-                        height: 120,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 0.5,
-                              )
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            )),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    // opacity: 20,
-                                    image: NetworkImage(
-                                      value.studPhoto == null
-                                          ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
-                                          : value.studPhoto.toString(),
-                                    ),
-                                  ),
-                                  shape: BoxShape.circle,
-                                  boxShadow: const [BoxShadow(blurRadius: 1)]),
-                              width: 70,
-                              height: 120,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                              height: 30,
-                            ),
-                            Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  kheight20,
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Name : ',
-                                        style: TextStyle(
-                                            color: Colors.purple,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-
-                                      RichText(
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
-                                        text: TextSpan(
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black54,
-                                                fontWeight: FontWeight.w900),
-                                            text: value.studName ?? "--"
-
-                                            // dataResponse == null
-                                            //     ? '---'
-                                            //     : dataResponse!['studentName']
-
-                                            ),
-                                      ),
-                                      // dataResponse==null
-                                      // ? Container(): dataResponse?['studentName'].text
-                                    ],
-                                  ),
-                                  kheight,
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Adm no : ',
-                                        style: TextStyle(
-                                            color: Colors.purple,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        value.admissionNo == null
-                                            ? '--'
-                                            : value.admissionNo.toString()
-                                        //  dataResponse?['admissionNo'].noSuchMethod(),
-                                        ,
-                                        style: const TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w900),
-                                      )
-                                    ],
-                                  ),
-                                  kheight,
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Class : ',
-                                        style: TextStyle(
-                                            color: Colors.purple,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        value.division == null
-                                            ? '--'
-                                            : value.division.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w900),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const Spacer(),
-                            Row(
-                              // crossAxisAlignment: CrossAxisAlignment.end,
-                              // mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: (() {
-                                          var currentname = value.studName;
-                                          _displayNameOfSiblings(
-                                              context, currentname);
-                                        }),
-                                        icon: const Icon(
-                                          Icons.switch_account_outlined,
-                                          size: 30,
-                                        )),
-                                  ],
+              FutureBuilder<StudProModel>(
+                future: ProfileProvider().getProfile(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10),
+                        child: Container(
+                          height: 120,
+                          decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 0.5,
                                 )
                               ],
-                            ),
-                          ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              )),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      // opacity: 20,
+                                      image: NetworkImage(snapshot
+                                                  .data!
+                                                  .studentDetails
+                                                  .studentPhoto
+                                                  .url ==
+                                              null
+                                          ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdO-enHDFSlpAWAzJGtHlIoJAzzbCYKYhVIxD4NpW&s'
+                                          : snapshot.data!.studentDetails
+                                              .studentPhoto.url
+                                              .toString()),
+                                    ),
+                                    shape: BoxShape.circle,
+                                    boxShadow: const [
+                                      BoxShadow(blurRadius: 1)
+                                    ]),
+                                width: 70,
+                                height: 120,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                                height: 30,
+                              ),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    kheight20,
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Name : ',
+                                          style: TextStyle(
+                                              color: Colors.purple,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+
+                                        RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          strutStyle:
+                                              const StrutStyle(fontSize: 8.0),
+                                          text: TextSpan(
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black54,
+                                                  fontWeight: FontWeight.w900),
+                                              text: snapshot.data!
+                                                  .studentDetails.studentName
+                                                  .toString()
+
+                                              // dataResponse == null
+                                              //     ? '---'
+                                              //     : dataResponse!['studentName']
+
+                                              ),
+                                        ),
+                                        // dataResponse==null
+                                        // ? Container(): dataResponse?['studentName'].text
+                                      ],
+                                    ),
+                                    kheight,
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Adm no : ',
+                                          style: TextStyle(
+                                              color: Colors.purple,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .data!.studentDetails.admissionNo
+                                              .toString()
+                                          //  dataResponse?['admissionNo'].noSuchMethod(),
+                                          ,
+                                          style: const TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w900),
+                                        )
+                                      ],
+                                    ),
+                                    kheight,
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Class : ',
+                                          style: TextStyle(
+                                              color: Colors.purple,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          snapshot
+                                              .data!.studentDetails.division,
+                                          style: const TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w900),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              Row(
+                                // crossAxisAlignment: CrossAxisAlignment.end,
+                                // mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                          onPressed: (() {
+                                            var currentname = snapshot.data!
+                                                .studentDetails.studentName
+                                                .toString();
+                                            _displayNameOfSiblings(
+                                                context, currentname);
+                                          }),
+                                          icon: const Icon(
+                                            Icons.switch_account_outlined,
+                                            size: 30,
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    return Center(
+                      child: Text('Loading.....'),
+                    );
+                  }
                 },
               ),
               const SizedBox(
@@ -1183,9 +1203,55 @@ class ProfileHome extends StatelessWidget {
     );
   }
 
+  // _displayNameOfSiblings(BuildContext context, String? name) async {
+  //   final siblings = Provider.of<ProfileProvider>(context, listen: false);
+  //   siblings.siblingsAPI();
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //             content: Container(
+  //           decoration: BoxDecoration(border: Border.all()),
+  //           height: 70,
+  //           child: ListView.separated(
+  //               separatorBuilder: (BuildContext context, int index) =>
+  //                   const Divider(),
+  //               itemCount:
+  //                   siblinggResponse == null ? 0 : siblinggResponse!.length,
+  //               itemBuilder: ((context, index) {
+  //                 return Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.center,
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     Center(
+  //                         child: GestureDetector(
+  //                             onTap: () async {
+  //                               var idd = siblinggResponse![index]['id'] == null
+  //                                   ? '--'
+  //                                   : siblinggResponse![index]['id'].toString();
+
+  //                               await Provider.of<SibingsProvider>(context,
+  //                                       listen: false)
+  //                                   .getSibling(context, idd);
+  //                             },
+  //                             child: Text(
+  //                                 siblinggResponse![index]['name'] == null
+  //                                     ? '--'
+  //                                     : siblinggResponse![index]['name']
+  //                                         .toString()))),
+  //                     const Divider(
+  //                       height: 1,
+  //                       color: Colors.black54,
+  //                     )
+  //                   ],
+  //                 );
+  //               })),
+  //         ));
+  //       });
+  // }
   _displayNameOfSiblings(BuildContext context, String? name) async {
-    final siblings = Provider.of<ProfileProvider>(context, listen: false);
-    siblings.siblingsAPI();
+    Provider.of<SibingsProvider>(context, listen: false).getSiblingName();
+
     return showDialog(
         context: context,
         builder: (context) {
@@ -1193,43 +1259,286 @@ class ProfileHome extends StatelessWidget {
               content: Container(
             decoration: BoxDecoration(border: Border.all()),
             height: 70,
-            child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-                itemCount: 2,
-                itemBuilder: ((context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: GestureDetector(
-                              onTap: () async {
-                                var idd = siblinggResponse![index]['id'];
-                                final switchSiblings =
-                                    await Provider.of<SibingsProvider>(context,
-                                            listen: false)
-                                        .getSibling(idd);
-                                await Future.delayed(
-                                    const Duration(seconds: 3));
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            SplashFuturePage()));
-                              },
-                              child: Text(siblinggResponse![index]['name']))),
-                      const Divider(
-                        height: 1,
-                        color: Colors.black54,
-                      )
-                    ],
-                  );
-                })),
+            child: FutureBuilder<List<SiblingsNameModel>>(
+              future: SibingsProvider().getSiblingName(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: ((context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: GestureDetector(
+                                    onTap: () async {
+                                      var idd = snapshot.data![index].id;
+                                      print(idd);
+                                      await Provider.of<SibingsProvider>(
+                                              context,
+                                              listen: false)
+                                          .getSibling(context, idd!);
+                                    },
+                                    child: Text(snapshot.data![index].name
+                                        .toString()))),
+                            const Divider(
+                              height: 1,
+                              color: Colors.black54,
+                            )
+                          ],
+                        );
+                      }));
+                } else {
+                  return Text('Loading....');
+                }
+              },
+            ),
           ));
         });
   }
 }
+// class ProfileHome extends StatelessWidget {
+//   ProfileHome({
+//     Key? key,
+//     required this.kheight20,
+//     required this.kheight,
+//   }) : super(key: key);
+
+//   var kheight20;
+//   var kheight;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     Provider.of<ProfileProvider>(context, listen: false).profileData();
+//     var size = MediaQuery.of(context).size;
+//     var width = size.width;
+//     return SafeArea(
+//       child: Stack(
+//         children: [
+//           Column(
+//             children: [
+//               const SizedBox(
+//                 height: 2,
+//               ),
+//               Consumer<ProfileProvider>(
+//                 builder: (_, value, child) {
+//                   return Container(
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(left: 10.0, right: 10),
+//                       child: Container(
+//                         height: 120,
+//                         decoration: const BoxDecoration(
+//                             boxShadow: [
+//                               BoxShadow(
+//                                 blurRadius: 0.5,
+//                               )
+//                             ],
+//                             color: Colors.white,
+//                             borderRadius: BorderRadius.all(
+//                               Radius.circular(10),
+//                             )),
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             const SizedBox(
+//                               width: 10,
+//                             ),
+//                             Container(
+//                               decoration: BoxDecoration(
+//                                   color: Colors.white,
+//                                   image: DecorationImage(
+//                                     // opacity: 20,
+//                                     image: NetworkImage(
+//                                       value.studPhoto == null
+//                                           ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
+//                                           : value.studPhoto.toString(),
+//                                     ),
+//                                   ),
+//                                   shape: BoxShape.circle,
+//                                   boxShadow: const [BoxShadow(blurRadius: 1)]),
+//                               width: 70,
+//                               height: 120,
+//                             ),
+//                             const SizedBox(
+//                               width: 10,
+//                               height: 30,
+//                             ),
+//                             Container(
+//                               child: Column(
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   kheight20,
+//                                   Row(
+//                                     children: [
+//                                       const Text(
+//                                         'Name : ',
+//                                         style: TextStyle(
+//                                             color: Colors.purple,
+//                                             fontSize: 12,
+//                                             fontWeight: FontWeight.w700),
+//                                       ),
+
+//                                       RichText(
+//                                         overflow: TextOverflow.ellipsis,
+//                                         maxLines: 1,
+//                                         strutStyle:
+//                                             const StrutStyle(fontSize: 8.0),
+//                                         text: TextSpan(
+//                                             style: const TextStyle(
+//                                                 fontSize: 12,
+//                                                 color: Colors.black54,
+//                                                 fontWeight: FontWeight.w900),
+//                                             text: value.studName ?? "--"
+
+//                                             // dataResponse == null
+//                                             //     ? '---'
+//                                             //     : dataResponse!['studentName']
+
+//                                             ),
+//                                       ),
+//                                       // dataResponse==null
+//                                       // ? Container(): dataResponse?['studentName'].text
+//                                     ],
+//                                   ),
+//                                   kheight,
+//                                   Row(
+//                                     children: [
+//                                       const Text(
+//                                         'Adm no : ',
+//                                         style: TextStyle(
+//                                             color: Colors.purple,
+//                                             fontSize: 12,
+//                                             fontWeight: FontWeight.w700),
+//                                       ),
+//                                       Text(
+//                                         value.admissionNo == null
+//                                             ? '--'
+//                                             : value.admissionNo.toString()
+//                                         //  dataResponse?['admissionNo'].noSuchMethod(),
+//                                         ,
+//                                         style: const TextStyle(
+//                                             color: Colors.black54,
+//                                             fontSize: 12,
+//                                             fontWeight: FontWeight.w900),
+//                                       )
+//                                     ],
+//                                   ),
+//                                   kheight,
+//                                   Row(
+//                                     children: [
+//                                       const Text(
+//                                         'Class : ',
+//                                         style: TextStyle(
+//                                             color: Colors.purple,
+//                                             fontSize: 12,
+//                                             fontWeight: FontWeight.w700),
+//                                       ),
+//                                       Text(
+//                                         value.division == null
+//                                             ? '--'
+//                                             : value.division.toString(),
+//                                         style: const TextStyle(
+//                                             color: Colors.black54,
+//                                             fontSize: 12,
+//                                             fontWeight: FontWeight.w900),
+//                                       )
+//                                     ],
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                             const Spacer(),
+//                             Row(
+//                               // crossAxisAlignment: CrossAxisAlignment.end,
+//                               // mainAxisAlignment: MainAxisAlignment.end,
+//                               children: [
+//                                 Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.end,
+//                                   mainAxisAlignment: MainAxisAlignment.end,
+//                                   children: [
+//                                     IconButton(
+//                                         onPressed: (() {
+//                                           var currentname = value.studName;
+//                                           _displayNameOfSiblings(
+//                                               context, currentname);
+//                                         }),
+//                                         icon: const Icon(
+//                                           Icons.switch_account_outlined,
+//                                           size: 30,
+//                                         )),
+//                                   ],
+//                                 )
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               ),
+//               const SizedBox(
+//                 height: 10,
+//               ),
+//               // Flashnews()
+//             ],
+//           ),
+//           //Flashnews()
+//         ],
+//       ),
+//     );
+//   }
+
+// _displayNameOfSiblings(BuildContext context, String? name) async {
+//   final siblings = Provider.of<ProfileProvider>(context, listen: false);
+//   siblings.siblingsAPI();
+//   return showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//             content: Container(
+//           decoration: BoxDecoration(border: Border.all()),
+//           height: 70,
+//           child: ListView.separated(
+//               separatorBuilder: (BuildContext context, int index) =>
+//                   const Divider(),
+//               itemCount:
+//                   siblinggResponse == null ? 0 : siblinggResponse!.length,
+//               itemBuilder: ((context, index) {
+//                 return Column(
+//                   crossAxisAlignment: CrossAxisAlignment.center,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Center(
+//                         child: GestureDetector(
+//                             onTap: () async {
+//                               var idd = siblinggResponse![index]['id'] == null
+//                                   ? '--'
+//                                   : siblinggResponse![index]['id'].toString();
+
+//                               await Provider.of<SibingsProvider>(context,
+//                                       listen: false)
+//                                   .getSibling(context, idd);
+//                             },
+//                             child: Text(
+//                                 siblinggResponse![index]['name'] == null
+//                                     ? '--'
+//                                     : siblinggResponse![index]['name']
+//                                         .toString()))),
+//                     const Divider(
+//                       height: 1,
+//                       color: Colors.black54,
+//                     )
+//                   ],
+//                 );
+//               })),
+//         ));
+//       });
+// }
+// }
 
 class Flashnews extends StatelessWidget {
   const Flashnews({Key? key}) : super(key: key);

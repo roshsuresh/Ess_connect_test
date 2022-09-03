@@ -16,6 +16,7 @@ Map? dataResponse;
 Map? studResponse;
 List? dataRsponse;
 Map? siblingResponse;
+List? siblinggResponse;
 
 class ProfileProvider with ChangeNotifier {
   String? studName;
@@ -44,6 +45,26 @@ class ProfileProvider with ChangeNotifier {
   String? motherMobileno;
   String? studPhoto;
 
+  Future<StudProModel> getProfile() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
+        headers: headers);
+    var data = jsonDecode(response.body.toString());
+
+    if (response.statusCode == 200) {
+      return StudProModel.fromJson(data);
+    } else {
+      print('Error');
+      return StudProModel.fromJson(data);
+    }
+  }
+
   Future profileData() async {
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -66,7 +87,7 @@ class ProfileProvider with ChangeNotifier {
         studResponse = dataResponse!['studentPhoto'];
         // print(studResponse);
         // print("corect..........");
-        //  print(dataResponse);
+        print(dataResponse);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);
         StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
@@ -74,6 +95,7 @@ class ProfileProvider with ChangeNotifier {
 
         // log(studPhoto.toString());
         studName = std.studentName;
+        print(studName);
         admissionNo = std.admissionNo;
         division = std.division;
         divisionId = std.divisionId;
@@ -143,7 +165,7 @@ class ProfileProvider with ChangeNotifier {
   }
 
   Future siblingsAPI() async {
-    SiblingsNameModel siblingsNameModel;
+    //SiblingsNameModel siblingsNameModel;
 
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -166,5 +188,3 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 }
-
-List? siblinggResponse;

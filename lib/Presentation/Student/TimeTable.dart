@@ -39,12 +39,9 @@ class Timetable extends StatelessWidget {
             kheight20,
             Table(
               columnWidths: {
-                0: FlexColumnWidth(3),
-                1: FlexColumnWidth(5),
-                2: FlexColumnWidth(2),
-                // 3: FlexColumnWidth(2)
+                0: FlexColumnWidth(4),
+                1: FlexColumnWidth(2),
               },
-              // border: TableBorder.all(),
               children: const [
                 TableRow(
                     decoration: BoxDecoration(
@@ -58,19 +55,12 @@ class Timetable extends StatelessWidget {
                       //     child: Text('No.'),
                       //   ),
                       // ),
-                      SizedBox(
-                        height: 30,
-                        child: Center(
-                            child: Text(
-                          'Date',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        )),
-                      ),
+
                       SizedBox(
                         height: 30,
                         child: Center(
                           child: Text(
-                            'Exam Description',
+                            'Class TimeTable',
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -88,13 +78,11 @@ class Timetable extends StatelessWidget {
             ),
             Consumer<Timetableprovider>(
               builder: (context, value, child) {
-                String dat = value.createdAt.toString();
-                String date = dat.replaceRange(10, 27, '');
                 return Table(
                   columnWidths: const {
-                    0: FlexColumnWidth(3),
-                    1: FlexColumnWidth(4),
-                    2: FlexColumnWidth(2),
+                    0: FlexColumnWidth(4),
+                    1: FlexColumnWidth(2),
+
                     // 3: FlexColumnWidth(2)
                   },
                   //  border: TableBorder.all(),
@@ -109,36 +97,31 @@ class Timetable extends StatelessWidget {
                           //   child:
                           //       Center(child: Text('${index.toString()}')),
                           // ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              date == null ? '--' : date,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
+
                           Center(
                             child: Text(
                               '${value.name.toString() == null ? '--' : value.name.toString()}',
                               style: TextStyle(fontSize: 15),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () async {
-                                if (value.extension == '.pdf') {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PdfDownloader()),
-                                  );
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PdfViewPages()),
-                                  );
-                                }
-                              },
-                              icon: Icon(Icons.remove_red_eye_outlined)),
+                          GestureDetector(
+                            onTap: () async {
+                              if (value.extension == '.pdf') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PdfDownloader()),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PdfViewPages()),
+                                );
+                              }
+                            },
+                            child: Icon(Icons.remove_red_eye),
+                          ),
                         ]),
                   ],
                 );
