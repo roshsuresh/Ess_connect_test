@@ -1,9 +1,12 @@
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/SiblingsProvider.dart';
 import 'package:Ess_Conn/Application/TimetableProvider.dart';
+import 'package:Ess_Conn/Domain/SiblingsTokenModel.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
 import 'package:Ess_Conn/Presentation/Student/Gallery.dart';
+import 'package:Ess_Conn/Presentation/Student/PasswordChange.dart';
 import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
 import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
 import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
@@ -13,6 +16,8 @@ import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
 import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
+import 'package:Ess_Conn/Presentation/Student/payment.dart';
+import 'package:Ess_Conn/main.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:Ess_Conn/utils/constants.dart';
@@ -609,32 +614,42 @@ class StudentHome extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/pay.png',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PaymentRough()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/pay.png',
+                                              ),
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Fee Structure',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
+                                        kheight,
+                                        const Text(
+                                          'Fee Structure',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 GestureDetector(
@@ -895,7 +910,7 @@ class StudentHome extends StatelessWidget {
                                     )),
                               ),
                               const Text(
-                                "SignOut",
+                                "Password Change / SignOut",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     color: Colors.purple,
@@ -913,29 +928,54 @@ class StudentHome extends StatelessWidget {
                             ]),
                             kheight,
 
-                            MaterialButton(
-                                minWidth: 50,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
-                                onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  print("accesstoken  $prefs");
-                                  prefs.remove("accesstoken");
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                MaterialButton(
+                                    minWidth: 50,
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: () async {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PasswordChange()),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.key_sharp,
+                                      color: Colors.purple,
+                                    )),
+                                MaterialButton(
+                                    minWidth: 50,
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0)),
+                                    onPressed: () async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      print("accesstoken  $prefs");
+                                      prefs.remove("accesstoken");
 
-                                  // Navigator.of(context).pushNamedAndRemoveUntil(
-                                  //     routeLoginmain,
-                                  //     (Route<dynamic> route) => false);
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginPage()),
-                                      (Route<dynamic> route) => false);
-                                },
-                                child: const Icon(
-                                  Icons.logout_outlined,
-                                  color: Colors.purple,
-                                )),
+                                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                                      //     routeLoginmain,
+                                      //     (Route<dynamic> route) => false);
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                          (Route<dynamic> route) => false);
+                                    },
+                                    child: const Icon(
+                                      Icons.logout_outlined,
+                                      color: Colors.purple,
+                                    )),
+                              ],
+                            ),
                             kheight20,
                           ],
                         ),
@@ -1164,6 +1204,20 @@ class ProfileHome extends StatelessWidget {
                     children: [
                       Center(
                           child: GestureDetector(
+                              onTap: () async {
+                                var idd = siblinggResponse![index]['id'];
+                                final switchSiblings =
+                                    await Provider.of<SibingsProvider>(context,
+                                            listen: false)
+                                        .getSibling(idd);
+                                await Future.delayed(
+                                    const Duration(seconds: 3));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SplashFuturePage()));
+                              },
                               child: Text(siblinggResponse![index]['name']))),
                       const Divider(
                         height: 1,

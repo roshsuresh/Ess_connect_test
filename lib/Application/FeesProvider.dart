@@ -16,6 +16,7 @@ class FeesProvider with ChangeNotifier {
   late String installmentTerm;
   late int installamount;
   bool? allowPartialPayment;
+  List<FeeFeesInstallments> feeList = [];
   Future feesData() async {
     late FeeFeesInstallments feeFeesInstallments;
     //Map<String, dynamic> data = await parseJWT();
@@ -28,6 +29,7 @@ class FeesProvider with ChangeNotifier {
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/feevalues"),
         headers: headers);
+
     try {
       if (response.statusCode == 200) {
         // print("corect");
@@ -46,8 +48,19 @@ class FeesProvider with ChangeNotifier {
             mapResponses!['onlineFeePaymentStudentDetails']);
         allowPartialPayment = fee.allowPartialPayment;
         print(allowPartialPayment);
-        // FeeFeesInstallments feesdata = FeeFeesInstallments.fromJson(data);
-        // installmentTerm = feesdata.installmentName.toString();
+
+        FeeFeesInstallments feesdata =
+            FeeFeesInstallments.fromJson(dataResponss!['feeFeesInstallments']);
+        installmentTerm = feesdata.installmentName.toString();
+        // Map<String, dynamic> data =
+        //     jsonDecode(await response.bodyBytes.toString());
+        // //print(await response.stream.bytesToString());
+        // print(data);
+        // List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
+        //     data["feeFeesInstallments"]
+        //         .map((x) => FeeFeesInstallments.fromJson(x)));
+        // feeList.addAll(templist);
+
         // print(installmentTerm);
         notifyListeners();
         // print(response.body);

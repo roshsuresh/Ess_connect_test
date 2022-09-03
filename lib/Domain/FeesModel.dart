@@ -104,6 +104,8 @@ class FeeFeesInstallments {
     data['installmentOrder'] = this.installmentOrder;
     return data;
   }
+
+  void addAll(List<FeeFeesInstallments> templist) {}
 }
 
 class FeeBusInstallments {

@@ -130,21 +130,15 @@ class PayFee extends StatelessWidget {
                                           return Table(
                                             //  border: TableBorder.all(),
                                             children: [
-                                              TableRow(
-                                                  decoration: const BoxDecoration(
-                                                      // color: Color.fromARGB(
-                                                      //     255, 230, 227, 227),
-                                                      ),
-                                                  children: [
-                                                    Text(
-                                                        '\n${busfeeResponse![index]['installmentName']}'),
-                                                    Center(
-                                                        child: Text(
-                                                            '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
-                                                    const Center(
-                                                        child:
-                                                            CheckBoxButton()),
-                                                  ]),
+                                              TableRow(children: [
+                                                Text(
+                                                    '\n${busfeeResponse![index]['installmentName']}'),
+                                                Center(
+                                                    child: Text(
+                                                        '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+                                                const Center(
+                                                    child: CheckBoxButton()),
+                                              ]),
                                             ],
                                           );
                                         }));
