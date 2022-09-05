@@ -22,8 +22,8 @@ class StudentProfileModel {
     required this.rollNo,
     required this.division,
     required this.divisionId,
-    this.bloodGroup,
-    this.houseGroup,
+    required this.bloodGroup,
+    required this.houseGroup,
     required this.classTeacher,
     required this.dob,
     required this.studentPhoto,
@@ -33,10 +33,10 @@ class StudentProfileModel {
     required this.weight,
     required this.address,
     required this.fatherName,
-    this.fatherMail,
+    required this.fatherMail,
     required this.fatherMobileno,
     required this.motherName,
-    this.motherMailId,
+    required this.motherMailId,
     required this.motherMobileno,
   });
   late final String studentName;
@@ -45,8 +45,8 @@ class StudentProfileModel {
 
   late final String division;
   late final String divisionId;
-  late final Null bloodGroup;
-  late final Null houseGroup;
+  late final String bloodGroup;
+  late final String houseGroup;
   late final String classTeacher;
   late final String dob;
   late final StudentPhoto studentPhoto;
@@ -56,10 +56,10 @@ class StudentProfileModel {
   late final String weight;
   late final String address;
   late final String fatherName;
-  late final Null fatherMail;
+  late final String fatherMail;
   late final String fatherMobileno;
   late final String motherName;
-  late final Null motherMailId;
+  late final String motherMailId;
   late final String motherMobileno;
 
   StudentProfileModel.fromJson(Map<String, dynamic> json) {
@@ -69,8 +69,8 @@ class StudentProfileModel {
 
     division = json['divisionName'];
     divisionId = json['divisionId'];
-    bloodGroup = null;
-    houseGroup = null;
+    bloodGroup = json['bloodGroup'];
+    houseGroup = json['houseGroup'];
     classTeacher = json['classTeacher'];
     dob = json['dob'];
     studentPhoto = StudentPhoto.fromJson(json['studentPhoto']);
@@ -80,10 +80,10 @@ class StudentProfileModel {
     weight = json['weight'];
     address = json['address'];
     fatherName = json['fatherName'];
-    fatherMail = null;
+    fatherMail = json['fatherMailId'];
     fatherMobileno = json['fatherMobileno'];
     motherName = json['motherName'];
-    motherMailId = null;
+    motherMailId = json['motherMailId'];
     motherMobileno = json['motherMobileno'];
   }
 
