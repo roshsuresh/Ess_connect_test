@@ -1036,143 +1036,141 @@ class StudentHome extends StatelessWidget {
 //                               borderRadius: BorderRadius.all(
 //                                 Radius.circular(10),
 //                               )),
-//                           child: widget(
-//                             child: Row(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 const SizedBox(
-//                                   width: 10,
-//                                 ),
-//                                 Container(
-//                                   decoration: BoxDecoration(
-//                                       color: Colors.white,
-//                                       image: DecorationImage(
-//                                         // opacity: 20,
-//                                         image: NetworkImage(snapshot
-//                                                     .data!
-//                                                     .studentDetails
-//                                                     .studentPhoto
-//                                                     .url ==
-//                                                 null
-//                                             ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdO-enHDFSlpAWAzJGtHlIoJAzzbCYKYhVIxD4NpW&s'
-//                                             : snapshot.data!.studentDetails
-//                                                 .studentPhoto.url
-//                                                 .toString()),
-//                                       ),
-//                                       shape: BoxShape.circle,
-//                                       boxShadow: const [
-//                                         BoxShadow(blurRadius: 1)
-//                                       ]),
-//                                   width: 70,
-//                                   height: 120,
-//                                 ),
-//                                 const SizedBox(
-//                                   width: 10,
-//                                   height: 30,
-//                                 ),
-//                                 Container(
-//                                   child: Column(
-//                                     crossAxisAlignment: CrossAxisAlignment.start,
-//                                     children: [
-//                                       kheight20,
-//                                       Row(
-//                                         children: [
-//                                           const Text(
-//                                             'Name : ',
-//                                             style: TextStyle(
-//                                                 color: Colors.purple,
-//                                                 fontSize: 12,
-//                                                 fontWeight: FontWeight.w700),
-//                                           ),
-//                                           RichText(
-//                                             overflow: TextOverflow.ellipsis,
-//                                             maxLines: 1,
-//                                             strutStyle:
-//                                                 const StrutStyle(fontSize: 8.0),
-//                                             text: TextSpan(
-//                                                 style: const TextStyle(
-//                                                     fontSize: 12,
-//                                                     color: Colors.black54,
-//                                                     fontWeight: FontWeight.w900),
-//                                                 text: snapshot.data!
-//                                                     .studentDetails.studentName
-//                                                     .toString()),
-//                                           ),
-//                                         ],
-//                                       ),
-//                                       kheight,
-//                                       Row(
-//                                         children: [
-//                                           const Text(
-//                                             'Adm no : ',
-//                                             style: TextStyle(
-//                                                 color: Colors.purple,
-//                                                 fontSize: 12,
-//                                                 fontWeight: FontWeight.w700),
-//                                           ),
-//                                           Text(
-//                                             snapshot
-//                                                 .data!.studentDetails.admissionNo
-//                                                 .toString()
-//                                             //  dataResponse?['admissionNo'].noSuchMethod(),
-//                                             ,
-//                                             style: const TextStyle(
-//                                                 color: Colors.black54,
-//                                                 fontSize: 12,
-//                                                 fontWeight: FontWeight.w900),
-//                                           )
-//                                         ],
-//                                       ),
-//                                       kheight,
-//                                       Row(
-//                                         children: [
-//                                           const Text(
-//                                             'Class : ',
-//                                             style: TextStyle(
-//                                                 color: Colors.purple,
-//                                                 fontSize: 12,
-//                                                 fontWeight: FontWeight.w700),
-//                                           ),
-//                                           Text(
-//                                             snapshot
-//                                                 .data!.studentDetails.division,
-//                                             style: const TextStyle(
-//                                                 color: Colors.black54,
-//                                                 fontSize: 12,
-//                                                 fontWeight: FontWeight.w900),
-//                                           )
-//                                         ],
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ),
-//                                 const Spacer(),
-//                                 Row(
-//                                   // crossAxisAlignment: CrossAxisAlignment.end,
-//                                   // mainAxisAlignment: MainAxisAlignment.end,
+//                           child: Row(
+//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                             children: [
+//                               const SizedBox(
+//                                 width: 10,
+//                               ),
+//                               Container(
+//                                 decoration: BoxDecoration(
+//                                     color: Colors.white,
+//                                     image: DecorationImage(
+//                                       // opacity: 20,
+//                                       image: NetworkImage(snapshot
+//                                                   .data!
+//                                                   .studentDetails
+//                                                   .studentPhoto
+//                                                   .url ==
+//                                               null
+//                                           ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdO-enHDFSlpAWAzJGtHlIoJAzzbCYKYhVIxD4NpW&s'
+//                                           : snapshot.data!.studentDetails
+//                                               .studentPhoto.url
+//                                               .toString()),
+//                                     ),
+//                                     shape: BoxShape.circle,
+//                                     boxShadow: const [
+//                                       BoxShadow(blurRadius: 1)
+//                                     ]),
+//                                 width: 70,
+//                                 height: 120,
+//                               ),
+//                               const SizedBox(
+//                                 width: 10,
+//                                 height: 30,
+//                               ),
+//                               Container(
+//                                 child: Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
 //                                   children: [
-//                                     Column(
-//                                       crossAxisAlignment: CrossAxisAlignment.end,
-//                                       mainAxisAlignment: MainAxisAlignment.end,
+//                                     kheight20,
+//                                     Row(
 //                                       children: [
-//                                         IconButton(
-//                                             onPressed: (() {
-//                                               var currentname = snapshot.data!
+//                                         const Text(
+//                                           'Name : ',
+//                                           style: TextStyle(
+//                                               color: Colors.purple,
+//                                               fontSize: 12,
+//                                               fontWeight: FontWeight.w700),
+//                                         ),
+//                                         RichText(
+//                                           overflow: TextOverflow.ellipsis,
+//                                           maxLines: 1,
+//                                           strutStyle:
+//                                               const StrutStyle(fontSize: 8.0),
+//                                           text: TextSpan(
+//                                               style: const TextStyle(
+//                                                   fontSize: 12,
+//                                                   color: Colors.black54,
+//                                                   fontWeight: FontWeight.w900),
+//                                               text: snapshot.data!
 //                                                   .studentDetails.studentName
-//                                                   .toString();
-//                                               _displayNameOfSiblings(
-//                                                   context, currentname);
-//                                             }),
-//                                             icon: const Icon(
-//                                               Icons.switch_account_outlined,
-//                                               size: 30,
-//                                             )),
+//                                                   .toString()),
+//                                         ),
 //                                       ],
-//                                     )
+//                                     ),
+//                                     kheight,
+//                                     Row(
+//                                       children: [
+//                                         const Text(
+//                                           'Adm no : ',
+//                                           style: TextStyle(
+//                                               color: Colors.purple,
+//                                               fontSize: 12,
+//                                               fontWeight: FontWeight.w700),
+//                                         ),
+//                                         Text(
+//                                           snapshot
+//                                               .data!.studentDetails.admissionNo
+//                                               .toString()
+//                                           //  dataResponse?['admissionNo'].noSuchMethod(),
+//                                           ,
+//                                           style: const TextStyle(
+//                                               color: Colors.black54,
+//                                               fontSize: 12,
+//                                               fontWeight: FontWeight.w900),
+//                                         )
+//                                       ],
+//                                     ),
+//                                     kheight,
+//                                     Row(
+//                                       children: [
+//                                         const Text(
+//                                           'Class : ',
+//                                           style: TextStyle(
+//                                               color: Colors.purple,
+//                                               fontSize: 12,
+//                                               fontWeight: FontWeight.w700),
+//                                         ),
+//                                         Text(
+//                                           snapshot
+//                                               .data!.studentDetails.division,
+//                                           style: const TextStyle(
+//                                               color: Colors.black54,
+//                                               fontSize: 12,
+//                                               fontWeight: FontWeight.w900),
+//                                         )
+//                                       ],
+//                                     ),
 //                                   ],
 //                                 ),
-//                               ],
-//                             ),
+//                               ),
+//                               const Spacer(),
+//                               Row(
+//                                 // crossAxisAlignment: CrossAxisAlignment.end,
+//                                 // mainAxisAlignment: MainAxisAlignment.end,
+//                                 children: [
+//                                   Column(
+//                                     crossAxisAlignment: CrossAxisAlignment.end,
+//                                     mainAxisAlignment: MainAxisAlignment.end,
+//                                     children: [
+//                                       IconButton(
+//                                           onPressed: (() {
+//                                             var currentname = snapshot.data!
+//                                                 .studentDetails.studentName
+//                                                 .toString();
+//                                             _displayNameOfSiblings(
+//                                                 context, currentname);
+//                                           }),
+//                                           icon: const Icon(
+//                                             Icons.switch_account_outlined,
+//                                             size: 30,
+//                                           )),
+//                                     ],
+//                                   )
+//                                 ],
+//                               ),
+//                             ],
 //                           ),
 //                         ),
 //                       ),
@@ -1196,101 +1194,55 @@ class StudentHome extends StatelessWidget {
 //     );
 //   }
 
-//   // _displayNameOfSiblings(BuildContext context, String? name) async {
-//   //   final siblings = Provider.of<ProfileProvider>(context, listen: false);
-//   //   siblings.siblingsAPI();
-//   //   return showDialog(
-//   //       context: context,
-//   //       builder: (context) {
-//   //         return AlertDialog(
-//   //             content: Container(
-//   //           decoration: BoxDecoration(border: Border.all()),
-//   //           height: 70,
-//   //           child: ListView.separated(
-//   //               separatorBuilder: (BuildContext context, int index) =>
-//   //                   const Divider(),
-//   //               itemCount:
-//   //                   siblinggResponse == null ? 0 : siblinggResponse!.length,
-//   //               itemBuilder: ((context, index) {
-//   //                 return Column(
-//   //                   crossAxisAlignment: CrossAxisAlignment.center,
-//   //                   mainAxisAlignment: MainAxisAlignment.center,
-//   //                   children: [
-//   //                     Center(
-//   //                         child: GestureDetector(
-//   //                             onTap: () async {
-//   //                               var idd = siblinggResponse![index]['id'] == null
-//   //                                   ? '--'
-//   //                                   : siblinggResponse![index]['id'].toString();
-
-//   //                               await Provider.of<SibingsProvider>(context,
-//   //                                       listen: false)
-//   //                                   .getSibling(context, idd);
-//   //                             },
-//   //                             child: Text(
-//   //                                 siblinggResponse![index]['name'] == null
-//   //                                     ? '--'
-//   //                                     : siblinggResponse![index]['name']
-//   //                                         .toString()))),
-//   //                     const Divider(
-//   //                       height: 1,
-//   //                       color: Colors.black54,
-//   //                     )
-//   //                   ],
-//   //                 );
-//   //               })),
-//   //         ));
-//   //       });
-//   // }
 //   _displayNameOfSiblings(BuildContext context, String? name) async {
 //     Provider.of<SibingsProvider>(context, listen: false).getSiblingName();
 
-// return showDialog(
-//     context: context,
-//     builder: (context) {
-//       return AlertDialog(
-//           content: Container(
-//         decoration: BoxDecoration(border: Border.all()),
-//         height: 70,
-//         child: FutureBuilder<List<SiblingsNameModel>>(
-//           future: SibingsProvider().getSiblingName(),
-//           builder: (context, snapshot) {
-//             if (snapshot.hasData) {
-//               return ListView.separated(
-//                   separatorBuilder: (BuildContext context, int index) =>
-//                       const Divider(),
-//                   itemCount: snapshot.data!.length,
-//                   itemBuilder: ((context, index) {
-//                     return Column(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         Center(
-//                             child: GestureDetector(
-//                                 onTap: () async {
-//                                   var idd = snapshot.data![index].id;
-//                                   print(idd);
-//                                   await Provider.of<SibingsProvider>(
-//                                           context,
-//                                           listen: false)
-//                                       .getSibling(context, idd!);
-//                                 },
-//                                 child: Text(snapshot.data![index].name
-//                                     .toString()))),
-//                         const Divider(
-//                           height: 1,
-//                           color: Colors.black54,
-//                         )
-//                       ],
-//                     );
-//                   }));
-//             } else {
-//               return Text('Loading....');
-//             }
-//           },
-//         ),
-//       ));
-//     });
+//     return showDialog(
+//         context: context,
+//         builder: (context) {
+//           return AlertDialog(
+//               content: Container(
+//             decoration: BoxDecoration(border: Border.all()),
+//             height: 70,
+//             child: FutureBuilder<List<SiblingsNameModel>>(
+//               future: SibingsProvider().getSiblingName(),
+//               builder: (context, snapshot) {
+//                 if (snapshot.hasData) {
+//                   return ListView.separated(
+//                       separatorBuilder: (BuildContext context, int index) =>
+//                           const Divider(),
+//                       itemCount: snapshot.data!.length,
+//                       itemBuilder: ((context, index) {
+//                         return Column(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Center(
+//                                 child: GestureDetector(
+//                                     onTap: () async {
+//                                       var idd = snapshot.data![index].id;
+//                                       print(idd);
+//                                       await Provider.of<SibingsProvider>(
+//                                               context,
+//                                               listen: false)
+//                                           .getSibling(context, idd!);
+//                                     },
+//                                     child: Text(snapshot.data![index].name
+//                                         .toString()))),
+//                             const Divider(
+//                               height: 1,
+//                               color: Colors.black54,
+//                             )
+//                           ],
+//                         );
+//                       }));
+//                 } else {
+//                   return Text('Loading....');
+//                 }
+//               },
+//             ),
+//           ));
+//         });
 //   }
 // }
 class ProfileHome extends StatelessWidget {
