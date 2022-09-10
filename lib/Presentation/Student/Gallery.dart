@@ -2,13 +2,9 @@ import 'package:Ess_Conn/Application/GalleryProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
-
-import '../../Application/GalleryProvider.dart';
 import '../../utils/constants.dart';
 
 class Gallery extends StatelessWidget {
@@ -21,7 +17,7 @@ class Gallery extends StatelessWidget {
         .getGalleyList(); //provider
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gallery'),
+        title: const Text('Gallery'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -84,7 +80,7 @@ class Gallery extends StatelessWidget {
                                               fit: BoxFit.fill),
                                           color: Colors.white12,
                                           border: Border.all(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 219, 215, 215)),
                                           borderRadius: const BorderRadius.only(
                                               topRight: Radius.circular(0),
@@ -128,7 +124,7 @@ class Gallery extends StatelessWidget {
                                                         CrossAxisAlignment.end,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.end,
-                                                    children: [
+                                                    children: const [
                                                       Align(
                                                         alignment: Alignment
                                                             .bottomRight,
@@ -200,7 +196,7 @@ class GalleryonTap extends StatelessWidget {
                           : galleryAttachResponse!.length, (index) {
                     return GestureDetector(
                       child: isLoading
-                          ? Center(
+                          ? const Center(
                               child: CircularProgressIndicator(),
                             )
                           : Container(
@@ -214,12 +210,9 @@ class GalleryonTap extends StatelessWidget {
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
                                           galleryAttachResponse![index]
-                                                      ['url'] ==
-                                                  null
-                                              ? AssetImage(
-                                                  'assets/noimages.png')
-                                              : galleryAttachResponse![index]
-                                                  ['url']))),
+                                                  ['url'] ??
+                                              const AssetImage(
+                                                  'assets/noimages.png')))),
                             ),
                       onTap: () async {
                         Navigator.push(

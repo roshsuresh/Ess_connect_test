@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Ess_Conn/Domain/GalleryModel.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +35,10 @@ class GalleryProvider with ChangeNotifier {
         galleryResponse = data["gallerydetails"];
         gallery = GalleryModel.fromJson(data);
         // gallery = GalleryModel.fromJson(data);
-        // print(galleryResponse);
-        //  print(galleryResponse);
-
         notifyListeners();
         isLoading = false;
       } else {
-        print("wrong2");
+        print("Error in Response");
       }
     } catch (e) {
       print(e);
@@ -61,7 +57,7 @@ class GalleryProvider with ChangeNotifier {
         Uri.parse(
             "${UIGuide.baseURL}/mobileapp/parents/gallery-photos/$galleryid"),
         headers: headers);
-    //print(response);
+
     try {
       if (response.statusCode == 200) {
         // print("corect");
@@ -69,7 +65,6 @@ class GalleryProvider with ChangeNotifier {
         print(data);
         galleryAttachResponse = data["galleryphotos"];
         // galleryphotosModel = GalleryphotosModel.fromJson(data);
-
         // print(galleryAttachResponse);
         // print(galleryphotosModel);
         notifyListeners();

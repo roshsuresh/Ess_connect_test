@@ -39,28 +39,28 @@ class StudentProfileModel {
     required this.motherMailId,
     required this.motherMobileno,
   });
-  late final String studentName;
-  late final String admissionNo;
-  late final String rollNo;
+  String? studentName;
+  String? admissionNo;
+  String? rollNo;
 
-  late final String division;
-  late final String divisionId;
-  late final String bloodGroup;
-  late final String houseGroup;
-  late final String classTeacher;
-  late final String dob;
-  late final StudentPhoto studentPhoto;
-  late final String studentPhotoId;
-  late final String gender;
-  late final String height;
-  late final String weight;
-  late final String address;
-  late final String fatherName;
-  late final String fatherMail;
-  late final String fatherMobileno;
-  late final String motherName;
-  late final String motherMailId;
-  late final String motherMobileno;
+  String? division;
+  String? divisionId;
+  String? bloodGroup;
+  String? houseGroup;
+  String? classTeacher;
+  String? dob;
+  StudentPhoto? studentPhoto;
+  String? studentPhotoId;
+  String? gender;
+  String? height;
+  String? weight;
+  String? address;
+  String? fatherName;
+  String? fatherMail;
+  String? fatherMobileno;
+  String? motherName;
+  String? motherMailId;
+  String? motherMobileno;
 
   StudentProfileModel.fromJson(Map<String, dynamic> json) {
     studentName = json['studentName'];
@@ -98,7 +98,7 @@ class StudentProfileModel {
     _data['houseGroup'] = houseGroup;
     _data['classTeacher'] = classTeacher;
     _data['dob'] = dob;
-    _data['studentPhoto'] = studentPhoto.toJson();
+    _data['studentPhoto'] = studentPhoto!.toJson();
     _data['studentPhotoId'] = studentPhotoId;
     _data['gender'] = gender;
     _data['height'] = height;
@@ -126,15 +126,15 @@ class StudentPhoto {
     required this.createdAt,
     required this.id,
   });
-  late final String name;
-  late final String extension;
-  late final String path;
-  late final String url;
-  late final bool isTemporary;
-  late final bool isDeleted;
-  late final List<Images> images;
-  late final String createdAt;
-  late final String id;
+  String? name;
+  String? extension;
+  String? path;
+  String? url;
+  bool? isTemporary;
+  bool? isDeleted;
+  List<Images>? images;
+  String? createdAt;
+  String? id;
 
   StudentPhoto.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -156,7 +156,7 @@ class StudentPhoto {
     _data['url'] = url;
     _data['isTemporary'] = isTemporary;
     _data['isDeleted'] = isDeleted;
-    _data['images'] = images.map((e) => e.toJson()).toList();
+    _data['images'] = images!.map((e) => e.toJson()).toList();
     _data['createdAt'] = createdAt;
     _data['id'] = id;
     return _data;
@@ -170,10 +170,10 @@ class Images {
     this.url,
     required this.id,
   });
-  late final String fileId;
-  late final String dimension;
-  late final String? url;
-  late final String id;
+  String? fileId;
+  String? dimension;
+  String? url;
+  String? id;
 
   Images.fromJson(Map<String, dynamic> json) {
     fileId = json['fileId'];

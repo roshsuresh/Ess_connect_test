@@ -28,7 +28,6 @@ class AdvancePay extends StatelessWidget {
         child: Container(
           height: height - 450,
           width: width - 50,
-          //color: Colors.black,
           decoration: const BoxDecoration(
               color: UIGuide.WHITE,
               boxShadow: [

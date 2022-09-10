@@ -1,13 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
-import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Domain/Flashnews.dart';
 import '../Domain/profileModel.dart';
 
@@ -23,10 +18,8 @@ class ProfileProvider with ChangeNotifier {
   String? admissionNo;
   String? division;
   String? divisionId;
-
   String? rollNo;
   dynamic studentDetailsClass;
-
   dynamic bloodGroup;
   dynamic houseGroup;
   String? classTeacher;
@@ -58,9 +51,11 @@ class ProfileProvider with ChangeNotifier {
     var data = jsonDecode(response.body.toString());
 
     if (response.statusCode == 200) {
+      print(data);
+      print(StudProModel.fromJson(data));
       return StudProModel.fromJson(data);
     } else {
-      print('Error');
+      print('Error in profile');
       return StudProModel.fromJson(data);
     }
   }
@@ -89,8 +84,9 @@ class ProfileProvider with ChangeNotifier {
         // print("corect..........");
         print(dataResponse);
         StudentProfileModel std =
-            StudentProfileModel.fromJson(mapResponse!['studentDetails']);
-        StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
+            await StudentProfileModel.fromJson(mapResponse!['studentDetails']);
+        StudentPhoto asa =
+            await StudentPhoto.fromJson(dataResponse!['studentPhoto']);
         studPhoto = asa.url;
 
         // log(studPhoto.toString());
@@ -125,7 +121,7 @@ class ProfileProvider with ChangeNotifier {
 
         // print(response.body);
       } else {
-        print("wrong");
+        print("Error in Response");
       }
     } catch (e) {
       print(e);
@@ -180,11 +176,9 @@ class ProfileProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       siblinggResponse = json.decode(response.body);
       print(siblinggResponse);
-      // return jsonResponse
-      //     .map((data) => SiblingsNameModel.fromJson(data))
-      //     .toList();
+      notifyListeners();
     } else {
-      throw ("Something went wrong");
+      throw ("Something went wrong in Response");
     }
   }
 }

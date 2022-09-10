@@ -1,9 +1,6 @@
 import 'package:Ess_Conn/Application/ProfileProvider.dart';
 import 'package:Ess_Conn/Application/SiblingsProvider.dart';
 import 'package:Ess_Conn/Application/TimetableProvider.dart';
-import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
-import 'package:Ess_Conn/Domain/SiblingsTokenModel.dart';
-import 'package:Ess_Conn/Domain/profileModel.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -13,26 +10,17 @@ import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
 import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
 import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Calender.dart';
-
 import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
 import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
 import 'package:Ess_Conn/Presentation/Student/payment.dart';
-import 'package:Ess_Conn/main.dart';
-import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
-import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Application/GalleryProvider.dart';
-import '../../Application/LoginProvider.dart';
-import '../../Application/NoticProvider.dart';
 
 class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
@@ -248,8 +236,8 @@ class StudentHome extends StatelessWidget {
                                         var divId = value.divisionId == null
                                             ? 'divId is null'
                                             : value.divisionId.toString();
-                                        var divid = await Provider.of<
-                                                    Timetableprovider>(context,
+                                        await Provider.of<Timetableprovider>(
+                                                context,
                                                 listen: false)
                                             .getTimeTable(divId);
                                         Navigator.push(
@@ -1438,8 +1426,8 @@ class ProfileHome extends StatelessWidget {
   }
 
   _displayNameOfSiblings(BuildContext context, String? name) async {
-    final siblings = Provider.of<ProfileProvider>(context, listen: false);
-    siblings.siblingsAPI();
+    await Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
+
     return showDialog(
         context: context,
         builder: (context) {

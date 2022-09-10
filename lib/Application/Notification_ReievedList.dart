@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import '../Domain/NotificationModel.dart';
 import '../utils/constants.dart';
 
@@ -14,8 +14,8 @@ class NotificationHistoryBloc with ChangeNotifier {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     print(_pref.getString('token'));
     var headers = {'Content-Type': 'application/json'};
-    var request = http.Request('GET',
-        Uri.parse('${UIGuide.baseURL}/mobileapp/token/receivedlist'));
+    var request = http.Request(
+        'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/token/receivedlist'));
     request.body = json.encode({
       "SchoolId": data1["SchoolId"],
       "AcademicyearId": data1["AcademicYearId"],

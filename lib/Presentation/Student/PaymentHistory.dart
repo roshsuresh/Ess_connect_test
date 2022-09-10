@@ -1,8 +1,5 @@
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../../utils/constants.dart';
 
 class PaymentHistory extends StatelessWidget {
@@ -56,6 +53,12 @@ class PaymentHistory extends StatelessWidget {
           //  view(),
           //  ViewPaymentHistory(),
           Table(
+            columnWidths: const {
+              0: FlexColumnWidth(2),
+              1: FlexColumnWidth(2),
+              2: FlexColumnWidth(3),
+              3: FlexColumnWidth(2)
+            },
             //  border: TableBorder.all(),
             children: const [
               TableRow(
@@ -67,10 +70,26 @@ class PaymentHistory extends StatelessWidget {
                     ),
                   ),
                   children: [
-                    Center(child: Text('Bill No.')),
-                    Center(child: Text('Bill Date')),
-                    Center(child: Text('Amount \n paid')),
-                    Center(child: Text('Receipt'))
+                    Center(
+                        child: Text(
+                      'Bill No.',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    )),
+                    Center(
+                        child: Text(
+                      'Bill Date',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    )),
+                    Center(
+                        child: Text(
+                      'Amount \n paid',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    )),
+                    Center(
+                        child: Text(
+                      'Receipt',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ))
                   ]),
             ],
           ),
@@ -79,18 +98,36 @@ class PaymentHistory extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(2),
+                    1: FlexColumnWidth(2),
+                    2: FlexColumnWidth(3),
+                    3: FlexColumnWidth(2)
+                  },
                   //  border: TableBorder.all(),
                   children: [
                     TableRow(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 230, 227, 227),
                         ),
                         children: [
-                          Center(child: Text('\nar7875df')),
-                          Center(child: Text('\n18/10/2022')),
-                          Center(child: Text('\n2000')),
+                          const Center(
+                              child: Text(
+                            '\nText',
+                            style: TextStyle(fontSize: 13),
+                          )),
+                          const Center(
+                              child: Text(
+                            '\n18/10/2022',
+                            style: TextStyle(fontSize: 13),
+                          )),
+                          const Center(
+                              child: Text(
+                            '\n2000',
+                            style: TextStyle(fontSize: 13),
+                          )),
                           IconButton(
-                            icon: Icon(Icons.download),
+                            icon: const Icon(Icons.download),
                             onPressed: () {},
                           )
                         ]),
@@ -149,12 +186,6 @@ class _RadioButtonForPaymentState extends State<RadioButtonForPayment> {
   }
 }
 
-// class ViewPaymentHistory extends StatelessWidget {
-//   const ViewPaymentHistory({Key? key}) : super(key: key);
-
-//   @override
-// Widget build(BuildContext context) {
-
 Widget view() {
   // print('fgj');
   return Padding(
@@ -162,7 +193,6 @@ Widget view() {
       child: ListView(
         children: [
           Table(
-            //  border: TableBorder.all(),
             children: const [
               TableRow(
                   decoration: BoxDecoration(
@@ -192,7 +222,7 @@ Widget view() {
                           color: Color.fromARGB(255, 230, 227, 227),
                         ),
                         children: [
-                          Center(child: Text('\nar7875df')),
+                          Center(child: Text('\n text')),
                           Center(child: Text('\n18/10/2022')),
                           Center(child: Text('\n2000')),
                           IconButton(

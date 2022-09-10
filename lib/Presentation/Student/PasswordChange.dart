@@ -2,8 +2,6 @@ import 'package:Ess_Conn/Application/PasswordChangeProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class PasswordChange extends StatelessWidget {
@@ -142,7 +140,7 @@ class PasswordChange extends StatelessWidget {
                       obscureText: !_isObscure,
                       controller: _confirmpassword,
                       decoration: InputDecoration(
-                        focusColor: Color.fromARGB(255, 213, 215, 218),
+                        focusColor: const Color.fromARGB(255, 213, 215, 218),
                         prefixIcon: const Icon(
                           Icons.key_outlined,
                           color: Colors.grey,

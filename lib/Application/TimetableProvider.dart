@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Ess_Conn/Domain/TimeTableModel.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,5 @@ class Timetableprovider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    //throw ('Response');
-    // return result2;
   }
 }

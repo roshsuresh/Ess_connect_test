@@ -1,16 +1,11 @@
 import 'dart:convert';
-
 import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
 import 'package:Ess_Conn/Domain/SiblingsTokenModel.dart';
 import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import 'LoginProvider.dart';
-import 'ProfileProvider.dart';
 
 class SibingsProvider with ChangeNotifier {
   Future<List<SiblingsNameModel>> getSiblingName() async {
@@ -34,6 +29,7 @@ class SibingsProvider with ChangeNotifier {
             SiblingsNameModel(name: u['name'], id: u['id']);
         siblings.add(sibling);
       }
+      notifyListeners();
       return siblings;
     } else {
       print('Error');
@@ -63,15 +59,20 @@ class SibingsProvider with ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('accesstoken', respo.accessToken);
       print('accessToken ${respo.accessToken}');
-
+      // notifyListeners();
       // await Provider.of<ProfileProvider>(context).profileData();
 
       // await Provider.of<LoginProvider>(context, listen: false)
       //     .getToken(context);
       await Future.delayed(const Duration(seconds: 1));
-      await Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => StudentHome()),
-          (Route<dynamic> route) => false);
+      await Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => StudentHome()),
+        (Route<dynamic> route) => false,
+      );
+      // await Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(builder: (context) => StudentHome()),
+      //     (Route<dynamic> route) => false);
       notifyListeners();
       // await  Provider.of<ProfileProvider>(context).profileData();
       //  Provider.of<LoginProvider>(context, listen: false).getToken(context);

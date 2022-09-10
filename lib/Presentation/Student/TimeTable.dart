@@ -2,13 +2,10 @@ import 'package:Ess_Conn/Application/TimetableProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import '../../utils/constants.dart';
 
 class Timetable extends StatelessWidget {
@@ -49,13 +46,6 @@ class Timetable extends StatelessWidget {
                       color: Color.fromARGB(255, 228, 224, 224),
                     ),
                     children: [
-                      // SizedBox(
-                      //   height: 30,
-                      //   child: Center(
-                      //     child: Text('No.'),
-                      //   ),
-                      // ),
-
                       SizedBox(
                         height: 30,
                         child: Center(
@@ -92,12 +82,6 @@ class Timetable extends StatelessWidget {
                           color: Color.fromARGB(255, 245, 242, 242),
                         ),
                         children: [
-                          // Padding(
-                          //   padding: EdgeInsets.all(8.0),
-                          //   child:
-                          //       Center(child: Text('${index.toString()}')),
-                          // ),
-
                           Center(
                             child: Text(
                               '${value.name.toString() == null ? '--' : value.name.toString()}',

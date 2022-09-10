@@ -1,13 +1,8 @@
-import 'dart:ui';
-
 import 'package:Ess_Conn/Application/FeesProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
 import '../../utils/constants.dart';
 
 class PayFee extends StatelessWidget {

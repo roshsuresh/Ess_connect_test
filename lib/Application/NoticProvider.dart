@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'dart:developer';
 import 'package:Ess_Conn/Domain/Noticeattachmentmodel.dart';
-import 'package:Ess_Conn/Domain/activation_model.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -34,11 +31,11 @@ class NoticeProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         // print("corect");
         final data = json.decode(response.body);
-        //print(data);
+        //  print(data);
         noticeresponse = data["noticeBoardDetails"];
         notifyListeners();
       } else {
-        print("wrong2");
+        print("Error in Response");
       }
     } catch (e) {
       print(e);
@@ -62,7 +59,7 @@ class NoticeProvider with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
         attachResponse = json.decode(response.body);
-        //  log(data.toString());
+        // // log(data.toString());
         AttachmentModel attach = AttachmentModel.fromJson(data);
         extension = attach.extension;
         url = attach.url;

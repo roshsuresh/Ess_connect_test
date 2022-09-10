@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final welcome7 = welcome7FromJson(jsonString);
-
 import 'dart:convert';
 
 class NoticeBoardModel {
@@ -23,23 +19,25 @@ class NoticeBoardModel {
   dynamic staffId;
   String staffName;
 
-  factory NoticeBoardModel.fromJson(Map<String, dynamic> json) => NoticeBoardModel(
-    noticeId: json["noticeId"],
-    title: json["title"],
-    matter: json["matter"],
-    entryDate: DateTime.parse(json["entryDate"]),
-    entryTime: json["entryTime"],
-    staffId: json["staffId"],
-    staffName: json["staffName"],
-  );
+  factory NoticeBoardModel.fromJson(Map<String, dynamic> json) =>
+      NoticeBoardModel(
+        noticeId: json["noticeId"],
+        title: json["title"],
+        matter: json["matter"],
+        entryDate: DateTime.parse(json["entryDate"]),
+        entryTime: json["entryTime"],
+        staffId: json["staffId"],
+        staffName: json["staffName"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "noticeId": noticeId,
-    "title": title,
-    "matter": matter,
-    "entryDate": "${entryDate.year.toString().padLeft(4, '0')}-${entryDate.month.toString().padLeft(2, '0')}-${entryDate.day.toString().padLeft(2, '0')}",
-    "entryTime": entryTime,
-    "staffId": staffId,
-    "staffName": staffName,
-  };
+        "noticeId": noticeId,
+        "title": title,
+        "matter": matter,
+        "entryDate":
+            "${entryDate.year.toString().padLeft(4, '0')}-${entryDate.month.toString().padLeft(2, '0')}-${entryDate.day.toString().padLeft(2, '0')}",
+        "entryTime": entryTime,
+        "staffId": staffId,
+        "staffName": staffName,
+      };
 }

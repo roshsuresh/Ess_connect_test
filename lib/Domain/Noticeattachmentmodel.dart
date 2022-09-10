@@ -38,7 +38,7 @@ class AttachmentModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['name'] = this.name;
     data['extension'] = this.extension;
     data['path'] = this.path;

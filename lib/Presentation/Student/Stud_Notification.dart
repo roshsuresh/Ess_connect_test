@@ -56,7 +56,7 @@ class Stud_Notification extends StatelessWidget {
                     children: [
                       const Text('Exam Reminder 🔔'),
                       kheight,
-                      TextWrapper(
+                      const TextWrapper(
                         text:
                             '  SSC CGL exam is conducted in Tiers. Tier-I & II will be conducted online. On the other hand, Tier-III & IV will be conducted in offline mode. The candidate has to clear every tier and score cut-off marks, decided by the SSC board, to proceed further in this exam. ',
                       ),

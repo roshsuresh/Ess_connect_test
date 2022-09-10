@@ -6,7 +6,6 @@ import 'package:pdfdownload/pdfdownload.dart';
 
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import '../../utils/constants.dart';
 
 class ReportCard extends StatelessWidget {
@@ -41,9 +40,7 @@ class ReportCard extends StatelessWidget {
                 0: FlexColumnWidth(3),
                 1: FlexColumnWidth(5),
                 2: FlexColumnWidth(2),
-                // 3: FlexColumnWidth(2)
               },
-              // border: TableBorder.all(),
               children: const [
                 TableRow(
                     decoration: BoxDecoration(
@@ -51,12 +48,6 @@ class ReportCard extends StatelessWidget {
                       color: Color.fromARGB(255, 228, 224, 224),
                     ),
                     children: [
-                      // SizedBox(
-                      //   height: 30,
-                      //   child: Center(
-                      //     child: Text('No.'),
-                      //   ),
-                      // ),
                       SizedBox(
                         height: 30,
                         child: Center(
@@ -104,21 +95,11 @@ class ReportCard extends StatelessWidget {
                             0: FlexColumnWidth(3),
                             1: FlexColumnWidth(5),
                             2: FlexColumnWidth(2),
-                            // 3: FlexColumnWidth(2)
                           },
-                          //  border: TableBorder.all(),
                           children: [
                             TableRow(
-                                decoration: const BoxDecoration(
-                                    // color: Color.fromARGB(
-                                    //     255, 230, 227, 227),
-                                    ),
+                                decoration: const BoxDecoration(),
                                 children: [
-                                  // Padding(
-                                  //   padding: EdgeInsets.all(8.0),
-                                  //   child:
-                                  //       Center(child: Text('${index.toString()}')),
-                                  // ),
                                   Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text(

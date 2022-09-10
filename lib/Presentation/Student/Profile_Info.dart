@@ -3,8 +3,6 @@ import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class Profile_Info extends StatelessWidget {
