@@ -9,7 +9,7 @@ class Stud_Calender extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 110, 95, 241),
+        backgroundColor: UIGuide.light_Purple,
         title: Row(
           children: const [
             Icon(Icons.calendar_month_outlined),
@@ -38,7 +38,7 @@ class Stud_Calender extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color.fromARGB(255, 196, 190, 190),
-                      offset: const Offset(
+                      offset: Offset(
                         1,
                         3.0,
                       ),

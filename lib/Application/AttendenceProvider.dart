@@ -18,6 +18,7 @@ class AttendenceProvider with ChangeNotifier {
   double? attendancePercentage;
 
   Future attendenceList() async {
+    // await Future.delayed(const Duration(seconds: 2));
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -27,6 +28,7 @@ class AttendenceProvider with ChangeNotifier {
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
         headers: headers);
+
     try {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);

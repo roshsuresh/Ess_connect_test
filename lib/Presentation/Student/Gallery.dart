@@ -30,7 +30,9 @@ class Gallery extends StatelessWidget {
         backgroundColor: UIGuide.light_Purple,
       ),
       body: isLoading
-          ? LoadingIcon()
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
           : ListView(
               children: [
                 ListView.builder(
@@ -150,11 +152,9 @@ class Gallery extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () async {
-                                  final postModel =
-                                      await Provider.of<GalleryProvider>(
-                                              context,
-                                              listen: false)
-                                          .galleyAttachment(idd);
+                                  await Provider.of<GalleryProvider>(context,
+                                          listen: false)
+                                      .galleyAttachment(idd);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -204,8 +204,8 @@ class GalleryonTap extends StatelessWidget {
                               width: 50,
                               decoration: BoxDecoration(
                                   color: Colors.black12,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
@@ -218,7 +218,9 @@ class GalleryonTap extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ViewImageOntap()),
+                              builder: (context) => ViewImageOntap(
+                                    inde: index,
+                                  )),
                         );
                       },
                     );
@@ -231,31 +233,36 @@ class GalleryonTap extends StatelessWidget {
 }
 
 class ViewImageOntap extends StatelessWidget {
-  ViewImageOntap({Key? key}) : super(key: key);
+  ViewImageOntap({Key? key, required int inde}) : super(key: key);
   bool isLoading = false;
-
+  int? indee;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : PhotoViewGallery.builder(
-              scrollPhysics: const BouncingScrollPhysics(),
-              enableRotation: false,
-              itemCount: galleryAttachResponse == null
-                  ? 0
-                  : galleryAttachResponse!.length,
-              builder: ((context, index) {
-                final imgUrl = galleryAttachResponse![index]['url'];
-                return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage(imgUrl == null
-                        ? AssetImage('assets/noimages.png')
-                        : imgUrl),
-                    initialScale: PhotoViewComputedScale.contained * 0.8,
-                    heroAttributes: PhotoViewHeroAttributes(
-                        tag: galleryAttachResponse![index]['url']));
-              }),
-              loadingBuilder: (context, event) => LoadingIcon()),
-    );
+    return ChangeNotifierProvider.value(
+        value: GalleryProvider(),
+        child: isLoading
+            ? const LoadingIcon()
+            : Scaffold(
+                body: isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : PhotoViewGallery.builder(
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        enableRotation: false,
+                        itemCount: galleryAttachResponse == null
+                            ? 0
+                            : galleryAttachResponse!.length,
+                        builder: ((context, inde) {
+                          final imgUrl = galleryAttachResponse![inde]['url'];
+                          return PhotoViewGalleryPageOptions(
+                              imageProvider: NetworkImage(imgUrl ??
+                                  const AssetImage('assets/noimages.png')),
+                              initialScale:
+                                  PhotoViewComputedScale.contained * 0.8,
+                              heroAttributes: PhotoViewHeroAttributes(
+                                  tag: galleryAttachResponse![inde]['url']));
+                        }),
+                        loadingBuilder: (context, event) =>
+                            const LoadingIcon()),
+              ));
   }
 }

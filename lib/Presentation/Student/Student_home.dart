@@ -16,6 +16,7 @@ import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
 import 'package:Ess_Conn/Presentation/Student/payment.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
+import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
@@ -48,531 +49,187 @@ class StudentHome extends StatelessWidget {
     return Scaffold(
       body: isLoading
           ? const LoadingIcon()
-          : Stack(
+          : ListView(
               children: [
-                ListView(
-                  children: [
-                    kheight,
-                    const SizedBox(
-                      height: 120,
-                    ),
-                    const Flashnews(),
-                    SingleChildScrollView(
-                      child: Container(
-                        // width: width,
-                        // height: double.infinity,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(blurRadius: 5, offset: Offset(1, 3))
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30))),
-                        child: Column(
-                          children: [
-                            kheight,
-                            kheight20,
-                            // SizedBox(
-                            //   height: 150,
-                            // ),
-                            Row(children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                              const Text(
-                                'Personal info',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.purple,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                            ]),
-
-                            kheight20,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Profile_Info()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                            // borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Profile',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Stud_Notification()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            image: const DecorationImage(
-                                              opacity: 20,
-                                              image: const AssetImage(
-                                                'assets/notification.png',
-                                              ),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Notification',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Attendence()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                            // borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Attendence',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Consumer<ProfileProvider>(
-                                  builder: (context, value, child) {
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        var divId = value.divisionId == null
-                                            ? 'divId is null'
-                                            : value.divisionId.toString();
-                                        await Provider.of<Timetableprovider>(
-                                                context,
-                                                listen: false)
-                                            .getTimeTable(divId);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Timetable(divid: divId)),
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              height: 50,
-                                              width: 40,
-                                              decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                  opacity: 20,
-                                                  image: AssetImage(
-                                                    'assets/Profile.png',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            kheight,
-                                            const Text(
-                                              'Timetable',
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black38),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                            kheight,
-                            kheight20,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => NoticeBoard()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Notice Board',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Gallery()),
-                                      );
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            image: const DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/notification.png',
-                                              ),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Gallery',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Stud_Calender()),
-                                      );
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Calender',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            kheight, kheight20,
-                            Container(
-                              color: const Color.fromARGB(255, 218, 212, 212),
-                              height: 150,
-                              width: width,
+                ProfileHome(kheight20: kheight20, kheight: kheight),
+                const Flashnews(),
+                Container(
+                  width: width,
+                  height: size.height - 180,
+                  decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(blurRadius: 5, offset: Offset(1, 3))
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: ListView(
+                    children: [
+                      kheight20,
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        const Text(
+                          'Personal info',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ]),
+                      kheight20,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profile_Info()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  kheight,
-                                  Row(children: const <Widget>[
-                                    Expanded(child: Text("")),
-                                    Text(
-                                      " * Urgent & Important * ",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 129, 125, 129),
-                                          fontWeight: FontWeight.w900),
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
                                     ),
-                                    Expanded(child: Text("")),
-                                  ]),
-                                  kheight,
-                                  kheight,
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PayFee()),
-                                            );
-                                          },
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: 40,
-                                                decoration: const BoxDecoration(
-                                                  image: DecorationImage(
-                                                    opacity: 20,
-                                                    image: AssetImage(
-                                                      'assets/pay.png',
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              kheight,
-                                              const Text(
-                                                'Pay Fee',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.black38),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              height: 50,
-                                              width: 40,
-                                              decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                  opacity: 20,
-                                                  image: AssetImage(
-                                                    'assets/Profile.png',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            kheight,
-                                            const Text(
-                                              'Events',
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black38),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              height: 50,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                image: const DecorationImage(
-                                                  opacity: 20,
-                                                  image: AssetImage(
-                                                    'assets/pay.png',
-                                                  ),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                            kheight,
-                                            const Text(
-                                              'Fee Structure',
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black38),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
                                   ),
+                                  kheight,
+                                  const Text(
+                                    'Profile',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
                                 ],
                               ),
                             ),
-
-                            Row(children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Stud_Notification()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: const AssetImage(
+                                          'assets/notification.png',
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Notification',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
                               ),
-                              const Text(
-                                "Fees",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.purple,
-                                    fontWeight: FontWeight.w900),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Attendence()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
+                                      // borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Attendence',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
                               ),
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                            ]),
-                            kheight,
-                            kheight20,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
+                            ),
+                          ),
+                          Consumer<ProfileProvider>(
+                            builder: (context, value, child) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  var divId = value.divisionId == null
+                                      ? 'divId is null'
+                                      : value.divisionId.toString();
+                                  await Provider.of<Timetableprovider>(context,
+                                          listen: false)
+                                      .getTimeTable(divId);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Timetable(divid: divId)),
+                                  );
+                                },
+                                child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
                                   child: Column(
@@ -586,14 +243,14 @@ class StudentHome extends StatelessWidget {
                                           image: DecorationImage(
                                             opacity: 20,
                                             image: AssetImage(
-                                              'assets/pay.png',
+                                              'assets/Profile.png',
                                             ),
                                           ),
                                         ),
                                       ),
                                       kheight,
                                       const Text(
-                                        'Pay Fee',
+                                        'Timetable',
                                         style: TextStyle(
                                             fontSize: 11,
                                             color: Colors.black38),
@@ -601,6 +258,156 @@ class StudentHome extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      kheight,
+                      kheight20,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NoticeBoard()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Notice Board',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Gallery()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/notification.png',
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Gallery',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Stud_Calender()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Calender',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      kheight,
+                      kheight20,
+                      Container(
+                        color: const Color.fromARGB(255, 218, 212, 212),
+                        height: 150,
+                        width: width,
+                        child: Column(
+                          children: [
+                            kheight,
+                            Row(children: const <Widget>[
+                              Expanded(child: Text("")),
+                              Text(
+                                " * Urgent & Important * ",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 129, 125, 129),
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              Expanded(child: Text("")),
+                            ]),
+                            kheight,
+                            kheight,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
@@ -609,8 +416,7 @@ class StudentHome extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                PaymentRough()),
+                                            builder: (context) => PayFee()),
                                       );
                                     },
                                     child: Column(
@@ -620,205 +426,18 @@ class StudentHome extends StatelessWidget {
                                         Container(
                                           height: 50,
                                           width: 40,
-                                          decoration: BoxDecoration(
-                                            image: const DecorationImage(
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
                                               opacity: 20,
                                               image: AssetImage(
                                                 'assets/pay.png',
                                               ),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
                                           ),
                                         ),
                                         kheight,
                                         const Text(
-                                          'Fee Structure',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AdvancePay()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Advance Pay ',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PaymentHistory()),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Profile.png',
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Payment \n History',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              color: Colors.black38),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            kheight, kheight20,
-
-                            Row(children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                              const Text(
-                                "Tabulation",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.purple,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                            ]),
-                            kheight,
-                            kheight20,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/Reportcard.png',
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Mark Sheet',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ReportCard()),
-                                      );
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: 50,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            image: const DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/Reportcard.png',
-                                              ),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        kheight,
-                                        const Text(
-                                          'Report Card',
+                                          'Pay Fee',
                                           style: TextStyle(
                                               fontSize: 11,
                                               color: Colors.black38),
@@ -848,7 +467,7 @@ class StudentHome extends StatelessWidget {
                                       ),
                                       kheight,
                                       const Text(
-                                        'Home Works',
+                                        'Events',
                                         style: TextStyle(
                                             fontSize: 11,
                                             color: Colors.black38),
@@ -866,18 +485,20 @@ class StudentHome extends StatelessWidget {
                                       Container(
                                         height: 50,
                                         width: 40,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
+                                        decoration: BoxDecoration(
+                                          image: const DecorationImage(
                                             opacity: 20,
                                             image: AssetImage(
-                                              'assets/Profile.png',
+                                              'assets/pay.png',
                                             ),
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                       ),
                                       kheight,
                                       const Text(
-                                        'Statistics',
+                                        'Fee Structure',
                                         style: TextStyle(
                                             fontSize: 11,
                                             color: Colors.black38),
@@ -887,94 +508,409 @@ class StudentHome extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            kheight, kheight20,
-
-                            Row(children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                              const Text(
-                                "Password Change / SignOut",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.purple,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                            ]),
-                            kheight,
-
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                MaterialButton(
-                                    minWidth: 50,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: () async {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PasswordChange()),
-                                      );
-                                    },
-                                    child: const Icon(
-                                      Icons.key_sharp,
-                                      color: Colors.purple,
-                                    )),
-                                MaterialButton(
-                                    minWidth: 50,
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0)),
-                                    onPressed: () async {
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      print("accesstoken  $prefs");
-                                      prefs.remove("accesstoken");
-
-// Navigator.of(context).pushNamedAndRemoveUntil(
-//     routeLoginmain,
-//     (Route<dynamic> route) => false);
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()),
-                                          (Route<dynamic> route) => false);
-                                    },
-                                    child: const Icon(
-                                      Icons.logout_outlined,
-                                      color: Colors.purple,
-                                    )),
-                              ],
-                            ),
-                            kheight20,
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-                ProfileHome(kheight20: kheight20, kheight: kheight),
-                //Flashnews(),
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        const Text(
+                          "Fees",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ]),
+                      kheight,
+                      kheight20,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 20,
+                                      image: AssetImage(
+                                        'assets/pay.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                kheight,
+                                const Text(
+                                  'Pay Fee',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black38),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PaymentRough()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/pay.png',
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Fee Structure',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AdvancePay()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Advance Pay ',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PaymentHistory()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Profile.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Payment \n History',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      kheight,
+                      kheight20,
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        const Text(
+                          "Tabulation",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ]),
+                      kheight,
+                      kheight20,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 20,
+                                      image: AssetImage(
+                                        'assets/Reportcard.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                kheight,
+                                const Text(
+                                  'Mark Sheet',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black38),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const ReportCard()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Reportcard.png',
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  kheight,
+                                  const Text(
+                                    'Report Card',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 20,
+                                      image: AssetImage(
+                                        'assets/Profile.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                kheight,
+                                const Text(
+                                  'Home Works',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black38),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 20,
+                                      image: AssetImage(
+                                        'assets/Profile.png',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                kheight,
+                                const Text(
+                                  'Statistics',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black38),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      kheight,
+                      kheight20,
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 10.0, right: 20.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        const Text(
+                          "Password Change / SignOut",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontWeight: FontWeight.w900),
+                        ),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0),
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ]),
+                      kheight,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MaterialButton(
+                              minWidth: 50,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              onPressed: () async {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => PasswordChange()),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.key_sharp,
+                                color: Colors.purple,
+                              )),
+                          MaterialButton(
+                              minWidth: 50,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              onPressed: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                print("accesstoken  $prefs");
+                                prefs.remove("accesstoken");
+
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                    (Route<dynamic> route) => false);
+                              },
+                              child: const Icon(
+                                Icons.logout_outlined,
+                                color: Colors.purple,
+                              )),
+                        ],
+                      ),
+                      kheight20,
+                    ],
+                  ),
+                )
               ],
             ),
     );
@@ -1401,6 +1337,8 @@ class ProfileHome extends StatelessWidget {
                                         icon: const Icon(
                                           Icons.switch_account_outlined,
                                           size: 30,
+                                          color:
+                                              Color.fromARGB(255, 83, 81, 81),
                                         )),
                                   ],
                                 )

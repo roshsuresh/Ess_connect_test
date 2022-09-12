@@ -31,7 +31,6 @@ class _ActivatePageState extends State<ActivatePage>
     await prefs.setBool('activated', true);
   }
 
-
   showBottomDialogSchool() {
     showModalBottomSheet(
         context: context,
@@ -44,7 +43,7 @@ class _ActivatePageState extends State<ActivatePage>
             padding: const EdgeInsets.all(8.0),
             child: Wrap(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Consumer<LoginProvider>(
@@ -63,7 +62,7 @@ class _ActivatePageState extends State<ActivatePage>
                                 fontSize: 25,
                                 decorationThickness: 5),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           // Image.network(provider.imageUrl),
@@ -74,7 +73,7 @@ class _ActivatePageState extends State<ActivatePage>
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               provider.schoolName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,

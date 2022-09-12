@@ -22,6 +22,7 @@ class FeesProvider with ChangeNotifier {
   Future feesData() async {
     isLoading = true;
 
+    //await Future.delayed(const Duration(seconds: 2));
     //late FeeFeesInstallments feeFeesInstallments;
     //Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -70,7 +71,7 @@ class FeesProvider with ChangeNotifier {
         notifyListeners();
         // print(response.body);
       } else {
-        print("wrong");
+        print("Error in fee response");
       }
     } catch (e) {
       print(e);

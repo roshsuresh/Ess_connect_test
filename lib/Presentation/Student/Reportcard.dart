@@ -124,10 +124,10 @@ class ReportCard extends StatelessWidget {
                                                 .reportCardAttachment(reAttach);
                                             if (provider.extension.toString() ==
                                                 '.pdf') {
-                                              final result =
-                                                  provider.url.toString();
-                                              final name =
-                                                  provider.name.toString();
+                                              // final result =
+                                              //     provider.url.toString();
+                                              // final name =
+                                              //     provider.name.toString();
 
                                               Navigator.push(
                                                 context,
@@ -140,7 +140,7 @@ class ReportCard extends StatelessWidget {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        NoAttachmentScreen()),
+                                                        const NoAttachmentScreen()),
                                               );
                                             }
                                           },

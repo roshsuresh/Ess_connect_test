@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class SibingsProvider with ChangeNotifier {
+  bool isLoading = false;
   Future<List<SiblingsNameModel>> getSiblingName() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -38,6 +39,7 @@ class SibingsProvider with ChangeNotifier {
   }
 
   Future getSibling(BuildContext context, String childId) async {
+    isLoading = true;
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -73,6 +75,7 @@ class SibingsProvider with ChangeNotifier {
       // await Navigator.of(context).pushAndRemoveUntil(
       //     MaterialPageRoute(builder: (context) => StudentHome()),
       //     (Route<dynamic> route) => false);
+      isLoading = false;
       notifyListeners();
       // await  Provider.of<ProfileProvider>(context).profileData();
       //  Provider.of<LoginProvider>(context, listen: false).getToken(context);

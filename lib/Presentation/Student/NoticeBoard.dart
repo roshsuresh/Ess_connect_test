@@ -18,7 +18,7 @@ class NoticeBoard extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
-    final Color background = Colors.white;
+    const Color background = Colors.white;
     final Color fill1 = Color.fromARGB(255, 79, 97, 197);
     final Color fill2 = Color.fromARGB(255, 180, 103, 216);
     final List<Color> gradient = [
@@ -27,12 +27,12 @@ class NoticeBoard extends StatelessWidget {
       background,
       background,
     ];
-    final double fillPercent = 35;
-    final double fillStop = (100 - fillPercent) / 100;
+    const double fillPercent = 35;
+    const double fillStop = (100 - fillPercent) / 100;
     final List<double> stops = [0.0, fillStop, fillStop, 1.0];
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Notice Board',
         ),
         titleSpacing: 00.0,
@@ -123,7 +123,7 @@ class NoticeBoard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              //kWidth,
+                              kWidth,
                               Text(
                                 noticeresponse![index]['entryDate'] == null
                                     ? '--'
@@ -131,7 +131,7 @@ class NoticeBoard extends StatelessWidget {
                                         .toString(),
                                 style: TextStyle(fontSize: 12),
                               ),
-                              Spacer(),
+                              Spacer(), kWidth, kWidth, kWidth, kWidth,
                               Text(
                                 noticeresponse![index]['staffName'] == null
                                     ? '--'
@@ -167,7 +167,7 @@ class NoticeBoard extends StatelessWidget {
                                       );
                                     }
                                   },
-                                  child: Icon(Icons.file_download))
+                                  child: const Icon(Icons.file_download))
                             ],
                           )
                         ],

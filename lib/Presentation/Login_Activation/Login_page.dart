@@ -48,16 +48,14 @@ class _LoginPageState extends State<LoginPage> {
                               focusColor: Color.fromARGB(255, 213, 215, 218),
                               prefixIcon: Icon(
                                 Icons.person_outline_rounded,
-                                color: Colors.grey,
+                                color: UIGuide.light_Purple,
                               ),
-                              // errorText: "Please enter valid username",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                    color: Color.fromARGB(255, 144, 196, 238),
-                                    width: 1.0),
+                                    color: UIGuide.light_Purple, width: 1.0),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               fillColor: Colors.grey,
@@ -68,7 +66,9 @@ class _LoginPageState extends State<LoginPage> {
                                 fontFamily: "verdana_regular",
                                 fontWeight: FontWeight.w400,
                               ),
-                              labelText: 'Email'),
+                              labelText: 'Email',
+                              labelStyle:
+                                  TextStyle(color: UIGuide.light_Purple)),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter Email';
@@ -81,10 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: !_isObscure,
                           controller: _password,
                           decoration: InputDecoration(
-                            focusColor: Color.fromARGB(255, 213, 215, 218),
-                            prefixIcon: Icon(
-                              Icons.password_outlined,
-                              color: Colors.grey,
+                            focusColor:
+                                const Color.fromARGB(255, 213, 215, 218),
+                            prefixIcon: const Icon(
+                              Icons.password_sharp,
+                              color: UIGuide.light_Purple,
                             ),
                             // errorText: "Please enter valid username",
                             border: OutlineInputBorder(
@@ -92,8 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 123, 181, 228),
-                                  width: 1.0),
+                                  color: UIGuide.light_Purple, width: 1.0),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             fillColor: Colors.grey,
@@ -105,11 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.w400,
                             ),
                             labelText: 'Password',
+                            labelStyle:
+                                const TextStyle(color: UIGuide.light_Purple),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _isObscure
                                     ? Icons.visibility
                                     : Icons.visibility_off,
+                                color: UIGuide.light_Purple,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -131,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 38, 142, 228)),
+                                  backgroundColor: UIGuide.light_Purple),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   checkLogin(_username.text, _password.text);

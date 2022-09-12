@@ -46,8 +46,8 @@ class Attendence extends StatelessWidget {
                             children: [
                               Text(
                                   'Working Days : ${provider.workDays == null ? '--' : provider.workDays.toString()}'),
-                              Divider(),
-                              Divider(),
+                              const Divider(),
+                              const Divider(),
                               Text(
                                   'Days Present :  ${provider.presentDays == null ? '--' : provider.presentDays.toString()}')
                             ],
@@ -59,10 +59,10 @@ class Attendence extends StatelessWidget {
                             children: [
                               Text(
                                   'Days Absent : ${provider.absentDays == null ? '--' : provider.absentDays.toString()}'),
-                              Divider(),
-                              Divider(),
-                              Divider(),
-                              Divider(),
+                              const Divider(),
+                              const Divider(),
+                              const Divider(),
+                              const Divider(),
                               Text(
                                   'Percentage % : ${provider.attendancePercentage == null ? '--' : provider.attendancePercentage.toString()}')
                             ],

@@ -59,7 +59,7 @@ class NoticeProvider with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
         attachResponse = json.decode(response.body);
-        // // log(data.toString());
+        // log(data.toString());
         AttachmentModel attach = AttachmentModel.fromJson(data);
         extension = attach.extension;
         url = attach.url;

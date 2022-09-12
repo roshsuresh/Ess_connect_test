@@ -165,8 +165,7 @@ class Profile_Info extends StatelessWidget {
                 child: Container(
                   width: width,
                   height: 370,
-                  color: Color.fromARGB(255, 248, 240, 248),
-                  // Color.fromARGB(255, 207, 204, 207), // center container color
+                  color: const Color.fromARGB(255, 248, 240, 248),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -189,7 +188,7 @@ class Profile_Info extends StatelessWidget {
                             //  height: 36,
                           )),
                       Table(
-                        defaultColumnWidth: FixedColumnWidth(200.0),
+                        defaultColumnWidth: const FixedColumnWidth(200.0),
                         children: [
                           TableRow(
                             children: [

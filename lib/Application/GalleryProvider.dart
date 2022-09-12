@@ -69,7 +69,7 @@ class GalleryProvider with ChangeNotifier {
         // print(galleryphotosModel);
         notifyListeners();
       } else {
-        print("wrong2");
+        print("error in gallery response");
       }
     } catch (e) {
       print(e);
