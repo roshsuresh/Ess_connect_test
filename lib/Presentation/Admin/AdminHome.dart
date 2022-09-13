@@ -28,10 +28,9 @@ class AdminHome extends StatelessWidget {
       body: ListView(
         children: [
           const AdminProfileTop(),
-          const Flashnews(),
           Container(
             width: size.width,
-            height: size.height - 200,
+            height: size.height - 170,
             decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -870,6 +869,204 @@ class AdminHomeContent extends StatelessWidget {
                         kheight10,
                         const Text(
                           'NoticeBoard',
+                          style: TextStyle(fontSize: 11, color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(children: <Widget>[
+                Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                      child: const Divider(
+                        color: Colors.black,
+                        height: 36,
+                      )),
+                ),
+                const Text(
+                  "Users",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.purple, fontWeight: FontWeight.w900),
+                ),
+                Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                      child: const Divider(
+                        color: Colors.black,
+                        height: 36,
+                      )),
+                ),
+              ]),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              opacity: 20,
+                              image: AssetImage(
+                                'assets/Profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        kheight10,
+                        const Text(
+                          '  Create\nGuardian',
+                          style: TextStyle(fontSize: 11, color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReportCard()),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/Profile.png',
+                                ),
+                              ),
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                          ),
+                          kheight10,
+                          const Text(
+                            '  Merge\nGuardian',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              opacity: 20,
+                              image: AssetImage(
+                                'assets/Profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        kheight10,
+                        const Text(
+                          ' Change\nGuardian',
+                          style: TextStyle(fontSize: 11, color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              opacity: 20,
+                              image: AssetImage(
+                                'assets/Profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        kheight10,
+                        const Text(
+                          'Create\n Staff',
+                          style: TextStyle(fontSize: 11, color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              kheight10,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              opacity: 20,
+                              image: AssetImage(
+                                'assets/Profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        kheight10,
+                        const Text(
+                          'Change\n  Staff',
+                          style: TextStyle(fontSize: 11, color: Colors.black38),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              opacity: 20,
+                              image: AssetImage(
+                                'assets/Profile.png',
+                              ),
+                            ),
+                          ),
+                        ),
+                        kheight10,
+                        const Text(
+                          'Block \n Login',
                           style: TextStyle(fontSize: 11, color: Colors.black38),
                         )
                       ],

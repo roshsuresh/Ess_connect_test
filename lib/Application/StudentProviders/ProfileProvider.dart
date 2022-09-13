@@ -151,7 +151,7 @@ class ProfileProvider with ChangeNotifier {
         flashNewsModel = FlashNewsModel.fromJson(data);
         notifyListeners();
       } else {
-        print("Something went wrong");
+        print("Something went wrong in flashnews");
       }
     } catch (e) {
       print(e.toString());
