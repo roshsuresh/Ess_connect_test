@@ -3,8 +3,8 @@ import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Domain/Flashnews.dart';
-import '../Domain/profileModel.dart';
+import '../../Domain/Student/Flashnews.dart';
+import '../../Domain/Student/profileModel.dart';
 
 Map? mapResponse;
 Map? dataResponse;

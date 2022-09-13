@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:Ess_Conn/Domain/TimeTableModel.dart';
+import 'package:Ess_Conn/Domain/Student/TimeTableModel.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

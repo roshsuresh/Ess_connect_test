@@ -1,4 +1,4 @@
-import 'package:Ess_Conn/Application/TimetableProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
@@ -189,10 +189,10 @@ class PdfViewPages extends StatelessWidget {
       if (provider.extension.toString() == '.jpg') {
         final imgResult = provider.url.toString();
         return imageview(imgResult);
-      } else if (provider.extension.toString() == 'png') {
+      } else if (provider.extension.toString() == '.png') {
         final imgResult2 = provider.url.toString();
         return imageview(imgResult2);
-      } else if (provider.extension.toString() == 'jpeg') {
+      } else if (provider.extension.toString() == '.jpeg') {
         final imgResult3 = provider.url.toString();
         return imageview(imgResult3);
       } else {

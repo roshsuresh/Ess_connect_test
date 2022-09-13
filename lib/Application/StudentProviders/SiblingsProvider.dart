@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:Ess_Conn/Domain/SiblingsNameModel.dart';
-import 'package:Ess_Conn/Domain/SiblingsTokenModel.dart';
+import 'package:Ess_Conn/Domain/Student/SiblingsNameModel.dart';
+import 'package:Ess_Conn/Domain/Student/SiblingsTokenModel.dart';
 import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';

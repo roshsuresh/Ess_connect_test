@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:Ess_Conn/Domain/ReportCardModel.dart';
+import 'package:Ess_Conn/Domain/Student/ReportCardModel.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

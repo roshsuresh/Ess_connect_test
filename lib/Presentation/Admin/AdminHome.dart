@@ -2,30 +2,24 @@ import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
-import 'package:Ess_Conn/Presentation/Student/Gallery.dart';
-import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
+import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
+import 'package:Ess_Conn/Presentation/Student/PasswordChange.dart';
 import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
 import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
 import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
-import 'package:Ess_Conn/utils/constants.dart';
-import 'package:carousel_slider/carousel_options.dart';
+import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
+import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
+import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Application/StudentProviders/ProfileProvider.dart';
 import '../../Application/StudentProviders/TimetableProvider.dart';
-import 'NoticeBoard.dart';
-import 'PasswordChange.dart';
-import 'Stud_Calender.dart';
-import 'Stud_Notification.dart';
-import 'Student_home.dart';
-import 'TimeTable.dart';
+import '../Student/Stud_Calender.dart';
 
-class PaymentRough extends StatelessWidget {
-  PaymentRough({Key? key}) : super(key: key);
+class AdminHome extends StatelessWidget {
+  AdminHome({Key? key}) : super(key: key);
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -328,7 +322,7 @@ class AdminHomeContent extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PaymentRough()),
+                                builder: (context) => AdminHome()),
                           );
                         },
                         child: Column(

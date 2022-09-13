@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Application/LoginProvider.dart';
+import '../../Application/StudentProviders/LoginProvider.dart';
 import '../../Utils.dart';
 import '../../utils/constants.dart';
 

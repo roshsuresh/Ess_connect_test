@@ -1,4 +1,4 @@
-import 'package:Ess_Conn/Application/PasswordChangeProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/PasswordChangeProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';

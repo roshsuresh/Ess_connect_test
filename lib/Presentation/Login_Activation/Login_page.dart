@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Ess_Conn/Presentation/Admin/AdminHome.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:http/http.dart' as http;
 import 'package:Ess_Conn/Constants.dart';
@@ -6,8 +7,8 @@ import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Application/LoginProvider.dart';
-import '../../Domain/LoginModel.dart';
+import '../../Application/StudentProviders/LoginProvider.dart';
+import '../../Domain/Student/LoginModel.dart';
 import '../../utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -188,6 +189,14 @@ class _LoginPageState extends State<LoginPage> {
         await Future.delayed(const Duration(seconds: 3));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
+      } else if (parsedResponse['role'] == "SystemAdmin") {
+        if (isLoading) return;
+        setState(() {
+          isLoading = true;
+        });
+        await Future.delayed(const Duration(seconds: 3));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AdminHome()));
       } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));

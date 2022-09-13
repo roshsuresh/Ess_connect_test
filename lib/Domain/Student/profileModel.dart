@@ -26,7 +26,7 @@ class StudentProfileModel {
     required this.houseGroup,
     required this.classTeacher,
     required this.dob,
-    required this.studentPhoto,
+    this.studentPhoto,
     required this.studentPhotoId,
     required this.gender,
     required this.height,
@@ -122,7 +122,7 @@ class StudentPhoto {
     required this.url,
     required this.isTemporary,
     required this.isDeleted,
-    required this.images,
+    this.images,
     required this.createdAt,
     required this.id,
   });
@@ -165,10 +165,10 @@ class StudentPhoto {
 
 class Images {
   Images({
-    required this.fileId,
-    required this.dimension,
+    this.fileId,
+    this.dimension,
     this.url,
-    required this.id,
+    this.id,
   });
   String? fileId;
   String? dimension;

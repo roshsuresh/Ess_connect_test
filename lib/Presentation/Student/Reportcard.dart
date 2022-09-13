@@ -1,5 +1,5 @@
-import 'package:Ess_Conn/Application/NoticProvider.dart';
-import 'package:Ess_Conn/Application/ReportCardProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/NoticProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/ReportCardProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';

@@ -1,4 +1,4 @@
-import 'package:Ess_Conn/Application/GalleryProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/GalleryProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:Ess_Conn/Application/AttendenceProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/AttendenceProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

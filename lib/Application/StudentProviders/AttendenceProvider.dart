@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Ess_Conn/Domain/AttendenceModel.dart';
+import 'package:Ess_Conn/Domain/Student/AttendenceModel.dart';
 
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,6 @@ class AttendenceProvider with ChangeNotifier {
   double? attendancePercentage;
 
   Future attendenceList() async {
-    // await Future.delayed(const Duration(seconds: 2));
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',

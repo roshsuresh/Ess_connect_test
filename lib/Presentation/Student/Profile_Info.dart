@@ -1,4 +1,4 @@
-import 'package:Ess_Conn/Application/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';

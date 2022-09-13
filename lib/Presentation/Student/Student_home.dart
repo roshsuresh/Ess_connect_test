@@ -1,6 +1,6 @@
-import 'package:Ess_Conn/Application/ProfileProvider.dart';
-import 'package:Ess_Conn/Application/SiblingsProvider.dart';
-import 'package:Ess_Conn/Application/TimetableProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/SiblingsProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Application/GalleryProvider.dart';
+import '../../Application/StudentProviders/GalleryProvider.dart';
 
 class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
@@ -157,7 +157,7 @@ class StudentHome extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         opacity: 20,
-                                        image: const AssetImage(
+                                        image: AssetImage(
                                           'assets/notification.png',
                                         ),
                                       ),

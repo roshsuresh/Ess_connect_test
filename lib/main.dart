@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:Ess_Conn/Application/GalleryProvider.dart';
-import 'package:Ess_Conn/Application/PasswordChangeProvider.dart';
-import 'package:Ess_Conn/Application/ProfileProvider.dart';
-import 'package:Ess_Conn/Application/ReportCardProvider.dart';
-import 'package:Ess_Conn/Application/SiblingsProvider.dart';
-import 'package:Ess_Conn/Application/TimetableProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/GalleryProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/PasswordChangeProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/ReportCardProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/SiblingsProvider.dart';
+import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -18,11 +18,11 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Application/AttendenceProvider.dart';
-import 'Application/FeesProvider.dart';
-import 'Application/LoginProvider.dart';
+import 'Application/StudentProviders/AttendenceProvider.dart';
+import 'Application/StudentProviders/FeesProvider.dart';
+import 'Application/StudentProviders/LoginProvider.dart';
 
-import 'Application/NoticProvider.dart';
+import 'Application/StudentProviders/NoticProvider.dart';
 import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
 import 'Presentation/Login_Activation/Login_page.dart';
