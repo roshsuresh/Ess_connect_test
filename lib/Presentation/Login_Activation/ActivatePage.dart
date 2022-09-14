@@ -223,10 +223,11 @@ class _ActivatePageState extends State<ActivatePage>
                             child: Theme(
                                 data: Theme.of(context).copyWith(
                                   hintColor: Colors.black,
-                                  inputDecorationTheme: InputDecorationTheme(
-                                      border: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey))),
+                                  inputDecorationTheme:
+                                      const InputDecorationTheme(
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.grey))),
                                 ),
                                 child: secretKey(secretKeyController)),
                           ),

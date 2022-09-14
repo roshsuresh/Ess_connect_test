@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class NoticeBoard extends StatelessWidget {
-  NoticeBoard({Key? key}) : super(key: key);
+  const NoticeBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -37,7 +37,7 @@ class ProfileProvider with ChangeNotifier {
   dynamic motherMailId;
   String? motherMobileno;
   String? studPhoto;
-
+  bool isLoading = false;
   Future<StudProModel> getProfile() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -78,15 +78,14 @@ class ProfileProvider with ChangeNotifier {
         //  log(jsonData.toString());
         //  print("corect..........");
         mapResponse = json.decode(response.body);
-        dataResponse = mapResponse!['studentDetails'];
-        studResponse = dataResponse!['studentPhoto'];
+        dataResponse = await mapResponse!['studentDetails'];
+        studResponse = await dataResponse!['studentPhoto'];
         // print(studResponse);
         // print("corect..........");
         print(dataResponse);
         StudentProfileModel std =
-            await StudentProfileModel.fromJson(mapResponse!['studentDetails']);
-        StudentPhoto asa =
-            await StudentPhoto.fromJson(dataResponse!['studentPhoto']);
+            StudentProfileModel.fromJson(mapResponse!['studentDetails']);
+        StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
         studPhoto = asa.url;
 
         // log(studPhoto.toString());

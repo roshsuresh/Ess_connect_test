@@ -10,8 +10,6 @@ class PayFee extends StatelessWidget {
 
   var size, height, width;
 
-  bool isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -38,9 +36,9 @@ class PayFee extends StatelessWidget {
               indicatorWeight: 5,
               tabs: [
                 Tab(
-                  text: "Install-wise Fee",
+                  text: "Installment",
                 ),
-                Tab(text: "Partial Payment"),
+                Tab(text: "Partial "),
               ],
             ),
           ),
@@ -77,6 +75,10 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
   final List _selecteCategorys = [];
 
   double totalFees = 0;
+
+  void _selectAll(int index) {
+    _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
+  }
 
   void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
     if (selected == true) {
@@ -149,22 +151,29 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     });
   }
 
+  bool sele = true;
   @override
   Widget build(BuildContext context) {
-    Provider.of<FeesProvider>(context, listen: false).feesData();
+    // final _provider = Provider.of<FeesProvider>(context, listen: false);
+    // _provider.feesData();
+    Provider.of<FeesProvider>(context).feesData();
     return Stack(
       children: [
         ListView(
           children: [
             kheight20,
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10),
-              child: Text(
-                'Installment',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    color: UIGuide.light_Purple),
+              child: Row(
+                children: [
+                  Text(
+                    'Installment',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: UIGuide.light_Purple),
+                  ),
+                ],
               ),
             ),
             Scrollbar(
@@ -182,7 +191,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                               feeResponse == null ? 0 : feeResponse!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CheckboxListTile(
-                              activeColor: Color.fromARGB(255, 238, 236, 236),
+                              activeColor:
+                                  const Color.fromARGB(255, 238, 236, 236),
                               checkColor: UIGuide.light_Purple,
                               selectedTileColor: UIGuide.light_Purple,
                               value: _selecteCategorys.contains(

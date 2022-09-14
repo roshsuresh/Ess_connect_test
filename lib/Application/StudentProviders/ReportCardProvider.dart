@@ -11,7 +11,7 @@ List reportResponse = [];
 class ReportCardProvider with ChangeNotifier {
   String? name;
   String? extension;
-
+  bool isLoading = false;
   String? url;
   Future getReportCard() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -19,6 +19,7 @@ class ReportCardProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
+    isLoading = true;
     var response = await http.get(
         Uri.parse(
             "${UIGuide.baseURL}/mobileapp/parents/tabulation/initialvalues"),
@@ -27,6 +28,7 @@ class ReportCardProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         reportResponse = data['reportCardList'];
+        isLoading = false;
         notifyListeners();
       } else {
         print("Error in response");

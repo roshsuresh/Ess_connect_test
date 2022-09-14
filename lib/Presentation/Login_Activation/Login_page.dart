@@ -12,7 +12,7 @@ import '../../Domain/Student/LoginModel.dart';
 import '../../utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -28,13 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isLoading
-          ? LoadingIcon()
+          ? const LoadingIcon()
           : Center(
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(15),
-                    color: Color.fromARGB(31, 222, 245, 248)),
+                    color: const Color.fromARGB(31, 222, 245, 248)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Form(
@@ -46,8 +46,9 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                           controller: _username,
                           decoration: InputDecoration(
-                              focusColor: Color.fromARGB(255, 213, 215, 218),
-                              prefixIcon: Icon(
+                              focusColor:
+                                  const Color.fromARGB(255, 213, 215, 218),
+                              prefixIcon: const Icon(
                                 Icons.person_outline_rounded,
                                 color: UIGuide.light_Purple,
                               ),
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               labelText: 'Email',
                               labelStyle:
-                                  TextStyle(color: UIGuide.light_Purple)),
+                                  const TextStyle(color: UIGuide.light_Purple)),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter Email';

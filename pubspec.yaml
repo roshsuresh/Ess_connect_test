@@ -31,6 +31,7 @@ dependencies:
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   dependencies: null
+  dropdown_button2: ^1.8.0
   easy_splash_screen: any
   firebase: ^9.0.3
   firebase_core: ^1.20.0
@@ -50,7 +51,7 @@ dependencies:
   rect_getter: ^1.1.0
   shared_preferences: ^2.0.9
   syncfusion_flutter_pdfviewer: ^20.2.46-beta
-  url_launcher: any
+  url_launcher: ^6.1.5
   webview_flutter: any
 
 dev_dependencies:

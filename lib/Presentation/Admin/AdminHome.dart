@@ -1,4 +1,5 @@
 import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_Conn/Presentation/Admin/StudentReport.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -100,7 +101,8 @@ class AdminHomeContent extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Profile_Info()),
+                        MaterialPageRoute(
+                            builder: (context) => StudentReport()),
                       );
                     },
                     child: Padding(
@@ -122,8 +124,8 @@ class AdminHomeContent extends StatelessWidget {
                             ),
                           ),
                           kheight10,
-                          Center(
-                            child: const Text(
+                          const Center(
+                            child: Text(
                               'Student \n Report',
                               style: TextStyle(
                                   fontSize: 11, color: Colors.black38),
@@ -1041,7 +1043,7 @@ class AdminHomeContent extends StatelessWidget {
                         ),
                         kheight10,
                         const Text(
-                          'Change\n  Staff',
+                          'Change Staff',
                           style: TextStyle(fontSize: 11, color: Colors.black38),
                         )
                       ],
@@ -1066,7 +1068,7 @@ class AdminHomeContent extends StatelessWidget {
                         ),
                         kheight10,
                         const Text(
-                          'Block \n Login',
+                          'Block Login',
                           style: TextStyle(fontSize: 11, color: Colors.black38),
                         )
                       ],

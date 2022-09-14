@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,16 +19,16 @@ class FeesProvider with ChangeNotifier {
   bool? allowPartialPayment;
   // List<FeeFeesInstallments> feeList = [];
   Future feesData() async {
-    isLoading = true;
-
     //await Future.delayed(const Duration(seconds: 2));
     //late FeeFeesInstallments feeFeesInstallments;
     //Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    isLoading = true;
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
+
     // print(headers);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/feevalues"),
@@ -41,6 +40,7 @@ class FeesProvider with ChangeNotifier {
         var jsonData = json.decode(response.body);
         //  log(jsonData.toString());
         print("Fee Response..........");
+
         mapResponses = json.decode(response.body);
         dataResponss = mapResponses!['onlineFeePaymentStudentDetails'];
         feeResponse = dataResponss!['feeFeesInstallments'];
@@ -69,6 +69,7 @@ class FeesProvider with ChangeNotifier {
         // print(installmentTerm);
         isLoading = false;
         notifyListeners();
+
         // print(response.body);
       } else {
         print("Error in fee response");

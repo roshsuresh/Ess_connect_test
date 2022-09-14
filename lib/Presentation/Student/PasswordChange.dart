@@ -98,7 +98,7 @@ class PasswordChange extends StatelessWidget {
                       obscureText: !_isObscure,
                       controller: _passwordNew,
                       decoration: InputDecoration(
-                        focusColor: Color.fromARGB(255, 213, 215, 218),
+                        focusColor: const Color.fromARGB(255, 213, 215, 218),
                         prefixIcon: const Icon(
                           Icons.key_outlined,
                           color: Colors.grey,
@@ -184,9 +184,9 @@ class PasswordChange extends StatelessWidget {
                       height: 60,
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
-                          print('object');
+                          print('validated');
                         } else {
-                          print('Error in coonection');
+                          print('Error in conection');
                         }
                       },
                       child: const Text(
