@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:Ess_Conn/Presentation/Admin/AdminHome.dart';
+import 'package:Ess_Conn/Presentation/Staff/StaffHome.dart';
 import 'package:Ess_Conn/utils/LoadingIndication.dart';
 import 'package:http/http.dart' as http;
 import 'package:Ess_Conn/Constants.dart';
@@ -32,8 +33,6 @@ class _LoginPageState extends State<LoginPage> {
           : Center(
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),
                     color: const Color.fromARGB(31, 222, 245, 248)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -198,6 +197,14 @@ class _LoginPageState extends State<LoginPage> {
         await Future.delayed(const Duration(seconds: 3));
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => AdminHome()));
+      } else if (parsedResponse['role'] == "Teacher") {
+        if (isLoading) return;
+        setState(() {
+          isLoading = true;
+        });
+        await Future.delayed(const Duration(seconds: 3));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => StaffHome()));
       } else {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));

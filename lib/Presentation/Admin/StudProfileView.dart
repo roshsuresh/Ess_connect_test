@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/constants.dart';
 
@@ -205,7 +206,7 @@ class StudProfileView extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          'KMUP SCHOOL, ',
+                          'KMUP SCHOOL',
                           overflow: TextOverflow.clip,
                           style: TextStyle(fontSize: 12),
                         ),
@@ -213,21 +214,26 @@ class StudProfileView extends StatelessWidget {
                     ],
                   ),
                   kheight10,
-                  Row(
-                    children: const [
-                      Text(
-                        'Phone No : ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 13),
-                      ),
-                      Flexible(
-                        child: Text(
-                          '+91 9855464885',
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(fontSize: 12),
+                  GestureDetector(
+                    onTap: () {
+                      _makingPhoneCall();
+                    },
+                    child: Row(
+                      children: const [
+                        Text(
+                          'Phone No : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 13),
                         ),
-                      )
-                    ],
+                        Flexible(
+                          child: Text(
+                            '+91 9855464885',
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -236,5 +242,14 @@ class StudProfileView extends StatelessWidget {
         ],
       ),
     ));
+  }
+
+  _makingPhoneCall() async {
+    var url = Uri.parse("tel:807812564");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

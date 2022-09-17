@@ -19,11 +19,11 @@ class FeesProvider with ChangeNotifier {
   bool? allowPartialPayment;
   // List<FeeFeesInstallments> feeList = [];
   Future feesData() async {
-    //await Future.delayed(const Duration(seconds: 2));
-    //late FeeFeesInstallments feeFeesInstallments;
-    //Map<String, dynamic> data = await parseJWT();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
     isLoading = true;
+    notifyListeners();
+
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'

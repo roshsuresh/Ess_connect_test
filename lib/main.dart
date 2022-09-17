@@ -7,6 +7,7 @@ import 'package:Ess_Conn/Application/StudentProviders/ReportCardProvider.dart';
 import 'package:Ess_Conn/Application/StudentProviders/SiblingsProvider.dart';
 import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
 import 'package:Ess_Conn/Presentation/Admin/AdminHome.dart';
+import 'package:Ess_Conn/Presentation/Staff/StaffHome.dart';
 import 'package:Ess_Conn/routes.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -131,8 +132,8 @@ class _SplashFuturePageState extends State<SplashFuturePage> {
         var data = await parseJWT();
         if (data['role'] == "SystemAdmin") {
           return Future.value(AdminHome());
-        } else if (data['role'] == "Staff") {
-          return Future.value(LoginPage());
+        } else if (data['role'] == "Teacher") {
+          return Future.value(StaffHome());
         } else {
           return Future.value(StudentHome());
         }

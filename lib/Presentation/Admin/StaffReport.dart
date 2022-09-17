@@ -1,18 +1,11 @@
 import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/Presentation/Admin/StudProfileView.dart';
 import 'package:Ess_Conn/utils/constants.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class StudentReport extends StatefulWidget {
-  const StudentReport({Key? key}) : super(key: key);
+class StaffReport extends StatelessWidget {
+  const StaffReport({Key? key}) : super(key: key);
 
-  @override
-  State<StudentReport> createState() => _StudentReportState();
-}
-
-class _StudentReportState extends State<StudentReport> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -46,24 +39,15 @@ class _StudentReportState extends State<StudentReport> {
               actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
             ),
             body: TabBarView(children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const StudProfileView()),
-                  );
-                },
-                child: CurrentStudying(),
-              ),
-              CurrentStudying(),
-              CurrentStudying(),
+              TeachingStaff(),
+              TeachingStaff(),
+              TeachingStaff(),
             ])));
   }
 }
 
-class CurrentStudying extends StatelessWidget {
-  const CurrentStudying({Key? key}) : super(key: key);
+class TeachingStaff extends StatelessWidget {
+  const TeachingStaff({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +61,7 @@ class CurrentStudying extends StatelessWidget {
             kheight10,
             Container(
               width: size.width - 10,
-              height: 90,
+              height: 110,
               decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 236, 233, 233),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -92,7 +76,8 @@ class CurrentStudying extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: Color.fromARGB(255, 236, 233, 233),
                           image: DecorationImage(
-                              image: AssetImage('assets/studentLogo.png')),
+                              image: NetworkImage(
+                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwaLDKaK49tsHmdMGOrmTdns5qiw080F2Yw&usqp=CAU')),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                   ),
@@ -117,14 +102,14 @@ class CurrentStudying extends StatelessWidget {
                                     fontSize: 12,
                                     color: Colors.black,
                                   ),
-                                  text: "AADAM ISWAR AADHITHYA UNNI"),
+                                  text: "AADHITHYA "),
                             ),
                           ],
                         ),
                         Row(
                           children: [
                             const Text(
-                              'Roll No : ',
+                              'Section : ',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
@@ -138,40 +123,15 @@ class CurrentStudying extends StatelessWidget {
                                   fontSize: 12,
                                   color: Colors.black,
                                 ),
-                                text: "214",
+                                text: "VI-A",
                               ),
-                            ),
-                            kWidth,
-                            kWidth,
-                            Row(
-                              children: [
-                                Text(
-                                  'Division : ',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13),
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  strutStyle: const StrutStyle(fontSize: 8.0),
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                    text: "VII",
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            const Text(
-                              'Adm No : ',
+                            Text(
+                              'Designation : ',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 13),
@@ -185,7 +145,51 @@ class CurrentStudying extends StatelessWidget {
                                   fontSize: 12,
                                   color: Colors.black,
                                 ),
-                                text: "2154",
+                                text: "HINDI(HR)",
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Row(
+                        //   children: [
+                        //     const Text(
+                        //       'Email : ',
+                        //       textAlign: TextAlign.start,
+                        //       style: TextStyle(
+                        //           fontWeight: FontWeight.w500, fontSize: 13),
+                        //     ),
+                        //     RichText(
+                        //       overflow: TextOverflow.ellipsis,
+                        //       maxLines: 1,
+                        //       strutStyle: const StrutStyle(fontSize: 8.0),
+                        //       text: TextSpan(
+                        //         style: const TextStyle(
+                        //           fontSize: 12,
+                        //           color: Colors.black,
+                        //         ),
+                        //         text: "adhithya@gmail.com",
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        Row(
+                          children: [
+                            const Text(
+                              'Staff Role : ',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 13),
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              strutStyle: const StrutStyle(fontSize: 8.0),
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
+                                text: "Teacher",
                               ),
                             ),
                           ],

@@ -19,10 +19,10 @@ class PayFee extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text(''),
+            title: Text('Payment'),
             titleSpacing: 00.0,
             centerTitle: true,
-            toolbarHeight: 0.2,
+            toolbarHeight: 50.2,
             toolbarOpacity: 0.8,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -30,15 +30,24 @@ class PayFee extends StatelessWidget {
                   bottomLeft: Radius.circular(25)),
             ),
             backgroundColor: UIGuide.light_Purple,
-            bottom: const TabBar(
+            bottom: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorColor: Colors.white,
-              indicatorWeight: 5,
+              indicatorColor: UIGuide.light_Purple,
+              indicatorWeight: 0.1,
               tabs: [
                 Tab(
                   text: "Installment",
                 ),
-                Tab(text: "Partial "),
+                Consumer<FeesProvider>(builder: ((context, value, child) {
+                  if (value.allowPartialPayment == false) {
+                    return Tab(
+                      text: 'Partial',
+                    );
+                  } else {
+                    return Text('');
+                  }
+                }))
+                //Tab(text: "Partial "),
               ],
             ),
           ),
@@ -46,13 +55,10 @@ class PayFee extends StatelessWidget {
             children: [
               FeePayInstallment(),
               Consumer<FeesProvider>(builder: ((context, value, child) {
-                if (value.allowPartialPayment == true) {
+                if (value.allowPartialPayment == false) {
                   return FeePartialPayment();
-                } else {
-                  return Center(
-                    child: Text('Option Not Available'),
-                  );
                 }
+                return Text('');
               }))
             ],
           )),
@@ -151,7 +157,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     });
   }
 
-  bool sele = true;
+  bool enable = true;
   @override
   Widget build(BuildContext context) {
     // final _provider = Provider.of<FeesProvider>(context, listen: false);
@@ -197,13 +203,36 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                               selectedTileColor: UIGuide.light_Purple,
                               value: _selecteCategorys.contains(
                                   feeResponse![index]['installmentName']),
-                              onChanged: (bool? selected) {
-                                _onFeeSelected(
-                                    selected!,
-                                    feeResponse![index]['installmentName'],
-                                    index,
-                                    feeResponse![index]['installmentNetDue']);
-                                print(selected);
+                              onChanged: (bool? selected) async {
+                                // selected == true;
+
+                                for (int i = 0; i <= feeResponse!.length; i++) {
+                                  _onFeeSelected(
+                                      selected!,
+                                      feeResponse![index]['installmentName'],
+                                      index,
+                                      feeResponse![index]['installmentNetDue']);
+                                  print(selected);
+                                }
+                                // if (index == 0) {
+                                //   enable = true;
+                                //   _onFeeSelected(
+                                //       selected!,
+                                //       feeResponse![index]['installmentName'],
+                                //       index,
+                                //       feeResponse![index]['installmentNetDue']);
+                                //   print(selected);
+                                // }
+                                // // await index == 0 && selected == true;
+                                // else if (index == 1 && enable == false) {
+                                //   _onFeeSelected(
+                                //       selected!,
+                                //       feeResponse![index]['installmentName'],
+                                //       index,
+                                //       feeResponse![index]
+                                //           ['installmentNetDue']);
+                                //   print(selected);
+                                // }
                               },
                               title: Text(
                                 feeResponse![index]['installmentNetDue']
@@ -360,7 +389,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 80,
             )
           ],

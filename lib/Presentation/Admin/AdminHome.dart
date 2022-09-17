@@ -1,5 +1,10 @@
 import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_Conn/Presentation/Admin/FeeReport.dart';
+import 'package:Ess_Conn/Presentation/Admin/StaffInfo.dart';
+import 'package:Ess_Conn/Presentation/Admin/StaffReport.dart';
+import 'package:Ess_Conn/Presentation/Admin/StudentFeeDetails.dart';
 import 'package:Ess_Conn/Presentation/Admin/StudentReport.dart';
+import 'package:Ess_Conn/Presentation/Admin/ToGuardian.dart';
 import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
 import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
 import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
@@ -290,30 +295,39 @@ class AdminHomeContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/pay.png',
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const StaffInfo()),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 40,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  opacity: 20,
+                                  image: AssetImage(
+                                    'assets/pay.png',
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          kheight10,
-                          const Text(
-                            '       Staff \n Information',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
+                            kheight10,
+                            const Text(
+                              '       Staff \n Information',
+                              style: TextStyle(
+                                  fontSize: 11, color: Colors.black38),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -323,7 +337,7 @@ class AdminHomeContent extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AdminHome()),
+                                builder: (context) => const StaffReport()),
                           );
                         },
                         child: Column(
@@ -459,7 +473,7 @@ class AdminHomeContent extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NoticeBoard()),
+                        MaterialPageRoute(builder: (context) => FeeReport()),
                       );
                     },
                     child: Padding(
@@ -498,7 +512,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Stud_Calender()),
+                              builder: (context) => const StudFeeDetails()),
                         );
                       },
                       child: Column(
@@ -521,7 +535,7 @@ class AdminHomeContent extends StatelessWidget {
                             '    Student \nFees Report',
                             style:
                                 TextStyle(fontSize: 11, color: Colors.black38),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -739,8 +753,7 @@ class AdminHomeContent extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReportCard()),
+                          MaterialPageRoute(builder: (context) => ToGuardian()),
                         );
                       },
                       child: Column(
