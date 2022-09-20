@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Ess_Conn/Application/Staff_Providers/StaffProfile.dart';
 import 'package:Ess_Conn/Application/StudentProviders/GalleryProvider.dart';
 import 'package:Ess_Conn/Application/StudentProviders/PasswordChangeProvider.dart';
 import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
@@ -92,6 +93,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => Timetableprovider()),
         ChangeNotifierProvider(create: (context) => PasswordChangeprovider()),
         ChangeNotifierProvider(create: (context) => SibingsProvider()),
+        ChangeNotifierProvider(create: (context) => StaffProfileProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

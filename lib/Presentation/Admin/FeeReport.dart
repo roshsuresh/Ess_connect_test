@@ -231,9 +231,7 @@ class _MultiSelectState extends State<MultiSelect> {
       _items.forEach((element) {});
       isselectAll = false;
     } else {
-      _items.forEach((element) {
-        ;
-      });
+      _items.forEach((element) {});
       isselectAll = true;
     }
   }

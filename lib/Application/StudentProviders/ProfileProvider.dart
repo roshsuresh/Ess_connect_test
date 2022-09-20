@@ -74,14 +74,14 @@ class ProfileProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         // print("corect");
-        var jsonData = json.decode(response.body);
+        var jsonData = await json.decode(response.body);
         //  log(jsonData.toString());
         //  print("corect..........");
-        mapResponse = json.decode(response.body);
+        mapResponse = await json.decode(response.body);
         dataResponse = await mapResponse!['studentDetails'];
         studResponse = await dataResponse!['studentPhoto'];
         // print(studResponse);
-        // print("corect..........");
+        print("corect..........");
         print(dataResponse);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);

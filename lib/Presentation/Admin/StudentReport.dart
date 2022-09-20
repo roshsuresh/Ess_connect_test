@@ -5,14 +5,9 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class StudentReport extends StatefulWidget {
+class StudentReport extends StatelessWidget {
   const StudentReport({Key? key}) : super(key: key);
 
-  @override
-  State<StudentReport> createState() => _StudentReportState();
-}
-
-class _StudentReportState extends State<StudentReport> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

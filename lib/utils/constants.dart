@@ -31,7 +31,7 @@ class UIGuide {
   static const Color PRIMARY2 = Color(0XFF59081b);
   static const Color PRIMARY3 = Color(0XFFff6699);
   static const Color light_black = Color(0xff292C31);
-  static const Color light_Purple = Color.fromARGB(255, 136, 55, 243);
+  static const Color light_Purple = Color.fromARGB(255, 55, 89, 243);
 
   static const Color primary4 = Color(0xff17a2b8);
   Widget sizer20 = const SizedBox(
