@@ -597,8 +597,8 @@ class StaffProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<StaffProfileProvider>(context, listen: false)
-        .staff_profileData();
+    // Provider.of<StaffProfileProvider>(context, listen: false)
+    //     .staff_profileData();
 
     var size = MediaQuery.of(context).size;
     const Color background = Colors.white;

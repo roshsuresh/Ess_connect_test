@@ -1,8 +1,10 @@
+import 'package:Ess_Conn/Application/Staff_Providers/StudListProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/constants.dart';
@@ -59,91 +61,269 @@ class StudReport extends StatelessWidget {
   }
 }
 
-class StudCurrentStudying extends StatelessWidget {
+class StudCurrentStudying extends StatefulWidget {
   const StudCurrentStudying({Key? key}) : super(key: key);
 
   @override
+  State<StudCurrentStudying> createState() => _StudCurrentStudyingState();
+}
+
+class _StudCurrentStudyingState extends State<StudCurrentStudying> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<StudReportListProvider_stf>(context, listen: false);
+
+      p.clearAllFilters();
+      p.selectedCourse.clear();
+      p.courseClear();
+      p.getCourseList();
+    });
+  }
+
+  final courseController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: 2,
-      itemBuilder: (context, index) {
-        return Column(
+    return ListView(
+      children: [
+        kheight10,
+        Row(
           children: [
-            kheight10,
-            Container(
-              width: size.width - 10,
-              height: 90,
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 236, 233, 233),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  kWidth,
-                  Center(
-                    child: Container(
-                      width: 70,
-                      height: 70,
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 236, 233, 233),
-                          image: DecorationImage(
-                              image: AssetImage('assets/studentLogo.png')),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.45,
+              child: Consumer<StudReportListProvider_stf>(
+                  builder: (context, snapshot, child) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.courselist.length,
+                                  itemBuilder: (context, index) {
+                                    print(snapshot.courselist.length);
+                                    snapshot.removeCourseAll();
+                                    return ListTile(
+                                      selectedTileColor: Colors.blue.shade100,
+                                      selectedColor: UIGuide.PRIMARY2,
+                                      selected: snapshot.isCourseSelected(
+                                          snapshot.courselist[index]),
+                                      onTap: () {
+                                        print(snapshot.isCourseSelected(
+                                            snapshot.courselist[index]));
+                                        print(snapshot.courselist.length);
+                                        courseController.text =
+                                            snapshot.courselist[index].name;
+                                        snapshot.addSelectedCourse(
+                                            snapshot.courselist[index]);
+                                        print(snapshot.courselist[index].name);
+                                        Navigator.of(context).pop();
+                                      },
+                                      title:
+                                          Text(snapshot.courselist[index].name),
+                                    );
+                                  }));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      controller: courseController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 238, 237, 237),
+                        border: OutlineInputBorder(),
+                        labelText: "Select Course",
+                        hintText: "Course",
+                      ),
+                      enabled: false,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              'Name : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              strutStyle: const StrutStyle(fontSize: 8.0),
-                              text: TextSpan(
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                  ),
-                                  text: "AADAM ISWAR AADHITHYA UNNI"),
-                            ),
-                          ],
+                );
+              }),
+            ),
+            Spacer(),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.45,
+              child: Consumer<StudReportListProvider_stf>(
+                  builder: (context, snapshot, child) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: ListView.builder(
+                                itemCount: snapshot.courselist.length,
+                                itemBuilder: (context, index) {
+                                  print(snapshot.courselist.length);
+                                  //  snap.removeCourseAll();
+                                  return ListTile(
+                                    selectedTileColor: Colors.blue.shade100,
+                                    selectedColor: UIGuide.PRIMARY2,
+                                    // selected: snapshot.isCourseSelected(
+                                    //     snapshot.courselist[index]),
+                                    onTap: () {
+                                      print(snapshot.courselist.length);
+                                      // courseController.text =
+                                      //     snapshot.courselist[index].name;
+                                      // snapshot.addSelectedCourse(
+                                      //     snapshot.courselist[index]);
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    title:
+                                        Text(snapshot.courselist[index].name),
+                                  );
+                                }),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      //  controller: courseController,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color.fromARGB(255, 238, 237, 237),
+                        border: OutlineInputBorder(),
+                        labelText: "Select Division",
+                        hintText: "Division",
+                      ),
+                      enabled: false,
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MaterialButton(
+              child: const Text('View'),
+              color: Colors.grey,
+              onPressed: (() {}),
+            ),
+          ],
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                kheight10,
+                Container(
+                  width: size.width - 10,
+                  height: 90,
+                  decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 236, 233, 233),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      kWidth,
+                      Center(
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 236, 233, 233),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/studentLogo.png')),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                         ),
-                        Row(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Roll No : ',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              strutStyle: const StrutStyle(fontSize: 8.0),
-                              text: const TextSpan(
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                ),
-                                text: "214",
-                              ),
-                            ),
-                            kWidth,
-                            kWidth,
                             Row(
                               children: [
-                                Text(
-                                  'Division : ',
+                                const Text(
+                                  'Name : ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  strutStyle: const StrutStyle(fontSize: 8.0),
+                                  text: TextSpan(
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                      ),
+                                      text: "AADAM ISWAR AADHITHYA UNNI"),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Roll No : ',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13),
+                                ),
+                                RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  strutStyle: const StrutStyle(fontSize: 8.0),
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                    text: "214",
+                                  ),
+                                ),
+                                kWidth,
+                                kWidth,
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Division : ',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13),
+                                    ),
+                                    RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      strutStyle:
+                                          const StrutStyle(fontSize: 8.0),
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
+                                        text: "VII",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Adm No : ',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -158,77 +338,56 @@ class StudCurrentStudying extends StatelessWidget {
                                       fontSize: 12,
                                       color: Colors.black,
                                     ),
-                                    text: "VII",
+                                    text: "2154",
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              'Adm No : ',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              strutStyle: const StrutStyle(fontSize: 8.0),
-                              text: TextSpan(
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                ),
-                                text: "2154",
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _makingPhoneCall();
-                          },
-                          child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.center,
-                            //crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text(
-                                'Phone : ',
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                              RichText(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                strutStyle: const StrutStyle(fontSize: 8.0),
-                                text: TextSpan(
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black,
+                            GestureDetector(
+                              onTap: () {
+                                _makingPhoneCall();
+                              },
+                              child: Row(
+                                //mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Text(
+                                    'Phone : ',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13),
                                   ),
-                                  text: "9547812154",
-                                ),
+                                  RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    strutStyle: const StrutStyle(fontSize: 8.0),
+                                    text: TextSpan(
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                      text: "9547812154",
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.phone,
+                                    size: 17,
+                                  )
+                                ],
                               ),
-                              const Icon(
-                                Icons.phone,
-                                size: 17,
-                              )
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        );
-      },
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 

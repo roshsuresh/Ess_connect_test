@@ -1,13 +1,39 @@
+import 'package:Ess_Conn/Application/Staff_Providers/MarkEntryProvider.dart';
+import 'package:Ess_Conn/Application/Staff_Providers/StudListProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 
-class MarkEntry extends StatelessWidget {
+class MarkEntry extends StatefulWidget {
   const MarkEntry({Key? key}) : super(key: key);
+
+  @override
+  State<MarkEntry> createState() => _MarkEntryState();
+}
+
+class _MarkEntryState extends State<MarkEntry> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<MarkEntryProvider>(context, listen: false);
+
+      p.clearAllFilters();
+      p.selectedCourse.clear();
+      p.courseClear();
+      p.getMarkEntryInitialValues();
+      //p.getMarkEntryDivisionValues();
+    });
+  }
+
+  String courseId = '';
+  final markEntryInitialValuesController = TextEditingController();
+  final markEntryDivisionListController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,90 +59,395 @@ class MarkEntry extends StatelessWidget {
         children: [
           Row(
             children: [
-              MaterialButton(
-                minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    Text('Select Course'),
-                    // Icon(Icons.arrow_downward_outlined)
-                  ],
-                ),
-                color: Colors.white70,
-                onPressed: (() {}),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<MarkEntryProvider>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot
+                                          .markEntryInitialValues.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot
+                                            .markEntryInitialValues.length);
+                                        snapshot.removeCourseAll();
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isCourseSelected(snapshot
+                                                          .markEntryInitialValues[
+                                                      index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .markEntryInitialValues
+                                                    .length);
+                                                markEntryInitialValuesController
+                                                    .text = snapshot
+                                                        .markEntryInitialValues[
+                                                            index]
+                                                        .courseName ??
+                                                    '--';
+                                                courseId = snapshot
+                                                        .markEntryInitialValues[
+                                                            index]
+                                                        .id ??
+                                                    -snapshot.addSelectedCourse(
+                                                        snapshot.markEntryInitialValues[
+                                                            index]);
+                                                await Provider.of<
+                                                            MarkEntryProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .getMarkEntryDivisionValues(
+                                                        courseId);
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot
+                                                        .markEntryInitialValues[
+                                                            index]
+                                                        .courseName ??
+                                                    '--',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextField(
+                        controller: markEntryInitialValuesController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 238, 237, 237),
+                          border: OutlineInputBorder(),
+                          labelText: "Select Course",
+                          hintText: "Course",
+                        ),
+                        enabled: false,
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
-              MaterialButton(
-                minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    const Text('Select Division'),
-                    //  Icon(Icons.arrow_downward_outlined)
-                  ],
-                ),
-                color: Colors.white70,
-                onPressed: (() {}),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<MarkEntryProvider>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          snapshot.markEntryDivisionList.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot
+                                            .markEntryDivisionList.length);
+                                        snapshot.removeDivisionAll();
+                                        return ListTile(
+                                          selectedTileColor:
+                                              Colors.blue.shade100,
+                                          selectedColor: UIGuide.PRIMARY2,
+                                          selected: snapshot.isDivisonSelected(
+                                              snapshot.markEntryDivisionList[
+                                                  index]),
+                                          onTap: () {
+                                            print(snapshot
+                                                .markEntryDivisionList.length);
+                                            markEntryDivisionListController
+                                                .text = snapshot
+                                                    .markEntryDivisionList[
+                                                        index]
+                                                    .text ??
+                                                '---';
+                                            snapshot.addSelectedDivision(
+                                                snapshot.markEntryDivisionList[
+                                                    index]);
+
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(snapshot
+                                                  .markEntryDivisionList[index]
+                                                  .text ??
+                                              '---'),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextField(
+                        controller: markEntryDivisionListController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 238, 237, 237),
+                          border: OutlineInputBorder(),
+                          labelText: "Select Division",
+                          hintText: "Division",
+                        ),
+                        enabled: false,
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
           Row(
             children: [
-              MaterialButton(
-                minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    Text('Part'),
-                    //Icon(Icons.arrow_downward_outlined)
-                  ],
-                ),
-                color: Colors.white70,
-                onPressed: (() {}),
+              // MaterialButton(
+              //   minWidth: size.width - 200,
+              //   child: Row(
+              //     children: [
+              //       Text('Select Course'),
+              //       //Icon(Icons.arrow_downward_outlined)
+              //     ],
+              //   ),
+              //   color: Colors.white70,
+              //   onPressed: (() {}),
+              // ),
+
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: ListView.builder(
+                                    itemCount: snapshot.courselist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.courselist.length);
+                                      //  snap.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selected: snapshot.isCourseSelected(
+                                        //     snapshot.courselist[index]),
+                                        onTap: () {
+                                          print(snapshot.courselist.length);
+                                          // courseController.text =
+                                          //     snapshot.courselist[index].name;
+                                          // snapshot.addSelectedCourse(
+                                          //     snapshot.courselist[index]);
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                            snapshot.courselist[index].name),
+                                      );
+                                    }));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextField(
+                        //  controller: courseController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 238, 237, 237),
+                          border: OutlineInputBorder(),
+                          labelText: "Select Part",
+                          hintText: "Part",
+                        ),
+                        enabled: false,
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
-              MaterialButton(
-                minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    const Text('Subject '),
-                    // Icon(Icons.arrow_downward_outlined)
-                  ],
-                ),
-                color: Colors.white70,
-                onPressed: (() {}),
+              // MaterialButton(
+              //   minWidth: size.width - 200,
+              //   child: Row(
+              //     children: [
+              //       const Text('Select Division'),
+              //       // Icon(Icons.arrow_downward_outlined)
+              //     ],
+              //   ),
+              //   color: Colors.white70,
+              //   onPressed: (() {}),
+              // ),
+
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: ListView.builder(
+                                    itemCount: snapshot.courselist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.courselist.length);
+                                      //  snap.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selected: snapshot.isCourseSelected(
+                                        //     snapshot.courselist[index]),
+                                        onTap: () {
+                                          print(snapshot.courselist.length);
+                                          // courseController.text =
+                                          //     snapshot.courselist[index].name;
+                                          // snapshot.addSelectedCourse(
+                                          //     snapshot.courselist[index]);
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                            snapshot.courselist[index].name),
+                                      );
+                                    }));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextField(
+                        //  controller: courseController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 238, 237, 237),
+                          border: OutlineInputBorder(),
+                          labelText: "Select Subject",
+                          hintText: "Subject",
+                        ),
+                        enabled: false,
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
           Row(
             children: [
-              MaterialButton(
-                minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    Text('Exam'),
-                    kWidth,
-                    //  Icon(Icons.arrow_downward_outlined)
-                  ],
-                ),
-                color: Colors.white70,
-                onPressed: (() {}),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: ListView.builder(
+                                    itemCount: snapshot.courselist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.courselist.length);
+                                      //  snap.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selected: snapshot.isCourseSelected(
+                                        //     snapshot.courselist[index]),
+                                        onTap: () {
+                                          print(snapshot.courselist.length);
+                                          // courseController.text =
+                                          //     snapshot.courselist[index].name;
+                                          // snapshot.addSelectedCourse(
+                                          //     snapshot.courselist[index]);
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                            snapshot.courselist[index].name),
+                                      );
+                                    }));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TextField(
+                        //  controller: courseController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 238, 237, 237),
+                          border: OutlineInputBorder(),
+                          labelText: "Select Subject",
+                          hintText: "Subject",
+                        ),
+                        enabled: false,
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
-              MaterialButton(
-                //minWidth: size.width - 200,
-                child: Row(
-                  children: [
-                    const Text('View'),
-                  ],
-                ),
-                color: Colors.grey,
-                onPressed: (() {}),
-              ),
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
+              // MaterialButton(
+              //   //minWidth: size.width - 200,
+              //   child: Row(
+              //     children: [
+              //       const Text('View'),
+              //     ],
+              //   ),
+              //   color: Colors.grey,
+              //   onPressed: (() {}),
+              // ),
+              // kWidth,
+              // kWidth,
+              // kWidth,
+              // kWidth,
+              // kWidth,
+              // kWidth,
             ],
+          ),
+          SizedBox(
+            width: 100,
+            child: MaterialButton(
+              //minWidth: size.width - 200,
+              child: const Text('View'),
+              color: Colors.grey,
+              onPressed: (() {}),
+            ),
           ),
           kheight20,
           Padding(
