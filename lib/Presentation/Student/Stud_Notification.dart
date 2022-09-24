@@ -1,8 +1,9 @@
-import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../../utils/TextWrap(moreOption).dart';
 import '../../utils/constants.dart';
 
 class Stud_Notification extends StatelessWidget {

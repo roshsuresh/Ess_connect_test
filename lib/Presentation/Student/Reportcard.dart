@@ -1,12 +1,12 @@
-import 'package:Ess_Conn/Application/StudentProviders/NoticProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/ReportCardProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
+
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import '../../Application/StudentProviders/ReportCardProvider.dart';
+import '../../Constants.dart';
+import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
 
 class ReportCard extends StatelessWidget {

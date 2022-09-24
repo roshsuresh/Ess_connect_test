@@ -15,6 +15,8 @@ const String baseUrl = "https://api.esstestonline.in";
 const String buttonBackground = "assets/but_back.png";
 const String loginBackground = "assets/activation_page.png";
 const String gjlogo = "assets/backlogo.png";
+ const String notcheck = "assets/square.svg";
+ const String check = "assets/check-square.svg";
 const String activationButton = "assets/act_button.png";
 const String loginTabBackground = "assets/login_tab_back.png";
 

@@ -1,13 +1,15 @@
-import 'package:Ess_Conn/Application/StudentProviders/NoticProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
-import 'package:Ess_Conn/utils/TextWrap(moreOption).dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import '../../Application/StudentProviders/NoticProvider.dart';
+import '../../Constants.dart';
+import '../../utils/LoadingIndication.dart';
+import '../../utils/TextWrap(moreOption).dart';
+import '../../utils/constants.dart';
 
 class NoticeBoard extends StatelessWidget {
   const NoticeBoard({Key? key}) : super(key: key);

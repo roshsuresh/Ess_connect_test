@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'package:Ess_Conn/Domain/Student/SiblingsNameModel.dart';
-import 'package:Ess_Conn/Domain/Student/SiblingsTokenModel.dart';
-import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import '../../Domain/Student/SiblingsNameModel.dart';
+import '../../Domain/Student/SiblingsTokenModel.dart';
+import '../../Presentation/Student/Student_home.dart';
+import '../../utils/constants.dart';
 
 class SibingsProvider with ChangeNotifier {
   bool isLoading = false;

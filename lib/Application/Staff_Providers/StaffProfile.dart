@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:Ess_Conn/Domain/Staff/StaffProfile.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Domain/Staff/StaffProfile.dart';
 import '../../Domain/Student/profileModel.dart';
+import '../../utils/constants.dart';
 
 Map? staffProfleRespo;
 Map? staffResponse;

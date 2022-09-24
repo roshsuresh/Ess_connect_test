@@ -1,9 +1,11 @@
-import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../Application/StudentProviders/ProfileProvider.dart';
+import '../../Constants.dart';
+import '../../utils/constants.dart';
 
 class Profile_Info extends StatelessWidget {
   Profile_Info({Key? key}) : super(key: key);

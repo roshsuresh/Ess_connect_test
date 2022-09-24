@@ -1,8 +1,10 @@
-import 'package:Ess_Conn/Application/StudentProviders/PasswordChangeProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../Application/StudentProviders/PasswordChangeProvider.dart';
+import '../../Constants.dart';
+import '../../utils/constants.dart';
 
 class PasswordChange extends StatelessWidget {
   PasswordChange({Key? key}) : super(key: key);

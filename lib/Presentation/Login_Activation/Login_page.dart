@@ -1,16 +1,18 @@
 import 'dart:convert';
-import 'package:Ess_Conn/Presentation/Admin/AdminHome.dart';
-import 'package:Ess_Conn/Presentation/Staff/StaffHome.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/StudentProviders/LoginProvider.dart';
+import '../../Constants.dart';
 import '../../Domain/Student/LoginModel.dart';
+import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
+import '../Admin/AdminHome.dart';
+import '../Staff/StaffHome.dart';
+import '../Student/Student_home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -135,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor: UIGuide.light_Purple),
+                                  shadowColor: UIGuide.light_Purple),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   checkLogin(_username.text, _password.text);

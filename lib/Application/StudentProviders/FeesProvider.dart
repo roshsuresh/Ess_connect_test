@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +10,7 @@ Map? mapResponses;
 Map? dataResponss;
 List? feeResponse;
 List? busfeeResponse;
+List<FeeFeesInstallments> feesList=[];
 //List? listResponses;
 
 class FeesProvider with ChangeNotifier {
@@ -78,7 +79,23 @@ class FeesProvider with ChangeNotifier {
       print(e);
     }
   }
+  //select all fees
+  bool isselectAll = false;
+  void selectAll() {
+    if (feesList.first.checkedFees == true) {
+      feesList.forEach((element) {
+        element.checkedFees = false;
+      });
+      isselectAll = false;
+    } else {
+      feesList.forEach((element) {
+        element.checkedFees = true;
+      });
+      isselectAll = true;
+    }
 
+    notifyListeners();
+  }
   // Future<OnlineFeePayModel> getFee() async {
   //   SharedPreferences _pref = await SharedPreferences.getInstance();
   //   var headers = {

@@ -1,8 +1,8 @@
-import 'package:Ess_Conn/Application/StudentProviders/FeesProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../Application/StudentProviders/FeesProvider.dart';
+import '../../Constants.dart';
 import '../../utils/constants.dart';
 
 class PayFee extends StatelessWidget {
@@ -80,11 +80,13 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
 
   final List _selecteCategorys = [];
 
+
   double totalFees = 0;
 
   void _selectAll(int index) {
     _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
   }
+
 
   void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
     if (selected == true) {
@@ -171,6 +173,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
             Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Installment',
@@ -178,6 +181,23 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
+                  ),
+                  Consumer<FeesProvider>(
+                builder: (context, snap, child) {
+                  child:
+                 return Padding(
+                   padding: const EdgeInsets.only(right:20.0),
+                   child: Checkbox(
+                      value: snap.isselectAll,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          value= snap.isselectAll;
+                        });
+                      },
+                    ),
+                 );
+
+                }
                   ),
                 ],
               ),
@@ -418,6 +438,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     );
   }
 }
+
 
 class FeePartialPayment extends StatelessWidget {
   FeePartialPayment({Key? key}) : super(key: key);

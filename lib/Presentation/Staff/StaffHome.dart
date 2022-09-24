@@ -1,28 +1,15 @@
-import 'package:Ess_Conn/Application/Staff_Providers/StaffProfile.dart';
-import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
-import 'package:Ess_Conn/Presentation/Staff/GalleryUpload.dart';
-import 'package:Ess_Conn/Presentation/Staff/MarkEntry.dart';
-import 'package:Ess_Conn/Presentation/Staff/MarkEntryReport.dart';
-import 'package:Ess_Conn/Presentation/Staff/NoticeBoard.dart';
-import 'package:Ess_Conn/Presentation/Staff/StaffProfile.dart';
-import 'package:Ess_Conn/Presentation/Staff/StaffTimeTable.dart';
-import 'package:Ess_Conn/Presentation/Staff/StudAttendenceEntry.dart';
-import 'package:Ess_Conn/Presentation/Staff/StudReport.dart';
-import 'package:Ess_Conn/Presentation/Staff/ToGuardian.dart';
-import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
-import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
-import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
-import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
-import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Application/Staff_Providers/StaffFlashnews.dart';
+import '../../Application/Staff_Providers/StaffProfile.dart';
+import '../../Constants.dart';
 import '../../utils/LoadingIndication.dart';
+import '../../utils/constants.dart';
+import '../Login_Activation/Login_page.dart';
 import '../Student/Gallery.dart';
 import '../Student/NoticeBoard.dart';
 import '../Student/PasswordChange.dart';
@@ -31,6 +18,15 @@ import '../Student/Stud_Calender.dart';
 import '../Student/Stud_Notification.dart';
 import '../Student/Student_home.dart';
 import '../Student/payment.dart';
+import 'GalleryUpload.dart';
+import 'MarkEntry.dart';
+import 'MarkEntryReport.dart';
+import 'NoticeBoard.dart';
+import 'StaffProfile.dart';
+import 'StaffTimeTable.dart';
+import 'StudAttendenceEntry.dart';
+import 'StudReport.dart';
+import 'ToGuardian.dart';
 
 class StaffHome extends StatelessWidget {
   StaffHome({Key? key}) : super(key: key);
@@ -707,38 +703,48 @@ class StaffFlashNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('StaffFlashNews');
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 30,
-            width: 30,
-            child: Marquee(
-              //scrolling  text
-              text:
-                  '-----lQTEUgVEFCVUxBVElPTiBEQVRBIFNDSE9PTCIsIlN0YWZmS-------',
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                  fontSize: 12),
-              scrollAxis: Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              blankSpace: 20.0,
-              velocity: 40.0,
-              pauseAfterRound: const Duration(seconds: 1),
-              showFadingOnlyWhenScrolling: true,
-              fadingEdgeStartFraction: 0.3,
-              fadingEdgeEndFraction: 0.3,
-              numberOfRounds: null,
-              startPadding: 10.0,
-              accelerationDuration: const Duration(seconds: 1),
-              accelerationCurve: Curves.linear,
-              decelerationDuration: const Duration(milliseconds: 500),
-              decelerationCurve: Curves.easeOut,
-            ),
-          );
-        });
+    Provider.of<FlashnewsProvider>(context, listen: false)
+        .flashNewsProvider(context);
+
+    var size = MediaQuery
+        .of(context)
+        .size;
+    return Consumer<FlashnewsProvider>(
+        builder: (context, value, child) {
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 30,
+                  width: 30,
+                  child: Marquee(
+                    //scrolling  text
+                    text: dataRsponse![index]['flashNews'] == null
+                        ? '------------'
+                        : dataRsponse![index]['flashNews'].toString(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 12),
+                    scrollAxis: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    blankSpace: 20.0,
+                    velocity: 40.0,
+                    pauseAfterRound: const Duration(seconds: 1),
+                    showFadingOnlyWhenScrolling: true,
+                    fadingEdgeStartFraction: 0.3,
+                    fadingEdgeEndFraction: 0.3,
+                    numberOfRounds: null,
+                    startPadding: 10.0,
+                    accelerationDuration: const Duration(seconds: 1),
+                    accelerationCurve: Curves.linear,
+                    decelerationDuration: const Duration(milliseconds: 500),
+                    decelerationCurve: Curves.easeOut,
+                  ),
+                );
+              });
+        }
+    );
   }
 }
