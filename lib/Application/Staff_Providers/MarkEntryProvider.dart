@@ -90,7 +90,7 @@ class MarkEntryProvider with ChangeNotifier {
           data["markEntryInitialValues"]
               .map((x) => MarkEntryInitialValues.fromJson(x)));
       markEntryInitialValues.addAll(templist);
-
+      print(templist);
       notifyListeners();
     } else {
       print('Error in markEntryInitialValues stf');
@@ -98,17 +98,18 @@ class MarkEntryProvider with ChangeNotifier {
     return true;
   }
 
+// Division
   List<MarkEntryDivisionList> selectedDivision = [];
 
   addSelectedDivision(MarkEntryDivisionList item) {
     if (selectedDivision.contains(item)) {
       print("removing");
       selectedDivision.remove(item);
-      // notifyListeners();
+      notifyListeners();
     } else {
       print("adding");
       selectedDivision.add(item);
-      // notifyListeners();
+      notifyListeners();
     }
   }
 
@@ -128,6 +129,10 @@ class MarkEntryProvider with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  divisionClear() {
+    markEntryDivisionList.clear();
   }
 
   List<MarkEntryDivisionList> markEntryDivisionList = [];
@@ -160,6 +165,227 @@ class MarkEntryProvider with ChangeNotifier {
       notifyListeners();
     } else {
       print('Error in MarkEntryDivisionList stf');
+    }
+    return true;
+  }
+
+  //part
+
+  List<MarkEntryPartList> selectedPart = [];
+
+  addSelectedPart(MarkEntryPartList item) {
+    if (selectedPart.contains(item)) {
+      print("removing");
+      selectedPart.remove(item);
+      notifyListeners();
+    } else {
+      print("adding");
+      selectedPart.add(item);
+      notifyListeners();
+    }
+  }
+
+  removePart(MarkEntryPartList item) {
+    selectedPart.remove(item);
+    notifyListeners();
+  }
+
+  removePartAll() {
+    selectedPart.clear();
+    notifyListeners();
+  }
+
+  isPartSelected(MarkEntryPartList item) {
+    if (selectedPart.contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeAllpartClear() {
+    markEntryPartList.clear();
+  }
+
+  List<MarkEntryPartList> markEntryPartList = [];
+  Future<bool> getMarkEntryPartValues(
+      String courseId, String divisionId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staff/markEntrypart/$courseId/$divisionId'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<MarkEntryPartList> templist = List<MarkEntryPartList>.from(
+          data["partList"].map((x) => MarkEntryPartList.fromJson(x)));
+      markEntryPartList.addAll(templist);
+
+      notifyListeners();
+    } else {
+      print('Error in MarkEntryPartList stf');
+    }
+    return true;
+  }
+
+  //subjectList
+
+  List<MarkEntrySubjectList> selectedSubject = [];
+
+  addSelectedSubject(MarkEntrySubjectList item) {
+    if (selectedSubject.contains(item)) {
+      print("removing");
+      selectedSubject.remove(item);
+      notifyListeners();
+    } else {
+      print("adding");
+      selectedSubject.add(item);
+      notifyListeners();
+    }
+  }
+
+  removeSubject(MarkEntrySubjectList item) {
+    selectedSubject.remove(item);
+    notifyListeners();
+  }
+
+  removeSubjectAll() {
+    selectedSubject.clear();
+    notifyListeners();
+  }
+
+  isSubjectSelected(MarkEntrySubjectList item) {
+    if (selectedSubject.contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeAllSubjectClear() {
+    markEntrySubjectList.clear();
+  }
+
+  List<MarkEntrySubjectList> markEntrySubjectList = [];
+  Future<bool> getMarkEntrySubjectValues(String divionId, String partId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    print('object');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staff/markEntrysubjects/$divionId/$partId'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<MarkEntrySubjectList> templist = List<MarkEntrySubjectList>.from(
+          data["subjectList"].map((x) => MarkEntrySubjectList.fromJson(x)));
+      markEntrySubjectList.addAll(templist);
+
+      notifyListeners();
+    } else {
+      print('Error in MarkEntrysubjectList stf');
+    }
+    return true;
+  }
+
+  //examList
+
+  List<MarkEntryExamList> selectedExam = [];
+
+  addSelectedExam(MarkEntryExamList item) {
+    if (selectedExam.contains(item)) {
+      print("removing");
+      selectedExam.remove(item);
+      notifyListeners();
+    } else {
+      print("adding");
+      selectedExam.add(item);
+      notifyListeners();
+    }
+  }
+
+  removeExam(MarkEntryExamList item) {
+    selectedExam.remove(item);
+    notifyListeners();
+  }
+
+  removeExamAll() {
+    selectedExam.clear();
+    notifyListeners();
+  }
+
+  isExamSelected(MarkEntryExamList item) {
+    if (selectedExam.contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeAllExamClear() {
+    markEntryExamList.clear();
+  }
+
+  List<MarkEntryExamList> markEntryExamList = [];
+  Future<bool> getMarkEntryExamValues(
+      String subjectId, String divisionId, String partId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    print('object');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staff/markentryexamdetails/$subjectId/$divisionId/$partId'));
+
+    request.headers.addAll(headers);
+    print('object');
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('correct');
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<MarkEntryExamList> templist = List<MarkEntryExamList>.from(
+          data["list"].map((x) => MarkEntryExamList.fromJson(x)));
+      markEntryExamList.addAll(templist);
+
+      notifyListeners();
+    } else {
+      print('Error in MarkEntryExamList stf');
     }
     return true;
   }

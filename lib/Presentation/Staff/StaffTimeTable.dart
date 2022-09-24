@@ -1,13 +1,20 @@
+import 'package:Ess_Conn/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_Conn/Constants.dart';
 import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:pdfdownload/pdfdownload.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import '../../utils/LoadingIndication.dart';
 
 class Staff_Timetable extends StatelessWidget {
   const Staff_Timetable({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<StaffTimetableProvider>(context, listen: false).getTimeTable();
     var size = MediaQuery.of(context).size;
     var height = size.height;
     return Scaffold(
@@ -61,7 +68,7 @@ class Staff_Timetable extends StatelessWidget {
                     ]),
               ],
             ),
-            Consumer(
+            Consumer<StaffTimetableProvider>(
               builder: (context, value, child) {
                 return Table(
                   columnWidths: const {
@@ -79,12 +86,27 @@ class Staff_Timetable extends StatelessWidget {
                         children: [
                           Center(
                             child: Text(
-                              '---',
+                              value.name ?? '---',
                               style: TextStyle(fontSize: 15),
                             ),
                           ),
                           GestureDetector(
-                            onTap: () async {},
+                            onTap: () async {
+                              if (value.extension == '.pdf') {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PdfViewStaff()),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          StaffTimetableimage()),
+                                );
+                              }
+                            },
                             child: Icon(Icons.remove_red_eye),
                           ),
                         ]),
@@ -96,5 +118,87 @@ class Staff_Timetable extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class PdfViewStaff extends StatelessWidget {
+  const PdfViewStaff({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<StaffTimetableProvider>(
+      builder: (context, value, child) => Scaffold(
+          appBar: AppBar(
+            title: Text('Time Table'),
+            titleSpacing: 00.0,
+            centerTitle: true,
+            toolbarHeight: 50.2,
+            toolbarOpacity: 0.8,
+            backgroundColor: UIGuide.light_Purple,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: DownloandPdf(
+                  isUseIcon: true,
+                  pdfUrl: value.url ?? '--',
+                  fileNames: value.name ?? '--',
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          body: SfPdfViewer.network(value.url ?? '--')),
+    );
+  }
+}
+
+class StaffTimetableimage extends StatelessWidget {
+  StaffTimetableimage({Key? key}) : super(key: key);
+
+  bool isLoading = false;
+
+  imageview(String result) {
+    return Scaffold(
+      body: isLoading
+          ? LoadingIcon()
+          : Center(
+              child: Container(
+                  child: PhotoView(
+                loadingBuilder: (context, event) {
+                  return LoadingIcon();
+                },
+                imageProvider: NetworkImage(
+                  result == null
+                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlmeGlXoJwwpbCE9jGgHgZ2XaE5nnPUSomkZz_vZT7&s'
+                      : result,
+                ),
+              )),
+            ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<StaffTimetableProvider>(builder: (context, provider, _) {
+      if (provider.extension.toString() == '.jpg') {
+        final imgResult = provider.url.toString();
+        return imageview(imgResult);
+      } else if (provider.extension.toString() == '.png') {
+        final imgResult2 = provider.url.toString();
+        return imageview(imgResult2);
+      } else if (provider.extension.toString() == '.jpeg') {
+        final imgResult3 = provider.url.toString();
+        return imageview(imgResult3);
+      } else {
+        return const Scaffold(
+          body: Center(
+            child: Text(
+              'No Attachment Provided',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ),
+        );
+      }
+    });
   }
 }

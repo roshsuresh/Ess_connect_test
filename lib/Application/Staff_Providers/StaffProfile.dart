@@ -26,53 +26,49 @@ class StaffProfileProvider with ChangeNotifier {
   String? staffRole;
   String? photo;
 
-  // Future staff_profileData() async {
-  //   Map<String, dynamic> data = await parseJWT();
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-  //   // print(headers);
-  //   var response = await http.get(
-  //       Uri.parse("${UIGuide.baseURL}/mobileapp/staff/profile"),
-  //       headers: headers);
-  //   try {
-  //     if (response.statusCode == 200) {
-  //       var jsonData = await json.decode(response.body);
-  //       staffProfleRespo = await json.decode(response.body);
-  //       staffResponse = await staffProfleRespo!['staffprofile'];
-  //       staffPhotoResponse = await staffResponse!['photo'];
-  //       // print(studResponse);
-  //       // print("corect..........");
-  //       // print(staffResponse);
-  //       Staffprofile stf =
-  //           Staffprofile.fromJson(staffProfleRespo!['staffprofile']);
-  //       Photo asa = Photo.fromJson(staffResponse!['photo']);
-  //       photo = asa.url;
+  Future staff_profileData() async {
+    Map<String, dynamic> data = await parseJWT();
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/mobileapp/staff/profile"),
+        headers: headers);
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = await json.decode(response.body);
+        staffProfleRespo = await json.decode(response.body);
+        staffResponse = await staffProfleRespo!['staffprofile'];
+        Staffprofile stf =
+            Staffprofile.fromJson(staffProfleRespo!['staffprofile']);
 
-  //       name = stf.name;
-  //       section = stf.section;
-  //       designation = stf.designation;
-  //       mobileNo = stf.mobileNo;
-  //       emailid = stf.emailid;
-  //       dateOfBirth = stf.dateOfBirth;
-  //       shortname = stf.shortname;
-  //       address = stf.address;
-  //       gender = stf.gender;
+        photo = stf.photo;
 
-  //       print(name);
+        name = stf.name;
+        section = stf.section;
+        designation = stf.designation;
+        mobileNo = stf.mobileNo;
+        emailid = stf.emailid;
+        dateOfBirth = stf.dateOfBirth;
+        shortname = stf.shortname;
+        address = stf.address;
+        gender = stf.gender;
 
-  //       // print(studName);
-  //       // print("corect2..........");
-  //       notifyListeners();
+        print(name);
 
-  //       // print(response.body);
-  //     } else {
-  //       print("Error in Staff Profile Response");
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+        // print(studName);
+        // print("corect2..........");
+        notifyListeners();
+
+        // print(response.body);
+      } else {
+        print("Error in Staff Profile Response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

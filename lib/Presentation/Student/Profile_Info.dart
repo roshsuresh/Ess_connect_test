@@ -612,8 +612,10 @@ class Profile_Info extends StatelessWidget {
                                             255, 210, 199, 240)),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5))),
-                                child: Image.asset(
-                                  'assets/account-profile.png',
+                                child: Image.network(
+                                  provider.fatherPhoto == null
+                                      ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
+                                      : provider.fatherPhoto.toString(),
                                   color: Color.fromARGB(255, 151, 148, 148)
                                       .withOpacity(0.8),
                                   fit: BoxFit.fill,
@@ -719,8 +721,10 @@ class Profile_Info extends StatelessWidget {
                                             255, 210, 199, 240)),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5))),
-                                child: Image.asset(
-                                  'assets/account-profile.png',
+                                child: Image.network(
+                                  provider.motherPhoto == null
+                                      ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
+                                      : provider.motherPhoto.toString(),
                                   color:
                                       const Color.fromARGB(255, 151, 148, 148)
                                           .withOpacity(0.8),

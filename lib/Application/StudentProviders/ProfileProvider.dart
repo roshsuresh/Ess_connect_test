@@ -37,28 +37,30 @@ class ProfileProvider with ChangeNotifier {
   dynamic motherMailId;
   String? motherMobileno;
   String? studPhoto;
+  String? fatherPhoto;
+  String? motherPhoto;
   bool isLoading = false;
-  Future<StudProModel> getProfile() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    };
-    // print(headers);
-    var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
-        headers: headers);
-    var data = jsonDecode(response.body.toString());
+  // Future<StudentProfileModel> getProfile() async {
+  //   SharedPreferences _pref = await SharedPreferences.getInstance();
+  //   var headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+  //   };
+  //   // print(headers);
+  //   var response = await http.get(
+  //       Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
+  //       headers: headers);
+  //   var data = jsonDecode(response.body.toString());
 
-    if (response.statusCode == 200) {
-      print(data);
-      print(StudProModel.fromJson(data));
-      return StudProModel.fromJson(data);
-    } else {
-      print('Error in profile');
-      return StudProModel.fromJson(data);
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     print(data);
+  //     print(StudentProfileModel.fromJson(data));
+  //     return StudentProfileModel.fromJson(data);
+  //   } else {
+  //     print('Error in profile');
+  //     return StudProModel.fromJson(data);
+  //   }
+  // }
 
   Future profileData() async {
     Map<String, dynamic> data = await parseJWT();
@@ -79,20 +81,20 @@ class ProfileProvider with ChangeNotifier {
         //  print("corect..........");
         mapResponse = await json.decode(response.body);
         dataResponse = await mapResponse!['studentDetails'];
-        studResponse = await dataResponse!['studentPhoto'];
+        // studResponse = await dataResponse!['studentPhoto'];
         // print(studResponse);
         print("corect..........");
         print(dataResponse);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);
-        StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
-        studPhoto = asa.url;
+        //   StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
+        studPhoto = std.studentPhoto;
 
         // log(studPhoto.toString());
         studName = std.studentName;
         print(studName);
         admissionNo = std.admissionNo;
-        division = std.division;
+        division = std.divisionName;
         divisionId = std.divisionId;
         rollNo = std.rollNo;
         dob = std.dob;
@@ -101,7 +103,9 @@ class ProfileProvider with ChangeNotifier {
         weight = std.weight;
         address = std.address;
         fatherName = std.fatherName;
-        fatherMail = std.fatherMail;
+        fatherPhoto = std.fatherPhoto;
+        motherPhoto = std.motherPhoto;
+        fatherMail = std.fatherMailId;
         fatherMobileno = std.fatherMobileno;
         motherName = std.motherName;
         motherMailId = std.motherMailId;
