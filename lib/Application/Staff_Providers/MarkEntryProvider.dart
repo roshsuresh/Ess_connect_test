@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:Ess_Conn/Domain/Staff/MarkEntryModel.dart';
-import 'package:Ess_Conn/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Domain/Staff/MarkEntryModel.dart';
+import '../../utils/constants.dart';
 
 class MarkEntryProvider with ChangeNotifier {
   List<MarkEntryInitialValues> selectedCourse = [];
@@ -63,6 +64,7 @@ class MarkEntryProvider with ChangeNotifier {
 
   courseClear() {
     markEntryInitialValues.clear();
+
   }
 
   List<MarkEntryInitialValues> markEntryInitialValues = [];

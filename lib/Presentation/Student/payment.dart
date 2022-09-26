@@ -1,14 +1,4 @@
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
-import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
-import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
-import 'package:Ess_Conn/Presentation/Student/Gallery.dart';
-import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
-import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
-import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
-import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Application/StudentProviders/ProfileProvider.dart';
 import '../../Application/StudentProviders/TimetableProvider.dart';
+import '../../Constants.dart';
+import '../Login_Activation/Login_page.dart';
+import 'AdvancePay.dart';
+import 'Attendence.dart';
 import 'NoticeBoard.dart';
 import 'PasswordChange.dart';
+import 'PaymentHistory.dart';
+import 'Profile_Info.dart';
+import 'Reportcard.dart';
 import 'Stud_Calender.dart';
 import 'Stud_Notification.dart';
 import 'Student_home.dart';

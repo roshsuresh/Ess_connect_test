@@ -1,6 +1,4 @@
-import 'package:Ess_Conn/Application/Staff_Providers/Attendencestaff.dart';
-import 'package:Ess_Conn/Application/StudentProviders/AttendenceProvider.dart';
-import 'package:Ess_Conn/Constants.dart';
+import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -8,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../Constants.dart';
 import '../../utils/constants.dart';
 
 class AttendenceEntry extends StatefulWidget {
@@ -54,6 +53,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
         '         ' +
         DateFormat('kk:mm:a').format(DateTime.now());
     var size = MediaQuery.of(context).size;
+    print('object');
+    print(DateFormat().format(DateTime.now()));
     Provider.of<AttendenceStaffProvider>(context, listen: false)
         .attendenceCourseStaff();
     return Scaffold(
@@ -83,6 +84,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                     color: Colors.white,
                     child: Text(date.toString()),
                     onPressed: () async {
+                      print(DateFormat().format(DateTime.now()));
                       _mydatetime = await showDatePicker(
                           context: context,
                           initialDate: _mydatetime ?? DateTime.now(),
@@ -113,7 +115,9 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                         itemCount: attendecourse!.length,
                                         itemBuilder: (context, index) {
                                           // print(snapshot
+
                                           //     .attendenceInitialValues.length);
+
                                           // value.removeCourseAll();
                                           return Column(
                                             children: [
@@ -121,8 +125,10 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                 selectedTileColor:
                                                     Colors.blue.shade100,
                                                 selectedColor: UIGuide.PRIMARY2,
+
                                                 // selected: snapshot.isCourseSelected(
                                                 //     attendecourse![index]),
+
                                                 onTap: () async {
                                                   print(
                                                       'guh.....${attendecourse![index]}');

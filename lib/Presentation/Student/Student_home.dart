@@ -1,28 +1,29 @@
-import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/SiblingsProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
-import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
-import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
-import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
-import 'package:Ess_Conn/Presentation/Student/Gallery.dart';
-import 'package:Ess_Conn/Presentation/Student/PasswordChange.dart';
-import 'package:Ess_Conn/Presentation/Student/PayFee.dart';
-import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
-import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
-import 'package:Ess_Conn/Presentation/Student/Stud_Calender.dart';
-import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
-import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
-import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
-import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
-import 'package:Ess_Conn/Presentation/Student/payment.dart';
-import 'package:Ess_Conn/utils/LoadingIndication.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
+import 'package:Ess_test/Presentation/Student/payment.dart';
+import 'package:Ess_test/Presentation/Student/selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/StudentProviders/GalleryProvider.dart';
+import '../../Application/StudentProviders/ProfileProvider.dart';
+import '../../Application/StudentProviders/SiblingsProvider.dart';
+import '../../Application/StudentProviders/TimetableProvider.dart';
+import '../../utils/LoadingIndication.dart';
+import '../Login_Activation/Login_page.dart';
+import 'AdvancePay.dart';
+import 'Attendence.dart';
+import 'Gallery.dart';
+import 'NoticeBoard.dart';
+import 'PasswordChange.dart';
+import 'PayFee.dart';
+import 'PaymentHistory.dart';
+import 'Profile_Info.dart';
+import 'Reportcard.dart';
+import 'Stud_Calender.dart';
+import 'Stud_Notification.dart';
+import 'TimeTable.dart';
 
 class StudentHome extends StatelessWidget {
   StudentHome({Key? key}) : super(key: key);
@@ -417,7 +418,9 @@ class StudentHome extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => PayFee()),
+                                            builder: (context) =>
+                                                PayFee()),
+
                                       );
                                     },
                                     child: Column(

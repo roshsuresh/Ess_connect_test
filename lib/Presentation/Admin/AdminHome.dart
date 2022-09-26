@@ -1,28 +1,27 @@
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/Presentation/Admin/FeeReport.dart';
-import 'package:Ess_Conn/Presentation/Admin/StaffInfo.dart';
-import 'package:Ess_Conn/Presentation/Admin/StaffReport.dart';
-import 'package:Ess_Conn/Presentation/Admin/StudentFeeDetails.dart';
-import 'package:Ess_Conn/Presentation/Admin/StudentReport.dart';
-import 'package:Ess_Conn/Presentation/Admin/ToGuardian.dart';
-import 'package:Ess_Conn/Presentation/Login_Activation/Login_page.dart';
-import 'package:Ess_Conn/Presentation/Student/AdvancePay.dart';
-import 'package:Ess_Conn/Presentation/Student/Attendence.dart';
-import 'package:Ess_Conn/Presentation/Student/NoticeBoard.dart';
-import 'package:Ess_Conn/Presentation/Student/PasswordChange.dart';
-import 'package:Ess_Conn/Presentation/Student/PaymentHistory.dart';
-import 'package:Ess_Conn/Presentation/Student/Profile_Info.dart';
-import 'package:Ess_Conn/Presentation/Student/Reportcard.dart';
-import 'package:Ess_Conn/Presentation/Student/Stud_Notification.dart';
-import 'package:Ess_Conn/Presentation/Student/Student_home.dart';
-import 'package:Ess_Conn/Presentation/Student/TimeTable.dart';
+
+import 'package:Ess_test/Presentation/Admin/Student_list_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/StudentProviders/ProfileProvider.dart';
 import '../../Application/StudentProviders/TimetableProvider.dart';
+import '../../Constants.dart';
+import '../Login_Activation/Login_page.dart';
+import '../Student/AdvancePay.dart';
+import '../Student/Attendence.dart';
+import '../Student/PasswordChange.dart';
+import '../Student/PaymentHistory.dart';
+import '../Student/Reportcard.dart';
 import '../Student/Stud_Calender.dart';
+import '../Student/Stud_Notification.dart';
+import '../Student/TimeTable.dart';
+import 'FeeReport.dart';
+import 'StaffInfo.dart';
+import 'StaffReport.dart';
+import 'StudentFeeDetails.dart';
+import 'StudentReport.dart';
+import 'ToGuardian.dart';
 
 class AdminHome extends StatelessWidget {
   AdminHome({Key? key}) : super(key: key);
@@ -145,7 +144,8 @@ class AdminHomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Stud_Notification()),
+                          //  builder: (context) => Stud_Notification()),
+                            builder: (context) => StudentNotificationPage()),
                       );
                     },
                     child: Padding(

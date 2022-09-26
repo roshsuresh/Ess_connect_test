@@ -1,27 +1,3 @@
-// class MarkEntryInitialValuesModel {
-//   MarkEntryExamList<MarkEntryInitialValues>? markEntryInitialValues;
-
-//   MarkEntryInitialValuesModel({this.markEntryInitialValues});
-
-//   MarkEntryInitialValuesModel.fromJson(Map<String, dynamic> json) {
-//     if (json['markEntryInitialValues'] != null) {
-//       markEntryInitialValues = [];
-//       json['markEntryInitialValues'].forEach((v) {
-//         markEntryInitialValues!.add(new MarkEntryInitialValues.fromJson(v));
-//       });
-//     }
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     if (this.markEntryInitialValues != null) {
-//       data['markEntryInitialValues'] =
-//           this.markEntryInitialValues!.map((v) => v.toJson()).toList();
-//     }
-//     return data;
-//   }
-// }
-
 class MarkEntryInitialValues {
   String? id;
   String? courseName;

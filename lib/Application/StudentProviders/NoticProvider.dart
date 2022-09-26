@@ -1,9 +1,11 @@
 import 'dart:convert';
-import 'package:Ess_Conn/Domain/Student/Noticeattachmentmodel.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Domain/Student/Noticeattachmentmodel.dart';
+import '../../utils/constants.dart';
 
 List? noticeresponse;
 Map? attachResponse;

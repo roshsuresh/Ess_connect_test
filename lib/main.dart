@@ -1,20 +1,12 @@
 import 'dart:io';
 
-import 'package:Ess_Conn/Application/Staff_Providers/Attendencestaff.dart';
-import 'package:Ess_Conn/Application/Staff_Providers/MarkEntryProvider.dart';
-import 'package:Ess_Conn/Application/Staff_Providers/StaffProfile.dart';
-import 'package:Ess_Conn/Application/Staff_Providers/StudListProvider.dart';
-import 'package:Ess_Conn/Application/Staff_Providers/TimetableProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/GalleryProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/PasswordChangeProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/ProfileProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/ReportCardProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/SiblingsProvider.dart';
-import 'package:Ess_Conn/Application/StudentProviders/TimetableProvider.dart';
-import 'package:Ess_Conn/Presentation/Admin/AdminHome.dart';
-import 'package:Ess_Conn/Presentation/Staff/StaffHome.dart';
-import 'package:Ess_Conn/routes.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
+
+import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
+import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
+import 'package:Ess_test/routes.dart';
+import 'package:Ess_test/utils/constants.dart';
+
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -25,14 +17,26 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Application/AdminProviders/Student_list_provider.dart';
+import 'Application/Staff_Providers/MarkEntryProvider.dart';
+import 'Application/Staff_Providers/StaffProfile.dart';
+import 'Application/Staff_Providers/StudListProvider.dart';
 import 'Application/StudentProviders/AttendenceProvider.dart';
 import 'Application/StudentProviders/FeesProvider.dart';
+import 'Application/StudentProviders/GalleryProvider.dart';
 import 'Application/StudentProviders/LoginProvider.dart';
 
 import 'Application/StudentProviders/NoticProvider.dart';
+import 'Application/StudentProviders/PasswordChangeProvider.dart';
+import 'Application/StudentProviders/ProfileProvider.dart';
+import 'Application/StudentProviders/ReportCardProvider.dart';
+import 'Application/StudentProviders/SiblingsProvider.dart';
+import 'Application/StudentProviders/TimetableProvider.dart';
+import 'Presentation/Admin/AdminHome.dart';
 import 'Presentation/Login_Activation/ActivatePage.dart';
 import 'Presentation/Login_Activation/LoginPageWeb.dart';
 import 'Presentation/Login_Activation/Login_page.dart';
+import 'Presentation/Staff/StaffHome.dart';
 import 'Presentation/Student/Student_home.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -98,11 +102,13 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => PasswordChangeprovider()),
         ChangeNotifierProvider(create: (context) => SibingsProvider()),
         ChangeNotifierProvider(create: (context) => StaffProfileProvider()),
+        ChangeNotifierProvider(create: (context) => StudentNotification()),
         ChangeNotifierProvider(
             create: (context) => StudReportListProvider_stf()),
         ChangeNotifierProvider(create: (context) => MarkEntryProvider()),
         ChangeNotifierProvider(create: (context) => StaffTimetableProvider()),
         ChangeNotifierProvider(create: (context) => AttendenceStaffProvider()),
+        ChangeNotifierProvider(create: (context) => FlashnewsProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

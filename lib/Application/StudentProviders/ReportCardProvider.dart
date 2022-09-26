@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:Ess_Conn/Domain/Student/ReportCardModel.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Domain/Student/ReportCardModel.dart';
+import '../../utils/constants.dart';
 
 List reportResponse = [];
 

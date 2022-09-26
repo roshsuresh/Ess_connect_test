@@ -6,8 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UIGuide {
   static const String ourlogo = "assets/plogo.png";
-  static const String essplogo = "assets/essplogo.png";
+  static const String esslogo = "assets/backlogo.png";
   static const String notification = "assets/notification.png";
+  static const String studentnoti = "assets/studentsnotifications.png";
+  static const String staffnoti = "assets/staffnotification.png";
   static const String student = "assets/stud.png";
   static const String pay = "assets/pay.png";
   static const String board = "assets/blackboard.png";
@@ -17,7 +19,6 @@ class UIGuide {
   static const String notcheck = "assets/square.svg";
   static const String check = "assets/check-square.svg";
   static const String profile = "assets/Profile.png";
-
   static const String reportcard = "assets/Reportcard.png";
   static const String baseURL = "https://api.esstestonline.in";
 
@@ -56,23 +57,5 @@ Future<Map<String, dynamic>> parseJWT() async {
   }
 }
 
-// alertAppLogin({required BuildContext context}){
-//   return showDialog(
-//       context: context,
-//       builder: (context)=>Dialog(
-//     child: Column(
-//       children: [
-//         Row(
-//           children: [
-//             Text('Notification Access'),
-//             Text('For notification access you need ')
-//           ],
-//         )
-//       ],
-//     ),
-//   );
-//       }
-//   )
-// }
 
 enum LoginType { student, guardian, staff }

@@ -1,12 +1,14 @@
-import 'package:Ess_Conn/Application/Staff_Providers/StaffProfile.dart';
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../Application/Staff_Providers/StaffProfile.dart';
+import '../../Constants.dart';
+import '../../utils/constants.dart';
 
 class StaffProfileView extends StatelessWidget {
   const StaffProfileView({Key? key}) : super(key: key);

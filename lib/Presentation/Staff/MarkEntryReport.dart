@@ -1,6 +1,8 @@
-import 'package:Ess_Conn/Constants.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+
 import 'package:flutter/material.dart';
+
+import '../../Constants.dart';
+import '../../utils/constants.dart';
 
 class MarkEntryReport extends StatelessWidget {
   const MarkEntryReport({Key? key}) : super(key: key);
