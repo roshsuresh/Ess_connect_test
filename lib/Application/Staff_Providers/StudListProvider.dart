@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -8,14 +9,17 @@ import 'package:http/http.dart' as http;
 import '../../Domain/Admin/StudentListModel.dart';
 import '../../utils/constants.dart';
 
+Map? staffStudReportRespo;
+List StudReportinitvalues = [];
+
 class StudReportListProvider_stf with ChangeNotifier {
-  List<CourseList> selectedCourse = [];
+  List<StudReportSectionList> selectedSection = [];
 
   String filtersDivision = "";
   String filterCourse = "";
   int pageno = 1;
 
-  addFilterCourse(String course) {
+  addFilterSection(String course) {
     filterCourse = course;
     notifyListeners();
   }
@@ -31,32 +35,104 @@ class StudReportListProvider_stf with ChangeNotifier {
     notifyListeners();
   }
 
-//course List
-  addSelectedCourse(CourseList item) {
-    if (selectedCourse.contains(item)) {
+  //Section List
+  addSelectedSection(StudReportSectionList item) {
+    if (selectedSection.contains(item)) {
       print("removing");
-      selectedCourse.remove(item);
+      selectedSection.remove(item);
       notifyListeners();
     } else {
       print("adding");
-      selectedCourse.add(item);
+      selectedSection.add(item);
       notifyListeners();
     }
     clearAllFilters();
-    addFilterCourse(selectedCourse.first.name);
+    addFilterSection(selectedSection.first.text!);
+  }
+
+  removeSection(StudReportSectionList item) {
+    selectedSection.remove(item);
+    notifyListeners();
+  }
+
+  removeSectionAll() {
+    selectedSection.clear();
+  }
+
+  isSectionSelected(StudReportSectionList item) {
+    if (selectedSection.contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  SectionClear() {
+    stdReportInitialValues.clear();
+  }
+
+  List<StudReportSectionList> stdReportInitialValues = [];
+  bool? isClassTeacher;
+  bool? isDualAttendance;
+
+  Future stdReportSectionStaff() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/mobileapp/staffdet/studentreportinitialvalues"),
+        headers: headers);
+
+    try {
+      if (response.statusCode == 200) {
+        print("corect");
+        final data = json.decode(response.body);
+
+        print(data);
+        staffStudReportRespo = data['studentReportInitialValues'];
+        StudReportinitvalues = staffStudReportRespo!['sectionList'];
+        print(StudReportinitvalues);
+        print(isClassTeacher);
+
+        notifyListeners();
+      } else {
+        print("Error in StdReportSection response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+//course List
+
+  List<StudReportCourse> studReportCourse = [];
+  addSelectedCourse(StudReportCourse item) {
+    if (studReportCourse.contains(item)) {
+      print("removing");
+      studReportCourse.remove(item);
+      notifyListeners();
+    } else {
+      print("adding");
+      studReportCourse.add(item);
+      notifyListeners();
+    }
   }
 
   removeCourse(CourseList item) {
-    selectedCourse.remove(item);
+    studReportCourse.remove(item);
     notifyListeners();
   }
 
   removeCourseAll() {
-    selectedCourse.clear();
+    studReportCourse.clear();
   }
 
   isCourseSelected(CourseList item) {
-    if (selectedCourse.contains(item)) {
+    if (studReportCourse.contains(item)) {
       return true;
     } else {
       return false;
@@ -67,7 +143,7 @@ class StudReportListProvider_stf with ChangeNotifier {
     courselist.clear();
   }
 
-  List<CourseList> courselist = [];
+  List<StudReportCourse> courselist = [];
 
   Future<bool> getCourseList() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -89,8 +165,8 @@ class StudReportListProvider_stf with ChangeNotifier {
 
       log(data.toString());
 
-      List<CourseList> templist = List<CourseList>.from(
-          data["courseList"].map((x) => CourseList.fromJson(x)));
+      List<StudReportCourse> templist = List<StudReportCourse>.from(
+          data["courseList"].map((x) => StudReportCourse.fromJson(x)));
       courselist.addAll(templist);
 
       notifyListeners();

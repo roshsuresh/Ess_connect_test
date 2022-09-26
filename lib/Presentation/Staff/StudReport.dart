@@ -74,9 +74,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<StudReportListProvider_stf>(context, listen: false);
-
+      p.stdReportSectionStaff();
       p.clearAllFilters();
-      p.selectedCourse.clear();
+      // p.selectedCourse.clear();
       p.courseClear();
       p.getCourseList();
     });
@@ -111,21 +111,24 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                     return ListTile(
                                       selectedTileColor: Colors.blue.shade100,
                                       selectedColor: UIGuide.PRIMARY2,
-                                      selected: snapshot.isCourseSelected(
-                                          snapshot.courselist[index]),
+                                      // selected: snapshot.isCourseSelected(
+                                      //     snapshot.courselist[index]),
                                       onTap: () {
-                                        print(snapshot.isCourseSelected(
-                                            snapshot.courselist[index]));
+                                        // print(snapshot.isCourseSelected(
+                                        //     snapshot.courselist[index]));
                                         print(snapshot.courselist.length);
                                         courseController.text =
-                                            snapshot.courselist[index].name;
+                                            snapshot.courselist[index].text ??
+                                                '-';
                                         snapshot.addSelectedCourse(
                                             snapshot.courselist[index]);
-                                        print(snapshot.courselist[index].name);
+                                        print(snapshot.courselist[index].text ??
+                                            '-');
                                         Navigator.of(context).pop();
                                       },
-                                      title:
-                                          Text(snapshot.courselist[index].name),
+                                      title: Text(
+                                          snapshot.courselist[index].text ??
+                                              '-'),
                                     );
                                   }));
                         });
@@ -179,8 +182,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
 
                                       Navigator.of(context).pop();
                                     },
-                                    title:
-                                        Text(snapshot.courselist[index].name),
+                                    title: Text(
+                                        snapshot.courselist[index].text ??
+                                            '---'),
                                   );
                                 }),
                           ));
@@ -216,88 +220,147 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
             ),
           ],
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                kheight10,
-                Container(
-                  width: size.width - 10,
-                  height: 90,
-                  decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 236, 233, 233),
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      kWidth,
-                      Center(
-                        child: Container(
-                          width: 70,
-                          height: 70,
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 236, 233, 233),
-                              image: DecorationImage(
-                                  image: AssetImage('assets/studentLogo.png')),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+        ViewStaffReport(size: size),
+        LimitedBox(
+          maxHeight: size.height - 200,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: 25,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  kheight10,
+                  Container(
+                    width: size.width - 10,
+                    height: 90,
+                    decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 236, 233, 233),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        kWidth,
+                        Center(
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 236, 233, 233),
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage('assets/studentLogo.png')),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  'Name : ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13),
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  strutStyle: const StrutStyle(fontSize: 8.0),
-                                  text: TextSpan(
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Name : ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13),
+                                  ),
+                                  RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    strutStyle: const StrutStyle(fontSize: 8.0),
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
+                                        text: "AADAM ISWAR AADHITHYA UNNI"),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Roll No : ',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13),
+                                  ),
+                                  RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    strutStyle: const StrutStyle(fontSize: 8.0),
+                                    text: const TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                      ),
+                                      text: "214",
+                                    ),
+                                  ),
+                                  kWidth,
+                                  kWidth,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Division : ',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13),
+                                      ),
+                                      RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        strutStyle:
+                                            const StrutStyle(fontSize: 8.0),
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                          ),
+                                          text: "VII",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Adm No : ',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13),
+                                  ),
+                                  RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    strutStyle: const StrutStyle(fontSize: 8.0),
+                                    text: TextSpan(
                                       style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.black,
                                       ),
-                                      text: "AADAM ISWAR AADHITHYA UNNI"),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Roll No : ',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13),
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  strutStyle: const StrutStyle(fontSize: 8.0),
-                                  text: const TextSpan(
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
+                                      text: "2154",
                                     ),
-                                    text: "214",
                                   ),
-                                ),
-                                kWidth,
-                                kWidth,
-                                Row(
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _makingPhoneCall();
+                                },
+                                child: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.center,
+                                  //crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      'Division : ',
+                                    const Text(
+                                      'Phone : ',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -310,82 +373,29 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                           const StrutStyle(fontSize: 8.0),
                                       text: TextSpan(
                                         style: const TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 13,
                                           color: Colors.black,
                                         ),
-                                        text: "VII",
+                                        text: "9547812154",
                                       ),
                                     ),
+                                    const Icon(
+                                      Icons.phone,
+                                      size: 17,
+                                    )
                                   ],
                                 ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Adm No : ',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13),
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  strutStyle: const StrutStyle(fontSize: 8.0),
-                                  text: TextSpan(
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                    ),
-                                    text: "2154",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _makingPhoneCall();
-                              },
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.center,
-                                //crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Text(
-                                    'Phone : ',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13),
-                                  ),
-                                  RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    strutStyle: const StrutStyle(fontSize: 8.0),
-                                    text: TextSpan(
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
-                                      ),
-                                      text: "9547812154",
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.phone,
-                                    size: 17,
-                                  )
-                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ],
     );
@@ -398,6 +408,22 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+}
+
+class ViewStaffReport extends StatelessWidget {
+  const ViewStaffReport({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return LimitedBox(
+      maxHeight: size.height - 200,
+    );
   }
 }
 

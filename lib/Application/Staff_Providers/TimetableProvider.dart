@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:Ess_Conn/Domain/Staff/TimetableModel.dart';
-import 'package:Ess_Conn/utils/constants.dart';
+import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import '../../Domain/Staff/TimetableModel.dart';
 
 Map? staff_timetableRespo;
 
