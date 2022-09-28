@@ -49,7 +49,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
 
   @override
   Widget build(BuildContext context) {
-    date = DateFormat('dd-MM-yyyy').format(DateTime.now()) +
+    date = DateFormat('yyyy-MM-dd').format(DateTime.now()) +
         '         ' +
         DateFormat('kk:mm:a').format(DateTime.now());
     var size = MediaQuery.of(context).size;

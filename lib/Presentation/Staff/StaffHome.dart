@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
@@ -188,13 +187,12 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 60,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                        opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/FINGERNEW1.png',
                                         ),
                                       ),
                                     ),
@@ -260,7 +258,7 @@ class StaffHome extends StatelessWidget {
                                             image: DecorationImage(
                                               opacity: 20,
                                               image: AssetImage(
-                                                'assets/pay.png',
+                                                'assets/FINGER.png',
                                               ),
                                             ),
                                           ),
@@ -472,8 +470,7 @@ class StaffHome extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const StaffGalleryUPload()),
+                                    builder: (context) => const StaffGallery()),
                               );
                             },
                             child: Padding(
@@ -706,45 +703,41 @@ class StaffFlashNews extends StatelessWidget {
     Provider.of<FlashnewsProvider>(context, listen: false)
         .flashNewsProvider(context);
 
-    var size = MediaQuery
-        .of(context)
-        .size;
-    return Consumer<FlashnewsProvider>(
-        builder: (context, value, child) {
-          return ListView.builder(
-              shrinkWrap: true,
-              itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 30,
-                  width: 30,
-                  child: Marquee(
-                    //scrolling  text
-                    text: dataRsponse![index]['flashNews'] == null
-                        ? '------------'
-                        : dataRsponse![index]['flashNews'].toString(),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        fontSize: 12),
-                    scrollAxis: Axis.horizontal,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    blankSpace: 20.0,
-                    velocity: 40.0,
-                    pauseAfterRound: const Duration(seconds: 1),
-                    showFadingOnlyWhenScrolling: true,
-                    fadingEdgeStartFraction: 0.3,
-                    fadingEdgeEndFraction: 0.3,
-                    numberOfRounds: null,
-                    startPadding: 10.0,
-                    accelerationDuration: const Duration(seconds: 1),
-                    accelerationCurve: Curves.linear,
-                    decelerationDuration: const Duration(milliseconds: 500),
-                    decelerationCurve: Curves.easeOut,
-                  ),
-                );
-              });
-        }
-    );
+    var size = MediaQuery.of(context).size;
+    return Consumer<FlashnewsProvider>(builder: (context, value, child) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
+          itemBuilder: (context, index) {
+            return Container(
+              height: 30,
+              width: 30,
+              child: Marquee(
+                //scrolling  text
+                text: dataRsponse![index]['flashNews'] == null
+                    ? '------------'
+                    : dataRsponse![index]['flashNews'].toString(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                    fontSize: 12),
+                scrollAxis: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                blankSpace: 20.0,
+                velocity: 40.0,
+                pauseAfterRound: const Duration(seconds: 1),
+                showFadingOnlyWhenScrolling: true,
+                fadingEdgeStartFraction: 0.3,
+                fadingEdgeEndFraction: 0.3,
+                numberOfRounds: null,
+                startPadding: 10.0,
+                accelerationDuration: const Duration(seconds: 1),
+                accelerationCurve: Curves.linear,
+                decelerationDuration: const Duration(milliseconds: 500),
+                decelerationCurve: Curves.easeOut,
+              ),
+            );
+          });
+    });
   }
 }

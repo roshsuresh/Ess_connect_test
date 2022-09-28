@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,7 +17,7 @@ class Staff_ToGuardian extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Communication to Guardian',
-          style: TextStyle(fontSize: 16),
+          // style: TextStyle(fontSize: 18),
         ),
         titleSpacing: 00.0,
         centerTitle: true,
@@ -35,24 +34,27 @@ class Staff_ToGuardian extends StatelessWidget {
         children: [
           Row(
             children: [
+              kWidth, kWidth,
               MaterialButton(
-                minWidth: size.width - 200,
+                minWidth: size.width - 300,
                 child: Row(
                   children: [
                     Text('Select Course'),
-                    Icon(Icons.arrow_downward_outlined)
+                    // Icon(Icons.arrow_downward_outlined)
                   ],
                 ),
                 color: Colors.white70,
                 onPressed: (() {}),
               ),
-              Spacer(),
+              kWidth,
+              kWidth,
+              // Spacer(),
               MaterialButton(
-                minWidth: size.width - 200,
+                minWidth: size.width - 300,
                 child: Row(
                   children: [
                     const Text('Select Division'),
-                    Icon(Icons.arrow_downward_outlined)
+                    //Icon(Icons.arrow_downward_outlined)
                   ],
                 ),
                 color: Colors.white70,
@@ -86,16 +88,16 @@ class Staff_ToGuardian extends StatelessWidget {
                       Text('Notification')
                     ],
                   ),
-                  kWidth, Spacer(),
+                  Spacer(),
                   Container(
                     child: MaterialButton(
                       minWidth: 30, color: Colors.grey,
-                      //     style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      //   style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       onPressed: () {},
                       child: Text('View'),
                     ),
                   ),
-                  kWidth, kWidth
+                  kWidth, kWidth, kWidth
                   // SizedBox(
                   //   child: Table(
                   //     children: [TableRow(children: [])],

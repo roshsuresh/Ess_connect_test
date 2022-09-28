@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  avatar_glow: ^2.0.2
   awesome_notifications: any
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
@@ -38,13 +39,14 @@ dependencies:
   firebase_messaging: any
   flutter:
     sdk: flutter
+  flutter_chat_ui: any
   flutter_downloader: any
   flutter_local_notifications: ^9.9.0
   flutter_spinkit: ^5.1.0
+  flutter_svg: ^1.0.3
   http: ^0.13.4
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
-  flutter_chat_ui: any
   marquee: ^2.2.3
   multi_select_flutter: ^4.1.2
   open_file: ^3.2.1
@@ -52,13 +54,11 @@ dependencies:
   pdfdownload: ^0.0.2
   photo_view: ^0.14.0
   provider: any
-  flutter_svg: ^1.0.3
   rect_getter: ^1.1.0
   shared_preferences: ^2.0.9
   syncfusion_flutter_pdfviewer: ^20.2.46-beta
   url_launcher: ^6.1.5
   webview_flutter: any
-  avatar_glow: ^2.0.2
 dev_dependencies:
   flutter_lints: ^1.0.0
   flutter_test:

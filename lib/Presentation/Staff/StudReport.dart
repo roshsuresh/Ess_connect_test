@@ -45,17 +45,8 @@ class StudReport extends StatelessWidget {
               actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
             ),
             body: TabBarView(children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const StudProfileView_Staff()),
-                  );
-                },
-                child: StudCurrentStudying(),
-              ),
               StudCurrentStudying(),
+              StudRelievedStaff(),
               StudCurrentStudying(),
             ])));
   }
@@ -76,333 +67,645 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
       var p = Provider.of<StudReportListProvider_stf>(context, listen: false);
       p.stdReportSectionStaff();
       p.clearAllFilters();
-      // p.selectedCourse.clear();
+      p.removeSectionAll();
       p.courseClear();
-      p.getCourseList();
+      p.divisionClear();
+      p.sectionClear();
+      p.removeSectionAll();
+      p.removeDivisionAll();
+      p.removeCourseAll();
+      p.viewStudentReportList();
     });
   }
 
-  final courseController = TextEditingController();
+  String? phn;
+  String sectionId = '';
+  final studReportInitialValuesController = TextEditingController();
+  final studReportInitialValuesController1 = TextEditingController();
+  final StudReportcourseController = TextEditingController();
+  final StudReportcourseController1 = TextEditingController();
+  final StudReportDivisionController = TextEditingController();
+  final StudReportDivisionController1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return ListView(
-      children: [
-        kheight10,
-        Row(
-          children: [
-            SizedBox(
-              height: 50,
-              width: MediaQuery.of(context).size.width * 0.45,
-              child: Consumer<StudReportListProvider_stf>(
-                  builder: (context, snapshot, child) {
-                return InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.courselist.length,
-                                  itemBuilder: (context, index) {
-                                    print(snapshot.courselist.length);
-                                    snapshot.removeCourseAll();
-                                    return ListTile(
-                                      selectedTileColor: Colors.blue.shade100,
-                                      selectedColor: UIGuide.PRIMARY2,
-                                      // selected: snapshot.isCourseSelected(
-                                      //     snapshot.courselist[index]),
-                                      onTap: () {
-                                        // print(snapshot.isCourseSelected(
-                                        //     snapshot.courselist[index]));
-                                        print(snapshot.courselist.length);
-                                        courseController.text =
-                                            snapshot.courselist[index].text ??
-                                                '-';
-                                        snapshot.addSelectedCourse(
-                                            snapshot.courselist[index]);
-                                        print(snapshot.courselist[index].text ??
-                                            '-');
-                                        Navigator.of(context).pop();
-                                      },
-                                      title: Text(
-                                          snapshot.courselist[index].text ??
-                                              '-'),
-                                    );
-                                  }));
-                        });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
-                      controller: courseController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 238, 237, 237),
-                        border: OutlineInputBorder(),
-                        labelText: "Select Course",
-                        hintText: "Course",
-                      ),
-                      enabled: false,
-                    ),
-                  ),
-                );
-              }),
-            ),
-            Spacer(),
-            SizedBox(
-              height: 50,
-              width: MediaQuery.of(context).size.width * 0.45,
-              child: Consumer<StudReportListProvider_stf>(
-                  builder: (context, snapshot, child) {
-                return InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                              child: Container(
-                            child: ListView.builder(
-                                itemCount: snapshot.courselist.length,
-                                itemBuilder: (context, index) {
-                                  print(snapshot.courselist.length);
-                                  //  snap.removeCourseAll();
-                                  return ListTile(
-                                    selectedTileColor: Colors.blue.shade100,
-                                    selectedColor: UIGuide.PRIMARY2,
-                                    // selected: snapshot.isCourseSelected(
-                                    //     snapshot.courselist[index]),
-                                    onTap: () {
-                                      print(snapshot.courselist.length);
-                                      // courseController.text =
-                                      //     snapshot.courselist[index].name;
-                                      // snapshot.addSelectedCourse(
-                                      //     snapshot.courselist[index]);
+    return Consumer<StudReportListProvider_stf>(
+      builder: (context, value, child) => ListView(
+        children: [
+          kheight10,
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: studReportinitvalues_stf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
 
-                                      Navigator.of(context).pop();
-                                    },
-                                    title: Text(
-                                        snapshot.courselist[index].text ??
-                                            '---'),
-                                  );
-                                }),
-                          ));
-                        });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
-                      //  controller: courseController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color.fromARGB(255, 238, 237, 237),
-                        border: OutlineInputBorder(),
-                        labelText: "Select Division",
-                        hintText: "Division",
-                      ),
-                      enabled: false,
-                    ),
-                  ),
-                );
-              }),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MaterialButton(
-              child: const Text('View'),
-              color: Colors.grey,
-              onPressed: (() {}),
-            ),
-          ],
-        ),
-        ViewStaffReport(size: size),
-        LimitedBox(
-          maxHeight: size.height - 200,
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: 25,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  kheight10,
-                  Container(
-                    width: size.width - 10,
-                    height: 90,
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 236, 233, 233),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        kWidth,
-                        Center(
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 236, 233, 233),
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/studentLogo.png')),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                                      //     .attendenceInitialValues.length);
+
+                                      value.removeSectionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selected:
+                                            //     studReportinitvalues_stf![index],
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${studReportinitvalues_stf![index]}');
+                                              studReportInitialValuesController
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['value'] ??
+                                                      '--';
+                                              studReportInitialValuesController1
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['text'] ??
+                                                      '--';
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(sectionId);
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getCourseList(sectionId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              studReportinitvalues_stf![index]
+                                                      ['text'] ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
+                              ),
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.courselist.length,
+                                        itemBuilder: (context, index) {
+                                          print(snapshot.courselist.length);
+                                          // value.removeDivisionAll();
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isCourseSelected(
+                                                snapshot.courselist[index]),
+                                            onTap: () async {
+                                              print(snapshot.courselist.length);
+                                              StudReportcourseController.text =
+                                                  snapshot.courselist[index]
+                                                          .value ??
+                                                      '---';
+                                              StudReportcourseController1.text =
+                                                  snapshot.courselist[index]
+                                                          .text ??
+                                                      '---';
+                                              snapshot.addSelectedCourse(
+                                                  snapshot.courselist[index]);
+
+                                              print(StudReportcourseController
+                                                  .text);
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getDivisionList(sectionId);
+
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.courselist[index].text ??
+                                                  '---',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text(
-                                    'Name : ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13),
-                                  ),
-                                  RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    strutStyle: const StrutStyle(fontSize: 8.0),
-                                    text: TextSpan(
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                        ),
-                                        text: "AADAM ISWAR AADHITHYA UNNI"),
-                                  ),
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.divisionlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot.divisionlist.length);
+                                        // value.removeDivisionAll();
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isDivisionSelected(snapshot
+                                                      .divisionlist[index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .divisionlist.length);
+                                                StudReportDivisionController
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .value ??
+                                                    '---';
+                                                StudReportDivisionController1
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .text ??
+                                                    '---';
+                                                snapshot.addSelectedDivision(
+                                                    snapshot
+                                                        .divisionlist[index]);
+
+                                                print(
+                                                    StudReportDivisionController
+                                                        .text);
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot.divisionlist[index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Roll No : ',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              MaterialButton(
+                child: const Text('View'),
+                color: Colors.grey,
+                onPressed: (() {}),
+              ),
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+            ],
+          ),
+          ViewStaffReport(size: size),
+          LimitedBox(
+            maxHeight: size.height - 200,
+            child: Consumer<StudReportListProvider_stf>(
+              builder: (context, provider, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: provider.viewStudReportListt.length,
+                itemBuilder: (context, index) {
+                  String status = provider
+                      .viewStudReportListt[index].terminationStatus
+                      .toString();
+                  print(status);
+
+                  if (status.toString() == false.toString()) {
+                    return Column(
+                      children: [
+                        kheight10,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => StudProfileView_Staff(
+                                        indexx: index,
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            width: size.width - 10,
+                            height: 90,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 236, 233, 233),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                kWidth,
+                                Center(
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 236, 233, 233),
+                                        image: DecorationImage(
+                                            image: NetworkImage(provider
+                                                    .viewStudReportListt[index]
+                                                    .studentPhoto ??
+                                                'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
                                   ),
-                                  RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    strutStyle: const StrutStyle(fontSize: 8.0),
-                                    text: const TextSpan(
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                      ),
-                                      text: "214",
-                                    ),
-                                  ),
-                                  kWidth,
-                                  kWidth,
-                                  Row(
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'Division : ',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 13),
-                                      ),
-                                      RichText(
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
-                                        text: TextSpan(
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black,
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Name : ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
                                           ),
-                                          text: "VII",
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                ),
+                                                text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .name ??
+                                                    '---'),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Roll No : ',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
+                                                  ? '---'
+                                                  : provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
+                                            ),
+                                          ),
+                                          kWidth,
+                                          kWidth,
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Division : ',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 13),
+                                              ),
+                                              RichText(
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                strutStyle: const StrutStyle(
+                                                    fontSize: 8.0),
+                                                text: TextSpan(
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                  ),
+                                                  text: provider
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .division ??
+                                                      '---',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Adm No : ',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .admnNo ??
+                                                  '---',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          phn = provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ==
+                                                  null
+                                              ? '--'
+                                              : provider
+                                                  .viewStudReportListt[index]
+                                                  .mobNo
+                                                  .toString();
+
+                                          _makingPhoneCall(phn.toString());
+                                        },
+                                        child: Row(
+                                          //mainAxisAlignment: MainAxisAlignment.center,
+                                          //crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            const Text(
+                                              'Phone : ',
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 13),
+                                            ),
+                                            RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              strutStyle: const StrutStyle(
+                                                  fontSize: 8.0),
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black,
+                                                ),
+                                                text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .mobNo ??
+                                                    '---',
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.phone,
+                                              size: 17,
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Adm No : ',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 13),
-                                  ),
-                                  RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    strutStyle: const StrutStyle(fontSize: 8.0),
-                                    text: TextSpan(
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                      ),
-                                      text: "2154",
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _makingPhoneCall();
-                                },
-                                child: Row(
-                                  //mainAxisAlignment: MainAxisAlignment.center,
-                                  //crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    const Text(
-                                      'Phone : ',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13),
-                                    ),
-                                    RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      strutStyle:
-                                          const StrutStyle(fontSize: 8.0),
-                                      text: TextSpan(
-                                        style: const TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.black,
-                                        ),
-                                        text: "9547812154",
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.phone,
-                                      size: 17,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        )
+                        ),
                       ],
-                    ),
-                  ),
-                ],
-              );
-            },
+                    );
+                  } else {
+                    return Text(
+                      '',
+                      style: TextStyle(fontSize: 0),
+                    );
+                  }
+                },
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  _makingPhoneCall() async {
-    var url = Uri.parse("tel:807812564");
+  _makingPhoneCall(String phn) async {
+    var url = Uri.parse("tel:$phn");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -428,8 +731,9 @@ class ViewStaffReport extends StatelessWidget {
 }
 
 class StudProfileView_Staff extends StatelessWidget {
-  const StudProfileView_Staff({Key? key}) : super(key: key);
-
+  StudProfileView_Staff({Key? key, required this.indexx}) : super(key: key);
+  final int indexx;
+  String? phn;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -449,223 +753,1563 @@ class StudProfileView_Staff extends StatelessWidget {
 
     return SafeArea(
         child: Scaffold(
-      body: ListView(
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 260,
-                width: size.width,
-                // color: UIGuide.WHITE,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: gradient,
-                    stops: stops,
-                    end: Alignment.bottomCenter,
-                    begin: Alignment.topCenter,
+      body: Consumer<StudReportListProvider_stf>(
+        builder: (context, value, child) => ListView(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 260,
+                  width: size.width,
+                  // color: UIGuide.WHITE,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradient,
+                      stops: stops,
+                      end: Alignment.bottomCenter,
+                      begin: Alignment.topCenter,
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                top: 70,
-                left: 30,
-                right: 30,
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color: UIGuide.WHITE,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 128, 125, 125),
-                            offset: Offset(
-                              2,
-                              5.0,
+                Positioned(
+                  top: 70,
+                  left: 30,
+                  right: 30,
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: UIGuide.WHITE,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 128, 125, 125),
+                              offset: Offset(
+                                2,
+                                5.0,
+                              ),
+                              blurRadius: 5.0,
+                              spreadRadius: 2.0,
                             ),
-                            blurRadius: 5.0,
-                            spreadRadius: 2.0,
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      width: size.width - 50,
+                      height: 170,
+                      child: Column(
+                        children: [
+                          kheight20,
+                          kheight20,
+                          kheight20,
+                          kheight10,
+                          Text(
+                            value.viewStudReportListt[indexx].name ?? '---',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),
                           ),
+                          kheight10,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Table(
+                              // defaultColumnWidth: FixedColumnWidth(120.0),
+                              border: TableBorder.all(
+                                  color:
+                                      const Color.fromARGB(255, 213, 213, 243),
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                              children: [
+                                TableRow(children: [
+                                  Column(
+                                    children: [
+                                      const Text('Division',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
+                                                  .division ??
+                                              '---',
+                                          style:
+                                              const TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      const Text('Roll No',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
+                                                      .rollNo ==
+                                                  null
+                                              ? '---'
+                                              : value
+                                                  .viewStudReportListt[indexx]
+                                                  .rollNo
+                                                  .toString(),
+                                          style:
+                                              const TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      const Text('Adm No',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
+                                                  .admnNo ??
+                                              '---',
+                                          style:
+                                              const TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
+                                ])
+                              ],
+                            ),
+                          )
                         ],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    width: size.width - 50,
-                    height: 170,
-                    child: Column(
-                      children: [
-                        kheight20,
-                        kheight20,
-                        kheight20,
-                        kheight10,
-                        Text(
-                          'AADAM ISWAR AADHITHYA UNNI ',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 13),
-                        ),
-                        kheight10,
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Table(
-                            // defaultColumnWidth: FixedColumnWidth(120.0),
-                            border: TableBorder.all(
-                                color: const Color.fromARGB(255, 213, 213, 243),
-                                style: BorderStyle.solid,
-                                width: 2),
-                            children: [
-                              TableRow(children: [
-                                Column(
-                                  children: [
-                                    const Text('Division',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.grey)),
-                                    Text('XII-A',
-                                        style: const TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    const Text('Roll No',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.grey)),
-                                    Text('65',
-                                        style: const TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    const Text('Adm No',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.grey)),
-                                    Text('2354',
-                                        style: const TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
-                              ])
-                            ],
-                          ),
-                        )
-                      ],
-                    )),
-              ),
-              Center(
-                child: CircleAvatar(
-                  // foregroundColor: Colors.white,
-                  backgroundImage: NetworkImage(
-                      'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'),
-                  radius: 65,
-                  backgroundColor: UIGuide.WHITE,
+                      )),
                 ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 170,
-              width: size.width,
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 238, 234, 234),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 238, 234, 234),
+                Center(
+                  child: CircleAvatar(
+                    foregroundColor: Colors.white,
+                    foregroundImage: NetworkImage(
+                      value.viewStudReportListt[indexx].studentPhoto ??
+                          'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
                     ),
-                    width: size.width,
-                    height: 85,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Permenent Address',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Flexible(
-                          child: RichText(
-                            overflow: TextOverflow.ellipsis,
-                            strutStyle: const StrutStyle(fontSize: 13),
-                            maxLines: 3,
-                            text: const TextSpan(
+                    radius: 65,
+                    backgroundColor: UIGuide.WHITE,
+                    // child: Image(
+                    //   image: NetworkImage(
+                    //     value.viewStudReportListt[indexx].studentPhoto ??
+                    //         'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
+                    //   ),
+                    //   // fit: BoxFit.fill,
+                    // ),
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 170,
+                width: size.width,
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 238, 234, 234),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 238, 234, 234),
+                      ),
+                      width: size.width,
+                      height: 85,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Permenent Address',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Flexible(
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: const StrutStyle(fontSize: 13),
+                              maxLines: 3,
+                              text: TextSpan(
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Color.fromARGB(255, 44, 43, 43)),
                                 text:
-                                    'Reloaded 1 Reloaded 1 of 1770 libraries in 1,986ms (compile: 27 ms, reload: 861 ms, reassemble: 946 ms). of 1770 libraries in 1,986ms (compile: 27 ms, reload: 861 ms, reassemble: 946 ms).'),
+                                    value.viewStudReportListt[indexx].address ??
+                                        '---',
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: const [
-                      Text(
-                        'Bus Name : ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 13),
-                      ),
-                      Flexible(
-                        child: Text(
-                          'BUS-1',
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )
-                    ],
-                  ),
-                  kheight10,
-                  Row(
-                    children: const [
-                      Text(
-                        'Bus Stop : ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 13),
-                      ),
-                      Flexible(
-                        child: Text(
-                          'KMUP SCHOOL',
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      )
-                    ],
-                  ),
-                  kheight10,
-                  GestureDetector(
-                    onTap: () {
-                      _makingPhoneCall();
-                    },
-                    child: Row(
-                      children: const [
+                    Row(
+                      children: [
                         Text(
-                          'Phone No : ',
+                          'Bus Name : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
                         ),
                         Flexible(
                           child: Text(
-                            '+91 9855464885',
+                            value.viewStudReportListt[indexx].bus ?? '---',
                             overflow: TextOverflow.clip,
                             style: TextStyle(fontSize: 12),
                           ),
                         )
                       ],
                     ),
-                  ),
-                ],
+                    kheight10,
+                    Row(
+                      children: [
+                        Text(
+                          'Bus Stop : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 13),
+                        ),
+                        Flexible(
+                          child: Text(
+                            value.viewStudReportListt[indexx].stop ?? '---',
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        )
+                      ],
+                    ),
+                    kheight10,
+                    GestureDetector(
+                      onTap: () {
+                        _makingPhoneCall(phn.toString());
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'Phone No : ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),
+                          ),
+                          Flexible(
+                            child: Text(
+                              phn = value.viewStudReportListt[indexx].mobNo ??
+                                  '---',
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     ));
   }
 
-  _makingPhoneCall() async {
-    var url = Uri.parse("tel:807812564");
+  _makingPhoneCall(String phn) async {
+    var url = Uri.parse("tel:$phn");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+}
+
+class StudRelievedStaff extends StatefulWidget {
+  const StudRelievedStaff({Key? key}) : super(key: key);
+
+  @override
+  State<StudRelievedStaff> createState() => _StudRelievedStaffState();
+}
+
+class _StudRelievedStaffState extends State<StudRelievedStaff> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<StudReportListProvider_stf>(context, listen: false);
+      p.stdReportSectionStaff();
+      p.clearAllFilters();
+      p.removeSectionAll();
+      p.courseClear();
+      p.divisionClear();
+      p.sectionClear();
+      p.removeSectionAll();
+      p.removeDivisionAll();
+      p.removeCourseAll();
+      p.viewStudentReportList();
+    });
+  }
+
+  String? phn;
+  String sectionId = '';
+  final studReportInitialValuesController = TextEditingController();
+  final studReportInitialValuesController1 = TextEditingController();
+  final StudReportcourseController = TextEditingController();
+  final StudReportcourseController1 = TextEditingController();
+  final StudReportDivisionController = TextEditingController();
+  final StudReportDivisionController1 = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Consumer<StudReportListProvider_stf>(
+      builder: (context, value, child) => ListView(
+        children: [
+          kheight10,
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: studReportinitvalues_stf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      value.removeSectionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selected:
+                                            //     studReportinitvalues_stf![index],
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${studReportinitvalues_stf![index]}');
+                                              studReportInitialValuesController
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['value'] ??
+                                                      '--';
+                                              studReportInitialValuesController1
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['text'] ??
+                                                      '--';
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(sectionId);
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getCourseList(sectionId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              studReportinitvalues_stf![index]
+                                                      ['text'] ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.courselist.length,
+                                        itemBuilder: (context, index) {
+                                          print(snapshot.courselist.length);
+                                          // value.removeDivisionAll();
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isCourseSelected(
+                                                snapshot.courselist[index]),
+                                            onTap: () async {
+                                              print(snapshot.courselist.length);
+                                              StudReportcourseController.text =
+                                                  snapshot.courselist[index]
+                                                          .value ??
+                                                      '---';
+                                              StudReportcourseController1.text =
+                                                  snapshot.courselist[index]
+                                                          .text ??
+                                                      '---';
+                                              snapshot.addSelectedCourse(
+                                                  snapshot.courselist[index]);
+
+                                              print(StudReportcourseController
+                                                  .text);
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getDivisionList(sectionId);
+
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.courselist[index].text ??
+                                                  '---',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.divisionlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot.divisionlist.length);
+                                        // value.removeDivisionAll();
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isDivisionSelected(snapshot
+                                                      .divisionlist[index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .divisionlist.length);
+                                                StudReportDivisionController
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .value ??
+                                                    '---';
+                                                StudReportDivisionController1
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .text ??
+                                                    '---';
+                                                snapshot.addSelectedDivision(
+                                                    snapshot
+                                                        .divisionlist[index]);
+
+                                                print(
+                                                    StudReportDivisionController
+                                                        .text);
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot.divisionlist[index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              MaterialButton(
+                child: const Text('View'),
+                color: Colors.grey,
+                onPressed: (() {}),
+              ),
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+            ],
+          ),
+          ViewStaffReport(size: size),
+          LimitedBox(
+            maxHeight: size.height - 200,
+            child: Consumer<StudReportListProvider_stf>(
+              builder: (context, provider, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: provider.viewStudReportListt.length,
+                itemBuilder: (context, index) {
+                  String status = provider
+                      .viewStudReportListt[index].terminationStatus
+                      .toString();
+                  print(status);
+
+                  if (status.toString() == true.toString()) {
+                    return Column(
+                      children: [
+                        kheight10,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => StudProfileView_Staff(
+                                        indexx: index,
+                                      )),
+                            );
+                          },
+                          child: Container(
+                            width: size.width - 10,
+                            height: 90,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 236, 233, 233),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                kWidth,
+                                Center(
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 236, 233, 233),
+                                        image: DecorationImage(
+                                            image: NetworkImage(provider
+                                                    .viewStudReportListt[index]
+                                                    .studentPhoto ??
+                                                'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Name : ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                ),
+                                                text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .name ??
+                                                    '---'),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Roll No : ',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
+                                                  ? '---'
+                                                  : provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
+                                            ),
+                                          ),
+                                          kWidth,
+                                          kWidth,
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Division : ',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 13),
+                                              ),
+                                              RichText(
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                strutStyle: const StrutStyle(
+                                                    fontSize: 8.0),
+                                                text: TextSpan(
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black,
+                                                  ),
+                                                  text: provider
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .division ??
+                                                      '---',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            'Adm No : ',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .admnNo ??
+                                                  '---',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          phn = provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ==
+                                                  null
+                                              ? '--'
+                                              : provider
+                                                  .viewStudReportListt[index]
+                                                  .mobNo
+                                                  .toString();
+
+                                          _makingPhoneCall(phn.toString());
+                                        },
+                                        child: Row(
+                                          //mainAxisAlignment: MainAxisAlignment.center,
+                                          //crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            const Text(
+                                              'Phone : ',
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 13),
+                                            ),
+                                            RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              strutStyle: const StrutStyle(
+                                                  fontSize: 8.0),
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.black,
+                                                ),
+                                                text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .mobNo ??
+                                                    '---',
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.phone,
+                                              size: 17,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Container(
+                      height: 0,
+                      width: 0,
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _makingPhoneCall(String phn) async {
+    var url = Uri.parse("tel:$phn");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+}
+
+class StudentReportBoth_Staff extends StatefulWidget {
+  const StudentReportBoth_Staff({Key? key}) : super(key: key);
+
+  @override
+  State<StudentReportBoth_Staff> createState() =>
+      _StudentReportBoth_StaffState();
+}
+
+class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<StudReportListProvider_stf>(context, listen: false);
+      p.stdReportSectionStaff();
+      p.clearAllFilters();
+      p.removeSectionAll();
+      p.courseClear();
+      p.divisionClear();
+      p.sectionClear();
+      p.removeSectionAll();
+      p.removeDivisionAll();
+      p.removeCourseAll();
+      p.viewStudentReportList();
+    });
+  }
+
+  String? phn;
+  String sectionId = '';
+  final studReportInitialValuesController = TextEditingController();
+  final studReportInitialValuesController1 = TextEditingController();
+  final StudReportcourseController = TextEditingController();
+  final StudReportcourseController1 = TextEditingController();
+  final StudReportDivisionController = TextEditingController();
+  final StudReportDivisionController1 = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Consumer<StudReportListProvider_stf>(
+      builder: (context, value, child) => ListView(
+        children: [
+          kheight10,
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: studReportinitvalues_stf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      value.removeSectionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selected:
+                                            //     studReportinitvalues_stf![index],
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${studReportinitvalues_stf![index]}');
+                                              studReportInitialValuesController
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['value'] ??
+                                                      '--';
+                                              studReportInitialValuesController1
+                                                      .text =
+                                                  await studReportinitvalues_stf![
+                                                          index]['text'] ??
+                                                      '--';
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(sectionId);
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getCourseList(sectionId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              studReportinitvalues_stf![index]
+                                                      ['text'] ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.courselist.length,
+                                        itemBuilder: (context, index) {
+                                          print(snapshot.courselist.length);
+                                          // value.removeDivisionAll();
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isCourseSelected(
+                                                snapshot.courselist[index]),
+                                            onTap: () async {
+                                              print(snapshot.courselist.length);
+                                              StudReportcourseController.text =
+                                                  snapshot.courselist[index]
+                                                          .value ??
+                                                      '---';
+                                              StudReportcourseController1.text =
+                                                  snapshot.courselist[index]
+                                                          .text ??
+                                                      '---';
+                                              snapshot.addSelectedCourse(
+                                                  snapshot.courselist[index]);
+
+                                              print(StudReportcourseController
+                                                  .text);
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .getDivisionList(sectionId);
+
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.courselist[index].text ??
+                                                  '---',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<StudReportListProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.divisionlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot.divisionlist.length);
+                                        // value.removeDivisionAll();
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isDivisionSelected(snapshot
+                                                      .divisionlist[index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .divisionlist.length);
+                                                StudReportDivisionController
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .value ??
+                                                    '---';
+                                                StudReportDivisionController1
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .text ??
+                                                    '---';
+                                                snapshot.addSelectedDivision(
+                                                    snapshot
+                                                        .divisionlist[index]);
+
+                                                print(
+                                                    StudReportDivisionController
+                                                        .text);
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot.divisionlist[index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              MaterialButton(
+                child: const Text('View'),
+                color: Colors.grey,
+                onPressed: (() {}),
+              ),
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+            ],
+          ),
+          ViewStaffReport(size: size),
+          LimitedBox(
+            maxHeight: size.height - 200,
+            child: Consumer<StudReportListProvider_stf>(
+              builder: (context, provider, child) => ListView.builder(
+                shrinkWrap: true,
+                itemCount: provider.viewStudReportListt.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      kheight10,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => StudProfileView_Staff(
+                                      indexx: index,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          width: size.width - 10,
+                          height: 90,
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 236, 233, 233),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              kWidth,
+                              Center(
+                                child: Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 236, 233, 233),
+                                      image: DecorationImage(
+                                          image: NetworkImage(provider
+                                                  .viewStudReportListt[index]
+                                                  .studentPhoto ??
+                                              'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Name : ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13),
+                                        ),
+                                        RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          strutStyle:
+                                              const StrutStyle(fontSize: 8.0),
+                                          text: TextSpan(
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .name ??
+                                                  '---'),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Roll No : ',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13),
+                                        ),
+                                        RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          strutStyle:
+                                              const StrutStyle(fontSize: 8.0),
+                                          text: TextSpan(
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black,
+                                            ),
+                                            text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .rollNo ==
+                                                    null
+                                                ? '---'
+                                                : provider
+                                                    .viewStudReportListt[index]
+                                                    .rollNo
+                                                    .toString(),
+                                          ),
+                                        ),
+                                        kWidth,
+                                        kWidth,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Division : ',
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 13),
+                                            ),
+                                            RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              strutStyle: const StrutStyle(
+                                                  fontSize: 8.0),
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                ),
+                                                text: provider
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .division ??
+                                                    '---',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Adm No : ',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13),
+                                        ),
+                                        RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          strutStyle:
+                                              const StrutStyle(fontSize: 8.0),
+                                          text: TextSpan(
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black,
+                                            ),
+                                            text: provider
+                                                    .viewStudReportListt[index]
+                                                    .admnNo ??
+                                                '---',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        phn = provider
+                                                    .viewStudReportListt[index]
+                                                    .mobNo ==
+                                                null
+                                            ? '--'
+                                            : provider
+                                                .viewStudReportListt[index]
+                                                .mobNo
+                                                .toString();
+
+                                        _makingPhoneCall(phn.toString());
+                                      },
+                                      child: Row(
+                                        //mainAxisAlignment: MainAxisAlignment.center,
+                                        //crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          const Text(
+                                            'Phone : ',
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13),
+                                          ),
+                                          RichText(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            strutStyle:
+                                                const StrutStyle(fontSize: 8.0),
+                                            text: TextSpan(
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.black,
+                                              ),
+                                              text: provider
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ??
+                                                  '---',
+                                            ),
+                                          ),
+                                          const Icon(
+                                            Icons.phone,
+                                            size: 17,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _makingPhoneCall(String phn) async {
+    var url = Uri.parse("tel:$phn");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

@@ -1,4 +1,3 @@
-
 import 'package:Ess_test/Presentation/Student/payment.dart';
 import 'package:Ess_test/Presentation/Student/selection.dart';
 import 'package:flutter/material.dart';
@@ -418,9 +417,7 @@ class StudentHome extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                PayFee()),
-
+                                            builder: (context) => PayFee()),
                                       );
                                     },
                                     child: Column(
@@ -912,9 +909,11 @@ class StudentHome extends StatelessWidget {
                         ],
                       ),
                       kheight20,
+                      kheight20,
+                      kheight20,
                     ],
                   ),
-                )
+                ),
               ],
             ),
     );
@@ -1391,53 +1390,60 @@ class ProfileHome extends StatelessWidget {
           );
   }
 
+  bool loading = false;
   _displayNameOfSiblings(BuildContext context, String? name) async {
     await Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
 
-    return showDialog(
-        context: context,
-        builder: (context) {
-          var size = MediaQuery.of(context).size;
-          return AlertDialog(
-              content: Container(
-            decoration: BoxDecoration(border: Border.all()),
-            height: 70,
-            width: size.width,
-            child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-                itemCount:
-                    siblinggResponse == null ? 0 : siblinggResponse!.length,
-                itemBuilder: ((context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: GestureDetector(
-                              onTap: () async {
-                                var idd = siblinggResponse![index]['id'] == null
-                                    ? '--'
-                                    : siblinggResponse![index]['id'].toString();
+    return loading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : showDialog(
+            context: context,
+            builder: (context) {
+              var size = MediaQuery.of(context).size;
+              return AlertDialog(
+                  content: Container(
+                decoration: BoxDecoration(border: Border.all()),
+                height: 70,
+                width: size.width,
+                child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                    itemCount:
+                        siblinggResponse == null ? 0 : siblinggResponse!.length,
+                    itemBuilder: ((context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: GestureDetector(
+                                  onTap: () async {
+                                    var idd =
+                                        siblinggResponse![index]['id'] == null
+                                            ? '--'
+                                            : siblinggResponse![index]['id']
+                                                .toString();
 
-                                await Provider.of<SibingsProvider>(context,
-                                        listen: false)
-                                    .getSibling(context, idd);
-                              },
-                              child: Text(
-                                  siblinggResponse![index]['name'] == null
-                                      ? '--'
-                                      : siblinggResponse![index]['name']
-                                          .toString()))),
-                      const Divider(
-                        height: 1,
-                        color: Colors.black54,
-                      )
-                    ],
-                  );
-                })),
-          ));
-        });
+                                    await Provider.of<SibingsProvider>(context,
+                                            listen: false)
+                                        .getSibling(context, idd);
+                                  },
+                                  child: Text(
+                                      siblinggResponse![index]['name'] == null
+                                          ? '--'
+                                          : siblinggResponse![index]['name']
+                                              .toString()))),
+                          const Divider(
+                            height: 1,
+                            color: Colors.black54,
+                          )
+                        ],
+                      );
+                    })),
+              ));
+            });
   }
 }
 

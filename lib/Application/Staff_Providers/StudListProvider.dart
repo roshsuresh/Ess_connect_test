@@ -1,23 +1,20 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import '../../Domain/Admin/StudentListModel.dart';
 import '../../utils/constants.dart';
 
 Map? staffStudReportRespo;
-List StudReportinitvalues = [];
+List? studReportinitvalues_stf;
 
 class StudReportListProvider_stf with ChangeNotifier {
   List<StudReportSectionList> selectedSection = [];
 
   String filtersDivision = "";
   String filterCourse = "";
-  int pageno = 1;
 
   addFilterSection(String course) {
     filterCourse = course;
@@ -67,13 +64,11 @@ class StudReportListProvider_stf with ChangeNotifier {
     }
   }
 
-  SectionClear() {
+  sectionClear() {
     stdReportInitialValues.clear();
   }
 
   List<StudReportSectionList> stdReportInitialValues = [];
-  bool? isClassTeacher;
-  bool? isDualAttendance;
 
   Future stdReportSectionStaff() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -92,11 +87,11 @@ class StudReportListProvider_stf with ChangeNotifier {
         print("corect");
         final data = json.decode(response.body);
 
-        print(data);
+        //print(data);
         staffStudReportRespo = data['studentReportInitialValues'];
-        StudReportinitvalues = staffStudReportRespo!['sectionList'];
-        print(StudReportinitvalues);
-        print(isClassTeacher);
+        studReportinitvalues_stf = staffStudReportRespo!['sectionList'];
+        print(studReportinitvalues_stf);
+        // print(staffStudReportRespo);
 
         notifyListeners();
       } else {
@@ -122,7 +117,7 @@ class StudReportListProvider_stf with ChangeNotifier {
     }
   }
 
-  removeCourse(CourseList item) {
+  removeCourse(StudReportCourse item) {
     studReportCourse.remove(item);
     notifyListeners();
   }
@@ -131,7 +126,9 @@ class StudReportListProvider_stf with ChangeNotifier {
     studReportCourse.clear();
   }
 
-  isCourseSelected(CourseList item) {
+  isCourseSelected(
+    StudReportCourse item,
+  ) {
     if (studReportCourse.contains(item)) {
       return true;
     } else {
@@ -145,7 +142,7 @@ class StudReportListProvider_stf with ChangeNotifier {
 
   List<StudReportCourse> courselist = [];
 
-  Future<bool> getCourseList() async {
+  Future<bool> getCourseList(String sectionId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -153,7 +150,82 @@ class StudReportListProvider_stf with ChangeNotifier {
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     var request = http.Request(
-        'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/common/courselist'));
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/course/$sectionId'));
+    request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      // log(data.toString());
+
+      List<StudReportCourse> templist = List<StudReportCourse>.from(
+          data["course"].map((x) => StudReportCourse.fromJson(x)));
+      courselist.addAll(templist);
+
+      notifyListeners();
+    } else {
+      print('Error in courseList stf');
+    }
+    return true;
+  }
+
+  //Division List
+
+  List<StudReportDivision> studReportDivision = [];
+  addSelectedDivision(StudReportDivision item) {
+    if (studReportDivision.contains(item)) {
+      print("removing");
+      studReportDivision.remove(item);
+      notifyListeners();
+    } else {
+      print("adding");
+      studReportDivision.add(item);
+      notifyListeners();
+    }
+  }
+
+  removeDivision(StudReportDivision item) {
+    studReportDivision.remove(item);
+    notifyListeners();
+  }
+
+  removeDivisionAll() {
+    studReportDivision.clear();
+  }
+
+  isDivisionSelected(
+    StudReportDivision item,
+  ) {
+    if (studReportDivision.contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  divisionClear() {
+    divisionlist.clear();
+  }
+
+  List<StudReportDivision> divisionlist = [];
+
+  Future<bool> getDivisionList(String sectionId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/division/$sectionId'));
     request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
     request.headers.addAll(headers);
 
@@ -165,13 +237,51 @@ class StudReportListProvider_stf with ChangeNotifier {
 
       log(data.toString());
 
-      List<StudReportCourse> templist = List<StudReportCourse>.from(
-          data["courseList"].map((x) => StudReportCourse.fromJson(x)));
-      courselist.addAll(templist);
+      List<StudReportDivision> templist = List<StudReportDivision>.from(
+          data["division"].map((x) => StudReportDivision.fromJson(x)));
+      divisionlist.addAll(templist);
 
       notifyListeners();
     } else {
-      print('Error in courseList stf');
+      print('Error in DivisionList stf');
+    }
+    return true;
+  }
+
+  //view initial
+  List<ViewStudentReport> viewStudReportListt = [];
+  Future<bool> viewStudentReportList() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/viewStudentReport'));
+    request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      //  log(data.toString());
+
+      List<ViewStudentReport> templist = List<ViewStudentReport>.from(
+          data["viewStudentReport"].map((x) => ViewStudentReport.fromJson(x)));
+      viewStudReportListt.addAll(templist);
+      int len = templist.length;
+      String ss = templist[len].terminationStatus.toString();
+      log(ss.toString());
+
+      notifyListeners();
+    } else {
+      print('Error in DivisionList stf');
     }
     return true;
   }

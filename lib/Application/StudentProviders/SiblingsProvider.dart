@@ -68,7 +68,8 @@ class SibingsProvider with ChangeNotifier {
 
       // await Provider.of<LoginProvider>(context, listen: false)
       //     .getToken(context);
-      await Future.delayed(const Duration(seconds: 1));
+      // await Future.delayed(const Duration(seconds: 1));
+
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => StudentHome()),
