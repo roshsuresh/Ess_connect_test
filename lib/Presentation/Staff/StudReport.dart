@@ -106,69 +106,57 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                           context: context,
                           builder: (context) {
                             return Dialog(
-                                child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: studReportinitvalues_stf!.length,
-                                    itemBuilder: (context, index) {
-                                      // print(snapshot
+                                child: LimitedBox(
+                              maxHeight: size.height - 300,
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: studReportinitvalues_stf!.length,
+                                  itemBuilder: (context, index) {
+                                    // print(snapshot
 
-                                      //     .attendenceInitialValues.length);
+                                    //     .attendenceInitialValues.length);
 
-                                      value.removeSectionAll();
-                                      return Column(
-                                        children: [
-                                          ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-                                            // selected:
-                                            //     studReportinitvalues_stf![index],
-                                            onTap: () async {
-                                              print(
-                                                  'guh.....${studReportinitvalues_stf![index]}');
-                                              studReportInitialValuesController
-                                                      .text =
-                                                  await studReportinitvalues_stf![
-                                                          index]['value'] ??
-                                                      '--';
-                                              studReportInitialValuesController1
-                                                      .text =
-                                                  await studReportinitvalues_stf![
-                                                          index]['text'] ??
-                                                      '--';
-                                              sectionId =
-                                                  studReportInitialValuesController
-                                                      .text
-                                                      .toString();
+                                    value.removeSectionAll();
+                                    return ListTile(
+                                      selectedTileColor: Colors.blue.shade100,
+                                      selectedColor: UIGuide.PRIMARY2,
+                                      // selected:
+                                      //     studReportinitvalues_stf![index],
+                                      onTap: () async {
+                                        print(
+                                            'guh.....${studReportinitvalues_stf![index]}');
+                                        studReportInitialValuesController.text =
+                                            await studReportinitvalues_stf![
+                                                    index]['value'] ??
+                                                '--';
+                                        studReportInitialValuesController1
+                                                .text =
+                                            await studReportinitvalues_stf![
+                                                    index]['text'] ??
+                                                '--';
+                                        sectionId =
+                                            studReportInitialValuesController
+                                                .text
+                                                .toString();
 
-                                              // snapshot.addSelectedCourse(
-                                              //     attendecourse![index]);
-                                              print(sectionId);
-                                              await Provider.of<
-                                                          StudReportListProvider_stf>(
-                                                      context,
-                                                      listen: false)
-                                                  .getCourseList(sectionId);
-                                              Navigator.of(context).pop();
-                                            },
-                                            title: Text(
-                                              studReportinitvalues_stf![index]
-                                                      ['text'] ??
-                                                  '--',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 1,
-                                            color: Colors.black,
-                                          )
-                                        ],
-                                      );
-                                    }),
-                              ],
+                                        // snapshot.addSelectedCourse(
+                                        //     attendecourse![index]);
+                                        print(sectionId);
+                                        await Provider.of<
+                                                    StudReportListProvider_stf>(
+                                                context,
+                                                listen: false)
+                                            .getCourseList(sectionId);
+                                        Navigator.of(context).pop();
+                                      },
+                                      title: Text(
+                                        studReportinitvalues_stf![index]
+                                                ['text'] ??
+                                            '--',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  }),
                             ));
                           });
                     },
@@ -225,60 +213,55 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                           builder: (context) {
                             return Dialog(
                                 child: Container(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: snapshot.courselist.length,
-                                        itemBuilder: (context, index) {
+                              child: LimitedBox(
+                                maxHeight: size.height - 300,
+                                // mainAxisSize: MainAxisSize.min,
+
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.courselist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.courselist.length);
+                                      // value.removeDivisionAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        selected: snapshot.isCourseSelected(
+                                            snapshot.courselist[index]),
+                                        onTap: () async {
                                           print(snapshot.courselist.length);
-                                          // value.removeDivisionAll();
-                                          return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-                                            selected: snapshot.isCourseSelected(
-                                                snapshot.courselist[index]),
-                                            onTap: () async {
-                                              print(snapshot.courselist.length);
-                                              StudReportcourseController.text =
-                                                  snapshot.courselist[index]
-                                                          .value ??
-                                                      '---';
-                                              StudReportcourseController1.text =
-                                                  snapshot.courselist[index]
-                                                          .text ??
-                                                      '---';
-                                              snapshot.addSelectedCourse(
-                                                  snapshot.courselist[index]);
-
-                                              print(StudReportcourseController
-                                                  .text);
-                                              sectionId =
-                                                  studReportInitialValuesController
-                                                      .text
-                                                      .toString();
-
-                                              await Provider.of<
-                                                          StudReportListProvider_stf>(
-                                                      context,
-                                                      listen: false)
-                                                  .getDivisionList(sectionId);
-
-                                              Navigator.of(context).pop();
-                                            },
-                                            title: Text(
+                                          StudReportcourseController.text =
+                                              snapshot.courselist[index]
+                                                      .value ??
+                                                  '---';
+                                          StudReportcourseController1.text =
                                               snapshot.courselist[index].text ??
-                                                  '---',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          );
-                                        }),
-                                  ],
-                                ),
+                                                  '---';
+                                          snapshot.addSelectedCourse(
+                                              snapshot.courselist[index]);
+
+                                          print(
+                                              StudReportcourseController.text);
+                                          sectionId =
+                                              studReportInitialValuesController
+                                                  .text
+                                                  .toString();
+
+                                          await Provider.of<
+                                                      StudReportListProvider_stf>(
+                                                  context,
+                                                  listen: false)
+                                              .getDivisionList(sectionId);
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          snapshot.courselist[index].text ??
+                                              '---',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
                               ),
                             ));
                           });
@@ -339,62 +322,54 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             return Dialog(
                                 child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.divisionlist.length,
-                                      itemBuilder: (context, index) {
-                                        print(snapshot.divisionlist.length);
-                                        // value.removeDivisionAll();
-                                        return Column(
-                                          children: [
-                                            ListTile(
-                                              selectedTileColor:
-                                                  Colors.blue.shade100,
-                                              selectedColor: UIGuide.PRIMARY2,
-                                              selected: snapshot
-                                                  .isDivisionSelected(snapshot
-                                                      .divisionlist[index]),
-                                              onTap: () async {
-                                                print(snapshot
-                                                    .divisionlist.length);
-                                                StudReportDivisionController
-                                                    .text = snapshot
-                                                        .divisionlist[index]
-                                                        .value ??
-                                                    '---';
-                                                StudReportDivisionController1
-                                                    .text = snapshot
-                                                        .divisionlist[index]
-                                                        .text ??
-                                                    '---';
-                                                snapshot.addSelectedDivision(
-                                                    snapshot
-                                                        .divisionlist[index]);
+                              child: LimitedBox(
+                                maxHeight: size.height - 300,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.divisionlist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.divisionlist.length);
+                                      // value.removeDivisionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot
+                                                .isDivisionSelected(snapshot
+                                                    .divisionlist[index]),
+                                            onTap: () async {
+                                              print(
+                                                  snapshot.divisionlist.length);
+                                              StudReportDivisionController
+                                                  .text = snapshot
+                                                      .divisionlist[index]
+                                                      .value ??
+                                                  '---';
+                                              StudReportDivisionController1
+                                                  .text = snapshot
+                                                      .divisionlist[index]
+                                                      .text ??
+                                                  '---';
+                                              snapshot.addSelectedDivision(
+                                                  snapshot.divisionlist[index]);
 
-                                                print(
-                                                    StudReportDivisionController
-                                                        .text);
+                                              print(StudReportDivisionController
+                                                  .text);
 
-                                                Navigator.of(context).pop();
-                                              },
-                                              title: Text(
-                                                snapshot.divisionlist[index]
-                                                        .text ??
-                                                    '---',
-                                                textAlign: TextAlign.center,
-                                              ),
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.divisionlist[index]
+                                                      .text ??
+                                                  '---',
+                                              textAlign: TextAlign.center,
                                             ),
-                                            Divider(
-                                              height: 1,
-                                              color: Colors.black,
-                                            )
-                                          ],
-                                        );
-                                      }),
-                                ],
+                                          ),
+                                        ],
+                                      );
+                                    }),
                               ),
                             ));
                           });

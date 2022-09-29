@@ -86,3 +86,50 @@ class AttendenceDivisions {
     return data;
   }
 }
+
+//view
+
+class StudentsAttendenceView_stf {
+  String? studAttId;
+  String? divisionId;
+  String? id;
+  String? forenoon;
+  String? afternoon;
+  String? admNo;
+  int? rollNo;
+  String? name;
+
+  StudentsAttendenceView_stf(
+      {this.studAttId,
+      this.divisionId,
+      this.id,
+      this.forenoon,
+      this.afternoon,
+      this.admNo,
+      this.rollNo,
+      this.name});
+
+  StudentsAttendenceView_stf.fromJson(Map<String, dynamic> json) {
+    studAttId = json['studAttId'];
+    divisionId = json['divisionId'];
+    id = json['id'];
+    forenoon = json['forenoon'];
+    afternoon = json['afternoon'];
+    admNo = json['admNo'];
+    rollNo = json['rollNo'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['studAttId'] = this.studAttId;
+    data['divisionId'] = this.divisionId;
+    data['id'] = this.id;
+    data['forenoon'] = this.forenoon;
+    data['afternoon'] = this.afternoon;
+    data['admNo'] = this.admNo;
+    data['rollNo'] = this.rollNo;
+    data['name'] = this.name;
+    return data;
+  }
+}

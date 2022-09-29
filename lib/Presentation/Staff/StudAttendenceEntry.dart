@@ -19,20 +19,25 @@ class AttendenceEntry extends StatefulWidget {
 class _AttendenceEntryState extends State<AttendenceEntry> {
   DateTime? _mydatetime;
 
-  String? date;
+  String date = '';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<AttendenceStaffProvider>(context, listen: false);
-
+      Provider.of<AttendenceStaffProvider>(context, listen: false)
+          .timee
+          .toString();
       p.clearAllFilters();
       p.selectedCourse.clear();
       p.courseClear();
       p.divisionClear();
       p.attendenceCourseStaff();
       p.removeDivisionAll();
+      p.clearStudentList();
+      // p.getstudentsAttendenceView(
+      //     "2022-09-23", 'da8f4f98-f340-4975-8e53-8939b09f52c6');
 
       // p.getMarkEntryPartValues(courseId, divisionId);
     });
@@ -46,12 +51,18 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
   final markEntryInitialValuesController1 = TextEditingController();
   final markEntryDivisionListController = TextEditingController();
   final markEntryDivisionListController1 = TextEditingController();
+  var dateController1 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    date = DateFormat('yyyy-MM-dd').format(DateTime.now()) +
-        '         ' +
-        DateFormat('kk:mm:a').format(DateTime.now());
+    // date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+//dateFinal = dateController1;
+    String dateFinal =
+        Provider.of<AttendenceStaffProvider>(context, listen: false)
+            .timeNew
+            .toString();
+    print(dateFinal);
+
     var size = MediaQuery.of(context).size;
     print('object');
     print(DateFormat().format(DateTime.now()));
@@ -74,22 +85,22 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: Consumer<AttendenceStaffProvider>(
-        builder: (context, value, child) => ListView(
+      body: Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
+        return ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MaterialButton(
                     color: Colors.white,
-                    child: Text(date.toString()),
+                    child: Text(Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .timeNew ??
+                        'select date'),
                     onPressed: () async {
-                      print(DateFormat().format(DateTime.now()));
-                      _mydatetime = await showDatePicker(
-                          context: context,
-                          initialDate: _mydatetime ?? DateTime.now(),
-                          firstDate: DateTime(2022),
-                          lastDate: DateTime(2030));
+                      await Provider.of<AttendenceStaffProvider>(context,
+                              listen: false)
+                          .getDate(context);
                     }),
               ],
             ),
@@ -240,15 +251,16 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                         itemBuilder: (context, index) {
                                           print(snapshot
                                               .attendenceDivisionList.length);
+
                                           // value.removeDivisionAll();
                                           return ListTile(
                                             selectedTileColor:
                                                 Colors.blue.shade100,
                                             selectedColor: UIGuide.PRIMARY2,
-                                            selected: snapshot
-                                                .isDivisonSelected(snapshot
-                                                        .attendenceDivisionList[
-                                                    index]),
+                                            // selected: snapshot
+                                            //     .isDivisonSelected(snapshot
+                                            //             .attendenceDivisionList[
+                                            //         index]),
                                             onTap: () async {
                                               print(snapshot
                                                   .attendenceDivisionList
@@ -265,9 +277,9 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                           index]
                                                       .text ??
                                                   '---';
-                                              snapshot.addSelectedDivision(
-                                                  snapshot.attendenceDivisionList[
-                                                      index]);
+                                              // snapshot.addSelectedDivision(
+                                              //     snapshot.attendenceDivisionList[
+                                              //         index]);
                                               print('jfrhrkjfr');
                                               print(
                                                   markEntryDivisionListController
@@ -345,7 +357,29 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 MaterialButton(
                     color: Color.fromARGB(255, 172, 170, 170),
                     child: Text('View'),
-                    onPressed: () async {}),
+                    onPressed: () async {
+                      print(dateFinal);
+                      print(divisionId);
+                      dateFinal = Provider.of<AttendenceStaffProvider>(context,
+                                  listen: false)
+                              .timeNew ??
+                          date.toString();
+
+                      setState(() {
+                        dateFinal = Provider.of<AttendenceStaffProvider>(
+                                context,
+                                listen: false)
+                            .timeNew
+                            .toString();
+                      });
+
+                      await Provider.of<AttendenceStaffProvider>(context,
+                              listen: false)
+                          .clearStudentList();
+                      await Provider.of<AttendenceStaffProvider>(context,
+                              listen: false)
+                          .getstudentsAttendenceView(dateFinal, divisionId);
+                    }),
               ],
             ),
             kheight10,
@@ -406,12 +440,14 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 ],
               ),
             ),
-            Consumer<AttendenceStaffProvider>(
-              builder: (context, value, child) => LimitedBox(
+            Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
+              // Provider.of<AttendenceStaffProvider>(context, listen: false)
+              //     .getstudentsAttendenceView(dateFinal, divisionId);
+              return LimitedBox(
                   maxHeight: 440,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: attendecourse!.length,
+                      itemCount: value.studentsAttendenceView.length,
                       itemBuilder: ((context, index) {
                         return Column(
                           children: [
@@ -427,21 +463,34 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                     decoration: const BoxDecoration(),
                                     children: [
                                       Text(
-                                        (index + 1).toString(),
+                                        value.studentsAttendenceView[index]
+                                                    .rollNo ==
+                                                null
+                                            ? '0'
+                                            : value
+                                                .studentsAttendenceView[index]
+                                                .rollNo
+                                                .toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       Text(
-                                        attendecourse![index]['text'],
+                                        value.studentsAttendenceView[index]
+                                                .name ??
+                                            '--',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 14),
                                       ),
                                       Text(
-                                        'A',
+                                        value.studentsAttendenceView[index]
+                                                .forenoon ??
+                                            '--',
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        'A',
+                                        value.studentsAttendenceView[index]
+                                                .afternoon ??
+                                            '--',
                                         textAlign: TextAlign.center,
                                       )
                                     ]),
@@ -450,8 +499,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                             kheight20,
                           ],
                         );
-                      }))),
-            ),
+                      })));
+            }),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -477,8 +526,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
               ],
             )
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

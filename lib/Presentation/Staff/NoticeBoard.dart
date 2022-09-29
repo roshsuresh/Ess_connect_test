@@ -181,7 +181,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     firstDate: DateTime.now().subtract(Duration(days: 0)),
                     lastDate: DateTime(2030));
                 setState(() {
-                  time = DateFormat('dd-MM-yy').format(_mydatetimeFrom!);
+                  time = DateFormat('dd-MM-yyyy').format(_mydatetimeFrom!);
                   print(_mydatetimeFrom);
                 });
               }),
@@ -204,7 +204,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 //     firstDate: DateTime(2022),
                 //     lastDate: DateTime(2030));
                 setState(() {
-                  timeNow = DateFormat('dd-MM-yy').format(_mydatetimeTo!);
+                  timeNow = DateFormat('dd-MM-yyyy').format(_mydatetimeTo!);
                   print(_mydatetimeTo);
                 });
               }),

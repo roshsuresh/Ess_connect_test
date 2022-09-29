@@ -75,13 +75,13 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/Profilee.png',
                                         ),
                                       ),
                                     ),
@@ -90,7 +90,7 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'Profile',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
@@ -112,13 +112,12 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
-                                        opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/Attendance.png',
                                         ),
                                       ),
                                     ),
@@ -127,45 +126,7 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'Student \n Report',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Stud_Notification()),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/notification.png',
-                                        ),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  kheight10,
-                                  const Text(
-                                    '   Student \nInformation',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
@@ -188,11 +149,11 @@ class StaffHome extends StatelessWidget {
                                 children: [
                                   Container(
                                     height: 60,
-                                    width: 60,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
-                                          'assets/FINGERNEW1.png',
+                                          'assets/Attendance.png',
                                         ),
                                       ),
                                     ),
@@ -201,33 +162,49 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'Timetable',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       kheight10,
                       kheight20,
                       Container(
-                        color: const Color.fromARGB(255, 218, 212, 212),
-                        height: 150,
+                        color: Color.fromARGB(255, 235, 232, 232),
+                        height: 170,
                         width: size.width,
                         child: Column(
                           children: [
                             kheight10,
-                            Row(children: const <Widget>[
-                              Expanded(child: Text("")),
+                            Row(children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 10.0, right: 20.0),
+                                    child: const Divider(
+                                      color: UIGuide.light_Purple,
+                                      height: 36,
+                                    )),
+                              ),
                               Text(
                                 " * Entries * ",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 129, 125, 129),
+                                    color: UIGuide.light_Purple,
                                     fontWeight: FontWeight.w900),
                               ),
-                              Expanded(child: Text("")),
+                              Expanded(
+                                child: Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 10.0, right: 20.0),
+                                    child: const Divider(
+                                      color: UIGuide.light_Purple,
+                                      height: 36,
+                                    )),
+                              ),
                             ]),
                             kheight10,
                             kheight10,
@@ -252,13 +229,13 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 50,
-                                          width: 40,
+                                          height: 60,
+                                          width: 50,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               opacity: 20,
                                               image: AssetImage(
-                                                'assets/FINGER.png',
+                                                'assets/Attendance.png',
                                               ),
                                             ),
                                           ),
@@ -268,7 +245,7 @@ class StaffHome extends StatelessWidget {
                                           'Attendence',
                                           style: TextStyle(
                                               fontSize: 11,
-                                              color: Colors.black38),
+                                              color: Colors.black),
                                         )
                                       ],
                                     ),
@@ -290,13 +267,12 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 50,
-                                          width: 40,
+                                          height: 60,
+                                          width: 50,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
-                                              opacity: 20,
                                               image: AssetImage(
-                                                'assets/Profile.png',
+                                                'assets/Marksheet.png',
                                               ),
                                             ),
                                           ),
@@ -306,7 +282,7 @@ class StaffHome extends StatelessWidget {
                                           'Mark Entry',
                                           style: TextStyle(
                                               fontSize: 11,
-                                              color: Colors.black38),
+                                              color: Colors.black),
                                         )
                                       ],
                                     ),
@@ -329,13 +305,12 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 50,
-                                          width: 40,
+                                          height: 60,
+                                          width: 50,
                                           decoration: BoxDecoration(
                                             image: const DecorationImage(
-                                              opacity: 20,
                                               image: AssetImage(
-                                                'assets/pay.png',
+                                                'assets/Reportcard.png',
                                               ),
                                             ),
                                             borderRadius:
@@ -347,7 +322,7 @@ class StaffHome extends StatelessWidget {
                                           'Mark Entry \n   Report',
                                           style: TextStyle(
                                               fontSize: 11,
-                                              color: Colors.black38),
+                                              color: Colors.black),
                                         )
                                       ],
                                     ),
@@ -364,7 +339,7 @@ class StaffHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: UIGuide.light_Purple,
                                 height: 36,
                               )),
                         ),
@@ -372,7 +347,7 @@ class StaffHome extends StatelessWidget {
                           "Communication",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.purple,
+                              color: UIGuide.light_Purple,
                               fontWeight: FontWeight.w900),
                         ),
                         Expanded(
@@ -380,7 +355,7 @@ class StaffHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 20.0, right: 10.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: UIGuide.light_Purple,
                                 height: 36,
                               )),
                         ),
@@ -407,8 +382,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
@@ -422,7 +397,7 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'To Guardian',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
@@ -443,8 +418,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 50,
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         opacity: 20,
@@ -459,7 +434,7 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'Notice Board',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
@@ -481,13 +456,13 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
-                                    width: 40,
+                                    height: 60,
+                                    width: 50,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/Gallery.png',
                                         ),
                                       ),
                                     ),
@@ -496,12 +471,48 @@ class StaffHome extends StatelessWidget {
                                   const Text(
                                     'Gallery ',
                                     style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
+                                        fontSize: 11, color: Colors.black),
                                   )
                                 ],
                               ),
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Staff_Timetable()),
+                              );
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 50,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          'assets/notificationnew.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  kheight10,
+                                  const Text(
+                                    'Notifications',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       kheight10,
@@ -520,7 +531,7 @@ class StaffHome extends StatelessWidget {
                           "Password Change / SignOut",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.purple,
+                              color: UIGuide.light_Purple,
                               fontWeight: FontWeight.w900),
                         ),
                         Expanded(
@@ -551,7 +562,7 @@ class StaffHome extends StatelessWidget {
                               },
                               child: const Icon(
                                 Icons.key_sharp,
-                                color: Colors.purple,
+                                color: UIGuide.light_Purple,
                               )),
                           MaterialButton(
                               minWidth: 50,
@@ -571,14 +582,15 @@ class StaffHome extends StatelessWidget {
                               },
                               child: const Icon(
                                 Icons.logout_outlined,
-                                color: Colors.purple,
+                                color: UIGuide.light_Purple,
                               )),
                         ],
                       ),
                       kheight20,
+                      kheight20,
                     ],
                   ),
-                )
+                ),
               ],
             ),
     );
@@ -595,15 +607,12 @@ class StaffProfile extends StatelessWidget {
 
     var size = MediaQuery.of(context).size;
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 177, 233, 185);
-    final Color fill2 = Color.fromARGB(255, 157, 229, 238);
+    final Color fill1 = Color.fromARGB(255, 141, 195, 247);
+    final Color fill2 = Color.fromARGB(255, 188, 216, 214);
 
     final List<Color> gradient = [
       fill1,
       fill2,
-
-      // background,
-      // background,
     ];
     final double fillPercent = 35;
     final double fillStop = (100 - fillPercent) / 100;

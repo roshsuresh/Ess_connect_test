@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:Ess_test/Domain/Staff/StaffAttandenceModel.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -173,5 +174,69 @@ class AttendenceStaffProvider with ChangeNotifier {
       print('Error in AttendenceDivisionList stf');
     }
     return true;
+  }
+
+  //view Attendence
+
+  List<StudentsAttendenceView_stf> studentsAttendenceView = [];
+  Future<bool> getstudentsAttendenceView(String date, String id) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    notifyListeners();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staff/AttendenceView?attendanceDate=$date&divisionId=$id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<StudentsAttendenceView_stf> templist =
+          List<StudentsAttendenceView_stf>.from(data["studentsAttendenceView"]
+              .map((x) => StudentsAttendenceView_stf.fromJson(x)));
+      studentsAttendenceView.addAll(templist);
+      print('correct');
+      notifyListeners();
+    } else {
+      print('Error in AttendenceView stf');
+    }
+    return true;
+  }
+
+  clearStudentList() {
+    studentsAttendenceView.clear();
+    notifyListeners();
+  }
+
+  DateTime? _mydatetime;
+  String? timeNew;
+
+  String? timee = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  getDate(BuildContext context) async {
+    _mydatetime = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100));
+
+    timeNew = DateFormat('yyyy-MM-dd').format(_mydatetime!) == null
+        ? timee
+        : DateFormat('yyyy-MM-dd').format(_mydatetime!);
+    timee = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    print(timeNew);
+
+    print(_mydatetime);
+    notifyListeners();
   }
 }
