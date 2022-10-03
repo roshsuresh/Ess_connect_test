@@ -1,17 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Domain/Student/Flashnews.dart';
-import '../../Domain/Student/profileModel.dart';
 import '../../utils/constants.dart';
 
 List? dataRsponse;
 
-
 class FlashnewsProvider with ChangeNotifier {
-
   Future flashNewsProvider(context) async {
     // flashNewsModel = await flashNewsData(context);
     late FlashNewsModel flashNewsModel;
@@ -43,6 +39,4 @@ class FlashnewsProvider with ChangeNotifier {
 
     //return flash;
   }
-
-
 }

@@ -1,3 +1,4 @@
+import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -9,8 +10,7 @@ class LoadingIcon extends StatelessWidget {
     return const Scaffold(
       body: Center(
           child: SpinKitWave(
-              color: Color.fromARGB(255, 121, 110, 243),
-              type: SpinKitWaveType.center)),
+              color: UIGuide.light_Purple, type: SpinKitWaveType.center)),
     );
   }
 }

@@ -1,4 +1,3 @@
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -81,15 +80,13 @@ class _FeeReportState extends State<FeeReport> {
         child: ListView(
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // use this button to open the multi-select dialog
             Row(
               children: [
                 MaterialButton(
-                  minWidth: size.width - 200,
+                  minWidth: size.width - 230,
                   child: Row(
                     children: [
                       Text('Select Section'),
-                      Icon(Icons.arrow_downward_outlined)
                     ],
                   ),
                   color: Colors.white70,
@@ -97,11 +94,10 @@ class _FeeReportState extends State<FeeReport> {
                 ),
                 Spacer(),
                 MaterialButton(
-                  minWidth: size.width - 200,
+                  minWidth: size.width - 230,
                   child: Row(
                     children: [
                       const Text('Select Course'),
-                      Icon(Icons.arrow_downward_outlined)
                     ],
                   ),
                   color: Colors.white70,
@@ -112,7 +108,7 @@ class _FeeReportState extends State<FeeReport> {
             Row(
               children: [
                 MaterialButton(
-                  minWidth: size.width - 200,
+                  minWidth: size.width - 230,
                   child: Center(child: Text('From ${time}')),
                   color: Colors.white,
                   onPressed: (() async {
@@ -129,7 +125,7 @@ class _FeeReportState extends State<FeeReport> {
                 ),
                 Spacer(),
                 MaterialButton(
-                  minWidth: size.width - 200,
+                  minWidth: size.width - 230,
                   child: Center(child: Text('To ${timeNow}')),
                   color: Colors.white,
                   onPressed: (() async {
@@ -164,18 +160,6 @@ class _FeeReportState extends State<FeeReport> {
                 ),
               ],
             ),
-
-            // display selected items
-            // Wrap(
-            //   children: _selectedItems
-            //       .map((e) => Chip(
-            //             label: Text(e),
-            //           ))
-            //       .toList(),
-            // )
-            // ListView(
-            //   children: [Text('data')],
-            // )
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
+import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 
 import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
@@ -109,6 +110,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => StaffTimetableProvider()),
         ChangeNotifierProvider(create: (context) => AttendenceStaffProvider()),
         ChangeNotifierProvider(create: (context) => FlashnewsProvider()),
+        ChangeNotifierProvider(
+            create: (context) => StaffNoticeboardSendProviders()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

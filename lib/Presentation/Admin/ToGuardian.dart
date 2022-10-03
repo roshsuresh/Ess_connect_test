@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -93,11 +92,6 @@ class ToGuardian extends StatelessWidget {
                           ),
                         ),
                         kheight10,
-                        // SizedBox(
-                        //   child: Table(
-                        //     children: [TableRow(children: [])],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),
@@ -105,7 +99,26 @@ class ToGuardian extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+              color: Colors.grey,
+              height: size.height - 300,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 20,
+                itemBuilder: ((context, index) {
+                  return ListTile(
+                    leading: Text(index.toString() + 1.toString()),
+                    title: Text('aadham'),
+                  );
+                }),
+              ))
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: MaterialButton(
+          onPressed: () {},
+          child: Text('Proceed'),
+        ),
       ),
     );
   }

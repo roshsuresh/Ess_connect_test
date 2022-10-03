@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,14 +8,7 @@ import '../../Constants.dart';
 import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
 import '../Login_Activation/Login_page.dart';
-import '../Student/Gallery.dart';
-import '../Student/NoticeBoard.dart';
 import '../Student/PasswordChange.dart';
-import '../Student/Profile_Info.dart';
-import '../Student/Stud_Calender.dart';
-import '../Student/Stud_Notification.dart';
-import '../Student/Student_home.dart';
-import '../Student/payment.dart';
 import 'GalleryUpload.dart';
 import 'MarkEntry.dart';
 import 'MarkEntryReport.dart';
@@ -75,8 +67,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
@@ -112,8 +104,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
@@ -148,8 +140,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
@@ -229,8 +221,8 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 60,
-                                          width: 50,
+                                          height: 50,
+                                          width: 40,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               opacity: 20,
@@ -267,8 +259,8 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 60,
-                                          width: 50,
+                                          height: 50,
+                                          width: 40,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
@@ -305,8 +297,8 @@ class StaffHome extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          height: 60,
-                                          width: 50,
+                                          height: 50,
+                                          width: 40,
                                           decoration: BoxDecoration(
                                             image: const DecorationImage(
                                               image: AssetImage(
@@ -382,8 +374,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
@@ -418,8 +410,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: BoxDecoration(
                                       image: const DecorationImage(
                                         opacity: 20,
@@ -456,8 +448,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         opacity: 20,
@@ -493,8 +485,8 @@ class StaffHome extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 50,
+                                    height: 50,
+                                    width: 40,
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                         image: AssetImage(
@@ -607,8 +599,8 @@ class StaffProfile extends StatelessWidget {
 
     var size = MediaQuery.of(context).size;
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 141, 195, 247);
-    final Color fill2 = Color.fromARGB(255, 188, 216, 214);
+    final Color fill1 = Color.fromARGB(255, 7, 110, 206);
+    final Color fill2 = Color.fromARGB(255, 164, 197, 247);
 
     final List<Color> gradient = [
       fill1,
@@ -669,7 +661,7 @@ class StaffProfile extends StatelessWidget {
                           maxLines: 1,
                           strutStyle: const StrutStyle(fontSize: 8.0),
                           text: TextSpan(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15,
                                   color: UIGuide.BLACK,
                                   fontWeight: FontWeight.w900),

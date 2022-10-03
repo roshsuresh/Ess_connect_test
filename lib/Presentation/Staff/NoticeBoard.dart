@@ -1,16 +1,15 @@
+import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
+import 'package:Ess_test/Presentation/Staff/ReceivedNoticeBoard.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
-
+import 'package:provider/provider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
 class StaffNoticeBoard extends StatelessWidget {
-  const StaffNoticeBoard({Key? key}) : super(key: key);
+  StaffNoticeBoard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,37 @@ class StaffNoticeBoard extends StatelessWidget {
               backgroundColor: UIGuide.light_Purple,
             ),
             body: TabBarView(children: [
-              StaffNoticeBoard_sent(),
+              Consumer<StaffNoticeboardSendProviders>(
+                builder: (context, value, child) {
+                  if (value.isClassTeacher != false) {
+                    return StaffNoticeBoard_sent();
+                  } else {
+                    return Container(
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.sentiment_dissatisfied_outlined,
+                              size: 60,
+                              color: Colors.grey,
+                            ),
+                            kheight10,
+                            Text(
+                              "Sorry you don't have access",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
               StaffNoticeBoardReceived(),
             ])));
   }
@@ -58,7 +87,7 @@ class StaffNoticeBoard_sent extends StatefulWidget {
 class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
   DateTime? _mydatetime;
 
-  String? date;
+  String? datee;
 
   DateTime? _mydatetimeFrom;
 
@@ -70,45 +99,154 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
 
   String? checkname;
 
+  final coursevalueController = TextEditingController();
+  final coursevalueController1 = TextEditingController();
+
+  final categoryvalueController = TextEditingController();
+  final categoryvalueController1 = TextEditingController();
+  final divisionvalueController = TextEditingController();
+  final divisionvalueController1 = TextEditingController();
+
+  final titleController = TextEditingController();
+  final mattercontroller = TextEditingController();
+
+  String? attachmentid;
   @override
   Widget build(BuildContext context) {
+    Provider.of<StaffNoticeboardSendProviders>(context, listen: false)
+        .sendNoticeboard();
     var size = MediaQuery.of(context).size;
-    date = DateFormat('dd-MM-yyyy').format(DateTime.now());
+    datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
+
     return ListView(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-                minWidth: size.width - 200,
+                minWidth: size.width - 250,
                 color: Colors.white70,
-                child: Text('Date: ${date.toString()}'),
-                onPressed: () async {
-                  _mydatetime = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetime ?? DateTime.now(),
-                      firstDate: DateTime.now().subtract(Duration(days: 0)),
-                      lastDate: DateTime(2030));
-                }),
-            Spacer(),
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: const [
-                  Text('Select Category'),
-                  //Icon(Icons.arrow_downward_outlined)
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
+                child: Text('Date: ${datee.toString()}'),
+                onPressed: () async {}),
+            kWidth,
+            kWidth,
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.49,
+              child: Consumer<StaffNoticeboardSendProviders>(
+                  builder: (context, snapshot, child) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: noticeCategoryStf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      // value.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+
+                                        // selected: snapshot.isCourseSelected(
+                                        //     attendecourse![index]),
+
+                                        onTap: () async {
+                                          print({noticeCategoryStf![index]});
+                                          categoryvalueController.text =
+                                              await noticeCategoryStf![index]
+                                                      ['value'] ??
+                                                  '--';
+                                          categoryvalueController1.text =
+                                              await noticeCategoryStf![index]
+                                                      ['text'] ??
+                                                  '--';
+                                          // courseId =
+                                          //     markEntryInitialValuesController
+                                          //         .text
+                                          //         .toString();
+
+                                          // snapshot.addSelectedCourse(
+                                          //     attendecourse![index]);
+                                          //   print(courseId);
+                                          // await Provider.of<
+                                          //             AttendenceStaffProvider>(
+                                          //         context,
+                                          //         listen: false)
+                                          //     .getAttendenceDivisionValues(
+                                          //         courseId);
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          noticeCategoryStf![index]['text'] ??
+                                              '--',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: categoryvalueController1,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "Select Category",
+                              hintText: "Category",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: categoryvalueController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "",
+                              hintText: "",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
           ],
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            controller: titleController,
             minLines: 1,
-            maxLines: 3,
+            maxLines: 1,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
@@ -123,6 +261,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            controller: mattercontroller,
             minLines: 1,
             maxLines: 5,
             keyboardType: TextInputType.multiline,
@@ -156,6 +295,9 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
+                await Provider.of<StaffNoticeboardSendProviders>(context,
+                        listen: false)
+                    .noticeImageSave(file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -181,8 +323,8 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     firstDate: DateTime.now().subtract(Duration(days: 0)),
                     lastDate: DateTime(2030));
                 setState(() {
-                  time = DateFormat('dd-MM-yyyy').format(_mydatetimeFrom!);
-                  print(_mydatetimeFrom);
+                  time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
+                  print(time);
                 });
               }),
             ),
@@ -204,8 +346,8 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 //     firstDate: DateTime(2022),
                 //     lastDate: DateTime(2030));
                 setState(() {
-                  timeNow = DateFormat('dd-MM-yyyy').format(_mydatetimeTo!);
-                  print(_mydatetimeTo);
+                  timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
+                  print(timeNow);
                 });
               }),
             ),
@@ -213,28 +355,212 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
         ),
         Row(
           children: [
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: [
-                  Text('Select Course'),
-                  //  Icon(Icons.arrow_downward_outlined)
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.49,
+              child: Consumer<StaffNoticeboardSendProviders>(
+                  builder: (context, snapshot, child) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: noticeCourseStf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      // value.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+
+                                        // selected: snapshot.isCourseSelected(
+                                        //     attendecourse![index]),
+
+                                        onTap: () async {
+                                          print(
+                                              'guh.....${noticeCourseStf![index]}');
+                                          coursevalueController.text =
+                                              await noticeCourseStf![index]
+                                                      ['value'] ??
+                                                  '--';
+                                          coursevalueController1.text =
+                                              await noticeCourseStf![index]
+                                                      ['text'] ??
+                                                  '--';
+                                          String courseId =
+                                              coursevalueController.text
+                                                  .toString();
+
+                                          print(courseId);
+                                          await Provider.of<
+                                                      StaffNoticeboardSendProviders>(
+                                                  context,
+                                                  listen: false)
+                                              .getDivisionList(courseId);
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          noticeCourseStf![index]['text'] ??
+                                              '--',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: coursevalueController1,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "Select Course",
+                              hintText: "Course",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: coursevalueController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "",
+                              hintText: "",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
             Spacer(),
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: [
-                  const Text('Select Division'),
-                  //  Icon(Icons.arrow_downward_outlined)
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.49,
+              child: Consumer<StaffNoticeboardSendProviders>(
+                  builder: (context, snapshot, child) {
+                attachmentid = snapshot.id.toString();
+                return InkWell(
+                  onTap: () {
+                    print('haiiii');
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.divisionlistt.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      // value.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selected: snapshot.isDivisionSelected(
+                                        //     snapshot.noticeDivision[index]),
+                                        onTap: () async {
+                                          divisionvalueController.text =
+                                              snapshot.divisionlistt[index]
+                                                      .value ??
+                                                  '--';
+
+                                          print(divisionvalueController.text);
+                                          divisionvalueController1.text =
+                                              snapshot.divisionlistt[index]
+                                                      .text ??
+                                                  '--';
+                                          String divisionId =
+                                              divisionvalueController.text
+                                                  .toString();
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          snapshot.divisionlistt[index].text ??
+                                              '--',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: divisionvalueController1,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "Select Division",
+                              hintText: "Division",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: divisionvalueController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "",
+                              hintText: "",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
           ],
         ),
@@ -250,7 +576,30 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 textAlign: TextAlign.center,
               ),
               color: Color.fromARGB(179, 145, 143, 143),
-              onPressed: (() {}),
+              onPressed: (() async {
+                await Provider.of<StaffNoticeboardSendProviders>(context,
+                        listen: false)
+                    .noticeBoardSave(
+                        datee.toString(),
+                        time,
+                        timeNow,
+                        titleController.text,
+                        mattercontroller.text,
+                        coursevalueController.text,
+                        divisionvalueController.text,
+                        categoryvalueController.text,
+                        attachmentid.toString());
+
+                print(datee);
+                print(time);
+                print(timeNow);
+                print(titleController);
+                print(mattercontroller);
+                print(coursevalueController);
+                print(divisionvalueController);
+                print(categoryvalueController);
+                print(attachmentid);
+              }),
             ),
           ),
         ),
@@ -260,14 +609,5 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
 
   void openFile(PlatformFile file) {
     OpenFile.open(file.path);
-  }
-}
-
-class StaffNoticeBoardReceived extends StatelessWidget {
-  const StaffNoticeBoardReceived({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

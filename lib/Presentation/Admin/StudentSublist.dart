@@ -5,8 +5,6 @@ import '../../../../utils/constants.dart';
 import '../../Application/AdminProviders/Student_list_provider.dart';
 import '../../Domain/Admin/StudentListModel.dart';
 
-
-
 class StudentListItem extends StatelessWidget {
   final StudentListModel model;
 
@@ -20,9 +18,8 @@ class StudentListItem extends StatelessWidget {
           tileColor: model.selected == null || !model.selected!
               ? Colors.transparent
               : model.selected != null && model.selected == true
-              ? UIGuide.PRIMARY2
-              : Colors.transparent,
-          //selected: snapshot.isSelected(model),
+                  ? UIGuide.PRIMARY2
+                  : Colors.transparent,
           onTap: () => snapshot.selectItem(model),
           leading: Text(model.rollNo == null ? '0' : model.rollNo.toString()),
           title: Text(model.name),

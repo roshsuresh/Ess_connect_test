@@ -20,6 +20,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
   DateTime? _mydatetime;
 
   String date = '';
+  bool _attendence = false;
 
   @override
   void initState() {
@@ -481,12 +482,26 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 14),
                                       ),
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                .forenoon ??
-                                            '--',
-                                        textAlign: TextAlign.center,
+                                      // TextButton(onPressed: (){}, child: Text('f'))
+                                      IconButton(
+                                        icon: Icon(
+                                          _attendence
+                                              ? Icons.check
+                                              : Icons.clear_outlined,
+                                          color: UIGuide.light_Purple,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            _attendence = !_attendence;
+                                          });
+                                        },
                                       ),
+                                      // Text(
+                                      //   value.studentsAttendenceView[index]
+                                      //           .forenoon ??
+                                      //       '--',
+                                      //   textAlign: TextAlign.center,
+                                      // ),
                                       Text(
                                         value.studentsAttendenceView[index]
                                                 .afternoon ??

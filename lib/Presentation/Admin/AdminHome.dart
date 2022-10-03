@@ -1,5 +1,6 @@
-
+import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
 import 'package:Ess_test/Presentation/Admin/Student_list_item.dart';
+import 'package:Ess_test/utils/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +78,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -85,13 +86,13 @@ class AdminHomeContent extends StatelessWidget {
                   'Student',
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -121,7 +122,7 @@ class AdminHomeContent extends StatelessWidget {
                               image: DecorationImage(
                                 opacity: 20,
                                 image: AssetImage(
-                                  'assets/Profile.png',
+                                  'assets/Profilee.png',
                                 ),
                               ),
                               // borderRadius: BorderRadius.circular(10),
@@ -144,8 +145,8 @@ class AdminHomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //  builder: (context) => Stud_Notification()),
-                            builder: (context) => StudentNotificationPage()),
+                            //  builder: (context) => Stud_Notification()),
+                            builder: (context) => Student_statistics_admin()),
                       );
                     },
                     child: Padding(
@@ -216,51 +217,6 @@ class AdminHomeContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Consumer<ProfileProvider>(
-                    builder: (context, value, child) {
-                      return GestureDetector(
-                        onTap: () async {
-                          var divId = value.divisionId == null
-                              ? 'divId is null'
-                              : value.divisionId.toString();
-                          await Provider.of<Timetableprovider>(context,
-                                  listen: false)
-                              .getTimeTable(divId);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Timetable(divid: divId)),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 40,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    opacity: 20,
-                                    image: AssetImage(
-                                      'assets/Profile.png',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              kheight10,
-                              const Text(
-                                'Timetable',
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.black38),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
                 ],
               ),
               kheight10,
@@ -269,7 +225,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -277,13 +233,13 @@ class AdminHomeContent extends StatelessWidget {
                   "Staff",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -330,6 +286,7 @@ class AdminHomeContent extends StatelessWidget {
                         ),
                       ),
                     ),
+                    kWidth,
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: GestureDetector(
@@ -358,7 +315,7 @@ class AdminHomeContent extends StatelessWidget {
                             ),
                             kheight10,
                             const Text(
-                              ' Staff\nReport',
+                              ' Staff Report',
                               style: TextStyle(
                                   fontSize: 11, color: Colors.black38),
                             )
@@ -366,6 +323,7 @@ class AdminHomeContent extends StatelessWidget {
                         ),
                       ),
                     ),
+                    kWidth,
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -401,41 +359,6 @@ class AdminHomeContent extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PaymentHistory()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Profile.png',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            kheight10,
-                            const Text(
-                              'Timetable',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -445,7 +368,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -453,13 +376,13 @@ class AdminHomeContent extends StatelessWidget {
                   "Fees",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -488,7 +411,7 @@ class AdminHomeContent extends StatelessWidget {
                               image: DecorationImage(
                                 opacity: 20,
                                 image: AssetImage(
-                                  'assets/Profile.png',
+                                  'assets/payNew.png',
                                 ),
                               ),
                             ),
@@ -548,7 +471,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -556,13 +479,13 @@ class AdminHomeContent extends StatelessWidget {
                   "Attendence",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -698,7 +621,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -706,13 +629,13 @@ class AdminHomeContent extends StatelessWidget {
                   "Communication",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -734,7 +657,7 @@ class AdminHomeContent extends StatelessWidget {
                             image: DecorationImage(
                               opacity: 20,
                               image: AssetImage(
-                                'assets/Profile.png',
+                                'assets/staff notification.png',
                               ),
                             ),
                           ),
@@ -896,205 +819,7 @@ class AdminHomeContent extends StatelessWidget {
                   child: Container(
                       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
                       child: const Divider(
-                        color: Colors.black,
-                        height: 36,
-                      )),
-                ),
-                const Text(
-                  "Users",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
-                ),
-                Expanded(
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                      child: const Divider(
-                        color: Colors.black,
-                        height: 36,
-                      )),
-                ),
-              ]),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
-                              ),
-                            ),
-                          ),
-                        ),
-                        kheight10,
-                        const Text(
-                          '  Create\nGuardian',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReportCard()),
-                        );
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/Profile.png',
-                                ),
-                              ),
-                              borderRadius: BorderRadius.circular(0),
-                            ),
-                          ),
-                          kheight10,
-                          const Text(
-                            '  Merge\nGuardian',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
-                              ),
-                            ),
-                          ),
-                        ),
-                        kheight10,
-                        const Text(
-                          ' Change\nGuardian',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
-                              ),
-                            ),
-                          ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'Create\n Staff',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              kheight10,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
-                              ),
-                            ),
-                          ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'Change Staff',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
-                              ),
-                            ),
-                          ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'Block Login',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Row(children: <Widget>[
-                Expanded(
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                      child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -1102,13 +827,13 @@ class AdminHomeContent extends StatelessWidget {
                   "Password Change / SignOut",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                      color: Colors.purple, fontWeight: FontWeight.w900),
+                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Container(
                       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
                       child: const Divider(
-                        color: Colors.black,
+                        color: Colors.black45,
                         height: 36,
                       )),
                 ),
@@ -1130,7 +855,7 @@ class AdminHomeContent extends StatelessWidget {
                       },
                       child: const Icon(
                         Icons.key_sharp,
-                        color: Colors.purple,
+                        color: UIGuide.light_Purple,
                       )),
                   MaterialButton(
                       minWidth: 50,
@@ -1150,11 +875,12 @@ class AdminHomeContent extends StatelessWidget {
                       },
                       child: const Icon(
                         Icons.logout_outlined,
-                        color: Colors.purple,
+                        color: UIGuide.light_Purple,
                       )),
                 ],
               ),
               kheight20,
+              kheight20
             ],
           ),
         ),
