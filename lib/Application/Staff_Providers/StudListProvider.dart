@@ -149,6 +149,7 @@ class StudReportListProvider_stf with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
+
     var request = http.Request(
         'GET',
         Uri.parse(
@@ -250,7 +251,8 @@ class StudReportListProvider_stf with ChangeNotifier {
 
   //view initial
   List<ViewStudentReport> viewStudReportListt = [];
-  Future<bool> viewStudentReportList() async {
+  Future<bool> viewStudentReportList(
+      String section, String course, String division) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -260,7 +262,7 @@ class StudReportListProvider_stf with ChangeNotifier {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/viewStudentReport'));
+            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/viewStudentReport?section=$section&course=$course&division=$division'));
     request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
     request.headers.addAll(headers);
 
@@ -270,19 +272,24 @@ class StudReportListProvider_stf with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      //  log(data.toString());
+      log(data.toString());
 
       List<ViewStudentReport> templist = List<ViewStudentReport>.from(
           data["viewStudentReport"].map((x) => ViewStudentReport.fromJson(x)));
       viewStudReportListt.addAll(templist);
-      int len = templist.length;
-      String ss = templist[len].terminationStatus.toString();
-      log(ss.toString());
+      // int len = templist.length;
+      // String ss = templist[len].terminationStatus.toString();
+      // log(ss.toString());
 
       notifyListeners();
     } else {
-      print('Error in DivisionList stf');
+      print('Error in ViewList stf');
     }
     return true;
+  }
+
+  clearViewList() {
+    viewStudReportListt.clear();
+    notifyListeners();
   }
 }

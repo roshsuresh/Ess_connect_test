@@ -96,11 +96,14 @@ class Notification_StaffToGuardain extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MaterialButton(
-                  minWidth: 60, color: Colors.grey,
-                  //   style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                  onPressed: () {},
-                  child: Text('View'),
+                SizedBox(
+                  width: 100,
+                  child: MaterialButton(
+                    minWidth: 60, color: Colors.grey,
+                    //   style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: () {},
+                    child: Text('View'),
+                  ),
                 ),
               ],
             ),
@@ -135,25 +138,29 @@ class Notification_StaffToGuardain extends StatelessWidget {
               ],
             ),
             LimitedBox(
-              maxHeight: size.height - 250,
+              maxHeight: size.height - 300,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: 20,
                 itemBuilder: ((context, index) {
-                  return ListTile(
-                    style: ListTileStyle.list,
-                    selectedColor: UIGuide.light_Purple,
-                    leading: Text(
-                      (index + 1).toString(),
-                      textAlign: TextAlign.center,
+                  return SizedBox(
+                    height: 50,
+                    child: ListTile(
+                      style: ListTileStyle.list,
+                      selectedColor: UIGuide.light_Purple,
+                      leading: Text(
+                        (index + 1).toString(),
+                        textAlign: TextAlign.center,
+                      ),
+                      title: Text('AADHAM'),
+                      subtitle: Text('2343'),
+                      trailing: Icon(Icons.check_box_outline_blank_outlined),
                     ),
-                    title: Text('AADHAM'),
-                    subtitle: Text('2343'),
-                    trailing: Icon(Icons.check_box_outline_blank_outlined),
                   );
                 }),
               ),
             ),
+            kheight20,
             kheight20
           ],
         ),
@@ -162,7 +169,13 @@ class Notification_StaffToGuardain extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: MaterialButton(
             color: UIGuide.light_Purple,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Text_Matter_Notification()),
+              );
+            },
             child: Text('Proceed',
                 style: TextStyle(
                     color: Colors.white,
@@ -170,5 +183,101 @@ class Notification_StaffToGuardain extends StatelessWidget {
                     fontWeight: FontWeight.w400)),
           ),
         )));
+  }
+}
+
+class Text_Matter_Notification extends StatelessWidget {
+  Text_Matter_Notification({Key? key}) : super(key: key);
+
+  final titleController = TextEditingController();
+  final matterController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Send Notification'),
+        titleSpacing: 00.0,
+        centerTitle: true,
+        toolbarHeight: 60.2,
+        toolbarOpacity: 0.8,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
+        ),
+        backgroundColor: UIGuide.light_Purple,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 40,
+              child: TextFormField(
+                controller: titleController,
+                minLines: 1,
+                maxLines: 1,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  labelText: 'Title*',
+                  hintText: 'Enter Title',
+                  labelStyle: TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                        color: UIGuide.light_Purple, width: 1.0),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 100,
+              child: TextFormField(
+                controller: matterController,
+                minLines: 1,
+                maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                decoration: InputDecoration(
+                  labelText: 'Matter*',
+                  hintText: 'Enter Matter',
+                  labelStyle: TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                        color: UIGuide.light_Purple, width: 1.0),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 150,
+            height: 40,
+            child: MaterialButton(
+              onPressed: () {},
+              child: Text(
+                'Send',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: UIGuide.light_Purple,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

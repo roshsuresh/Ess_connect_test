@@ -44,6 +44,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
     });
   }
 
+  void attende(bool selected, att) {}
   String courseId = '';
   String partId = '';
   String subjectId = '';
@@ -56,7 +57,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
 
   @override
   Widget build(BuildContext context) {
-    // date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    //date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 //dateFinal = dateController1;
     String dateFinal =
         Provider.of<AttendenceStaffProvider>(context, listen: false)
@@ -130,7 +131,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
 
                                           //     .attendenceInitialValues.length);
 
-                                          // value.removeCourseAll();
+                                          // snapshot.clearStudentList();
+
                                           return Column(
                                             children: [
                                               ListTile(
@@ -379,6 +381,12 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                           .clearStudentList();
                       await Provider.of<AttendenceStaffProvider>(context,
                               listen: false)
+                          .divisionClear();
+                      await Provider.of<AttendenceStaffProvider>(context,
+                              listen: false)
+                          .removeDivisionAll();
+                      await Provider.of<AttendenceStaffProvider>(context,
+                              listen: false)
                           .getstudentsAttendenceView(dateFinal, divisionId);
                     }),
               ],
@@ -455,8 +463,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                             Table(
                               columnWidths: const {
                                 0: FlexColumnWidth(1),
-                                1: FlexColumnWidth(4),
-                                2: FlexColumnWidth(1.5),
+                                1: FlexColumnWidth(4.8),
+                                2: FlexColumnWidth(1),
                                 3: FlexColumnWidth(1.5),
                               },
                               children: [
@@ -473,7 +481,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                 .rollNo
                                                 .toString(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 12),
+                                        style: const TextStyle(fontSize: 12),
                                       ),
                                       Text(
                                         value.studentsAttendenceView[index]
@@ -482,26 +490,37 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 14),
                                       ),
-                                      // TextButton(onPressed: (){}, child: Text('f'))
-                                      IconButton(
-                                        icon: Icon(
-                                          _attendence
-                                              ? Icons.check
-                                              : Icons.clear_outlined,
-                                          color: UIGuide.light_Purple,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            _attendence = !_attendence;
-                                          });
-                                        },
-                                      ),
-                                      // Text(
-                                      //   value.studentsAttendenceView[index]
-                                      //           .forenoon ??
-                                      //       '--',
-                                      //   textAlign: TextAlign.center,
-                                      // ),
+                                      GestureDetector(
+                                          onTap: () {
+                                            attende(
+                                                _attendence,
+                                                value
+                                                    .studentsAttendenceView[
+                                                        index]
+                                                    .name);
+                                            child:
+                                            Text('At');
+                                            setState(() {
+                                              _attendence = !_attendence;
+                                            });
+                                          },
+                                          child: _attendence
+                                              ? Text(
+                                                  'A',
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : Text(
+                                                  'P',
+                                                  style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
                                       Text(
                                         value.studentsAttendenceView[index]
                                                 .afternoon ??

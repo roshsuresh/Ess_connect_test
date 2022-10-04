@@ -1,3 +1,4 @@
+import 'package:Ess_test/Presentation/Staff/NotificationStaff.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
@@ -474,7 +475,7 @@ class StaffHome extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Staff_Timetable()),
+                                    builder: (context) => StaffNotification()),
                               );
                             },
                             child: Padding(

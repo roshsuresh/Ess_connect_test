@@ -128,8 +128,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 color: Colors.white70,
                 child: Text('Date: ${datee.toString()}'),
                 onPressed: () async {}),
-            kWidth,
-            kWidth,
+            Spacer(),
             SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width * 0.49,
@@ -470,7 +469,6 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 attachmentid = snapshot.id.toString();
                 return InkWell(
                   onTap: () {
-                    print('haiiii');
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -611,3 +609,6 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
     OpenFile.open(file.path);
   }
 }
+
+//Notification Send Page TExt & Matter
+

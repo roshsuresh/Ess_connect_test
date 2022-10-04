@@ -177,9 +177,13 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
       "DisplayEndDate": DisplayEndDate,
       "Title": Titlee,
       "Matter": Matter,
+      "DisplayTo": "student",
+      "StaffRole": "null",
       "CourseId": [CourseId],
       "DivisionId": [DivisionId],
+      "SectionList": null,
       "CategoryId": CategoryId,
+      "ForClassTeachersOnly": "false",
       "AttachmentId": AttachmentId
     });
     print(request.body = json.encode({
@@ -189,9 +193,12 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
       "Title": Titlee,
       "Matter": Matter,
       "DisplayTo": "student",
+      "StaffRole": "null",
       "CourseId": [CourseId],
       "DivisionId": [DivisionId],
+      "SectionList": null,
       "CategoryId": CategoryId,
+      "ForClassTeachersOnly": "false",
       "AttachmentId": AttachmentId
     }));
     request.headers.addAll(headers);

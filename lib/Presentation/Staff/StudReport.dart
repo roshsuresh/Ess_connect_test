@@ -74,12 +74,15 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
       p.removeSectionAll();
       p.removeDivisionAll();
       p.removeCourseAll();
-      p.viewStudentReportList();
+      p.clearViewList();
+      //  p.viewStudentReportList();
     });
   }
 
   String? phn;
   String sectionId = '';
+  String courseId = '';
+  String divisionId = '';
   final studReportInitialValuesController = TextEditingController();
   final studReportInitialValuesController1 = TextEditingController();
   final StudReportcourseController = TextEditingController();
@@ -239,7 +242,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                   '---';
                                           snapshot.addSelectedCourse(
                                               snapshot.courselist[index]);
-
+                                          courseId = StudReportcourseController
+                                              .text
+                                              .toString();
                                           print(
                                               StudReportcourseController.text);
                                           sectionId =
@@ -357,7 +362,10 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
 
                                               print(StudReportDivisionController
                                                   .text);
-
+                                              divisionId =
+                                                  StudReportDivisionController
+                                                      .text
+                                                      .toString();
                                               Navigator.of(context).pop();
                                             },
                                             title: Text(
@@ -417,7 +425,21 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
               MaterialButton(
                 child: const Text('View'),
                 color: Colors.grey,
-                onPressed: (() {}),
+                onPressed: (() async {
+                  courseId = StudReportcourseController.text.toString();
+                  print(courseId);
+                  divisionId = StudReportDivisionController.text.toString();
+                  print(divisionId);
+                  print(sectionId);
+                  sectionId = studReportInitialValuesController.text.toString();
+
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .clearViewList();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .viewStudentReportList(sectionId, courseId, divisionId);
+                }),
               ),
               kWidth,
               kWidth,
@@ -429,16 +451,18 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
           ),
           ViewStaffReport(size: size),
           LimitedBox(
-            maxHeight: size.height - 200,
+            maxHeight: size.height - 250,
             child: Consumer<StudReportListProvider_stf>(
               builder: (context, provider, child) => ListView.builder(
                 shrinkWrap: true,
-                itemCount: provider.viewStudReportListt.length,
+                itemCount: provider.viewStudReportListt.length == null
+                    ? 0
+                    : provider.viewStudReportListt.length,
                 itemBuilder: (context, index) {
                   String status = provider
                       .viewStudReportListt[index].terminationStatus
                       .toString();
-                  print(status);
+                  //  print(status);
 
                   if (status.toString() == false.toString()) {
                     return Column(
@@ -666,8 +690,8 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                     );
                   } else {
                     return Text(
-                      '',
-                      style: TextStyle(fontSize: 0),
+                      ' No Data',
+                      style: TextStyle(fontSize: 20),
                     );
                   }
                 },
@@ -1007,12 +1031,15 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
       p.removeSectionAll();
       p.removeDivisionAll();
       p.removeCourseAll();
-      p.viewStudentReportList();
+      p.clearViewList();
+      //p.viewStudentReportList();
     });
   }
 
   String? phn;
   String sectionId = '';
+  String courseId = '';
+  String divisionId = '';
   final studReportInitialValuesController = TextEditingController();
   final studReportInitialValuesController1 = TextEditingController();
   final StudReportcourseController = TextEditingController();
@@ -1194,6 +1221,10 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                   studReportInitialValuesController
                                                       .text
                                                       .toString();
+                                              courseId =
+                                                  StudReportcourseController
+                                                      .text
+                                                      .toString();
 
                                               await Provider.of<
                                                           StudReportListProvider_stf>(
@@ -1298,6 +1329,11 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                         .divisionlist[index]
                                                         .value ??
                                                     '---';
+
+                                                divisionId =
+                                                    StudReportDivisionController
+                                                        .text
+                                                        .toString();
                                                 StudReportDivisionController1
                                                     .text = snapshot
                                                         .divisionlist[index]
@@ -1375,7 +1411,17 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
               MaterialButton(
                 child: const Text('View'),
                 color: Colors.grey,
-                onPressed: (() {}),
+                onPressed: (() async {
+                  sectionId = studReportInitialValuesController.text.toString();
+                  courseId = StudReportcourseController.text.toString();
+                  divisionId = StudReportDivisionController.text.toString();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .clearViewList();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .viewStudentReportList(sectionId, courseId, divisionId);
+                }),
               ),
               kWidth,
               kWidth,
@@ -1670,12 +1716,15 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
       p.removeSectionAll();
       p.removeDivisionAll();
       p.removeCourseAll();
-      p.viewStudentReportList();
+      p.clearViewList();
+      // p.viewStudentReportList();
     });
   }
 
   String? phn;
   String sectionId = '';
+  String courseId = '';
+  String divisionId = '';
   final studReportInitialValuesController = TextEditingController();
   final studReportInitialValuesController1 = TextEditingController();
   final StudReportcourseController = TextEditingController();
@@ -1853,6 +1902,10 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
 
                                               print(StudReportcourseController
                                                   .text);
+                                              courseId =
+                                                  StudReportcourseController
+                                                      .text
+                                                      .toString();
                                               sectionId =
                                                   studReportInitialValuesController
                                                       .text
@@ -1888,7 +1941,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportcourseController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -1943,7 +1996,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                       itemCount: snapshot.divisionlist.length,
                                       itemBuilder: (context, index) {
                                         print(snapshot.divisionlist.length);
-                                        // value.removeDivisionAll();
+
                                         return Column(
                                           children: [
                                             ListTile(
@@ -1966,6 +2019,10 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                         .divisionlist[index]
                                                         .text ??
                                                     '---';
+                                                divisionId =
+                                                    StudReportDivisionController
+                                                        .text
+                                                        .toString();
                                                 snapshot.addSelectedDivision(
                                                     snapshot
                                                         .divisionlist[index]);
@@ -2038,7 +2095,17 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
               MaterialButton(
                 child: const Text('View'),
                 color: Colors.grey,
-                onPressed: (() {}),
+                onPressed: (() async {
+                  sectionId = studReportInitialValuesController.text.toString();
+                  courseId = StudReportcourseController.text.toString();
+                  divisionId = StudReportDivisionController.text.toString();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .clearViewList();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .viewStudentReportList(sectionId, courseId, divisionId);
+                }),
               ),
               kWidth,
               kWidth,
@@ -2161,7 +2228,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                         kWidth,
                                         Row(
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Division : ',
                                               textAlign: TextAlign.start,
                                               style: TextStyle(

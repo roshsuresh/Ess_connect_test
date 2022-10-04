@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
@@ -64,9 +63,9 @@ class NoticeBoard extends StatelessWidget {
                       width: width,
                       //   height: 200,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 245, 241, 241),
+                          color: Color.fromARGB(255, 243, 243, 252),
                           border: Border.all(
-                              color: Color.fromARGB(255, 167, 166, 166)),
+                              color: UIGuide.light_Purple, width: .5),
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +82,7 @@ class NoticeBoard extends StatelessWidget {
                                     strutStyle: StrutStyle(fontSize: 14.0),
                                     text: TextSpan(
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: UIGuide.light_Purple,
                                             fontWeight: FontWeight.w500),
                                         text: noticeresponse![index]['title'] ==
                                                 null
@@ -102,7 +101,7 @@ class NoticeBoard extends StatelessWidget {
                               //height: 132,
                               width: width - 15,
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 230, 225, 230),
+                                  color: Color.fromARGB(255, 236, 237, 245),
                                   border: Border.all(
                                       color:
                                           Color.fromARGB(255, 215, 207, 236)),

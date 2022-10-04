@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Application/StudentProviders/FeesProvider.dart';
@@ -80,13 +79,11 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
 
   final List _selecteCategorys = [];
 
-
   double totalFees = 0;
 
   void _selectAll(int index) {
     _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
   }
-
 
   void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
     if (selected == true) {
@@ -182,23 +179,20 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
                   ),
-                  Consumer<FeesProvider>(
-                builder: (context, snap, child) {
-                  child:
-                 return Padding(
-                   padding: const EdgeInsets.only(right:20.0),
-                   child: Checkbox(
-                      value: snap.isselectAll,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          value= snap.isselectAll;
-                        });
-                      },
-                    ),
-                 );
-
-                }
-                  ),
+                  Consumer<FeesProvider>(builder: (context, snap, child) {
+                    child:
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Checkbox(
+                        value: snap.isselectAll,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            value = snap.isselectAll;
+                          });
+                        },
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -226,16 +220,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                               onChanged: (bool? selected) async {
                                 // selected == true;
 
-                                for (int i = 0; i <= feeResponse!.length; i++) {
-                                  _onFeeSelected(
-                                      selected!,
-                                      feeResponse![index]['installmentName'],
-                                      index,
-                                      feeResponse![index]['installmentNetDue']);
-                                  print(selected);
-                                }
-                                // if (index == 0) {
-                                //   enable = true;
+                                // for (int i = 0; i <= feeResponse!.length; i++) {
                                 //   _onFeeSelected(
                                 //       selected!,
                                 //       feeResponse![index]['installmentName'],
@@ -243,7 +228,16 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                 //       feeResponse![index]['installmentNetDue']);
                                 //   print(selected);
                                 // }
-                                // // await index == 0 && selected == true;
+                                //   if (index == 0) {
+                                //  enable = true;
+                                _onFeeSelected(
+                                    selected!,
+                                    feeResponse![index]['installmentName'],
+                                    index,
+                                    feeResponse![index]['installmentNetDue']);
+                                print(selected);
+                                // }
+                                // await index == 0 && selected == true;
                                 // else if (index == 1 && enable == false) {
                                 //   _onFeeSelected(
                                 //       selected!,
@@ -438,7 +432,6 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     );
   }
 }
-
 
 class FeePartialPayment extends StatelessWidget {
   FeePartialPayment({Key? key}) : super(key: key);

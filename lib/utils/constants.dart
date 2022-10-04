@@ -25,13 +25,13 @@ class UIGuide {
   static const Color WHITE = Colors.white;
   static const Color BLACK = Colors.black;
   static const Color THEME_PRIMARY = Color(0XFF575C79);
-  static const Color THEME_LIGHT = Color(0XFF8489A8);
+  static const Color THEME_LIGHT = Color.fromARGB(255, 164, 167, 187);
   static const Color THEME_DARK = Color(0XFF2D334D);
   static const Color BACKGROUND_COLOR = Color(0XFFAEB2D1);
   static const Color PRIMARY = Color(0XFF36235a);
   static const Color PRIMARY2 = Color(0XFF59081b);
   static const Color PRIMARY3 = Color(0XFFff6699);
-  static const Color light_black = Color.fromARGB(255, 9, 52, 126);
+  static const Color light_black = Color.fromARGB(255, 228, 229, 230);
   static const Color light_Purple = Color.fromARGB(255, 7, 68, 126);
 
   static const Color primary4 = Color(0xff17a2b8);

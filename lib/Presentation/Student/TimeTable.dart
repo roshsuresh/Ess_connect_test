@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
@@ -44,7 +43,7 @@ class Timetable extends StatelessWidget {
                 TableRow(
                     decoration: BoxDecoration(
                       //  border: Border.all(),
-                      color: Color.fromARGB(255, 228, 224, 224),
+                      color: UIGuide.light_black,
                     ),
                     children: [
                       SizedBox(

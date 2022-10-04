@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 
@@ -49,7 +48,7 @@ class ReportCard extends StatelessWidget {
                       TableRow(
                           decoration: BoxDecoration(
                             //  border: Border.all(),
-                            color: Color.fromARGB(255, 228, 224, 224),
+                            color: UIGuide.light_black,
                           ),
                           children: [
                             SizedBox(

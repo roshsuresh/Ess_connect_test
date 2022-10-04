@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +16,8 @@ class Profile_Info extends StatelessWidget {
     var height = size.height;
     var width = size.width;
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 79, 97, 197);
-    final Color fill2 = Color.fromARGB(255, 180, 103, 216);
+    final Color fill1 = Color.fromARGB(255, 109, 128, 236);
+    final Color fill2 = UIGuide.light_Purple;
     final List<Color> gradient = [
       fill1,
       fill2,
@@ -92,10 +91,9 @@ class Profile_Info extends StatelessWidget {
                               child: Table(
                                 // defaultColumnWidth: FixedColumnWidth(120.0),
                                 border: TableBorder.all(
-                                    color: const Color.fromARGB(
-                                        255, 213, 213, 243),
+                                    color: UIGuide.light_Purple,
                                     style: BorderStyle.solid,
-                                    width: 2),
+                                    width: .5),
                                 children: [
                                   TableRow(children: [
                                     Column(
@@ -167,7 +165,7 @@ class Profile_Info extends StatelessWidget {
                 child: Container(
                   width: width,
                   height: 370,
-                  color: const Color.fromARGB(255, 248, 240, 248),
+                  color: Color.fromARGB(255, 240, 243, 247),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -212,8 +210,7 @@ class Profile_Info extends StatelessWidget {
                                                 ? '--'
                                                 : provider.dob.toString(),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 43, 34, 158)),
+                                                color: UIGuide.light_Purple),
                                           ),
                                           const Text(
                                             'Birthday',
@@ -246,8 +243,8 @@ class Profile_Info extends StatelessWidget {
                                               Text(
                                                 provider.gender.toString(),
                                                 style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 43, 34, 158)),
+                                                  color: UIGuide.light_Purple,
+                                                ),
                                               ),
                                               const Text(
                                                 'Gender',
@@ -287,8 +284,8 @@ class Profile_Info extends StatelessWidget {
                                                 : provider.bloodGroup
                                                     .toString(),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 43, 34, 158)),
+                                              color: UIGuide.light_Purple,
+                                            ),
                                           ),
                                           const Text(
                                             'Blood Group',
@@ -324,8 +321,8 @@ class Profile_Info extends StatelessWidget {
                                                     : provider.houseGroup
                                                         .toString(),
                                                 style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 43, 34, 158)),
+                                                  color: UIGuide.light_Purple,
+                                                ),
                                               ),
                                               const Text(
                                                 'House Group',
@@ -364,8 +361,8 @@ class Profile_Info extends StatelessWidget {
                                                 ? '0.00'
                                                 : provider.height.toString(),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 43, 34, 158)),
+                                              color: UIGuide.light_Purple,
+                                            ),
                                           ),
                                           const Text(
                                             'Height',
@@ -401,8 +398,8 @@ class Profile_Info extends StatelessWidget {
                                                     : provider.weight
                                                         .toString(),
                                                 style: const TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 43, 34, 158)),
+                                                  color: UIGuide.light_Purple,
+                                                ),
                                               ),
                                               const Text(
                                                 'Weight',
@@ -442,8 +439,8 @@ class Profile_Info extends StatelessWidget {
                                                 : provider.classTeacher
                                                     .toString(),
                                             style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 43, 34, 158)),
+                                              color: UIGuide.light_Purple,
+                                            ),
                                           ),
                                           const Text(
                                             'Class Teacher',
@@ -476,8 +473,8 @@ class Profile_Info extends StatelessWidget {
                                               Text(
                                                 '--',
                                                 style: TextStyle(
-                                                    color: Color.fromARGB(
-                                                        255, 43, 34, 158)),
+                                                  color: UIGuide.light_Purple,
+                                                ),
                                               ),
                                               Text(
                                                 'Birthplace',
@@ -504,7 +501,8 @@ class Profile_Info extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
-                                  color: Color.fromARGB(255, 210, 199, 240)),
+                                color: Color.fromARGB(255, 230, 237, 245),
+                              ),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
                           width: width,
@@ -530,9 +528,9 @@ class Profile_Info extends StatelessWidget {
                                     maxLines: 4,
                                     text: TextSpan(
                                         style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Color.fromARGB(
-                                                255, 44, 43, 43)),
+                                          fontSize: 15,
+                                          color: UIGuide.light_Purple,
+                                        ),
                                         text: provider.address == null
                                             ? '---'
                                             : provider.address.toString()),
@@ -554,8 +552,8 @@ class Profile_Info extends StatelessWidget {
                     margin: const EdgeInsets.all(6.0),
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(
-                            color: const Color.fromARGB(255, 210, 199, 240)),
+                        border:
+                            Border.all(color: UIGuide.light_Purple, width: .5),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5))),
                     child: Column(
@@ -564,8 +562,7 @@ class Profile_Info extends StatelessWidget {
                         const Text(
                           'Father (Guardian)',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 37, 37, 117)),
+                          style: TextStyle(color: Colors.black),
                         ),
                         //kheight10,
                         Center(
@@ -574,7 +571,9 @@ class Profile_Info extends StatelessWidget {
                               ? '---'
                               : provider.fatherName.toString(),
                           style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12),
+                              color: UIGuide.light_Purple,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12),
                         )),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -590,7 +589,9 @@ class Profile_Info extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: const StrutStyle(fontSize: 12.0),
                                 text: TextSpan(
-                                    style: const TextStyle(color: Colors.black),
+                                    style: const TextStyle(
+                                      color: UIGuide.light_Purple,
+                                    ),
                                     text: provider.fatherMail == null
                                         ? '--'
                                         : provider.fatherMail),
@@ -610,17 +611,16 @@ class Profile_Info extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 210, 199, 240)),
+                                        color: UIGuide.light_Purple, width: .2),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5))),
                                 child: Image.network(
                                   provider.fatherPhoto == null
                                       ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
                                       : provider.fatherPhoto.toString(),
-                                  color: Color.fromARGB(255, 151, 148, 148)
-                                      .withOpacity(0.8),
-                                  fit: BoxFit.fill,
+                                  // color: Color.fromARGB(255, 151, 148, 148)
+                                  //     .withOpacity(0.8),
+                                  // fit: BoxFit.fill,
                                 ),
                               ),
                             ),
@@ -659,7 +659,9 @@ class Profile_Info extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
-                            color: const Color.fromARGB(255, 210, 199, 240)),
+                          width: .5,
+                          color: UIGuide.light_Purple,
+                        ),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5))),
                     child: Column(
@@ -668,8 +670,7 @@ class Profile_Info extends StatelessWidget {
                         const Text(
                           'Mother',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 37, 37, 117)),
+                          style: TextStyle(color: Colors.black),
                         ),
                         //kheight10,
                         Center(
@@ -678,7 +679,9 @@ class Profile_Info extends StatelessWidget {
                               ? '---'
                               : provider.motherName.toString(),
                           style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12),
+                              color: UIGuide.light_Purple,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12),
                         )),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -699,7 +702,9 @@ class Profile_Info extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: const StrutStyle(fontSize: 12.0),
                                 text: TextSpan(
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                    ),
                                     text: provider.motherMailId == null
                                         ? '---'
                                         : provider.motherMailId.toString()),
@@ -719,17 +724,16 @@ class Profile_Info extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 210, 199, 240)),
+                                        color: UIGuide.light_Purple, width: .2),
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5))),
                                 child: Image.network(
                                   provider.motherPhoto == null
                                       ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
                                       : provider.motherPhoto.toString(),
-                                  color:
-                                      const Color.fromARGB(255, 151, 148, 148)
-                                          .withOpacity(0.8),
+                                  // color:
+                                  //     const Color.fromARGB(255, 151, 148, 148)
+                                  //         .withOpacity(0.8),
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -768,7 +772,7 @@ class Profile_Info extends StatelessWidget {
                       image: const DecorationImage(
                         image: NetworkImage(
                             "https://cdn.vectorstock.com/i/1000x1000/50/63/people-human-together-family-logo-icon-vector-32705063.webp"),
-                        fit: BoxFit.fitWidth,
+                        //   fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),

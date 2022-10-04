@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Application/StudentProviders/AttendenceProvider.dart';
@@ -36,7 +35,8 @@ class Attendence extends StatelessWidget {
                   margin: const EdgeInsets.all(10.0),
                   padding: const EdgeInsets.all(3.0),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent),
+                      border:
+                          Border.all(color: UIGuide.light_Purple, width: .5),
                       borderRadius: BorderRadius.circular(10)),
                   child: Consumer<AttendenceProvider>(
                     builder: (_, provider, child) {
@@ -76,12 +76,10 @@ class Attendence extends StatelessWidget {
               ),
               kheight10,
               Table(
-                border:
-                    TableBorder.all(color: Color.fromARGB(255, 151, 150, 150)),
+                border: TableBorder.all(color: UIGuide.light_Purple, width: .2),
                 children: const [
                   TableRow(
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 209, 208, 208)),
+                      decoration: BoxDecoration(color: UIGuide.light_black),
                       children: [
                         Text(
                           'Month',

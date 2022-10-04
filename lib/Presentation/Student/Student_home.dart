@@ -1,5 +1,6 @@
 import 'package:Ess_test/Presentation/Student/payment.dart';
 import 'package:Ess_test/Presentation/Student/selection.dart';
+import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
@@ -74,7 +75,7 @@ class StudentHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -82,7 +83,7 @@ class StudentHome extends StatelessWidget {
                           'Personal info',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.purple,
+                              color: UIGuide.light_Purple,
                               fontWeight: FontWeight.w900),
                         ),
                         Expanded(
@@ -90,7 +91,7 @@ class StudentHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 20.0, right: 10.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -122,7 +123,7 @@ class StudentHome extends StatelessWidget {
                                       image: DecorationImage(
                                         opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/Profilee.png',
                                         ),
                                       ),
                                     ),
@@ -159,7 +160,7 @@ class StudentHome extends StatelessWidget {
                                       image: const DecorationImage(
                                         opacity: 20,
                                         image: AssetImage(
-                                          'assets/notification.png',
+                                          'assets/notificationnew.png',
                                         ),
                                       ),
                                       borderRadius: BorderRadius.circular(10),
@@ -197,7 +198,7 @@ class StudentHome extends StatelessWidget {
                                       image: DecorationImage(
                                         opacity: 20,
                                         image: AssetImage(
-                                          'assets/Profile.png',
+                                          'assets/Attendance.png',
                                         ),
                                       ),
                                       // borderRadius: BorderRadius.circular(10),
@@ -213,6 +214,14 @@ class StudentHome extends StatelessWidget {
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                      kheight,
+                      kheight20,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
                           Consumer<ProfileProvider>(
                             builder: (context, value, child) {
                               return GestureDetector(
@@ -262,14 +271,6 @@ class StudentHome extends StatelessWidget {
                               );
                             },
                           ),
-                        ],
-                      ),
-                      kheight,
-                      kheight20,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -307,86 +308,12 @@ class StudentHome extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Gallery()),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/notification.png',
-                                        ),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Gallery',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Stud_Calender()),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/Profile.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Calender',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                       kheight,
                       kheight20,
                       Container(
-                        color: const Color.fromARGB(255, 218, 212, 212),
+                        color: Color.fromARGB(255, 236, 237, 245),
                         height: 150,
                         width: width,
                         child: Column(
@@ -398,7 +325,7 @@ class StudentHome extends StatelessWidget {
                                 " * Urgent & Important * ",
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 129, 125, 129),
+                                    color: UIGuide.light_Purple,
                                     fontWeight: FontWeight.w900),
                               ),
                               Expanded(child: Text("")),
@@ -431,7 +358,7 @@ class StudentHome extends StatelessWidget {
                                             image: DecorationImage(
                                               opacity: 20,
                                               image: AssetImage(
-                                                'assets/pay.png',
+                                                'assets/payNew.png',
                                               ),
                                             ),
                                           ),
@@ -450,30 +377,42 @@ class StudentHome extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: 50,
-                                        width: 40,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            opacity: 20,
-                                            image: AssetImage(
-                                              'assets/Profile.png',
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ReportCard()),
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Reportcard.png',
+                                              ),
                                             ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                         ),
-                                      ),
-                                      kheight,
-                                      const Text(
-                                        'Events',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.black38),
-                                      )
-                                    ],
+                                        kheight,
+                                        const Text(
+                                          'Report Card',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -490,7 +429,7 @@ class StudentHome extends StatelessWidget {
                                           image: const DecorationImage(
                                             opacity: 20,
                                             image: AssetImage(
-                                              'assets/pay.png',
+                                              'assets/payNew.png',
                                             ),
                                           ),
                                           borderRadius:
@@ -499,7 +438,7 @@ class StudentHome extends StatelessWidget {
                                       ),
                                       kheight,
                                       const Text(
-                                        'Fee Structure',
+                                        'Payment \n History',
                                         style: TextStyle(
                                             fontSize: 11,
                                             color: Colors.black38),
@@ -512,188 +451,188 @@ class StudentHome extends StatelessWidget {
                           ],
                         ),
                       ),
+                      // Row(children: <Widget>[
+                      //   Expanded(
+                      //     child: Container(
+                      //         margin: const EdgeInsets.only(
+                      //             left: 10.0, right: 20.0),
+                      //         child: const Divider(
+                      //           color: Colors.black,
+                      //           height: 36,
+                      //         )),
+                      //   ),
+                      //   const Text(
+                      //     "Fees",
+                      //     textAlign: TextAlign.left,
+                      //     style: TextStyle(
+                      //         color: Colors.purple,
+                      //         fontWeight: FontWeight.w900),
+                      //   ),
+                      //   Expanded(
+                      //     child: Container(
+                      //         margin: const EdgeInsets.only(
+                      //             left: 20.0, right: 10.0),
+                      //         child: const Divider(
+                      //           color: Colors.black,
+                      //           height: 36,
+                      //         )),
+                      //   ),
+                      // ]),
+                      // kheight,
+                      // kheight20,
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 10, right: 10),
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //         children: [
+                      //           Container(
+                      //             height: 50,
+                      //             width: 40,
+                      //             decoration: const BoxDecoration(
+                      //               image: DecorationImage(
+                      //                 opacity: 20,
+                      //                 image: AssetImage(
+                      //                   'assets/pay.png',
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           kheight,
+                      //           const Text(
+                      //             'Pay Fee',
+                      //             style: TextStyle(
+                      //                 fontSize: 11, color: Colors.black38),
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 10, right: 10),
+                      //       child: GestureDetector(
+                      //         onTap: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => PaymentRough()),
+                      //           );
+                      //         },
+                      //         child: Column(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             Container(
+                      //               height: 50,
+                      //               width: 40,
+                      //               decoration: BoxDecoration(
+                      //                 image: const DecorationImage(
+                      //                   opacity: 20,
+                      //                   image: AssetImage(
+                      //                     'assets/pay.png',
+                      //                   ),
+                      //                 ),
+                      //                 borderRadius: BorderRadius.circular(10),
+                      //               ),
+                      //             ),
+                      //             kheight,
+                      //             const Text(
+                      //               'Fee Structure',
+                      //               style: TextStyle(
+                      //                   fontSize: 11, color: Colors.black38),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (context) => const AdvancePay()),
+                      //         );
+                      //       },
+                      //       child: Padding(
+                      //         padding:
+                      //             const EdgeInsets.only(left: 10, right: 10),
+                      //         child: Column(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             Container(
+                      //               height: 50,
+                      //               width: 40,
+                      //               decoration: const BoxDecoration(
+                      //                 image: DecorationImage(
+                      //                   opacity: 20,
+                      //                   image: AssetImage(
+                      //                     'assets/Profile.png',
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             kheight,
+                      //             const Text(
+                      //               'Advance Pay ',
+                      //               style: TextStyle(
+                      //                   fontSize: 11, color: Colors.black38),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (context) =>
+                      //                   const PaymentHistory()),
+                      //         );
+                      //       },
+                      //       child: Padding(
+                      //         padding:
+                      //             const EdgeInsets.only(left: 10, right: 10),
+                      //         child: Column(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             Container(
+                      //               height: 50,
+                      //               width: 40,
+                      //               decoration: const BoxDecoration(
+                      //                 image: DecorationImage(
+                      //                   opacity: 20,
+                      //                   image: AssetImage(
+                      //                     'assets/Profile.png',
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             kheight,
+                      //             const Text(
+                      //               'Payment \n History',
+                      //               style: TextStyle(
+                      //                   fontSize: 11, color: Colors.black38),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      kheight,
+                      kheight20,
                       Row(children: <Widget>[
                         Expanded(
                           child: Container(
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
                               child: const Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                        const Text(
-                          "Fees",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.purple,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Expanded(
-                          child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 20.0, right: 10.0),
-                              child: const Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                      ]),
-                      kheight,
-                      kheight20,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/pay.png',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Pay Fee',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PaymentRough()),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/pay.png',
-                                        ),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Fee Structure',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AdvancePay()),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/Profile.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Advance Pay ',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaymentHistory()),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/Profile.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Payment \n History',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      kheight,
-                      kheight20,
-                      Row(children: <Widget>[
-                        Expanded(
-                          child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 10.0, right: 20.0),
-                              child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -701,7 +640,7 @@ class StudentHome extends StatelessWidget {
                           "Tabulation",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.purple,
+                              color: UIGuide.light_Purple,
                               fontWeight: FontWeight.w900),
                         ),
                         Expanded(
@@ -709,7 +648,7 @@ class StudentHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 20.0, right: 10.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -785,56 +724,130 @@ class StudentHome extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Gallery()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/Gallery.png',
+                                        ),
                                       ),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Home Works',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Gallery',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Statistics',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left: 10, right: 10),
+                          //   child: GestureDetector(
+                          //     onTap: () {
+                          //       Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) =>
+                          //                 const Stud_Calender()),
+                          //       );
+                          //     },
+                          //     child: Column(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceEvenly,
+                          //       children: [
+                          //         Container(
+                          //           height: 50,
+                          //           width: 40,
+                          //           decoration: const BoxDecoration(
+                          //             image: DecorationImage(
+                          //               opacity: 20,
+                          //               image: AssetImage(
+                          //                 'assets/Profile.png',
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         kheight,
+                          //         const Text(
+                          //           'Calender',
+                          //           style: TextStyle(
+                          //               fontSize: 11, color: Colors.black38),
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left: 10, right: 10),
+                          //   child: Column(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     children: [
+                          //       Container(
+                          //         height: 50,
+                          //         width: 40,
+                          //         decoration: const BoxDecoration(
+                          //           image: DecorationImage(
+                          //             opacity: 20,
+                          //             image: AssetImage(
+                          //               'assets/Profile.png',
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       kheight,
+                          //       const Text(
+                          //         'Home Works',
+                          //         style: TextStyle(
+                          //             fontSize: 11, color: Colors.black38),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left: 10, right: 10),
+                          //   child: Column(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     children: [
+                          //       Container(
+                          //         height: 50,
+                          //         width: 40,
+                          //         decoration: const BoxDecoration(
+                          //           image: DecorationImage(
+                          //             opacity: 20,
+                          //             image: AssetImage(
+                          //               'assets/Profile.png',
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       kheight,
+                          //       const Text(
+                          //         'Statistics',
+                          //         style: TextStyle(
+                          //             fontSize: 11, color: Colors.black38),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                       kheight,
@@ -845,7 +858,7 @@ class StudentHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 10.0, right: 20.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -853,7 +866,7 @@ class StudentHome extends StatelessWidget {
                           "Password Change / SignOut",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              color: Colors.purple,
+                              color: UIGuide.light_Purple,
                               fontWeight: FontWeight.w900),
                         ),
                         Expanded(
@@ -861,7 +874,7 @@ class StudentHome extends StatelessWidget {
                               margin: const EdgeInsets.only(
                                   left: 20.0, right: 10.0),
                               child: const Divider(
-                                color: Colors.black,
+                                color: Colors.black45,
                                 height: 36,
                               )),
                         ),
@@ -884,7 +897,7 @@ class StudentHome extends StatelessWidget {
                               },
                               child: const Icon(
                                 Icons.key_sharp,
-                                color: Colors.purple,
+                                color: UIGuide.light_Purple,
                               )),
                           MaterialButton(
                               minWidth: 50,
@@ -904,7 +917,7 @@ class StudentHome extends StatelessWidget {
                               },
                               child: const Icon(
                                 Icons.logout_outlined,
-                                color: Colors.purple,
+                                color: UIGuide.light_Purple,
                               )),
                         ],
                       ),
@@ -1184,210 +1197,185 @@ class ProfileHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pro = Provider.of<ProfileProvider>(context, listen: false);
-    pro.profileData();
+    Provider.of<ProfileProvider>(context, listen: false).profileData();
     var size = MediaQuery.of(context).size;
 
-    return pro.isLoading
-        ? Center(
-            child: Container(
-              child: SpinKitThreeBounce(
-                itemBuilder: (BuildContext context, int index) {
-                  return DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: index.isEven ? Colors.red : Colors.green,
-                    ),
-                  );
-                },
+    return SafeArea(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              const SizedBox(
+                height: 2,
               ),
-            ),
-          )
-        : SafeArea(
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    Consumer<ProfileProvider>(
-                      builder: (_, value, child) {
-                        return Container(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, right: 10),
-                            child: Container(
-                              height: 120,
-                              decoration: const BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 0.5,
-                                    )
-                                  ],
+              Consumer<ProfileProvider>(
+                builder: (_, value, child) {
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10),
+                      child: Container(
+                        height: 120,
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 0.5,
+                              )
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            )),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  )),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        image: DecorationImage(
-                                          // opacity: 20,
-                                          image: NetworkImage(
-                                            value.studPhoto == null
-                                                ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
-                                                : value.studPhoto.toString(),
-                                          ),
-                                        ),
-                                        shape: BoxShape.circle,
-                                        boxShadow: const [
-                                          BoxShadow(blurRadius: 1)
-                                        ]),
-                                    width: 70,
-                                    height: 120,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        kheight20,
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Name : ',
-                                              style: TextStyle(
-                                                  color: Colors.purple,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-
-                                            RichText(
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              strutStyle: const StrutStyle(
-                                                  fontSize: 8.0),
-                                              text: TextSpan(
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black54,
-                                                      fontWeight:
-                                                          FontWeight.w900),
-                                                  text: value.studName ?? "--"
-
-                                                  // dataResponse == null
-                                                  //     ? '---'
-                                                  //     : dataResponse!['studentName']
-
-                                                  ),
-                                            ),
-                                            // dataResponse==null
-                                            // ? Container(): dataResponse?['studentName'].text
-                                          ],
-                                        ),
-                                        kheight,
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Adm no : ',
-                                              style: TextStyle(
-                                                  color: Colors.purple,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            Text(
-                                              value.admissionNo == null
-                                                  ? '--'
-                                                  : value.admissionNo.toString()
-                                              //  dataResponse?['admissionNo'].noSuchMethod(),
-                                              ,
-                                              style: const TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w900),
-                                            )
-                                          ],
-                                        ),
-                                        kheight,
-                                        Row(
-                                          children: [
-                                            const Text(
-                                              'Class : ',
-                                              style: TextStyle(
-                                                  color: Colors.purple,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            Text(
-                                              value.division == null
-                                                  ? '--'
-                                                  : value.division.toString(),
-                                              style: const TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w900),
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                  image: DecorationImage(
+                                    // opacity: 20,
+                                    image: NetworkImage(
+                                      value.studPhoto == null
+                                          ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
+                                          : value.studPhoto.toString(),
                                     ),
                                   ),
-                                  const Spacer(),
+                                  shape: BoxShape.circle,
+                                  boxShadow: const [BoxShadow(blurRadius: 1)]),
+                              width: 70,
+                              height: 120,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                              height: 30,
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  kheight20,
                                   Row(
-                                    // crossAxisAlignment: CrossAxisAlignment.end,
-                                    // mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                              onPressed: (() {
-                                                var currentname =
-                                                    value.studName;
-                                                _displayNameOfSiblings(
-                                                    context, currentname);
-                                              }),
-                                              icon: const Icon(
-                                                Icons.switch_account_outlined,
-                                                size: 30,
-                                                color: Color.fromARGB(
-                                                    255, 83, 81, 81),
-                                              )),
-                                        ],
+                                      const Text(
+                                        'Name : ',
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+
+                                      RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        strutStyle:
+                                            const StrutStyle(fontSize: 8.0),
+                                        text: TextSpan(
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: UIGuide.light_Purple,
+                                                fontWeight: FontWeight.w700),
+                                            text: value.studName ?? "--"
+
+                                            // dataResponse == null
+                                            //     ? '---'
+                                            //     : dataResponse!['studentName']
+
+                                            ),
+                                      ),
+                                      // dataResponse==null
+                                      // ? Container(): dataResponse?['studentName'].text
+                                    ],
+                                  ),
+                                  kheight,
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Adm no : ',
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        value.admissionNo == null
+                                            ? '--'
+                                            : value.admissionNo.toString()
+                                        //  dataResponse?['admissionNo'].noSuchMethod(),
+                                        ,
+                                        style: const TextStyle(
+                                            color: UIGuide.light_Purple,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  ),
+                                  kheight,
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Class : ',
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        value.division == null
+                                            ? '--'
+                                            : value.division.toString(),
+                                        style: const TextStyle(
+                                            color: UIGuide.light_Purple,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700),
                                       )
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        );
-                      },
+                            const Spacer(),
+                            Row(
+                              // crossAxisAlignment: CrossAxisAlignment.end,
+                              // mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: (() {
+                                          var currentname = value.studName;
+                                          _displayNameOfSiblings(
+                                              context, currentname);
+                                        }),
+                                        icon: const Icon(
+                                          Icons.switch_account_outlined,
+                                          size: 30,
+                                          color: UIGuide.light_Purple,
+                                        )),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Flashnews()
-                  ],
-                ),
-                //Flashnews()
-              ],
-            ),
-          );
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // Flashnews()
+            ],
+          ),
+          //Flashnews()
+        ],
+      ),
+    );
   }
 
   bool loading = false;
@@ -1404,7 +1392,8 @@ class ProfileHome extends StatelessWidget {
               var size = MediaQuery.of(context).size;
               return AlertDialog(
                   content: Container(
-                decoration: BoxDecoration(border: Border.all()),
+                decoration: BoxDecoration(
+                    border: Border.all(color: UIGuide.light_Purple)),
                 height: 70,
                 width: size.width,
                 child: ListView.separated(
@@ -1437,7 +1426,7 @@ class ProfileHome extends StatelessWidget {
                                               .toString()))),
                           const Divider(
                             height: 1,
-                            color: Colors.black54,
+                            color: Colors.black45,
                           )
                         ],
                       );
