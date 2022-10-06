@@ -1,10 +1,7 @@
+import 'package:Ess_test/Presentation/Staff/Searchstudent.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../Application/Staff_Providers/StudListProvider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
@@ -22,8 +19,8 @@ class StudReport extends StatelessWidget {
               title: const Text('Student Report'),
               titleSpacing: 20.0,
               centerTitle: true,
-              toolbarHeight: 30.2,
-              toolbarOpacity: 0.8,
+              toolbarHeight: 40.2,
+              // toolbarOpacity: 0.8,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
@@ -42,12 +39,22 @@ class StudReport extends StatelessWidget {
                 ],
               ),
               backgroundColor: UIGuide.light_Purple,
-              actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SearchStudent_stf()),
+                      );
+                    },
+                    icon: Icon(Icons.search))
+              ],
             ),
             body: TabBarView(children: [
               StudCurrentStudying(),
               StudRelievedStaff(),
-              StudCurrentStudying(),
+              StudentReportBoth_Staff(),
             ])));
   }
 }
@@ -174,7 +181,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: studReportInitialValuesController1,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "Select Section",
                                 hintText: "Section",
@@ -189,7 +196,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: studReportInitialValuesController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "",
                                 hintText: "",
@@ -282,7 +289,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: StudReportcourseController1,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "Select Course",
                                 hintText: "Course",
@@ -296,7 +303,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: StudReportcourseController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "",
                                 hintText: "",
@@ -393,7 +400,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: StudReportDivisionController1,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "Select Division",
                                 hintText: "Division",
@@ -407,7 +414,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               controller: StudReportDivisionController,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
                                 labelText: "",
                                 hintText: "",
@@ -424,7 +431,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
               Spacer(),
               MaterialButton(
                 child: const Text('View'),
-                color: Colors.grey,
+                color: UIGuide.THEME_LIGHT,
                 onPressed: (() async {
                   courseId = StudReportcourseController.text.toString();
                   print(courseId);
@@ -432,7 +439,24 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                   print(divisionId);
                   print(sectionId);
                   sectionId = studReportInitialValuesController.text.toString();
-
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .sectionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeSectionAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .courseClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeCourseAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .divisionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeDivisionAll();
                   await Provider.of<StudReportListProvider_stf>(context,
                           listen: false)
                       .clearViewList();
@@ -482,7 +506,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             width: size.width - 10,
                             height: 90,
                             decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 236, 233, 233),
+                                color: UIGuide.light_black,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             child: Row(
@@ -1417,6 +1441,24 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                   divisionId = StudReportDivisionController.text.toString();
                   await Provider.of<StudReportListProvider_stf>(context,
                           listen: false)
+                      .sectionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeSectionAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .courseClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeCourseAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .divisionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeDivisionAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
                       .clearViewList();
                   await Provider.of<StudReportListProvider_stf>(context,
                           listen: false)
@@ -2099,6 +2141,25 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                   sectionId = studReportInitialValuesController.text.toString();
                   courseId = StudReportcourseController.text.toString();
                   divisionId = StudReportDivisionController.text.toString();
+
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .sectionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeSectionAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .courseClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeCourseAll();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .divisionClear();
+                  await Provider.of<StudReportListProvider_stf>(context,
+                          listen: false)
+                      .removeDivisionAll();
                   await Provider.of<StudReportListProvider_stf>(context,
                           listen: false)
                       .clearViewList();

@@ -127,7 +127,9 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 minWidth: size.width - 250,
                 color: Colors.white70,
                 child: Text('Date: ${datee.toString()}'),
-                onPressed: () async {}),
+                onPressed: () async {
+                  return;
+                }),
             Spacer(),
             SizedBox(
               height: 50,
@@ -313,13 +315,13 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
           children: [
             MaterialButton(
               minWidth: size.width - 200,
-              child: Center(child: Text('From  ${time}')),
+              child: Center(child: Text('From  $time')),
               color: Colors.white,
               onPressed: (() async {
                 _mydatetimeFrom = await showDatePicker(
                     context: context,
                     initialDate: _mydatetimeFrom ?? DateTime.now(),
-                    firstDate: DateTime.now().subtract(Duration(days: 0)),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2030));
                 setState(() {
                   time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
@@ -466,7 +468,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
               width: MediaQuery.of(context).size.width * 0.49,
               child: Consumer<StaffNoticeboardSendProviders>(
                   builder: (context, snapshot, child) {
-                attachmentid = snapshot.id.toString();
+                attachmentid = snapshot.id ?? '';
                 return InkWell(
                   onTap: () {
                     showDialog(
@@ -586,7 +588,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                         coursevalueController.text,
                         divisionvalueController.text,
                         categoryvalueController.text,
-                        attachmentid.toString());
+                        attachmentid!);
 
                 print(datee);
                 print(time);

@@ -10,7 +10,7 @@ Map? mapResponses;
 Map? dataResponss;
 List? feeResponse;
 List? busfeeResponse;
-List<FeeFeesInstallments> feesList=[];
+List<FeeFeesInstallments> feesList = [];
 //List? listResponses;
 
 class FeesProvider with ChangeNotifier {
@@ -20,8 +20,8 @@ class FeesProvider with ChangeNotifier {
   bool? allowPartialPayment;
   // List<FeeFeesInstallments> feeList = [];
   Future feesData() async {
-    isLoading = true;
-    notifyListeners();
+    // isLoading = true;
+    // notifyListeners();
 
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
@@ -68,7 +68,7 @@ class FeesProvider with ChangeNotifier {
         // feeList.addAll(templist);
 
         // print(installmentTerm);
-        isLoading = false;
+        // isLoading = false;
         notifyListeners();
 
         // print(response.body);
@@ -79,6 +79,7 @@ class FeesProvider with ChangeNotifier {
       print(e);
     }
   }
+
   //select all fees
   bool isselectAll = false;
   void selectAll() {

@@ -9,8 +9,13 @@ class LoadingIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-          child: SpinKitWave(
-              color: UIGuide.light_Purple, type: SpinKitWaveType.center)),
+          child: SpinKitSpinningLines(
+        color: UIGuide.light_Purple,
+        size: 90,
+        lineWidth: 5,
+      )),
+      // child: SpinKitWave(
+      //     color: UIGuide.light_Purple, type: SpinKitWaveType.center)),
     );
   }
 }

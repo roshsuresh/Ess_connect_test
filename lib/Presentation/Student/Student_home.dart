@@ -1200,185 +1200,197 @@ class ProfileHome extends StatelessWidget {
     Provider.of<ProfileProvider>(context, listen: false).profileData();
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 2,
-              ),
-              Consumer<ProfileProvider>(
-                builder: (_, value, child) {
-                  return Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10),
-                      child: Container(
-                        height: 120,
-                        decoration: const BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 0.5,
-                              )
-                            ],
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            )),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  image: DecorationImage(
-                                    // opacity: 20,
-                                    image: NetworkImage(
-                                      value.studPhoto == null
-                                          ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
-                                          : value.studPhoto.toString(),
-                                    ),
-                                  ),
-                                  shape: BoxShape.circle,
-                                  boxShadow: const [BoxShadow(blurRadius: 1)]),
-                              width: 70,
+    return loading
+        ? LoadingIcon()
+        : SafeArea(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Consumer<ProfileProvider>(
+                      builder: (_, value, child) {
+                        return Container(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10),
+                            child: Container(
                               height: 120,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                              height: 30,
-                            ),
-                            Container(
-                              child: Column(
+                              decoration: const BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 0.5,
+                                    )
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  )),
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  kheight20,
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Name : ',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-
-                                      RichText(
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
-                                        text: TextSpan(
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: UIGuide.light_Purple,
-                                                fontWeight: FontWeight.w700),
-                                            text: value.studName ?? "--"
-
-                                            // dataResponse == null
-                                            //     ? '---'
-                                            //     : dataResponse!['studentName']
-
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        image: DecorationImage(
+                                          // opacity: 20,
+                                          image: NetworkImage(
+                                            value.studPhoto == null
+                                                ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
+                                                : value.studPhoto.toString(),
+                                          ),
+                                        ),
+                                        shape: BoxShape.circle,
+                                        boxShadow: const [
+                                          BoxShadow(blurRadius: 1)
+                                        ]),
+                                    width: 70,
+                                    height: 120,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                    height: 30,
+                                  ),
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        kheight20,
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Name : ',
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
                                             ),
-                                      ),
-                                      // dataResponse==null
-                                      // ? Container(): dataResponse?['studentName'].text
-                                    ],
+
+                                            RichText(
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              strutStyle: const StrutStyle(
+                                                  fontSize: 8.0),
+                                              text: TextSpan(
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color:
+                                                          UIGuide.light_Purple,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  text: value.studName ?? "--"
+
+                                                  // dataResponse == null
+                                                  //     ? '---'
+                                                  //     : dataResponse!['studentName']
+
+                                                  ),
+                                            ),
+                                            // dataResponse==null
+                                            // ? Container(): dataResponse?['studentName'].text
+                                          ],
+                                        ),
+                                        kheight,
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Adm no : ',
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            Text(
+                                              value.admissionNo == null
+                                                  ? '--'
+                                                  : value.admissionNo.toString()
+                                              //  dataResponse?['admissionNo'].noSuchMethod(),
+                                              ,
+                                              style: const TextStyle(
+                                                  color: UIGuide.light_Purple,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            )
+                                          ],
+                                        ),
+                                        kheight,
+                                        Row(
+                                          children: [
+                                            const Text(
+                                              'Class : ',
+                                              style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            Text(
+                                              value.division == null
+                                                  ? '--'
+                                                  : value.division.toString(),
+                                              style: const TextStyle(
+                                                  color: UIGuide.light_Purple,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  kheight,
+                                  const Spacer(),
                                   Row(
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    // mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      const Text(
-                                        'Adm no : ',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        value.admissionNo == null
-                                            ? '--'
-                                            : value.admissionNo.toString()
-                                        //  dataResponse?['admissionNo'].noSuchMethod(),
-                                        ,
-                                        style: const TextStyle(
-                                            color: UIGuide.light_Purple,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      )
-                                    ],
-                                  ),
-                                  kheight,
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Class : ',
-                                        style: TextStyle(
-                                            color: Colors.black54,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      Text(
-                                        value.division == null
-                                            ? '--'
-                                            : value.division.toString(),
-                                        style: const TextStyle(
-                                            color: UIGuide.light_Purple,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                              onPressed: (() {
+                                                var currentname =
+                                                    value.studName;
+                                                _displayNameOfSiblings(
+                                                    context, currentname);
+                                              }),
+                                              icon: const Icon(
+                                                Icons.switch_account_outlined,
+                                                size: 30,
+                                                color: UIGuide.light_Purple,
+                                              )),
+                                        ],
                                       )
                                     ],
                                   ),
                                 ],
                               ),
                             ),
-                            const Spacer(),
-                            Row(
-                              // crossAxisAlignment: CrossAxisAlignment.end,
-                              // mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                        onPressed: (() {
-                                          var currentname = value.studName;
-                                          _displayNameOfSiblings(
-                                              context, currentname);
-                                        }),
-                                        icon: const Icon(
-                                          Icons.switch_account_outlined,
-                                          size: 30,
-                                          color: UIGuide.light_Purple,
-                                        )),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              // Flashnews()
-            ],
-          ),
-          //Flashnews()
-        ],
-      ),
-    );
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    // Flashnews()
+                  ],
+                ),
+                //Flashnews()
+              ],
+            ),
+          );
   }
 
   bool loading = false;
+
   _displayNameOfSiblings(BuildContext context, String? name) async {
     await Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
 
@@ -1414,6 +1426,9 @@ class ProfileHome extends StatelessWidget {
                                             ? '--'
                                             : siblinggResponse![index]['id']
                                                 .toString();
+
+                                    // await Future.delayed(
+                                    //     const Duration(seconds: 3));
 
                                     await Provider.of<SibingsProvider>(context,
                                             listen: false)

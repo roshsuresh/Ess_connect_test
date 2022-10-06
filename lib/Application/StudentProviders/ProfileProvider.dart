@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,8 @@ class ProfileProvider with ChangeNotifier {
   // }
 
   Future profileData() async {
+    isLoading = true;
+    LoadingIcon();
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -121,6 +124,7 @@ class ProfileProvider with ChangeNotifier {
 
         // print(studName);
         // print("corect2..........");
+        isLoading = false;
         notifyListeners();
 
         // print(response.body);

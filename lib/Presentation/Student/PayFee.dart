@@ -180,7 +180,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         color: UIGuide.light_Purple),
                   ),
                   Consumer<FeesProvider>(builder: (context, snap, child) {
-                    child:
+                    //   child:
                     return Padding(
                       padding: const EdgeInsets.only(right: 20.0),
                       child: Checkbox(
@@ -190,6 +190,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                             value = snap.isselectAll;
                           });
                         },
+                        //       },
                       ),
                     );
                   }),
@@ -201,93 +202,95 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 8),
                 child: LimitedBox(
-                  maxHeight: 160,
-                  child: Consumer<FeesProvider>(
-                    builder: (context, value, child) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          controller: _controller,
-                          itemCount:
-                              feeResponse == null ? 0 : feeResponse!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CheckboxListTile(
-                              activeColor:
-                                  const Color.fromARGB(255, 238, 236, 236),
-                              checkColor: UIGuide.light_Purple,
-                              selectedTileColor: UIGuide.light_Purple,
-                              value: _selecteCategorys.contains(
-                                  feeResponse![index]['installmentName']),
-                              onChanged: (bool? selected) async {
-                                // selected == true;
+                    maxHeight: 160,
+                    child:
+                        //  Consumer<FeesProvider>(
+                        //   builder: (context, value, child) {
+                        //     return
+                        ListView.builder(
+                            shrinkWrap: true,
+                            controller: _controller,
+                            itemCount:
+                                feeResponse == null ? 0 : feeResponse!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CheckboxListTile(
+                                activeColor:
+                                    const Color.fromARGB(255, 238, 236, 236),
+                                checkColor: UIGuide.light_Purple,
+                                selectedTileColor: UIGuide.light_Purple,
+                                value: _selecteCategorys.contains(
+                                    feeResponse![index]['installmentName']),
+                                onChanged: (bool? selected) async {
+                                  // selected == true;
 
-                                // for (int i = 0; i <= feeResponse!.length; i++) {
-                                //   _onFeeSelected(
-                                //       selected!,
-                                //       feeResponse![index]['installmentName'],
-                                //       index,
-                                //       feeResponse![index]['installmentNetDue']);
-                                //   print(selected);
-                                // }
-                                //   if (index == 0) {
-                                //  enable = true;
-                                _onFeeSelected(
-                                    selected!,
-                                    feeResponse![index]['installmentName'],
-                                    index,
-                                    feeResponse![index]['installmentNetDue']);
-                                print(selected);
-                                // }
-                                // await index == 0 && selected == true;
-                                // else if (index == 1 && enable == false) {
-                                //   _onFeeSelected(
-                                //       selected!,
-                                //       feeResponse![index]['installmentName'],
-                                //       index,
-                                //       feeResponse![index]
-                                //           ['installmentNetDue']);
-                                //   print(selected);
-                                // }
-                              },
-                              title: Text(
-                                feeResponse![index]['installmentNetDue']
-                                    .toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                              secondary:
-                                  Text(feeResponse![index]['installmentName']),
-                            );
-                          });
+                                  // for (int i = 0; i <= feeResponse!.length; i++) {
+                                  //   _onFeeSelected(
+                                  //       selected!,
+                                  //       feeResponse![index]['installmentName'],
+                                  //       index,
+                                  //       feeResponse![index]['installmentNetDue']);
+                                  //   print(selected);
+                                  // }
+                                  //   if (index == 0) {
+                                  //  enable = true;
+                                  _onFeeSelected(
+                                      selected!,
+                                      feeResponse![index]['installmentName'],
+                                      index,
+                                      feeResponse![index]['installmentNetDue']);
+                                  print(selected);
+                                  // }
+                                  // await index == 0 && selected == true;
+                                  // else if (index == 1 && enable == false) {
+                                  //   _onFeeSelected(
+                                  //       selected!,
+                                  //       feeResponse![index]['installmentName'],
+                                  //       index,
+                                  //       feeResponse![index]
+                                  //           ['installmentNetDue']);
+                                  //   print(selected);
+                                  // }
+                                },
+                                title: Text(
+                                  feeResponse![index]['installmentNetDue']
+                                      .toString(),
+                                  textAlign: TextAlign.end,
+                                ),
+                                secondary: Text(
+                                    feeResponse![index]['installmentName']),
+                              );
+                            })
 
-                      // return ListView.builder(
-                      //   shrinkWrap: true,
-                      //   controller: _controller,
-                      //   itemCount: feeResponse == null
-                      //       ? 0
-                      //       : feeResponse!.length,
-                      //   itemBuilder: ((context, index) {
-                      //     return Table(
-                      //       //  border: TableBorder.all(),
-                      //       children: [
-                      //         TableRow(
-                      //             decoration: const BoxDecoration(
-                      //                 // color: Color.fromARGB(
-                      //                 //     255, 230, 227, 227),
-                      //                 ),
-                      //             children: [
-                      //               Text(
-                      //                   "\n${feeResponse![index]['installmentName']}"),
-                      //               Center(
-                      //                   child: Text(
-                      //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
-                      //               Center(child: CheckBoxButton()),
-                      //             ]),
-                      //       ],
-                      //     );
-                      //   }),
-                      // );
-                    },
-                  ),
-                ),
+                    // return ListView.builder(
+                    //   shrinkWrap: true,
+                    //   controller: _controller,
+                    //   itemCount: feeResponse == null
+                    //       ? 0
+                    //       : feeResponse!.length,
+                    //   itemBuilder: ((context, index) {
+                    //     return Table(
+                    //       //  border: TableBorder.all(),
+                    //       children: [
+                    //         TableRow(
+                    //             decoration: const BoxDecoration(
+                    //                 // color: Color.fromARGB(
+                    //                 //     255, 230, 227, 227),
+                    //                 ),
+                    //             children: [
+                    //               Text(
+                    //                   "\n${feeResponse![index]['installmentName']}"),
+                    //               Center(
+                    //                   child: Text(
+                    //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
+                    //               Center(child: CheckBoxButton()),
+                    //             ]),
+                    //       ],
+                    //     );
+                    //   }),
+                    // );
+                    //   },
+                    // ),
+                    ),
               ),
               thumbVisibility: true,
               thickness: 6,
@@ -315,9 +318,11 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                 padding: const EdgeInsets.only(left: 20, right: 8),
                 child: LimitedBox(
                     maxHeight: 280,
-                    child: Consumer<FeesProvider>(
-                      builder: (context, value, child) {
-                        return ListView.builder(
+                    child:
+                        // Consumer<FeesProvider>(
+                        //   builder: (context, value, child) {
+                        //     return
+                        ListView.builder(
                             shrinkWrap: true,
                             controller: _controller2,
                             itemCount: busfeeResponse == null
@@ -351,31 +356,32 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                 secondary: Text(
                                     busfeeResponse![index]['installmentName']),
                               );
-                            });
-                        // return ListView.builder(
-                        //     shrinkWrap: true,
-                        //     controller: _controller2,
-                        //     itemCount: busfeeResponse == null
-                        //         ? 0
-                        //         : busfeeResponse!.length,
-                        //     itemBuilder: ((context, index) {
-                        //       return Table(
-                        //         //  border: TableBorder.all(),
-                        //         children: [
-                        //           TableRow(children: [
-                        //             Text(
-                        //                 '\n${busfeeResponse![index]['installmentName']}'),
-                        //             Center(
-                        //                 child: Text(
-                        //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
-                        //             const Center(
-                        //                 child: CheckBoxButton()),
-                        //           ]),
-                        //         ],
-                        //       );
-                        //     }));
-                      },
-                    )),
+                            })
+                    // return ListView.builder(
+                    //     shrinkWrap: true,
+                    //     controller: _controller2,
+                    //     itemCount: busfeeResponse == null
+                    //         ? 0
+                    //         : busfeeResponse!.length,
+                    //     itemBuilder: ((context, index) {
+                    //       return Table(
+                    //         //  border: TableBorder.all(),
+                    //         children: [
+                    //           TableRow(children: [
+                    //             Text(
+                    //                 '\n${busfeeResponse![index]['installmentName']}'),
+                    //             Center(
+                    //                 child: Text(
+                    //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+                    //             const Center(
+                    //                 child: CheckBoxButton()),
+                    //           ]),
+                    //         ],
+                    //       );
+                    //     }));
+                    //   },
+                    // )
+                    ),
               ),
               thumbVisibility: true,
               thickness: 6,
