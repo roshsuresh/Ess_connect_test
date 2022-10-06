@@ -20,6 +20,7 @@ import '../Student/TimeTable.dart';
 import 'FeeReport.dart';
 import 'StaffInfo.dart';
 import 'StaffReport.dart';
+import 'StudReport.dart';
 import 'StudentFeeDetails.dart';
 import 'StudentReport.dart';
 import 'ToGuardian.dart';
@@ -764,27 +765,35 @@ class AdminHomeContent extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Stud1Report()),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/Profile.png',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'Flash News',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
+                          kheight10,
+                          const Text(
+                            'Flash News',
+                            style: TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Padding(

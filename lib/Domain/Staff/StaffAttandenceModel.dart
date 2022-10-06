@@ -85,7 +85,55 @@ class AttendenceDivisions {
     data['order'] = this.order;
     return data;
   }
+
 }
+  class AttendanceView {
+    AttendanceView({
+  this.studAttId,
+  this.divisionId,
+  this.id,
+  this.forenoon,
+  this.afternoon,
+  this.admNo,
+  this.rollNo,
+  this.name,
+  });
+
+  dynamic studAttId;
+  String? divisionId;
+  String? id;
+  String? forenoon;
+  String? afternoon;
+  String? admNo;
+  int? rollNo;
+  String? name;
+
+  factory AttendanceView.fromJson(Map<String, dynamic> json) => AttendanceView(
+  studAttId: json["studAttId"],
+  divisionId: json["divisionId"],
+  id: json["id"],
+  forenoon: json["forenoon"],
+  afternoon: json["afternoon"],
+  admNo: json["admNo"],
+  rollNo: json["rollNo"],
+  name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+  "studAttId": studAttId,
+  "divisionId": divisionId,
+  "id": id,
+  "forenoon": forenoon,
+  "afternoon": afternoon,
+  "admNo": admNo,
+  "rollNo": rollNo,
+  "name": name,
+  };
+  }
+
+
+
+
 
 //view
 

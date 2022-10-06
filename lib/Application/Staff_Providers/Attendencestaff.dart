@@ -176,6 +176,42 @@ class AttendenceStaffProvider with ChangeNotifier {
     return true;
   }
 
+
+  Future<bool> getAttendanceView(String id,String date) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request('GET',
+        Uri.parse('${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
+
+    request.body = json.encode({
+      "SchoolId": _pref.getString('schoolId')
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+      jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<AttendenceDivisions> templist = List<AttendenceDivisions>.from(
+          data["divisions"].map((x) => AttendenceDivisions.fromJson(x)));
+      attendenceDivisionList.addAll(templist);
+      print('correct');
+      notifyListeners();
+    } else {
+      print('Error in AttendenceDivisionList stf');
+    }
+    return true;
+  }
+
   //view Attendence
 
   List<StudentsAttendenceView_stf> studentsAttendenceView = [];
