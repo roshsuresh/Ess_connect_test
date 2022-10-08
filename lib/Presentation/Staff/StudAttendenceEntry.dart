@@ -1,11 +1,7 @@
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
@@ -40,7 +36,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
       // p.getstudentsAttendenceView(
       //     "2022-09-23", 'da8f4f98-f340-4975-8e53-8939b09f52c6');
 
-      // p.getMarkEntryPartValues(courseId, divisionId);
+      // p.getMarkEnrtyPartValues(courseId, divisionId);
     });
   }
 
@@ -367,6 +363,14 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                   listen: false)
                               .timeNew ??
                           date.toString();
+                      if (dateFinal.isEmpty) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Text(
+                          "Select Date..!",
+                          textAlign: TextAlign.center,
+                        )));
+                      }
 
                       setState(() {
                         dateFinal = Provider.of<AttendenceStaffProvider>(
@@ -397,7 +401,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
               child: Table(
                 columnWidths: const {
                   0: FlexColumnWidth(1),
-                  1: FlexColumnWidth(4),
+                  1: FlexColumnWidth(4.2),
                   2: FlexColumnWidth(1.5),
                   3: FlexColumnWidth(1.5),
                 },
