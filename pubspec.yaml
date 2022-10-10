@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   avatar_glow: ^2.0.2
+  awesome_dialog: ^3.0.2
   awesome_notifications: any
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
@@ -45,7 +46,7 @@ dependencies:
   flutter_downloader: any
   flutter_local_notifications: ^9.9.0
   flutter_spinkit: ^5.1.0
-  flutter_svg: ^1.0.3
+  flutter_svg: ^1.1.5
   http: ^0.13.4
   intl: ^0.17.0
   jwt_decoder: ^2.0.1

@@ -1,4 +1,5 @@
 import 'package:Ess_test/Presentation/Staff/Searchstudent.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,7 +52,7 @@ class StudReport extends StatelessWidget {
                     icon: Icon(Icons.search))
               ],
             ),
-            body: TabBarView(children: [
+            body: const TabBarView(children: [
               StudCurrentStudying(),
               StudRelievedStaff(),
               StudentReportBoth_Staff(),
@@ -82,7 +83,6 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
       p.removeDivisionAll();
       p.removeCourseAll();
       p.clearViewList();
-      //  p.viewStudentReportList();
     });
   }
 
@@ -179,7 +179,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
@@ -194,7 +194,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
@@ -287,7 +287,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportcourseController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
@@ -301,7 +301,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             height: 0,
                             child: TextField(
                               controller: StudReportcourseController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
@@ -398,7 +398,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportDivisionController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
@@ -428,11 +428,28 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                   );
                 }),
               ),
-              Spacer(),
+              const Spacer(),
               MaterialButton(
                 child: const Text('View'),
                 color: UIGuide.THEME_LIGHT,
                 onPressed: (() async {
+                  if (StudReportDivisionController.text.isEmpty &&
+                      studReportInitialValuesController.text.isEmpty &&
+                      StudReportDivisionController.text.isEmpty) {
+                    return AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.rightSlide,
+                            headerAnimationLoop: false,
+                            title: 'Warning',
+                            desc: 'Select mandatory fields',
+                            btnOkOnPress: () {
+                              return;
+                            },
+                            btnOkIcon: Icons.cancel,
+                            btnOkColor: Colors.red)
+                        .show();
+                  }
                   courseId = StudReportcourseController.text.toString();
                   print(courseId);
                   divisionId = StudReportDivisionController.text.toString();
@@ -470,7 +487,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
               kWidth,
               kWidth,
               kWidth,
-              kWidth,
+              // kWidth,
             ],
           ),
           ViewStaffReport(size: size),
@@ -525,7 +542,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                     .viewStudReportListt[index]
                                                     .studentPhoto ??
                                                 'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(10))),
                                   ),
                                 ),
@@ -1434,8 +1451,25 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
               Spacer(),
               MaterialButton(
                 child: const Text('View'),
-                color: Colors.grey,
+                color: UIGuide.THEME_LIGHT,
                 onPressed: (() async {
+                  if (StudReportDivisionController.text.isEmpty &&
+                      studReportInitialValuesController.text.isEmpty &&
+                      StudReportDivisionController.text.isEmpty) {
+                    return AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.rightSlide,
+                            headerAnimationLoop: false,
+                            title: 'Warning',
+                            desc: 'Select mandatory fields',
+                            btnOkOnPress: () {
+                              return;
+                            },
+                            btnOkIcon: Icons.cancel,
+                            btnOkColor: Colors.red)
+                        .show();
+                  }
                   sectionId = studReportInitialValuesController.text.toString();
                   courseId = StudReportcourseController.text.toString();
                   divisionId = StudReportDivisionController.text.toString();
@@ -2136,8 +2170,25 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
               Spacer(),
               MaterialButton(
                 child: const Text('View'),
-                color: Colors.grey,
+                color: UIGuide.THEME_LIGHT,
                 onPressed: (() async {
+                  if (StudReportDivisionController.text.isEmpty &&
+                      studReportInitialValuesController.text.isEmpty &&
+                      StudReportDivisionController.text.isEmpty) {
+                    return AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.rightSlide,
+                            headerAnimationLoop: false,
+                            title: 'Warning',
+                            desc: 'Select mandatory fields',
+                            btnOkOnPress: () {
+                              return;
+                            },
+                            btnOkIcon: Icons.cancel,
+                            btnOkColor: Colors.red)
+                        .show();
+                  }
                   sectionId = studReportInitialValuesController.text.toString();
                   courseId = StudReportcourseController.text.toString();
                   divisionId = StudReportDivisionController.text.toString();

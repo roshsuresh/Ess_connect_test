@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -50,7 +49,8 @@ class _MarkEntryState extends State<MarkEntry> {
   final markEntrySubjectListController = TextEditingController();
   final markEntrySubjectListController1 = TextEditingController();
   final markEntryExamListController = TextEditingController();
-
+  final markfieldController = TextEditingController();
+  final markfieldController1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -781,6 +781,8 @@ class _MarkEntryState extends State<MarkEntry> {
                       shrinkWrap: true,
                       itemCount: 30,
                       itemBuilder: ((context, index) {
+                        String pre = 'P';
+                        markfieldController.text = pre;
                         return Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Column(
@@ -814,16 +816,25 @@ class _MarkEntryState extends State<MarkEntry> {
                                           height: 22,
                                           width: 10,
                                           child: TextField(
-                                            //keyboardType: TextInputType.number,
-                                            // maxLines: 1,
-                                            // maxLength: 4,
+                                            onTap: () {
+                                              String abs = "A";
+
+                                              // setState(() {
+                                              //   markfieldController.text = pre;
+                                              //   print(markfieldController.text
+                                              //       .toString());
+                                              // });
+                                              //  markfieldController.text = abs;
+                                            },
+                                            // controller: markfieldController,
+                                            keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 errorStyle: TextStyle(
                                                     color: Colors.red,
                                                     fontWeight:
                                                         FontWeight.bold)),
-                                            //style: TextStyle(height: 0),
+                                            //  style: TextStyle(height: 0),
                                           ),
                                         )
                                       ]),

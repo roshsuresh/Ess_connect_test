@@ -1,5 +1,6 @@
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Presentation/Staff/ReceivedNoticeBoard.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +52,7 @@ class StaffNoticeBoard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.sentiment_dissatisfied_outlined,
                               size: 60,
@@ -577,28 +578,71 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
               ),
               color: Color.fromARGB(179, 145, 143, 143),
               onPressed: (() async {
-                await Provider.of<StaffNoticeboardSendProviders>(context,
-                        listen: false)
-                    .noticeBoardSave(
-                        datee.toString(),
-                        time,
-                        timeNow,
-                        titleController.text,
-                        mattercontroller.text,
-                        coursevalueController.text,
-                        divisionvalueController.text,
-                        categoryvalueController.text,
-                        attachmentid!);
+                if (titleController.text.isEmpty &&
+                    mattercontroller.text.isEmpty &&
+                    coursevalueController.text.isEmpty &&
+                    divisionvalueController.text.isEmpty &&
+                    categoryvalueController.text.isEmpty) {
+                  return await AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          headerAnimationLoop: false,
+                          title: 'Error',
+                          desc: 'Select mandatory fields',
+                          btnOkOnPress: () {
+                            return;
+                          },
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.red)
+                      .show();
+                } else {
+                  await Provider.of<StaffNoticeboardSendProviders>(context,
+                          listen: false)
+                      .noticeBoardSave(
+                          datee.toString(),
+                          time,
+                          timeNow,
+                          titleController.text,
+                          mattercontroller.text,
+                          coursevalueController.text,
+                          divisionvalueController.text,
+                          categoryvalueController.text,
+                          attachmentid!);
 
-                print(datee);
-                print(time);
-                print(timeNow);
-                print(titleController);
-                print(mattercontroller);
-                print(coursevalueController);
-                print(divisionvalueController);
-                print(categoryvalueController);
-                print(attachmentid);
+                  print(datee);
+                  print(time);
+                  print(timeNow);
+                  print(titleController);
+                  print(mattercontroller);
+                  print(coursevalueController);
+                  print(divisionvalueController);
+                  print(categoryvalueController);
+                  print(attachmentid);
+
+                  await AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          headerAnimationLoop: false,
+                          title: 'Success',
+                          desc: 'Successfully send',
+                          btnOkOnPress: () {
+                            return;
+                          },
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.green)
+                      .show();
+
+                  titleController.clear();
+                  mattercontroller.clear();
+                  coursevalueController.clear();
+                  divisionvalueController.clear();
+                  categoryvalueController.clear();
+                  coursevalueController1.clear();
+                  divisionvalueController1.clear();
+                  categoryvalueController1.clear();
+                }
               }),
             ),
           ),

@@ -15,9 +15,10 @@ class UIGuide {
   static const String board = "assets/blackboard.png";
   static const String school = "assets/school1.png";
   static const String homeback = "assets/activation_page.png";
-  static const String logout = "assets/logout.png";
+  static const String notcheckk = "assets/success-green-check-mark-icon.svg";
   static const String notcheck = "assets/square.svg";
   static const String check = "assets/check-square.svg";
+  static const String checkk = "assets/red-x-line-icon.svg";
   static const String profile = "assets/Profile.png";
   static const String reportcard = "assets/Reportcard.png";
   static const String baseURL = "https://api.esstestonline.in";

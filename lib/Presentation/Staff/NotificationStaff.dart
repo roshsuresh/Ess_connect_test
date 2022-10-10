@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_selector/flutter_custom_selector.dart';
 
@@ -35,6 +36,23 @@ class _StaffNotificationState extends State<StaffNotification> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            AnimatedButton(
+              text: 'Error Dialog',
+              color: Colors.red,
+              pressEvent: () {
+                AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.error,
+                        animType: AnimType.rightSlide,
+                        headerAnimationLoop: false,
+                        title: 'Error',
+                        desc: 'Select course & Division',
+                        // btnOkOnPress: () {},
+                        btnOkIcon: Icons.cancel,
+                        btnOkColor: Colors.red)
+                    .show();
+              },
+            ),
             CustomSingleSelectField<String>(
               items: dataString,
               title: "Country",

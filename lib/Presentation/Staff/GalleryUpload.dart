@@ -1,3 +1,5 @@
+import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
+import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
+import 'package:provider/provider.dart';
 
 import '../../Constants.dart';
 import '../../utils/constants.dart';
@@ -58,7 +61,7 @@ class StaffGalleryUPload extends StatefulWidget {
 class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
   DateTime? _mydatetime;
 
-  String? date;
+  String? datee;
 
   DateTime? _mydatetimeFrom;
 
@@ -70,64 +73,62 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
 
   String? checkname;
 
+  final coursevalueController = TextEditingController();
+  final coursevalueController1 = TextEditingController();
+
+  final divisionvalueController = TextEditingController();
+  final divisionvalueController1 = TextEditingController();
+
+  final titleController = TextEditingController();
+
+  String? attachmentid;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<GallerySendProvider_Stf>(context, listen: false);
+
+      p.clearAllFilters();
+      p.galleryCourse.clear();
+      p.courseClear();
+      p.divisionClear();
+      p.removeCourseAll();
+      p.removeDivisionAll();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<GallerySendProvider_Stf>(context, listen: false).sendGallery();
     var size = MediaQuery.of(context).size;
-    date = DateFormat('dd-MM-yyyy').format(DateTime.now());
+    datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
+
     return ListView(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-                minWidth: size.width - 200,
+                minWidth: size.width - 250,
                 color: Colors.white70,
-                child: Text('Date: ${date.toString()}'),
+                child: Text('Date: ${datee.toString()}'),
                 onPressed: () async {
-                  _mydatetime = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetime ?? DateTime.now(),
-                      firstDate: DateTime.now().subtract(Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                  return;
                 }),
-            Spacer(),
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: [
-                  const Text('Select Category'),
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
-            ),
+            // Spacer(),
           ],
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            controller: titleController,
             minLines: 1,
-            maxLines: 3,
+            maxLines: 1,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
               hintText: 'Enter Title',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            minLines: 1,
-            maxLines: 5,
-            keyboardType: TextInputType.multiline,
-            decoration: InputDecoration(
-              labelText: 'Matter*',
-              hintText: 'Enter Matter',
               hintStyle: TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -147,6 +148,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               onPressed: (() async {
                 final result = await FilePicker.platform.pickFiles(
                     type: FileType.custom,
+                    allowMultiple: true,
                     allowedExtensions: ['png', 'jpeg', 'jpg']);
                 if (result == null) {
                   return;
@@ -155,6 +157,9 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
+                await Provider.of<StaffNoticeboardSendProviders>(context,
+                        listen: false)
+                    .noticeImageSave(file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -171,17 +176,17 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
           children: [
             MaterialButton(
               minWidth: size.width - 200,
-              child: Center(child: Text('From  ${time}')),
+              child: Center(child: Text('From  $time')),
               color: Colors.white,
               onPressed: (() async {
                 _mydatetimeFrom = await showDatePicker(
                     context: context,
                     initialDate: _mydatetimeFrom ?? DateTime.now(),
-                    firstDate: DateTime.now().subtract(Duration(days: 0)),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2030));
                 setState(() {
-                  time = DateFormat('dd-MM-yy').format(_mydatetimeFrom!);
-                  print(_mydatetimeFrom);
+                  time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
+                  print(time);
                 });
               }),
             ),
@@ -192,13 +197,19 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               color: Colors.white,
               onPressed: (() async {
                 _mydatetimeTo = await showDatePicker(
-                    context: context,
-                    initialDate: _mydatetimeTo ?? DateTime.now(),
-                    firstDate: DateTime.now().subtract(Duration(days: 0)),
-                    lastDate: DateTime(2030));
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                  lastDate: DateTime(2100),
+                );
+                // _mydatetimeTo = await showDatePicker(
+                //     context: context,
+                //     initialDate: _mydatetimeTo ?? DateTime.now(),
+                //     firstDate: DateTime(2022),
+                //     lastDate: DateTime(2030));
                 setState(() {
-                  timeNow = DateFormat('dd-MM-yy').format(_mydatetimeTo!);
-                  print(_mydatetimeTo);
+                  timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
+                  print(timeNow);
                 });
               }),
             ),
@@ -206,26 +217,209 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
         ),
         Row(
           children: [
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: [
-                  Text('Select Course'),
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.49,
+              child: Consumer<GallerySendProvider_Stf>(
+                  builder: (context, snapshot, child) {
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.courselistt.length,
+                                    itemBuilder: (context, index) {
+                                      print('hii');
+                                      print(snapshot.courselistt[index].value);
+                                      print('hii');
+                                      // value.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+
+                                        // selected: snapshot.isCourseSelected(
+                                        //     attendecourse![index]),
+
+                                        onTap: () async {
+                                          coursevalueController.text = snapshot
+                                                  .courselistt[index].value ??
+                                              '--';
+                                          coursevalueController1.text = snapshot
+                                                  .courselistt[index].text ??
+                                              '--';
+                                          String courseId =
+                                              coursevalueController.text
+                                                  .toString();
+                                          await snapshot.addSelectedCourse(
+                                              snapshot.courselistt[index]);
+                                          print(courseId);
+                                          await Provider.of<
+                                                      GallerySendProvider_Stf>(
+                                                  context,
+                                                  listen: false)
+                                              .getDivisionList(courseId);
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          snapshot.courselistt[index].text ??
+                                              '--',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: coursevalueController1,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "Select Course",
+                              hintText: "Course",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: coursevalueController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "",
+                              hintText: "",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
             Spacer(),
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Row(
-                children: [
-                  const Text('Select Division'),
-                ],
-              ),
-              color: Colors.white70,
-              onPressed: (() {}),
+            SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.49,
+              child: Consumer<GallerySendProvider_Stf>(
+                  builder: (context, snapshot, child) {
+                //   attachmentid = snapshot.id ?? '';
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                              child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.divisionlistt.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
+
+                                      //     .attendenceInitialValues.length);
+
+                                      // value.removeCourseAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selected: snapshot.isDivisionSelected(
+                                        //     snapshot.noticeDivision[index]),
+                                        onTap: () async {
+                                          divisionvalueController.text =
+                                              snapshot.divisionlistt[index]
+                                                      .value ??
+                                                  '--';
+
+                                          print(divisionvalueController.text);
+                                          divisionvalueController1.text =
+                                              snapshot.divisionlistt[index]
+                                                      .text ??
+                                                  '--';
+                                          String divisionId =
+                                              divisionvalueController.text
+                                                  .toString();
+                                          snapshot.addSelectedDivision(
+                                              snapshot.divisionlistt[index]);
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          snapshot.divisionlistt[index].text ??
+                                              '--',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ));
+                        });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: divisionvalueController1,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "Select Division",
+                              hintText: "Division",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: divisionvalueController,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color.fromARGB(255, 238, 237, 237),
+                              border: OutlineInputBorder(),
+                              labelText: "",
+                              hintText: "",
+                            ),
+                            enabled: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
           ],
         ),
@@ -241,7 +435,30 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 textAlign: TextAlign.center,
               ),
               color: Color.fromARGB(179, 145, 143, 143),
-              onPressed: (() {}),
+              onPressed: (() async {
+                // await Provider.of<GallerySendProvider_Stf>(context,
+                //         listen: false)
+                //     .noticeBoardSave(
+                //         datee.toString(),
+                //         time,
+                //         timeNow,
+                //         titleController.text,
+                //         mattercontroller.text,
+                //         coursevalueController.text,
+                //         divisionvalueController.text,
+                //         categoryvalueController.text,
+                //         attachmentid!);
+
+                // print(datee);
+                // print(time);
+                // print(timeNow);
+                // print(titleController);
+                // print(mattercontroller);
+                // print(coursevalueController);
+                // print(divisionvalueController);
+                // print(categoryvalueController);
+                // print(attachmentid);
+              }),
             ),
           ),
         ),

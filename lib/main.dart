@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
+import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
+import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
 
 import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
+import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -114,6 +117,11 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(
             create: (context) => StaffNoticeboardSendProviders()),
         ChangeNotifierProvider(create: (context) => Screen_Search_Providers()),
+        ChangeNotifierProvider(
+            create: (context) => NotificationToGuardian_Providers()),
+        ChangeNotifierProvider(
+            create: (context) => TextSMS_ToGuardian_Providers()),
+        ChangeNotifierProvider(create: (context) => GallerySendProvider_Stf()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

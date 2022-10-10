@@ -1,141 +1,20 @@
-import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
-import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
-import 'package:Ess_test/Presentation/Staff/ToGuard_textSMS.dart';
+import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
+import 'package:Ess_test/Constants.dart';
+import 'package:Ess_test/Domain/Staff/ToGuardian_TextSMS.dart';
+import 'package:Ess_test/utils/constants.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../Constants.dart';
-import '../../utils/constants.dart';
-
-class Staff_ToGuardian extends StatelessWidget {
-  Staff_ToGuardian({Key? key}) : super(key: key);
-  String? valuee;
-  bool checked = true;
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Communication to Guardian',
-          ),
-          titleSpacing: 00.0,
-          centerTitle: true,
-          toolbarHeight: 45.2,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25)),
-          ),
-          bottom: const TabBar(
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorColor: Colors.white,
-            indicatorWeight: 5,
-            tabs: [
-              Tab(
-                text: "Notification",
-              ),
-              Tab(text: "Text SMS"),
-            ],
-          ),
-          backgroundColor: UIGuide.light_Purple,
-        ),
-        body: TabBarView(
-          children: [
-            Consumer<NotificationToGuardian_Providers>(
-              builder: (context, value, child) {
-                if (value.isClassTeacher != false) {
-                  return Notification_StaffToGuardain(
-                      size: size, valuee: valuee, checked: checked);
-                } else {
-                  return Container(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.sentiment_dissatisfied_outlined,
-                            size: 60,
-                            color: Colors.grey,
-                          ),
-                          kheight10,
-                          Text(
-                            "Sorry you don't have access",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-            Consumer<NotificationToGuardian_Providers>(
-              builder: (context, value, child) {
-                if (value.isClassTeacher != false) {
-                  return TextSMS_staff();
-                } else {
-                  return Container(
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.sentiment_dissatisfied_outlined,
-                            size: 60,
-                            color: Colors.grey,
-                          ),
-                          kheight10,
-                          Text(
-                            "Sorry you don't have access",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Notification_StaffToGuardain extends StatefulWidget {
-  Notification_StaffToGuardain({
-    Key? key,
-    required this.size,
-    required this.valuee,
-    required this.checked,
-  }) : super(key: key);
-
-  final Size size;
-  final String? valuee;
-  final bool checked;
+class TextSMS_staff extends StatefulWidget {
+  const TextSMS_staff({Key? key}) : super(key: key);
 
   @override
-  State<Notification_StaffToGuardain> createState() =>
-      _Notification_StaffToGuardainState();
+  State<TextSMS_staff> createState() => _TextSMS_staffState();
 }
 
-class _Notification_StaffToGuardainState
-    extends State<Notification_StaffToGuardain> {
+class _TextSMS_staffState extends State<TextSMS_staff> {
   String courseId = '';
 
   String divisionId = '';
@@ -152,8 +31,7 @@ class _Notification_StaffToGuardainState
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var p =
-          Provider.of<NotificationToGuardian_Providers>(context, listen: false);
+      var p = Provider.of<TextSMS_ToGuardian_Providers>(context, listen: false);
       p.communicationToGuardianCourseStaff();
       p.clearAllFilters();
       p.selectedCourse.clear();
@@ -162,11 +40,13 @@ class _Notification_StaffToGuardainState
       p.removeDivisionAll();
       p.clearStudentList();
       p.selectedList.clear();
+      // p.selectAll();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
           children: [
@@ -178,7 +58,7 @@ class _Notification_StaffToGuardainState
                 SizedBox(
                   height: 50,
                   width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<NotificationToGuardian_Providers>(
+                  child: Consumer<TextSMS_ToGuardian_Providers>(
                       builder: (context, snapshot, child) {
                     return InkWell(
                       onTap: () {
@@ -192,7 +72,8 @@ class _Notification_StaffToGuardainState
                                   children: [
                                     ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: staffToGuardianRespo!.length,
+                                        itemCount:
+                                            staffTextSMSToGuardRespo!.length,
                                         itemBuilder: (context, index) {
                                           // print(snapshot
 
@@ -212,15 +93,15 @@ class _Notification_StaffToGuardainState
 
                                                 onTap: () async {
                                                   print(
-                                                      'guh.....${staffToGuardianRespo![index]}');
+                                                      'guh.....${staffTextSMSToGuardRespo![index]}');
                                                   notificationCourseController
                                                           .text =
-                                                      await staffToGuardianRespo![
+                                                      await staffTextSMSToGuardRespo![
                                                               index]['value'] ??
                                                           '--';
                                                   notificationCourseController1
                                                           .text =
-                                                      await staffToGuardianRespo![
+                                                      await staffTextSMSToGuardRespo![
                                                               index]['text'] ??
                                                           '--';
                                                   courseId =
@@ -232,7 +113,7 @@ class _Notification_StaffToGuardainState
                                                   //     attendecourse![index]);
                                                   print(courseId);
                                                   await Provider.of<
-                                                              NotificationToGuardian_Providers>(
+                                                              TextSMS_ToGuardian_Providers>(
                                                           context,
                                                           listen: false)
                                                       .communicationToGuardianDivisionStaff(
@@ -240,8 +121,8 @@ class _Notification_StaffToGuardainState
                                                   Navigator.of(context).pop();
                                                 },
                                                 title: Text(
-                                                  staffToGuardianRespo![index]
-                                                          ['text'] ??
+                                                  staffTextSMSToGuardRespo![
+                                                          index]['text'] ??
                                                       '--',
                                                   textAlign: TextAlign.center,
                                                 ),
@@ -302,7 +183,7 @@ class _Notification_StaffToGuardainState
                 SizedBox(
                   height: 50,
                   width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<NotificationToGuardian_Providers>(
+                  child: Consumer<TextSMS_ToGuardian_Providers>(
                       builder: (context, snapshot, child) {
                     return InkWell(
                       onTap: () async {
@@ -444,24 +325,20 @@ class _Notification_StaffToGuardainState
                                 btnOkColor: Colors.red)
                             .show();
                       } else {
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
                             .clearStudentList();
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
                             .divisionClear();
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
                             .removeDivisionAll();
                         divisionId =
                             notificationDivisionListController.text.toString();
                         courseId = notificationCourseController.text.toString();
 
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
                             .getNotificationView(courseId, divisionId);
                       }
@@ -486,7 +363,7 @@ class _Notification_StaffToGuardainState
                     'Name',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Consumer<NotificationToGuardian_Providers>(
+                  Consumer<TextSMS_ToGuardian_Providers>(
                     builder: (context, value, child) => GestureDetector(
                         onTap: () {
                           value.selectAll();
@@ -509,17 +386,17 @@ class _Notification_StaffToGuardainState
                 ])
               ],
             ),
-            Consumer<NotificationToGuardian_Providers>(
+            Consumer<TextSMS_ToGuardian_Providers>(
               builder: (context, value, child) {
                 return LimitedBox(
-                  maxHeight: widget.size.height - 360,
+                  maxHeight: size.height - 360,
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: value.notificationView.isEmpty
                         ? 0
                         : value.notificationView.length,
                     itemBuilder: ((context, index) {
-                      return Notification_StudList(
+                      return TextSMS_studListView(
                         viewStud: value.notificationView[index],
                         indexx: index,
                       );
@@ -554,16 +431,16 @@ class _Notification_StaffToGuardainState
   }
 }
 
-class Notification_StudList extends StatelessWidget {
-  final StudentViewbyCourseDivision_notification_Stf viewStud;
-  const Notification_StudList(
+class TextSMS_studListView extends StatelessWidget {
+  final TExtSMS_VIEW_byStaff viewStud;
+  const TextSMS_studListView(
       {Key? key, required this.viewStud, required this.indexx})
       : super(key: key);
   final int indexx;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NotificationToGuardian_Providers>(
+    return Consumer<TextSMS_ToGuardian_Providers>(
       builder: (context, value, child) => SizedBox(
         height: 50,
         child: ListTile(

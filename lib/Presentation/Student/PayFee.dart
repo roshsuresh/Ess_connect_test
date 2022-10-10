@@ -77,91 +77,105 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
 
   final ScrollController _controller2 = ScrollController();
 
-  final List _selecteCategorys = [];
+  // final List _selecteCategorys = [];
 
-  double totalFees = 0;
-
-  void _selectAll(int index) {
-    _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
-  }
-
-  void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
-    if (selected == true) {
-      setState(() {
-        _selecteCategorys.add(feeName);
-        print(index);
-        final double tot = feeResponse![index]['installmentNetDue'];
-        print(feeName);
-        print(tot);
-        totalFees = tot + totalFees;
-        print(totalFees);
-        total = totalFees + totalBusFee;
-        print(total);
-      });
-    } else {
-      setState(() {
-        // _selecteCategorys.remove(fee_Name);
-        // print('removed  $fee_Name');
-        // final double tot = feeResponse![index]['installmentNetDue'];
-        // print(fee_Name);
-        // print(tot);
-        // totalFees = tot - totalFees;
-        // print('totalFees: $totalFees');
-        if (_selecteCategorys.remove(feeName)) {
-          final double tot = feeResponse![index]['installmentNetDue'];
-          totalFees = totalFees - tot;
-          total = totalFees + totalBusFee;
-          print(total);
-        }
-      });
-    }
-  }
-
-  //bus fee
-  final List _selectedBusFee = [];
-
-  double totalBusFee = 0;
-
-  void _onBusSelected(bool selected, busfeeName, int index, feeNetDue) {
-    if (selected == true) {
-      setState(() {
-        _selectedBusFee.add(busfeeName);
-        print(index);
-        final double tot = busfeeResponse![index]['installmentNetDue'];
-        print(busfeeName);
-        print(tot);
-        totalBusFee = tot + totalBusFee;
-        print(totalBusFee);
-        total = totalFees + totalBusFee;
-        print(total);
-      });
-    } else {
-      setState(() {
-        if (_selectedBusFee.remove(busfeeName)) {
-          final double tot = busfeeResponse![index]['installmentNetDue'];
-          totalBusFee = totalBusFee - tot;
-          total = totalFees + totalBusFee;
-          print(total);
-        }
-      });
-    }
-  }
-
-  double? total = 0;
-
-  void totalFee() async {
-    setState(() {
-      total = totalFees + totalBusFee;
-      print(total);
+  // double totalFees = 0;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<FeesProvider>(context, listen: false);
+      // _selecteCategorys.clear();
+      // _selectedBusFee.clear();
+      p.selecteCategorys.clear();
+      p.selectedBusFee.clear();
+      p.feesData();
+      p.busFeeList.clear();
+      p.feeList.clear();
     });
   }
+
+  // void _selectAll(int index) {
+  //   _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
+  // }
+
+  // void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
+  //   if (selected == true) {
+  //     //  setState(() {
+  //     _selecteCategorys.add(feeName);
+  //     print(index);
+  //     final double tot = feeNetDue;
+  //     print(feeName);
+  //     print(tot);
+  //     totalFees = tot + totalFees;
+  //     print(totalFees);
+  //     total = totalFees + totalBusFee;
+  //     print(total);
+  //     //  });
+  //   } else {
+  //     //  setState(() {
+  //     // _selecteCategorys.remove(fee_Name);
+  //     // print('removed  $fee_Name');
+  //     // final double tot = feeResponse![index]['installmentNetDue'];
+  //     // print(fee_Name);
+  //     // print(tot);
+  //     // totalFees = tot - totalFees;
+  //     // print('totalFees: $totalFees');
+  //     if (_selecteCategorys.remove(feeName)) {
+  //       final double tot = feeNetDue;
+  //       totalFees = totalFees - tot;
+  //       total = totalFees + totalBusFee;
+  //       print(total);
+  //     }
+  //     //   });
+  //   }
+  // }
+
+  //bus fee
+  // final List _selectedBusFee = [];
+
+  // double totalBusFee = 0;
+
+  // void _onBusSelected(bool selected, busfeeName, int index, feeNetDue) {
+  //   if (selected == true) {
+  //     //   setState(() {
+  //     _selectedBusFee.add(busfeeName);
+  //     print(index);
+  //     final double tot = feeNetDue;
+  //     print(busfeeName);
+  //     print(tot);
+  //     totalBusFee = tot + totalBusFee;
+  //     print(totalBusFee);
+  //     //  total = totalFees + totalBusFee;
+  //     print(total);
+  //     //  });
+  //   } else {
+  //     //   setState(() {
+  //     if (_selectedBusFee.remove(busfeeName)) {
+  //       final double tot = feeNetDue;
+  //       totalBusFee = totalBusFee - tot;
+  //       // total = totalFees + totalBusFee;
+  //       print(total);
+  //     }
+  //     //   });
+  //   }
+  // }
+
+  // double? total = 0;
+
+  // void totalFee() async {
+  //   //  setState(() {
+  //   // total = totalFees + totalBusFee;
+  //   print(total);
+  //   //  });
+  // }
 
   bool enable = true;
   @override
   Widget build(BuildContext context) {
     // final _provider = Provider.of<FeesProvider>(context, listen: false);
     // _provider.feesData();
-    Provider.of<FeesProvider>(context).feesData();
+    //Provider.of<FeesProvider>(context, listen: false).feesData();
     return Stack(
       children: [
         ListView(
@@ -207,59 +221,66 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         //  Consumer<FeesProvider>(
                         //   builder: (context, value, child) {
                         //     return
-                        ListView.builder(
-                            shrinkWrap: true,
-                            controller: _controller,
-                            itemCount:
-                                feeResponse == null ? 0 : feeResponse!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CheckboxListTile(
-                                activeColor:
-                                    const Color.fromARGB(255, 238, 236, 236),
-                                checkColor: UIGuide.light_Purple,
-                                selectedTileColor: UIGuide.light_Purple,
-                                value: _selecteCategorys.contains(
-                                    feeResponse![index]['installmentName']),
-                                onChanged: (bool? selected) async {
-                                  // selected == true;
+                        Consumer<FeesProvider>(
+                      builder: (context, value, child) => ListView.builder(
+                          shrinkWrap: true,
+                          controller: _controller,
+                          itemCount: value.feeList.length == null
+                              ? 0
+                              : value.feeList.length,
 
-                                  // for (int i = 0; i <= feeResponse!.length; i++) {
-                                  //   _onFeeSelected(
-                                  //       selected!,
-                                  //       feeResponse![index]['installmentName'],
-                                  //       index,
-                                  //       feeResponse![index]['installmentNetDue']);
-                                  //   print(selected);
-                                  // }
-                                  //   if (index == 0) {
-                                  //  enable = true;
-                                  _onFeeSelected(
-                                      selected!,
-                                      feeResponse![index]['installmentName'],
-                                      index,
-                                      feeResponse![index]['installmentNetDue']);
-                                  print(selected);
-                                  // }
-                                  // await index == 0 && selected == true;
-                                  // else if (index == 1 && enable == false) {
-                                  //   _onFeeSelected(
-                                  //       selected!,
-                                  //       feeResponse![index]['installmentName'],
-                                  //       index,
-                                  //       feeResponse![index]
-                                  //           ['installmentNetDue']);
-                                  //   print(selected);
-                                  // }
-                                },
-                                title: Text(
-                                  feeResponse![index]['installmentNetDue']
-                                      .toString(),
-                                  textAlign: TextAlign.end,
-                                ),
-                                secondary: Text(
-                                    feeResponse![index]['installmentName']),
-                              );
-                            })
+                          // feeResponse == null ? 0 : feeResponse!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            print(value.feeList.length);
+                            return CheckboxListTile(
+                              activeColor:
+                                  const Color.fromARGB(255, 238, 236, 236),
+                              checkColor: UIGuide.light_Purple,
+                              selectedTileColor: UIGuide.light_Purple,
+                              value: value.selecteCategorys.contains(
+                                  value.feeList[index].installmentName ?? '--'
+                                  // feeResponse![index]['installmentName']
+                                  ),
+                              onChanged: (bool? selected) async {
+                                // selected == true;
+
+                                // for (int i = 0; i <= feeResponse!.length; i++) {
+                                //   _onFeeSelected(
+                                //       selected!,
+                                //       feeResponse![index]['installmentName'],
+                                //       index,
+                                //       feeResponse![index]['installmentNetDue']);
+                                //   print(selected);
+                                // }
+                                //   if (index == 0) {
+                                //  enable = true;
+                                value.onFeeSelected(
+                                    selected!,
+                                    value.feeList[index].installmentName,
+                                    index,
+                                    value.feeList[index].installmentNetDue);
+                                print(selected);
+                                // }
+                                // await index == 0 && selected == true;
+                                // else if (index == 1 && enable == false) {
+                                //   _onFeeSelected(
+                                //       selected!,
+                                //       feeResponse![index]['installmentName'],
+                                //       index,
+                                //       feeResponse![index]
+                                //           ['installmentNetDue']);
+                                //   print(selected);
+                                // }
+                              },
+                              title: Text(
+                                value.feeList[index].installmentName ?? '--',
+                                textAlign: TextAlign.end,
+                              ),
+                              secondary: Text(
+                                  value.feeList[index].installmentName ?? '--'),
+                            );
+                          }),
+                    )
 
                     // return ListView.builder(
                     //   shrinkWrap: true,
@@ -296,10 +317,12 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
               thickness: 6,
               radius: Radius.circular(20),
             ),
-            Center(
-              child: Text(
-                'TotalFee:  $totalFees',
-                style: TextStyle(fontSize: 12),
+            Consumer<FeesProvider>(
+              builder: (context, value, child) => Center(
+                child: Text(
+                  'TotalFee:  ${value.totalFees}',
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ),
             const Padding(
@@ -322,41 +345,46 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         // Consumer<FeesProvider>(
                         //   builder: (context, value, child) {
                         //     return
-                        ListView.builder(
-                            shrinkWrap: true,
-                            controller: _controller2,
-                            itemCount: busfeeResponse == null
-                                ? 0
-                                : busfeeResponse!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CheckboxListTile(
-                                activeColor:
-                                    const Color.fromARGB(255, 238, 236, 236),
-                                checkColor: UIGuide.light_Purple,
-                                selectedTileColor: UIGuide.light_Purple,
-                                value: _selectedBusFee.contains(
-                                    busfeeResponse![index]['installmentName']),
-                                onChanged: (bool? selected) {
-                                  _onBusSelected(
-                                      selected!,
-                                      busfeeResponse![index]['installmentName'],
-                                      index,
-                                      busfeeResponse![index]
-                                          ['installmentNetDue']);
-                                  print(selected);
-                                },
-                                title: Padding(
-                                  padding: const EdgeInsets.only(left: 75),
-                                  child: Text(
-                                    busfeeResponse![index]['installmentNetDue']
-                                        .toString(),
-                                    textAlign: TextAlign.end,
-                                  ),
+                        Consumer<FeesProvider>(
+                      builder: (context, value, child) => ListView.builder(
+                          shrinkWrap: true,
+                          controller: _controller2,
+                          itemCount: value.busFeeList.length == null
+                              ? 0
+                              : value.busFeeList.length,
+                          //  busfeeResponse == null
+                          //     ? 0
+                          //     : busfeeResponse!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CheckboxListTile(
+                              activeColor:
+                                  const Color.fromARGB(255, 238, 236, 236),
+                              checkColor: UIGuide.light_Purple,
+                              selectedTileColor: UIGuide.light_Purple,
+                              value: value.selectedBusFee.contains(
+                                  value.busFeeList[index].installmentName),
+                              onChanged: (bool? selected) {
+                                value.onBusSelected(
+                                    selected!,
+                                    value.busFeeList[index].installmentName,
+                                    index,
+                                    value.busFeeList[index].installmentNetDue);
+                                print(selected);
+                              },
+                              title: Padding(
+                                padding: const EdgeInsets.only(left: 75),
+                                child: Text(
+                                  value.busFeeList[index].installmentNetDue
+                                      .toString(),
+                                  textAlign: TextAlign.end,
                                 ),
-                                secondary: Text(
-                                    busfeeResponse![index]['installmentName']),
-                              );
-                            })
+                              ),
+                              secondary: Text(
+                                  value.busFeeList[index].installmentName ??
+                                      '--'),
+                            );
+                          }),
+                    )
                     // return ListView.builder(
                     //     shrinkWrap: true,
                     //     controller: _controller2,
@@ -387,10 +415,12 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
               thickness: 6,
               radius: const Radius.circular(20),
             ),
-            Center(
-              child: Text(
-                'TotalBus fee :  $totalBusFee',
-                style: TextStyle(fontSize: 12),
+            Consumer<FeesProvider>(
+              builder: (context, value, child) => Center(
+                child: Text(
+                  'TotalBus fee :  ${value.totalBusFee}',
+                  style: TextStyle(fontSize: 12),
+                ),
               ),
             ),
             kheight20,
@@ -405,7 +435,9 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                   // totalFee()
-                  Text(total.toString())
+                  Consumer<FeesProvider>(
+                      builder: (context, value, child) =>
+                          Text(value.total.toString()))
                 ],
               ),
             ),
