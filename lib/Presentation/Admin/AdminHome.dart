@@ -677,7 +677,7 @@ class AdminHomeContent extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ToGuardian()),
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
                         );
                       },
                       child: Column(
@@ -769,7 +769,7 @@ class AdminHomeContent extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Stud1Report()),
+                          MaterialPageRoute(builder: (context) => AdminStudReport()),
                         );
                       },
                       child: Column(

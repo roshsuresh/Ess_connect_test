@@ -16,9 +16,15 @@ class StudReportListProvider_stf with ChangeNotifier {
   String filtersDivision = "";
   String filterCourse = "";
 
-  addFilterSection(String course) {
+  addFilterSection(String section) {
+    filterCourse = section;
+    notifyListeners();
+  }
+  addFilterCourse(String course) {
     filterCourse = course;
     notifyListeners();
+
+
   }
 
   addFilters(String f) {
@@ -115,6 +121,8 @@ class StudReportListProvider_stf with ChangeNotifier {
       studReportCourse.add(item);
       notifyListeners();
     }
+    clearAllFilters();
+    addFilterCourse(studReportCourse.first.text);
   }
 
   removeCourse(StudReportCourse item) {
@@ -189,6 +197,16 @@ class StudReportListProvider_stf with ChangeNotifier {
       studReportDivision.add(item);
       notifyListeners();
     }
+  }
+  void selectItem(ViewStudentReport model) {
+    ViewStudentReport selected = viewStudReportListt
+        .firstWhere((element) => element.admnNo == model.admnNo);
+    if (selected.selected == null) {
+      selected.selected = false;
+    }
+    selected.selected = !selected.selected!;
+    print(selected.toJson());
+    notifyListeners();
   }
 
   removeDivision(StudReportDivision item) {

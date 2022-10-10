@@ -371,6 +371,7 @@ class StudentNotification with ChangeNotifier {
 
   }
 
+
   removeCourse(CourseList item) {
     selectedCourse.remove(item);
     notifyListeners();
