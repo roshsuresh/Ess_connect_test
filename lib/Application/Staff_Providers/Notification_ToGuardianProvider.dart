@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Domain/Staff/StaffAttandenceModel.dart';
+import '../../Presentation/Staff/ToGuard_textSMS.dart';
 
 Map? staffNotificationToGuardianRespo;
 List? staffToGuardianRespo;
@@ -256,6 +257,57 @@ class NotificationToGuardian_Providers with ChangeNotifier {
     notifyListeners();
   }
 
+
+  sendNotification(BuildContext context, String text, List<String> to,
+      {required String sentTo}) async {
+    Map<String, dynamic> data = await parseJWT();
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    print(_pref.getString('token'));
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request('POST',
+        Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusernotification'));
+    print(Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusernotification'));
+    request.body = json.encode({
+      "SchoolId": data["SchoolId"],
+      "Title": "Notification",
+      "Body": text,
+      "FromStaffId": data['role'] == "Guardian"
+          ? data['GuardianId']
+          : data["StaffId"],
+      "SentTo": sentTo,
+      "ToId": to,
+      "IsSeen": false
+    });
+    print({
+      "SchoolId": data["SchoolId"],
+      "Title": "Student Notification",
+      "Body": text,
+      "FromStaffId": data['role'] == "Guardian"
+          ? data['GuardianId']
+          : data["StaffId"],
+      "SentTo": sentTo,
+      "ToId": to,
+      "IsSeen": false
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Notification Send Successfully")));
+      debugPrint(await response.stream.bytesToString());
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something Went Wrong")));
+      debugPrint(response.reasonPhrase);
+    }
+  }
+
   List<StudentViewbyCourseDivision_notification_Stf> selectedList = [];
   submitStudent(BuildContext context) {
     selectedList.clear();
@@ -263,19 +315,16 @@ class NotificationToGuardian_Providers with ChangeNotifier {
         notificationView.where((element) => element.selected == true).toList();
     if (selectedList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Please select ...'),
+        content: Text('Select Any Student..'),
         duration: Duration(seconds: 1),
       ));
     } else {
       print('selected.....');
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => MessagePage(
-      //               toList:
-      //                   selectedList.map((e) => e.presentDetailsId).toList(),
-      //               type: "Student",
-      //             )));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>Text_Matter_Notification()
+          ));
     }
   }
 }

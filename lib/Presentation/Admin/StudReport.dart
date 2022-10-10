@@ -1235,8 +1235,8 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                       Navigator.of(context).pop();
                                                     },
                                                     title: Text(
-                                                      snapshot.courselist[index].text ??
-                                                          '---',
+                                                      snapshot.courselist[index].text == null?
+                                                          "---":snapshot.courselist[index].text.toString(),
                                                       textAlign: TextAlign.center,
                                                     ),
                                                   );

@@ -492,12 +492,15 @@ class _Notification_StaffToGuardainState
                           value.selectAll();
                         },
                         child: value.isselectAll
-                            ? SvgPicture.asset(
-                                UIGuide.check,
-                                // width: 25,
-                                // height: 25,
-                                color: UIGuide.light_Purple,
-                              )
+                            ? Padding(
+                              padding: const EdgeInsets.only(left:10),
+                              child: SvgPicture.asset(
+                                  UIGuide.check,
+                                  // width: 25,
+                                  // height: 25,
+                                  color: UIGuide.light_Purple,
+                                ),
+                            )
                             : Text(
                                 'Select All',
                                 style: TextStyle(
@@ -533,16 +536,14 @@ class _Notification_StaffToGuardainState
           ],
         ),
         bottomNavigationBar: BottomAppBar(
+          elevation: 3.0,
             child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: MaterialButton(
             color: UIGuide.light_Purple,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Text_Matter_Notification()),
-              );
+              Provider.of<NotificationToGuardian_Providers>(context, listen: false)
+                  .submitStudent(context);
             },
             child: const Text('Proceed',
                 style: TextStyle(
@@ -603,6 +604,7 @@ class Text_Matter_Notification extends StatelessWidget {
 
   final titleController = TextEditingController();
   final matterController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -692,4 +694,5 @@ class Text_Matter_Notification extends StatelessWidget {
       ),
     );
   }
+
 }
