@@ -177,4 +177,77 @@ class GallerySendProvider_Stf with ChangeNotifier {
     }
     return true;
   }
+//find image id
+
+  String? id;
+  Future galleryImageSave(String path) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${UIGuide.baseURL}/files/single/School'));
+    request.fields.addAll({'': ''});
+    request.files.add(await http.MultipartFile.fromPath('', '$path'));
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      GalleryImageId idd = GalleryImageId.fromJson(data);
+      id = idd.id;
+      print('...............   $id');
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  //gallery save
+
+  Future gallerySave(
+      String entryDate,
+      String DisplayStartDate,
+      String DisplayEndDate,
+      String Titlee,
+      String CourseId,
+      String DivisionId,
+      String AttachmentId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request =
+        http.Request('POST', Uri.parse('${UIGuide.baseURL}/gallery/create'));
+    request.body = json.encode({
+      "EntryDate": entryDate,
+      "DisplayStartDate": DisplayStartDate,
+      "DisplayEndDate": DisplayEndDate,
+      "Title": Titlee,
+      "CourseId": [CourseId],
+      "DivisionId": [DivisionId],
+      "ForClassTeacherOnly": "false",
+      "DisplayTo": "student",
+      "StaffRole": "null",
+      "PhotoList": [
+        {"PhotoCaption": "null", "FileId": AttachmentId, "IsMaster": "true"},
+      ]
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200 || response.statusCode == 204) {
+      print('Correct...______________________________');
+      print(await response.stream.bytesToString());
+    } else {
+      print('Error in gallery save respo');
+    }
+  }
 }

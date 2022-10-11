@@ -730,9 +730,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                       ],
                     );
                   } else {
-                    return Text(
-                      ' No Data',
-                      style: TextStyle(fontSize: 20),
+                    return Container(
+                      width: 0,
+                      height: 0,
                     );
                   }
                 },

@@ -1,5 +1,6 @@
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
+import 'package:Ess_test/Presentation/Staff/GalleryList.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -18,7 +19,7 @@ class StaffGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: AppBar(
               title: const Text('Gallery'),
@@ -36,17 +37,21 @@ class StaffGallery extends StatelessWidget {
                 indicatorColor: Colors.white,
                 indicatorWeight: 5,
                 tabs: [
+                  Tab(text: "Received"),
                   Tab(
                     text: "Send",
                   ),
-                  Tab(text: "Received"),
+                  Tab(
+                    text: "List",
+                  ),
                 ],
               ),
               backgroundColor: UIGuide.light_Purple,
             ),
             body: TabBarView(children: [
-              StaffGalleryUPload(),
               StaffGalleryView(),
+              StaffGalleryUPload(),
+              GalleryListStaff()
             ])));
   }
 }
@@ -157,9 +162,9 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
-                await Provider.of<StaffNoticeboardSendProviders>(context,
+                await Provider.of<GallerySendProvider_Stf>(context,
                         listen: false)
-                    .noticeImageSave(file.path.toString());
+                    .galleryImageSave(file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -193,7 +198,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
             Spacer(),
             MaterialButton(
               minWidth: size.width - 200,
-              child: Center(child: Text('To  ${timeNow}')),
+              child: Center(child: Text('To  $timeNow')),
               color: Colors.white,
               onPressed: (() async {
                 _mydatetimeTo = await showDatePicker(
@@ -325,7 +330,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               width: MediaQuery.of(context).size.width * 0.49,
               child: Consumer<GallerySendProvider_Stf>(
                   builder: (context, snapshot, child) {
-                //   attachmentid = snapshot.id ?? '';
+                attachmentid = snapshot.id ?? '';
                 return InkWell(
                   onTap: () {
                     showDialog(
@@ -436,28 +441,26 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               ),
               color: Color.fromARGB(179, 145, 143, 143),
               onPressed: (() async {
-                // await Provider.of<GallerySendProvider_Stf>(context,
-                //         listen: false)
-                //     .noticeBoardSave(
-                //         datee.toString(),
-                //         time,
-                //         timeNow,
-                //         titleController.text,
-                //         mattercontroller.text,
-                //         coursevalueController.text,
-                //         divisionvalueController.text,
-                //         categoryvalueController.text,
-                //         attachmentid!);
+                await Provider.of<GallerySendProvider_Stf>(context,
+                        listen: false)
+                    .gallerySave(
+                        datee.toString(),
+                        time,
+                        timeNow,
+                        titleController.text,
+                        coursevalueController.text,
+                        divisionvalueController.text,
+                        attachmentid!);
 
-                // print(datee);
-                // print(time);
-                // print(timeNow);
-                // print(titleController);
-                // print(mattercontroller);
-                // print(coursevalueController);
-                // print(divisionvalueController);
-                // print(categoryvalueController);
-                // print(attachmentid);
+                print(datee);
+                print(time);
+                print(timeNow);
+                print(titleController);
+
+                print(coursevalueController);
+                print(divisionvalueController);
+
+                print(attachmentid);
               }),
             ),
           ),

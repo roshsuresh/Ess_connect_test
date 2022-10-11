@@ -92,6 +92,9 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
       p.feesData();
       p.busFeeList.clear();
       p.feeList.clear();
+      p.totalFees = 0;
+      p.total = 0;
+      p.totalBusFee = 0;
     });
   }
 
@@ -273,11 +276,15 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                 // }
                               },
                               title: Text(
-                                value.feeList[index].installmentName ?? '--',
+                                value.feeList[index].installmentNetDue == null
+                                    ? '--'
+                                    : value.feeList[index].installmentNetDue
+                                        .toString(),
                                 textAlign: TextAlign.end,
                               ),
                               secondary: Text(
-                                  value.feeList[index].installmentName ?? '--'),
+                                value.feeList[index].installmentName ?? '--',
+                              ),
                             );
                           }),
                     )
