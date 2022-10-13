@@ -93,6 +93,9 @@ class CommunicationToGuardian_Division {
 
 //View
 class StudentViewbyCourseDivision_notification_Stf {
+  String? studentId;
+  String? guardianId;
+
   String? admnNo;
   String? name;
   int? rollNo;
@@ -102,7 +105,9 @@ class StudentViewbyCourseDivision_notification_Stf {
   bool? selected;
 
   StudentViewbyCourseDivision_notification_Stf(
-      {this.admnNo,
+      {this.studentId,
+      this.guardianId,
+      this.admnNo,
       this.name,
       this.rollNo,
       this.mobNo,
@@ -112,6 +117,8 @@ class StudentViewbyCourseDivision_notification_Stf {
 
   StudentViewbyCourseDivision_notification_Stf.fromJson(
       Map<String, dynamic> json) {
+    studentId = json['studentId'];
+    guardianId = json['guardianId'];
     admnNo = json['admnNo'];
     name = json['name'];
     rollNo = json['rollNo'];
@@ -122,6 +129,8 @@ class StudentViewbyCourseDivision_notification_Stf {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['studentId'] = this.studentId;
+    data['guardianId'] = this.guardianId;
     data['admnNo'] = this.admnNo;
     data['name'] = this.name;
     data['rollNo'] = this.rollNo;

@@ -80,12 +80,9 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
 
   final coursevalueController = TextEditingController();
   final coursevalueController1 = TextEditingController();
-
   final divisionvalueController = TextEditingController();
   final divisionvalueController1 = TextEditingController();
-
   final titleController = TextEditingController();
-
   String? attachmentid;
 
   @override

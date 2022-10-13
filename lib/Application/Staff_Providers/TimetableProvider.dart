@@ -11,19 +11,29 @@ class StaffTimetableProvider with ChangeNotifier {
   String? name;
   String? extension;
   String? url;
+
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future getTimeTable() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-
+    setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/staff/class-timetable-preview"),
         headers: headers);
 
     try {
       if (response.statusCode == 200) {
+        setLoading(true);
         print("corect");
         final data = json.decode(response.body);
         staff_timetableRespo = data['timeTable'];
@@ -32,9 +42,11 @@ class StaffTimetableProvider with ChangeNotifier {
         extension = tabl.extension;
         url = tabl.url;
         print(name);
+        setLoading(false);
 
         notifyListeners();
       } else {
+        setLoading(false);
         print("Error in timetable response");
       }
     } catch (e) {

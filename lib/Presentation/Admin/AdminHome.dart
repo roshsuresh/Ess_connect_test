@@ -1,29 +1,23 @@
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
-import 'package:Ess_test/Presentation/Admin/Student_list_item.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Application/StudentProviders/ProfileProvider.dart';
-import '../../Application/StudentProviders/TimetableProvider.dart';
+
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
 import '../Student/AdvancePay.dart';
 import '../Student/Attendence.dart';
 import '../Student/PasswordChange.dart';
-import '../Student/PaymentHistory.dart';
+
 import '../Student/Reportcard.dart';
-import '../Student/Stud_Calender.dart';
-import '../Student/Stud_Notification.dart';
-import '../Student/TimeTable.dart';
+
 import 'FeeReport.dart';
 import 'StaffInfo.dart';
 import 'StaffReport.dart';
 import 'StudReport.dart';
 import 'StudentFeeDetails.dart';
 import 'StudentReport.dart';
-import 'ToGuardian.dart';
 
 class AdminHome extends StatelessWidget {
   AdminHome({Key? key}) : super(key: key);
@@ -677,7 +671,8 @@ class AdminHomeContent extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AdminStudReport()),
+                          MaterialPageRoute(
+                              builder: (context) => AdminStudReport()),
                         );
                       },
                       child: Column(
@@ -769,7 +764,8 @@ class AdminHomeContent extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AdminStudReport()),
+                          MaterialPageRoute(
+                              builder: (context) => AdminStudReport()),
                         );
                       },
                       child: Column(
@@ -790,7 +786,8 @@ class AdminHomeContent extends StatelessWidget {
                           kheight10,
                           const Text(
                             'Flash News',
-                            style: TextStyle(fontSize: 11, color: Colors.black38),
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
                           )
                         ],
                       ),

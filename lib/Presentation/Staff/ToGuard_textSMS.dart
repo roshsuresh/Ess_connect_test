@@ -81,57 +81,49 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
 
                                           // snapshot.clearStudentList();
 
-                                          return Column(
-                                            children: [
-                                              ListTile(
-                                                selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                selectedColor: UIGuide.PRIMARY2,
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
 
-                                                // selected: snapshot.isCourseSelected(
-                                                //     attendecourse![index]),
+                                            // selected: snapshot.isCourseSelected(
+                                            //     attendecourse![index]),
 
-                                                onTap: () async {
-                                                  print(
-                                                      'guh.....${staffTextSMSToGuardRespo![index]}');
-                                                  notificationCourseController
-                                                          .text =
-                                                      await staffTextSMSToGuardRespo![
-                                                              index]['value'] ??
-                                                          '--';
-                                                  notificationCourseController1
-                                                          .text =
-                                                      await staffTextSMSToGuardRespo![
-                                                              index]['text'] ??
-                                                          '--';
-                                                  courseId =
-                                                      notificationCourseController
-                                                          .text
-                                                          .toString();
-
-                                                  // snapshot.addSelectedCourse(
-                                                  //     attendecourse![index]);
-                                                  print(courseId);
-                                                  await Provider.of<
-                                                              TextSMS_ToGuardian_Providers>(
-                                                          context,
-                                                          listen: false)
-                                                      .communicationToGuardianDivisionStaff(
-                                                          courseId);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                title: Text(
-                                                  staffTextSMSToGuardRespo![
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${staffTextSMSToGuardRespo![index]}');
+                                              notificationCourseController
+                                                      .text =
+                                                  await staffTextSMSToGuardRespo![
+                                                          index]['value'] ??
+                                                      '--';
+                                              notificationCourseController1
+                                                      .text =
+                                                  await staffTextSMSToGuardRespo![
                                                           index]['text'] ??
-                                                      '--',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              Divider(
-                                                height: 1,
-                                                color: Colors.black,
-                                              )
-                                            ],
+                                                      '--';
+                                              courseId =
+                                                  notificationCourseController
+                                                      .text
+                                                      .toString();
+
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(courseId);
+                                              await Provider.of<
+                                                          TextSMS_ToGuardian_Providers>(
+                                                      context,
+                                                      listen: false)
+                                                  .communicationToGuardianDivisionStaff(
+                                                      courseId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              staffTextSMSToGuardRespo![index]
+                                                      ['text'] ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
                                           );
                                         }),
                                   ],

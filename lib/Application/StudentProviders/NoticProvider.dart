@@ -19,24 +19,38 @@ class NoticeProvider with ChangeNotifier {
   String? name;
 
   String? url;
+
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future getnoticeList() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     // print(headers);
+
+    setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/noticeboard-details"),
         headers: headers);
     try {
       if (response.statusCode == 200) {
+        setLoading(true);
         // print("corect");
         final data = json.decode(response.body);
         //  print(data);
         noticeresponse = data["noticeBoardDetails"];
+        setLoading(false);
         notifyListeners();
       } else {
+        setLoading(false);
         print("Error in Response");
       }
     } catch (e) {

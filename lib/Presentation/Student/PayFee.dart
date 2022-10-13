@@ -1,3 +1,4 @@
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Application/StudentProviders/FeesProvider.dart';
@@ -181,277 +182,304 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     //Provider.of<FeesProvider>(context, listen: false).feesData();
     return Stack(
       children: [
-        ListView(
-          children: [
-            kheight20,
-            Padding(
-              padding: EdgeInsets.only(left: 20, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Installment',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        color: UIGuide.light_Purple),
-                  ),
-                  Consumer<FeesProvider>(builder: (context, snap, child) {
-                    //   child:
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: Checkbox(
-                        value: snap.isselectAll,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            value = snap.isselectAll;
-                          });
-                        },
-                        //       },
+        Consumer<FeesProvider>(
+          builder: (context, value, child) => value.loading
+              ? spinkitLoader()
+              : ListView(
+                  children: [
+                    kheight20,
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, bottom: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Installment',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w900,
+                                color: UIGuide.light_Purple),
+                          ),
+                          Consumer<FeesProvider>(
+                              builder: (context, snap, child) {
+                            //   child:
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Checkbox(
+                                value: snap.isselectAll,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    value = snap.isselectAll;
+                                  });
+                                },
+                                //       },
+                              ),
+                            );
+                          }),
+                        ],
                       ),
-                    );
-                  }),
-                ],
-              ),
-            ),
-            Scrollbar(
-              controller: _controller,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 8),
-                child: LimitedBox(
-                    maxHeight: 160,
-                    child:
-                        //  Consumer<FeesProvider>(
-                        //   builder: (context, value, child) {
-                        //     return
-                        Consumer<FeesProvider>(
-                      builder: (context, value, child) => ListView.builder(
-                          shrinkWrap: true,
-                          controller: _controller,
-                          itemCount: value.feeList.length == null
-                              ? 0
-                              : value.feeList.length,
-
-                          // feeResponse == null ? 0 : feeResponse!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            print(value.feeList.length);
-                            return CheckboxListTile(
-                              activeColor:
-                                  const Color.fromARGB(255, 238, 236, 236),
-                              checkColor: UIGuide.light_Purple,
-                              selectedTileColor: UIGuide.light_Purple,
-                              value: value.selecteCategorys.contains(
-                                  value.feeList[index].installmentName ?? '--'
-                                  // feeResponse![index]['installmentName']
-                                  ),
-                              onChanged: (bool? selected) async {
-                                // selected == true;
-
-                                // for (int i = 0; i <= feeResponse!.length; i++) {
-                                //   _onFeeSelected(
-                                //       selected!,
-                                //       feeResponse![index]['installmentName'],
-                                //       index,
-                                //       feeResponse![index]['installmentNetDue']);
-                                //   print(selected);
-                                // }
-                                //   if (index == 0) {
-                                //  enable = true;
-                                value.onFeeSelected(
-                                    selected!,
-                                    value.feeList[index].installmentName,
-                                    index,
-                                    value.feeList[index].installmentNetDue);
-                                print(selected);
-                                // }
-                                // await index == 0 && selected == true;
-                                // else if (index == 1 && enable == false) {
-                                //   _onFeeSelected(
-                                //       selected!,
-                                //       feeResponse![index]['installmentName'],
-                                //       index,
-                                //       feeResponse![index]
-                                //           ['installmentNetDue']);
-                                //   print(selected);
-                                // }
-                              },
-                              title: Text(
-                                value.feeList[index].installmentNetDue == null
-                                    ? '--'
-                                    : value.feeList[index].installmentNetDue
-                                        .toString(),
-                                textAlign: TextAlign.end,
-                              ),
-                              secondary: Text(
-                                value.feeList[index].installmentName ?? '--',
-                              ),
-                            );
-                          }),
-                    )
-
-                    // return ListView.builder(
-                    //   shrinkWrap: true,
-                    //   controller: _controller,
-                    //   itemCount: feeResponse == null
-                    //       ? 0
-                    //       : feeResponse!.length,
-                    //   itemBuilder: ((context, index) {
-                    //     return Table(
-                    //       //  border: TableBorder.all(),
-                    //       children: [
-                    //         TableRow(
-                    //             decoration: const BoxDecoration(
-                    //                 // color: Color.fromARGB(
-                    //                 //     255, 230, 227, 227),
-                    //                 ),
-                    //             children: [
-                    //               Text(
-                    //                   "\n${feeResponse![index]['installmentName']}"),
-                    //               Center(
-                    //                   child: Text(
-                    //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
-                    //               Center(child: CheckBoxButton()),
-                    //             ]),
-                    //       ],
-                    //     );
-                    //   }),
-                    // );
-                    //   },
-                    // ),
                     ),
-              ),
-              thumbVisibility: true,
-              thickness: 6,
-              radius: Radius.circular(20),
-            ),
-            Consumer<FeesProvider>(
-              builder: (context, value, child) => Center(
-                child: Text(
-                  'TotalFee:  ${value.totalFees}',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-              child: Text(
-                'Bus Fee',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    color: UIGuide.light_Purple),
-              ),
-            ),
-            Scrollbar(
-              controller: _controller2,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 8),
-                child: LimitedBox(
-                    maxHeight: 280,
-                    child:
-                        // Consumer<FeesProvider>(
-                        //   builder: (context, value, child) {
-                        //     return
-                        Consumer<FeesProvider>(
-                      builder: (context, value, child) => ListView.builder(
-                          shrinkWrap: true,
-                          controller: _controller2,
-                          itemCount: value.busFeeList.length == null
-                              ? 0
-                              : value.busFeeList.length,
-                          //  busfeeResponse == null
-                          //     ? 0
-                          //     : busfeeResponse!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CheckboxListTile(
-                              activeColor:
-                                  const Color.fromARGB(255, 238, 236, 236),
-                              checkColor: UIGuide.light_Purple,
-                              selectedTileColor: UIGuide.light_Purple,
-                              value: value.selectedBusFee.contains(
-                                  value.busFeeList[index].installmentName),
-                              onChanged: (bool? selected) {
-                                value.onBusSelected(
-                                    selected!,
-                                    value.busFeeList[index].installmentName,
-                                    index,
-                                    value.busFeeList[index].installmentNetDue);
-                                print(selected);
-                              },
-                              title: Padding(
-                                padding: const EdgeInsets.only(left: 75),
-                                child: Text(
-                                  value.busFeeList[index].installmentNetDue
-                                      .toString(),
-                                  textAlign: TextAlign.end,
-                                ),
-                              ),
-                              secondary: Text(
-                                  value.busFeeList[index].installmentName ??
-                                      '--'),
-                            );
-                          }),
-                    )
-                    // return ListView.builder(
-                    //     shrinkWrap: true,
-                    //     controller: _controller2,
-                    //     itemCount: busfeeResponse == null
-                    //         ? 0
-                    //         : busfeeResponse!.length,
-                    //     itemBuilder: ((context, index) {
-                    //       return Table(
-                    //         //  border: TableBorder.all(),
-                    //         children: [
-                    //           TableRow(children: [
-                    //             Text(
-                    //                 '\n${busfeeResponse![index]['installmentName']}'),
-                    //             Center(
-                    //                 child: Text(
-                    //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
-                    //             const Center(
-                    //                 child: CheckBoxButton()),
-                    //           ]),
-                    //         ],
-                    //       );
-                    //     }));
-                    //   },
-                    // )
+                    Scrollbar(
+                      controller: _controller,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 8),
+                        child: LimitedBox(
+                            maxHeight: 160,
+                            child:
+                                //  Consumer<FeesProvider>(
+                                //   builder: (context, value, child) {
+                                //     return
+                                Consumer<FeesProvider>(
+                              builder: (context, value, child) =>
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      controller: _controller,
+                                      itemCount: value.feeList.length == null
+                                          ? 0
+                                          : value.feeList.length,
+
+                                      // feeResponse == null ? 0 : feeResponse!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        print(value.feeList.length);
+                                        return CheckboxListTile(
+                                          activeColor: const Color.fromARGB(
+                                              255, 238, 236, 236),
+                                          checkColor: UIGuide.light_Purple,
+                                          selectedTileColor:
+                                              UIGuide.light_Purple,
+                                          value: value.selecteCategorys.contains(
+                                              value.feeList[index]
+                                                      .installmentName ??
+                                                  '--'
+                                              // feeResponse![index]['installmentName']
+                                              ),
+                                          onChanged: (bool? selected) async {
+                                            // selected == true;
+
+                                            // for (int i = 0; i <= feeResponse!.length; i++) {
+                                            //   _onFeeSelected(
+                                            //       selected!,
+                                            //       feeResponse![index]['installmentName'],
+                                            //       index,
+                                            //       feeResponse![index]['installmentNetDue']);
+                                            //   print(selected);
+                                            // }
+                                            //   if (index == 0) {
+                                            //  enable = true;
+                                            value.onFeeSelected(
+                                                selected!,
+                                                value.feeList[index]
+                                                    .installmentName,
+                                                index,
+                                                value.feeList[index]
+                                                    .installmentNetDue);
+                                            print(selected);
+                                            // }
+                                            // await index == 0 && selected == true;
+                                            // else if (index == 1 && enable == false) {
+                                            //   _onFeeSelected(
+                                            //       selected!,
+                                            //       feeResponse![index]['installmentName'],
+                                            //       index,
+                                            //       feeResponse![index]
+                                            //           ['installmentNetDue']);
+                                            //   print(selected);
+                                            // }
+                                          },
+                                          title: Text(
+                                            value.feeList[index]
+                                                        .installmentNetDue ==
+                                                    null
+                                                ? '--'
+                                                : value.feeList[index]
+                                                    .installmentNetDue
+                                                    .toString(),
+                                            textAlign: TextAlign.end,
+                                          ),
+                                          secondary: Text(
+                                            value.feeList[index]
+                                                    .installmentName ??
+                                                '--',
+                                          ),
+                                        );
+                                      }),
+                            )
+
+                            // return ListView.builder(
+                            //   shrinkWrap: true,
+                            //   controller: _controller,
+                            //   itemCount: feeResponse == null
+                            //       ? 0
+                            //       : feeResponse!.length,
+                            //   itemBuilder: ((context, index) {
+                            //     return Table(
+                            //       //  border: TableBorder.all(),
+                            //       children: [
+                            //         TableRow(
+                            //             decoration: const BoxDecoration(
+                            //                 // color: Color.fromARGB(
+                            //                 //     255, 230, 227, 227),
+                            //                 ),
+                            //             children: [
+                            //               Text(
+                            //                   "\n${feeResponse![index]['installmentName']}"),
+                            //               Center(
+                            //                   child: Text(
+                            //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
+                            //               Center(child: CheckBoxButton()),
+                            //             ]),
+                            //       ],
+                            //     );
+                            //   }),
+                            // );
+                            //   },
+                            // ),
+                            ),
+                      ),
+                      thumbVisibility: true,
+                      thickness: 6,
+                      radius: Radius.circular(20),
                     ),
-              ),
-              thumbVisibility: true,
-              thickness: 6,
-              radius: const Radius.circular(20),
-            ),
-            Consumer<FeesProvider>(
-              builder: (context, value, child) => Center(
-                child: Text(
-                  'TotalBus fee :  ${value.totalBusFee}',
-                  style: TextStyle(fontSize: 12),
+                    Consumer<FeesProvider>(
+                      builder: (context, value, child) => Center(
+                        child: Text(
+                          'TotalFee:  ${value.totalFees}',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
+                      child: Text(
+                        'Bus Fee',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w900,
+                            color: UIGuide.light_Purple),
+                      ),
+                    ),
+                    Scrollbar(
+                      controller: _controller2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 8),
+                        child: LimitedBox(
+                            maxHeight: 280,
+                            child:
+                                // Consumer<FeesProvider>(
+                                //   builder: (context, value, child) {
+                                //     return
+                                Consumer<FeesProvider>(
+                              builder: (context, value, child) =>
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      controller: _controller2,
+                                      itemCount: value.busFeeList.length == null
+                                          ? 0
+                                          : value.busFeeList.length,
+                                      //  busfeeResponse == null
+                                      //     ? 0
+                                      //     : busfeeResponse!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return CheckboxListTile(
+                                          activeColor: const Color.fromARGB(
+                                              255, 238, 236, 236),
+                                          checkColor: UIGuide.light_Purple,
+                                          selectedTileColor:
+                                              UIGuide.light_Purple,
+                                          value: value.selectedBusFee.contains(
+                                              value.busFeeList[index]
+                                                  .installmentName),
+                                          onChanged: (bool? selected) {
+                                            value.onBusSelected(
+                                                selected!,
+                                                value.busFeeList[index]
+                                                    .installmentName,
+                                                index,
+                                                value.busFeeList[index]
+                                                    .installmentNetDue);
+                                            print(selected);
+                                          },
+                                          title: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 75),
+                                            child: Text(
+                                              value.busFeeList[index]
+                                                  .installmentNetDue
+                                                  .toString(),
+                                              textAlign: TextAlign.end,
+                                            ),
+                                          ),
+                                          secondary: Text(value
+                                                  .busFeeList[index]
+                                                  .installmentName ??
+                                              '--'),
+                                        );
+                                      }),
+                            )
+                            // return ListView.builder(
+                            //     shrinkWrap: true,
+                            //     controller: _controller2,
+                            //     itemCount: busfeeResponse == null
+                            //         ? 0
+                            //         : busfeeResponse!.length,
+                            //     itemBuilder: ((context, index) {
+                            //       return Table(
+                            //         //  border: TableBorder.all(),
+                            //         children: [
+                            //           TableRow(children: [
+                            //             Text(
+                            //                 '\n${busfeeResponse![index]['installmentName']}'),
+                            //             Center(
+                            //                 child: Text(
+                            //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+                            //             const Center(
+                            //                 child: CheckBoxButton()),
+                            //           ]),
+                            //         ],
+                            //       );
+                            //     }));
+                            //   },
+                            // )
+                            ),
+                      ),
+                      thumbVisibility: true,
+                      thickness: 6,
+                      radius: const Radius.circular(20),
+                    ),
+                    Consumer<FeesProvider>(
+                      builder: (context, value, child) => Center(
+                        child: Text(
+                          'TotalBus fee :  ${value.totalBusFee}',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                    kheight20,
+                    kheight20,
+                    Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Total : ',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                          // totalFee()
+                          Consumer<FeesProvider>(
+                              builder: (context, value, child) =>
+                                  Text(value.total.toString()))
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 80,
+                    )
+                  ],
                 ),
-              ),
-            ),
-            kheight20,
-            kheight20,
-            Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Total : ',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                  // totalFee()
-                  Consumer<FeesProvider>(
-                      builder: (context, value, child) =>
-                          Text(value.total.toString()))
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 80,
-            )
-          ],
         ),
         Positioned(
           bottom: 10,

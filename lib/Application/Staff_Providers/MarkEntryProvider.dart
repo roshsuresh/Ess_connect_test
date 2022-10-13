@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Domain/Staff/MarkEntryModel.dart';
+import '../../Domain/Staff/MarkentryViewStaff.dart';
 import '../../utils/constants.dart';
 
 class MarkEntryProvider with ChangeNotifier {
@@ -64,7 +65,6 @@ class MarkEntryProvider with ChangeNotifier {
 
   courseClear() {
     markEntryInitialValues.clear();
-
   }
 
   List<MarkEntryInitialValues> markEntryInitialValues = [];
@@ -390,5 +390,64 @@ class MarkEntryProvider with ChangeNotifier {
       print('Error in MarkEntryExamList stf');
     }
     return true;
+  }
+
+  //markentry view
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  List<StudentMEList> studentMEList = [];
+  Future<bool> getMarkEntryView(String course, String date, String division,
+      String exam, String part, String subject) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    setLoading(true);
+    var request =
+        http.Request('POST', Uri.parse('${UIGuide.baseURL}/markentry/view'));
+    request.body = json.encode({
+      "Course": course,
+      "created date": date,
+      "Division": division,
+      "Exam": exam,
+      "Part": part,
+      "subject": subject,
+      "IsBlocked": "false",
+      "StudentMEDet[0]": "[null]"
+    });
+    request.headers.addAll(headers);
+    setLoading(true);
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      setLoading(true);
+      print('---------------------correct--------------------------');
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      // log(data.toString());
+      setLoading(true);
+      List<StudentMEList> templist = List<StudentMEList>.from(
+          data["studentMEList"].map((x) => StudentMEList.fromJson(x)));
+      studentMEList.addAll(templist);
+      setLoading(false);
+      notifyListeners();
+    } else {
+      setLoading(false);
+      print('Error in MarkEntryView stf');
+    }
+    return true;
+  }
+
+   clearStudentMEList() {
+    studentMEList.clear();
+    notifyListeners();
   }
 }

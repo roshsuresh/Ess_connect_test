@@ -1,3 +1,4 @@
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 
@@ -31,143 +32,148 @@ class ReportCard extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: _provider == null || _provider.isLoading
-          ? LoadingIcon()
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: [
-                  kheight20,
-                  Table(
-                    columnWidths: {
-                      0: FlexColumnWidth(3),
-                      1: FlexColumnWidth(5),
-                      2: FlexColumnWidth(2),
-                    },
-                    children: const [
-                      TableRow(
-                          decoration: BoxDecoration(
-                            //  border: Border.all(),
-                            color: UIGuide.light_black,
-                          ),
-                          children: [
-                            SizedBox(
-                              height: 30,
-                              child: Center(
-                                  child: Text(
-                                'Date',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              )),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Consumer<ReportCardProvider>(
+          builder: (context, value, child) => value.loading
+              ? spinkitLoader()
+              : ListView(
+                  children: [
+                    kheight20,
+                    Table(
+                      columnWidths: {
+                        0: FlexColumnWidth(3),
+                        1: FlexColumnWidth(5),
+                        2: FlexColumnWidth(2),
+                      },
+                      children: const [
+                        TableRow(
+                            decoration: BoxDecoration(
+                              //  border: Border.all(),
+                              color: UIGuide.light_black,
                             ),
-                            SizedBox(
-                              height: 30,
-                              child: Center(
-                                child: Text(
-                                  'Description',
+                            children: [
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  'Date',
                                   style: TextStyle(fontWeight: FontWeight.w500),
+                                )),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    'Description',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              child: Center(
-                                  child: Text(
-                                'View',
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              )),
-                            ),
-                          ]),
-                    ],
-                  ),
-                  LimitedBox(
-                    maxHeight: size.height - 30,
-                    child: Consumer<ReportCardProvider>(
-                      builder: (context, provider, child) {
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: reportResponse == null
-                                ? 0
-                                : reportResponse.length,
-                            itemBuilder: ((context, index) {
-                              String time =
-                                  reportResponse[index]['uploadedDate'];
-                              String Corect_tym = time.replaceRange(10, 20, '');
-                              print('dob $Corect_tym');
-                              String reAttach = reportResponse[index]['fileId'];
-                              print(reAttach);
-                              return Table(
-                                columnWidths: const {
-                                  0: FlexColumnWidth(3),
-                                  1: FlexColumnWidth(5),
-                                  2: FlexColumnWidth(2),
-                                },
-                                children: [
-                                  TableRow(
-                                      decoration: const BoxDecoration(),
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            Corect_tym == null
-                                                ? '---'
-                                                : Corect_tym,
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                        ),
-                                        Text(
-                                          reportResponse[index]
-                                                      ['description'] ==
-                                                  null
-                                              ? '----'
-                                              : reportResponse[index]
-                                                      ['description']
-                                                  .toString(),
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        Center(
-                                            child: IconButton(
-                                                onPressed: () async {
-                                                  final attch = await Provider
-                                                          .of<ReportCardProvider>(
-                                                              context,
-                                                              listen: false)
-                                                      .reportCardAttachment(
-                                                          reAttach);
-                                                  if (provider.extension
-                                                          .toString() ==
-                                                      '.pdf') {
-                                                    // final result =
-                                                    //     provider.url.toString();
-                                                    // final name =
-                                                    //     provider.name.toString();
-
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              PdfDownload()),
-                                                    );
-                                                  } else {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const NoAttachmentScreen()),
-                                                    );
-                                                  }
-                                                },
-                                                icon: const Icon(Icons
-                                                    .remove_red_eye_outlined))),
-                                      ]),
-                                ],
-                              );
-                            }));
-                      },
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  'View',
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                )),
+                              ),
+                            ]),
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
+                    LimitedBox(
+                      maxHeight: size.height - 30,
+                      child: Consumer<ReportCardProvider>(
+                        builder: (context, provider, child) {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: reportResponse == null
+                                  ? 0
+                                  : reportResponse.length,
+                              itemBuilder: ((context, index) {
+                                String time =
+                                    reportResponse[index]['uploadedDate'];
+                                String Corect_tym =
+                                    time.replaceRange(10, 20, '');
+                                print('dob $Corect_tym');
+                                String reAttach =
+                                    reportResponse[index]['fileId'];
+                                print(reAttach);
+                                return Table(
+                                  columnWidths: const {
+                                    0: FlexColumnWidth(3),
+                                    1: FlexColumnWidth(5),
+                                    2: FlexColumnWidth(2),
+                                  },
+                                  children: [
+                                    TableRow(
+                                        decoration: const BoxDecoration(),
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              Corect_tym == null
+                                                  ? '---'
+                                                  : Corect_tym,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                          Text(
+                                            reportResponse[index]
+                                                        ['description'] ==
+                                                    null
+                                                ? '----'
+                                                : reportResponse[index]
+                                                        ['description']
+                                                    .toString(),
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          Center(
+                                              child: IconButton(
+                                                  onPressed: () async {
+                                                    final attch = await Provider
+                                                            .of<ReportCardProvider>(
+                                                                context,
+                                                                listen: false)
+                                                        .reportCardAttachment(
+                                                            reAttach);
+                                                    if (provider.extension
+                                                            .toString() ==
+                                                        '.pdf') {
+                                                      // final result =
+                                                      //     provider.url.toString();
+                                                      // final name =
+                                                      //     provider.name.toString();
+
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                PdfDownload()),
+                                                      );
+                                                    } else {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const NoAttachmentScreen()),
+                                                      );
+                                                    }
+                                                  },
+                                                  icon: const Icon(Icons
+                                                      .remove_red_eye_outlined))),
+                                        ]),
+                                  ],
+                                );
+                              }));
+                        },
+                      ),
+                    )
+                  ],
+                ),
+        ),
+      ),
     );
   }
 }

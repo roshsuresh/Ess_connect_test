@@ -1,4 +1,5 @@
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -67,479 +68,495 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
     Provider.of<AttendenceStaffProvider>(context, listen: false)
         .attendenceCourseStaff();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Attendence Entry',
-          //style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          title: const Text(
+            'Attendence Entry',
+            //style: TextStyle(fontSize: 20),
+          ),
+          titleSpacing: 00.0,
+          centerTitle: true,
+          toolbarHeight: 60.2,
+          toolbarOpacity: 0.8,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(25),
+                bottomLeft: Radius.circular(25)),
+          ),
+          backgroundColor: UIGuide.light_Purple,
         ),
-        titleSpacing: 00.0,
-        centerTitle: true,
-        toolbarHeight: 60.2,
-        toolbarOpacity: 0.8,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25)),
-        ),
-        backgroundColor: UIGuide.light_Purple,
-      ),
-      body: Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
-        return ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MaterialButton(
-                    color: Colors.white,
-                    child: Text(Provider.of<AttendenceStaffProvider>(context,
-                                listen: false)
-                            .timeNew ??
-                        'select date'),
-                    onPressed: () async {
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .getDate(context);
-                    }),
-              ],
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<AttendenceStaffProvider>(
-                      builder: (context, snapshot, child) {
-                    return InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                  child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: attendecourse!.length,
-                                        itemBuilder: (context, index) {
-                                          // print(snapshot
-
-                                          //     .attendenceInitialValues.length);
-
-                                          // snapshot.clearStudentList();
-
-                                          return Column(
-                                            children: [
-                                              ListTile(
-                                                selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                selectedColor: UIGuide.PRIMARY2,
-
-                                                // selected: snapshot.isCourseSelected(
-                                                //     attendecourse![index]),
-
-                                                onTap: () async {
-                                                  print(
-                                                      'guh.....${attendecourse![index]}');
-                                                  markEntryInitialValuesController
-                                                          .text =
-                                                      await attendecourse![
-                                                              index]['value'] ??
-                                                          '--';
-                                                  markEntryInitialValuesController1
-                                                          .text =
-                                                      await attendecourse![
-                                                              index]['text'] ??
-                                                          '--';
-                                                  courseId =
-                                                      markEntryInitialValuesController
-                                                          .text
-                                                          .toString();
-
-                                                  // snapshot.addSelectedCourse(
-                                                  //     attendecourse![index]);
-                                                  print(courseId);
-                                                  await Provider.of<
-                                                              AttendenceStaffProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .getAttendenceDivisionValues(
-                                                          courseId);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                title: Text(
-                                                  attendecourse![index]
-                                                          ['text'] ??
-                                                      '--',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              Divider(
-                                                height: 1,
-                                                color: Colors.black,
-                                              )
-                                            ],
-                                          );
-                                        }),
-                                  ],
-                                ),
-                              ));
-                            });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: markEntryInitialValuesController1,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Select Course",
-                                  hintText: "Course",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: markEntryInitialValuesController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "",
-                                  hintText: "",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-                Spacer(),
-                SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<AttendenceStaffProvider>(
-                      builder: (context, snapshot, child) {
-                    return InkWell(
-                      onTap: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                  child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: snapshot
-                                            .attendenceDivisionList.length,
-                                        itemBuilder: (context, index) {
-                                          print(snapshot
-                                              .attendenceDivisionList.length);
-
-                                          // value.removeDivisionAll();
-                                          return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-                                            // selected: snapshot
-                                            //     .isDivisonSelected(snapshot
-                                            //             .attendenceDivisionList[
-                                            //         index]),
-                                            onTap: () async {
-                                              print(snapshot
-                                                  .attendenceDivisionList
-                                                  .length);
-                                              markEntryDivisionListController
-                                                  .text = snapshot
-                                                      .attendenceDivisionList[
-                                                          index]
-                                                      .value ??
-                                                  '---';
-                                              markEntryDivisionListController1
-                                                  .text = snapshot
-                                                      .attendenceDivisionList[
-                                                          index]
-                                                      .text ??
-                                                  '---';
-                                              // snapshot.addSelectedDivision(
-                                              //     snapshot.attendenceDivisionList[
-                                              //         index]);
-                                              print('jfrhrkjfr');
-                                              print(
-                                                  markEntryDivisionListController
-                                                      .text);
-                                              divisionId =
-                                                  markEntryDivisionListController
-                                                      .text
-                                                      .toString();
-                                              courseId =
-                                                  markEntryInitialValuesController
-                                                      .text
-                                                      .toString();
-
-                                              Navigator.of(context).pop();
-                                            },
-                                            title: Text(
-                                              snapshot
-                                                      .attendenceDivisionList[
-                                                          index]
-                                                      .text ??
-                                                  '---',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          );
-                                        }),
-                                  ],
-                                ),
-                              ));
-                            });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: markEntryDivisionListController1,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Select Division",
-                                  hintText: "Division",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0,
-                              child: TextField(
-                                controller: markEntryDivisionListController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "",
-                                  hintText: "",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MaterialButton(
-                    color: Color.fromARGB(255, 172, 170, 170),
-                    child: Text('View'),
-                    onPressed: () async {
-                      print(dateFinal);
-                      print(divisionId);
-                      dateFinal = Provider.of<AttendenceStaffProvider>(context,
+        body:
+            Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
+          return ListView(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                      color: Colors.white,
+                      child: Text(Provider.of<AttendenceStaffProvider>(context,
                                   listen: false)
                               .timeNew ??
-                          date.toString();
-                      if (dateFinal.isEmpty) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                          "Select Date..!",
-                          textAlign: TextAlign.center,
-                        )));
-                      }
-
-                      setState(() {
-                        dateFinal = Provider.of<AttendenceStaffProvider>(
-                                context,
+                          'select date'),
+                      onPressed: () async {
+                        await Provider.of<AttendenceStaffProvider>(context,
                                 listen: false)
-                            .timeNew
-                            .toString();
-                      });
-
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .clearStudentList();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .divisionClear();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .removeDivisionAll();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .getstudentsAttendenceView(dateFinal, divisionId);
-                    }),
-              ],
-            ),
-            kheight10,
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Table(
-                columnWidths: const {
-                  0: FlexColumnWidth(1),
-                  1: FlexColumnWidth(4.2),
-                  2: FlexColumnWidth(1.5),
-                  3: FlexColumnWidth(1.5),
-                },
-                children: const [
-                  TableRow(
-                      decoration: BoxDecoration(
-                        //  border: Border.all(),
-                        color: Color.fromARGB(255, 228, 224, 224),
-                      ),
-                      children: [
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                              child: Text(
-                            'Roll No.',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12),
-                          )),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                            child: Text(
-                              'Name',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 12),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                              child: Text(
-                            'Forenoon',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12),
-                          )),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                              child: Text(
-                            'Afternoon',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 12),
-                          )),
-                        ),
-                      ]),
+                            .getDate(context);
+                      }),
                 ],
               ),
-            ),
-            Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
-              // Provider.of<AttendenceStaffProvider>(context, listen: false)
-              //     .getstudentsAttendenceView(dateFinal, divisionId);
-              return LimitedBox(
-                  maxHeight: 440,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: value.studentsAttendenceView.length,
-                      itemBuilder: ((context, index) {
-                        return Column(
-                          children: [
-                            Table(
-                              columnWidths: const {
-                                0: FlexColumnWidth(1),
-                                1: FlexColumnWidth(4.8),
-                                2: FlexColumnWidth(1),
-                                3: FlexColumnWidth(1.5),
-                              },
-                              children: [
-                                TableRow(
-                                    decoration: const BoxDecoration(),
+              Row(
+                children: [
+                  SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.49,
+                    child: Consumer<AttendenceStaffProvider>(
+                        builder: (context, snapshot, child) {
+                      return InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                    child: Container(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                    .rollNo ==
-                                                null
-                                            ? '0'
-                                            : value
-                                                .studentsAttendenceView[index]
-                                                .rollNo
-                                                .toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                .name ??
-                                            '--',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
-                                            attende(
-                                                _attendence,
-                                                value
-                                                    .studentsAttendenceView[
-                                                        index]
-                                                    .name);
-                                            child:
-                                            Text('At');
-                                            setState(() {
-                                              _attendence = !_attendence;
-                                            });
-                                          },
-                                          child: _attendence
-                                              ? Text(
-                                                  'A',
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              : Text(
-                                                  'P',
-                                                  style: TextStyle(
-                                                      color: Colors.green,
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                .afternoon ??
-                                            '--',
-                                        textAlign: TextAlign.center,
-                                      )
-                                    ]),
-                              ],
+                                      ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: attendecourse!.length,
+                                          itemBuilder: (context, index) {
+                                            // print(snapshot
+
+                                            //     .attendenceInitialValues.length);
+
+                                            // snapshot.clearStudentList();
+
+                                            return ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+
+                                              // selected: snapshot.isCourseSelected(
+                                              //     attendecourse![index]),
+
+                                              onTap: () async {
+                                                print(
+                                                    'guh.....${attendecourse![index]}');
+                                                markEntryInitialValuesController
+                                                        .text =
+                                                    await attendecourse![index]
+                                                            ['value'] ??
+                                                        '--';
+                                                markEntryInitialValuesController1
+                                                        .text =
+                                                    await attendecourse![index]
+                                                            ['text'] ??
+                                                        '--';
+                                                courseId =
+                                                    markEntryInitialValuesController
+                                                        .text
+                                                        .toString();
+
+                                                // snapshot.addSelectedCourse(
+                                                //     attendecourse![index]);
+                                                print(courseId);
+                                                await Provider.of<
+                                                            AttendenceStaffProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .getAttendenceDivisionValues(
+                                                        courseId);
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                attendecourse![index]['text'] ??
+                                                    '--',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                ));
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 40,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: markEntryInitialValuesController1,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(255, 238, 237, 237),
+                                    border: OutlineInputBorder(),
+                                    labelText: "Select Course",
+                                    hintText: "Course",
+                                  ),
+                                  enabled: false,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 0,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: markEntryInitialValuesController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(255, 238, 237, 237),
+                                    border: OutlineInputBorder(),
+                                    labelText: "",
+                                    hintText: "",
+                                  ),
+                                  enabled: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.49,
+                    child: Consumer<AttendenceStaffProvider>(
+                        builder: (context, snapshot, child) {
+                      return InkWell(
+                        onTap: () async {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                    child: Container(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: snapshot
+                                              .attendenceDivisionList.length,
+                                          itemBuilder: (context, index) {
+                                            print(snapshot
+                                                .attendenceDivisionList.length);
+
+                                            // value.removeDivisionAll();
+                                            return ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              // selected: snapshot
+                                              //     .isDivisonSelected(snapshot
+                                              //             .attendenceDivisionList[
+                                              //         index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .attendenceDivisionList
+                                                    .length);
+                                                markEntryDivisionListController
+                                                    .text = snapshot
+                                                        .attendenceDivisionList[
+                                                            index]
+                                                        .value ??
+                                                    '---';
+                                                markEntryDivisionListController1
+                                                    .text = snapshot
+                                                        .attendenceDivisionList[
+                                                            index]
+                                                        .text ??
+                                                    '---';
+                                                // snapshot.addSelectedDivision(
+                                                //     snapshot.attendenceDivisionList[
+                                                //         index]);
+                                                print('jfrhrkjfr');
+                                                print(
+                                                    markEntryDivisionListController
+                                                        .text);
+                                                divisionId =
+                                                    markEntryDivisionListController
+                                                        .text
+                                                        .toString();
+                                                courseId =
+                                                    markEntryInitialValuesController
+                                                        .text
+                                                        .toString();
+
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot
+                                                        .attendenceDivisionList[
+                                                            index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                ));
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 40,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: markEntryDivisionListController1,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(255, 238, 237, 237),
+                                    border: OutlineInputBorder(),
+                                    labelText: "Select Division",
+                                    hintText: "Division",
+                                  ),
+                                  enabled: false,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 0,
+                                child: TextField(
+                                  controller: markEntryDivisionListController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor:
+                                        Color.fromARGB(255, 238, 237, 237),
+                                    border: OutlineInputBorder(),
+                                    labelText: "",
+                                    hintText: "",
+                                  ),
+                                  enabled: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                      color: Color.fromARGB(255, 172, 170, 170),
+                      child: Text('View'),
+                      onPressed: () async {
+                        print(dateFinal);
+                        print(divisionId);
+                        dateFinal = Provider.of<AttendenceStaffProvider>(
+                                    context,
+                                    listen: false)
+                                .timeNew ??
+                            date.toString();
+                        if (dateFinal.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  content: Text(
+                            "Select Date..!",
+                            textAlign: TextAlign.center,
+                          )));
+                        }
+
+                        setState(() {
+                          dateFinal = Provider.of<AttendenceStaffProvider>(
+                                  context,
+                                  listen: false)
+                              .timeNew
+                              .toString();
+                        });
+
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .clearStudentList();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .divisionClear();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .removeDivisionAll();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .getstudentsAttendenceView(dateFinal, divisionId);
+                      }),
+                ],
+              ),
+              kheight10,
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Table(
+                  columnWidths: const {
+                    0: FlexColumnWidth(1),
+                    1: FlexColumnWidth(4.2),
+                    2: FlexColumnWidth(1.5),
+                    3: FlexColumnWidth(1.5),
+                  },
+                  children: const [
+                    TableRow(
+                        decoration: BoxDecoration(
+                          //  border: Border.all(),
+                          color: Color.fromARGB(255, 228, 224, 224),
+                        ),
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            child: Center(
+                                child: Text(
+                              'Roll No.',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 12),
+                            )),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: Center(
+                              child: Text(
+                                'Name',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              ),
                             ),
-                            kheight20,
-                          ],
-                        );
-                      })));
-            }),
-            Row(
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: Center(
+                                child: Text(
+                              'Forenoon',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 12),
+                            )),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: Center(
+                                child: Text(
+                              'Afternoon',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 12),
+                            )),
+                          ),
+                        ]),
+                  ],
+                ),
+              ),
+              Consumer<AttendenceStaffProvider>(
+                  builder: (context, value, child) {
+                // Provider.of<AttendenceStaffProvider>(context, listen: false)
+                //     .getstudentsAttendenceView(dateFinal, divisionId);
+                return value.loading
+                    ? spinkitLoader()
+                    : LimitedBox(
+                        maxHeight: 530,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: value.studentsAttendenceView.length,
+                            itemBuilder: ((context, index) {
+                              return Column(
+                                children: [
+                                  Table(
+                                    columnWidths: const {
+                                      0: FlexColumnWidth(1),
+                                      1: FlexColumnWidth(4.8),
+                                      2: FlexColumnWidth(1),
+                                      3: FlexColumnWidth(1.5),
+                                    },
+                                    children: [
+                                      TableRow(
+                                          decoration: const BoxDecoration(),
+                                          children: [
+                                            Text(
+                                              value
+                                                          .studentsAttendenceView[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
+                                                  ? '0'
+                                                  : value
+                                                      .studentsAttendenceView[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  const TextStyle(fontSize: 12),
+                                            ),
+                                            Text(
+                                              value
+                                                      .studentsAttendenceView[
+                                                          index]
+                                                      .name ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  attende(
+                                                      _attendence,
+                                                      value
+                                                          .studentsAttendenceView[
+                                                              index]
+                                                          .name);
+                                                  child:
+                                                  Text('At');
+                                                  setState(() {
+                                                    _attendence = !_attendence;
+                                                  });
+                                                },
+                                                child: _attendence
+                                                    ? Text(
+                                                        'A',
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )
+                                                    : Text(
+                                                        'P',
+                                                        style: TextStyle(
+                                                            color: Colors.green,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )),
+                                            Text(
+                                              value
+                                                      .studentsAttendenceView[
+                                                          index]
+                                                      .afternoon ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            )
+                                          ]),
+                                    ],
+                                  ),
+                                  kheight20,
+                                ],
+                              );
+                            })));
+              }),
+            ],
+          );
+        }),
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 kWidth,
@@ -562,10 +579,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                   ),
                 )
               ],
-            )
-          ],
-        );
-      }),
-    );
+            ),
+          ),
+        ));
   }
 }

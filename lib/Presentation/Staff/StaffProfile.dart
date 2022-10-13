@@ -1,4 +1,4 @@
-
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -32,276 +32,287 @@ class StaffProfileView extends StatelessWidget {
 
     return Scaffold(
       body: Consumer<StaffProfileProvider>(
-        builder: (context, value, child) => ListView(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 210,
-                  width: size.width,
-                  // color: UIGuide.WHITE,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: gradient,
-                      stops: stops,
-                      end: Alignment.bottomCenter,
-                      begin: Alignment.topCenter,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 70,
-                  left: 30,
-                  right: 30,
-                  child: Container(
-                      decoration: const BoxDecoration(
-                          color: UIGuide.WHITE,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 128, 125, 125),
-                              offset: Offset(
-                                2,
-                                5.0,
-                              ),
-                              blurRadius: 5.0,
-                              spreadRadius: 2.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      width: size.width - 50,
-                      height: 130,
-                      child: Column(
-                        children: [
-                          kheight20,
-                          kheight20,
-                          kheight20,
-                          kheight10,
-                          Flexible(
-                            child: RichText(
-                              overflow: TextOverflow.ellipsis,
-                              strutStyle: const StrutStyle(fontSize: 13),
-                              maxLines: 3,
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 44, 43, 43)),
-                                  text: value.name == null
-                                      ? '---'
-                                      : value.name.toString()),
-                            ),
-                          ),
-                          // Text(
-                          //   'Anita Paul  ',
-                          //   style: const TextStyle(
-                          //       fontWeight: FontWeight.w500, fontSize: 15),
-                          // ),
-                          Text(
-                            value.designation == null
-                                ? '---'
-                                : value.designation.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 13),
-                          ),
-                          kheight10,
-                        ],
-                      )),
-                ),
-                Center(
-                  child: CircleAvatar(
-                    // foregroundColor: Colors.white,
-                    backgroundImage: NetworkImage(value.photo == null
-                        ? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-default-avatar-profile-icon-vector-social-media-user-image-vector-illustration-227787227.jpg'
-                        : value.photo.toString()),
-                    radius: 65,
-                    backgroundColor: Colors.white,
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: size.width - 20,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 223, 222, 222),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
+        builder: (context, value, child) => value.loading
+            ? const spinkitLoader()
+            : ListView(
+                children: [
+                  Stack(
                     children: [
                       Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromARGB(255, 223, 222, 222),
-                        ),
+                        height: 210,
                         width: size.width,
-                        height: 90,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.home_outlined),
-                                Text(
-                                  'Permenent Address',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ],
-                            ),
-                            Flexible(
-                              child: RichText(
-                                overflow: TextOverflow.ellipsis,
-                                strutStyle: const StrutStyle(fontSize: 13),
-                                maxLines: 3,
-                                text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Color.fromARGB(255, 44, 43, 43)),
-                                    text: value.address == null
-                                        ? '----'
-                                        : value.address.toString()),
-                              ),
-                            ),
-                          ],
+                        // color: UIGuide.WHITE,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: gradient,
+                            stops: stops,
+                            end: Alignment.bottomCenter,
+                            begin: Alignment.topCenter,
+                          ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.person_outlined),
-                              Text(
-                                ' Gender : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: Text(
-                              value.gender == null
-                                  ? '--'
-                                  : value.gender.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          )
-                        ],
-                      ),
-                      kheight10,
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.cake_outlined),
-                              Text(
-                                ' DOB : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: Text(
-                              value.dateOfBirth == null
-                                  ? '--'
-                                  : value.dateOfBirth.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          )
-                        ],
-                      ),
-                      kheight10,
-                      GestureDetector(
-                        onTap: () {
-                          _makingPhoneCall();
-                        },
-                        child: Row(
-                          children: [
-                            Row(
+                      Positioned(
+                        top: 70,
+                        left: 30,
+                        right: 30,
+                        child: Container(
+                            decoration: const BoxDecoration(
+                                color: UIGuide.WHITE,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 128, 125, 125),
+                                    offset: Offset(
+                                      2,
+                                      5.0,
+                                    ),
+                                    blurRadius: 5.0,
+                                    spreadRadius: 2.0,
+                                  ),
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            width: size.width - 50,
+                            height: 130,
+                            child: Column(
                               children: [
-                                Icon(Icons.phone),
+                                kheight20,
+                                kheight20,
+                                kheight20,
+                                kheight10,
+                                Flexible(
+                                  child: RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    strutStyle: const StrutStyle(fontSize: 13),
+                                    maxLines: 3,
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                                255, 44, 43, 43)),
+                                        text: value.name == null
+                                            ? '---'
+                                            : value.name.toString()),
+                                  ),
+                                ),
+                                // Text(
+                                //   'Anita Paul  ',
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.w500, fontSize: 15),
+                                // ),
                                 Text(
-                                  ' Phone No : ',
-                                  style: TextStyle(
+                                  value.designation == null
+                                      ? '---'
+                                      : value.designation.toString(),
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 13),
                                 ),
+                                kheight10,
+                              ],
+                            )),
+                      ),
+                      Center(
+                        child: CircleAvatar(
+                          // foregroundColor: Colors.white,
+                          backgroundImage: NetworkImage(value.photo == null
+                              ? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-default-avatar-profile-icon-vector-social-media-user-image-vector-illustration-227787227.jpg'
+                              : value.photo.toString()),
+                          radius: 65,
+                          backgroundColor: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: size.width - 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 223, 222, 222),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color.fromARGB(255, 223, 222, 222),
+                              ),
+                              width: size.width,
+                              height: 90,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.home_outlined),
+                                      Text(
+                                        'Permenent Address',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      strutStyle:
+                                          const StrutStyle(fontSize: 13),
+                                      maxLines: 3,
+                                      text: TextSpan(
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Color.fromARGB(
+                                                  255, 44, 43, 43)),
+                                          text: value.address == null
+                                              ? '----'
+                                              : value.address.toString()),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.person_outlined),
+                                    Text(
+                                      ' Gender : ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    value.gender == null
+                                        ? '--'
+                                        : value.gender.toString(),
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
                               ],
                             ),
-                            Flexible(
-                              child: Text(
-                                value.mobileNo == null
-                                    ? '--'
-                                    : value.mobileNo.toString(),
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(fontSize: 12),
+                            kheight10,
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.cake_outlined),
+                                    Text(
+                                      ' DOB : ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    value.dateOfBirth == null
+                                        ? '--'
+                                        : value.dateOfBirth.toString(),
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
+                              ],
+                            ),
+                            kheight10,
+                            GestureDetector(
+                              onTap: () {
+                                _makingPhoneCall();
+                              },
+                              child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.phone),
+                                      Text(
+                                        ' Phone No : ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      value.mobileNo == null
+                                          ? '--'
+                                          : value.mobileNo.toString(),
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
+                            ),
+                            kheight10,
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.cake_outlined),
+                                    Text(
+                                      ' Short Name : ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    value.shortname == null
+                                        ? '--'
+                                        : value.shortname.toString(),
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
+                              ],
+                            ),
+                            kheight10,
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.email_outlined),
+                                    Text(
+                                      ' Email : ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13),
+                                    ),
+                                  ],
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    value.emailid == null
+                                        ? '--'
+                                        : value.emailid.toString(),
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                )
+                              ],
+                            ),
+                            kheight10,
                           ],
                         ),
                       ),
-                      kheight10,
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.cake_outlined),
-                              Text(
-                                ' Short Name : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: Text(
-                              value.shortname == null
-                                  ? '--'
-                                  : value.shortname.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          )
-                        ],
-                      ),
-                      kheight10,
-                      Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.email_outlined),
-                              Text(
-                                ' Email : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: Text(
-                              value.emailid == null
-                                  ? '--'
-                                  : value.emailid.toString(),
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          )
-                        ],
-                      ),
-                      kheight10,
-                    ],
-                  ),
-                ),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }

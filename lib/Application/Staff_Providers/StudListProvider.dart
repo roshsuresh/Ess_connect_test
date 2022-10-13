@@ -20,11 +20,10 @@ class StudReportListProvider_stf with ChangeNotifier {
     filterCourse = section;
     notifyListeners();
   }
+
   addFilterCourse(String course) {
     filterCourse = course;
     notifyListeners();
-
-
   }
 
   addFilters(String f) {
@@ -198,6 +197,7 @@ class StudReportListProvider_stf with ChangeNotifier {
       notifyListeners();
     }
   }
+
   void selectItem(ViewStudentReport model) {
     ViewStudentReport selected = viewStudReportListt
         .firstWhere((element) => element.admnNo == model.admnNo);
@@ -268,9 +268,18 @@ class StudReportListProvider_stf with ChangeNotifier {
   }
 
   //view initial
+
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   List<ViewStudentReport> viewStudReportListt = [];
   Future<bool> viewStudentReportList(
       String section, String course, String division) async {
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -298,9 +307,11 @@ class StudReportListProvider_stf with ChangeNotifier {
       // int len = templist.length;
       // String ss = templist[len].terminationStatus.toString();
       // log(ss.toString());
+      setLoading(false);
 
       notifyListeners();
     } else {
+      setLoading(false);
       print('Error in ViewList stf');
     }
     return true;

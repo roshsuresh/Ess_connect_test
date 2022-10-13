@@ -1,6 +1,7 @@
 import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
 import 'package:Ess_test/Presentation/Staff/ToGuard_textSMS.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -200,57 +201,49 @@ class _Notification_StaffToGuardainState
 
                                           // snapshot.clearStudentList();
 
-                                          return Column(
-                                            children: [
-                                              ListTile(
-                                                selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                selectedColor: UIGuide.PRIMARY2,
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
 
-                                                // selected: snapshot.isCourseSelected(
-                                                //     attendecourse![index]),
+                                            // selected: snapshot.isCourseSelected(
+                                            //     attendecourse![index]),
 
-                                                onTap: () async {
-                                                  print(
-                                                      'guh.....${staffToGuardianRespo![index]}');
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${staffToGuardianRespo![index]}');
+                                              notificationCourseController
+                                                      .text =
+                                                  await staffToGuardianRespo![
+                                                          index]['value'] ??
+                                                      '--';
+                                              notificationCourseController1
+                                                      .text =
+                                                  await staffToGuardianRespo![
+                                                          index]['text'] ??
+                                                      '--';
+                                              courseId =
                                                   notificationCourseController
-                                                          .text =
-                                                      await staffToGuardianRespo![
-                                                              index]['value'] ??
-                                                          '--';
-                                                  notificationCourseController1
-                                                          .text =
-                                                      await staffToGuardianRespo![
-                                                              index]['text'] ??
-                                                          '--';
-                                                  courseId =
-                                                      notificationCourseController
-                                                          .text
-                                                          .toString();
+                                                      .text
+                                                      .toString();
 
-                                                  // snapshot.addSelectedCourse(
-                                                  //     attendecourse![index]);
-                                                  print(courseId);
-                                                  await Provider.of<
-                                                              NotificationToGuardian_Providers>(
-                                                          context,
-                                                          listen: false)
-                                                      .communicationToGuardianDivisionStaff(
-                                                          courseId);
-                                                  Navigator.of(context).pop();
-                                                },
-                                                title: Text(
-                                                  staffToGuardianRespo![index]
-                                                          ['text'] ??
-                                                      '--',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              Divider(
-                                                height: 1,
-                                                color: Colors.black,
-                                              )
-                                            ],
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(courseId);
+                                              await Provider.of<
+                                                          NotificationToGuardian_Providers>(
+                                                      context,
+                                                      listen: false)
+                                                  .communicationToGuardianDivisionStaff(
+                                                      courseId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              staffToGuardianRespo![index]
+                                                      ['text'] ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
                                           );
                                         }),
                                   ],
@@ -493,14 +486,14 @@ class _Notification_StaffToGuardainState
                         },
                         child: value.isselectAll
                             ? Padding(
-                              padding: const EdgeInsets.only(left:10),
-                              child: SvgPicture.asset(
+                                padding: const EdgeInsets.only(left: 13),
+                                child: SvgPicture.asset(
                                   UIGuide.check,
                                   // width: 25,
                                   // height: 25,
                                   color: UIGuide.light_Purple,
                                 ),
-                            )
+                              )
                             : Text(
                                 'Select All',
                                 style: TextStyle(
@@ -536,22 +529,23 @@ class _Notification_StaffToGuardainState
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          elevation: 3.0,
+            elevation: 3.0,
             child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MaterialButton(
-            color: UIGuide.light_Purple,
-            onPressed: () {
-              Provider.of<NotificationToGuardian_Providers>(context, listen: false)
-                  .submitStudent(context);
-            },
-            child: const Text('Proceed',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400)),
-          ),
-        )));
+              padding: const EdgeInsets.all(8.0),
+              child: MaterialButton(
+                color: UIGuide.light_Purple,
+                onPressed: () {
+                  Provider.of<NotificationToGuardian_Providers>(context,
+                          listen: false)
+                      .submitStudent(context);
+                },
+                child: const Text('Proceed',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400)),
+              ),
+            )));
   }
 }
 
@@ -604,7 +598,6 @@ class Text_Matter_Notification extends StatelessWidget {
 
   final titleController = TextEditingController();
   final matterController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -694,5 +687,4 @@ class Text_Matter_Notification extends StatelessWidget {
       ),
     );
   }
-
 }

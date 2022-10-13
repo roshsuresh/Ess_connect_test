@@ -176,28 +176,35 @@ class AttendenceStaffProvider with ChangeNotifier {
     return true;
   }
 
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
-  Future<bool> getAttendanceView(String id,String date) async {
+  Future<bool> getAttendanceView(String id, String date) async {
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
-
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    var request = http.Request('GET',
-        Uri.parse('${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
 
-    request.body = json.encode({
-      "SchoolId": _pref.getString('schoolId')
-    });
+    request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
 
     request.headers.addAll(headers);
-
+    setLoading(true);
     http.StreamedResponse response = await request.send();
-
+    setLoading(true);
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
-      jsonDecode(await response.stream.bytesToString());
+          jsonDecode(await response.stream.bytesToString());
 
       log(data.toString());
 
@@ -205,8 +212,10 @@ class AttendenceStaffProvider with ChangeNotifier {
           data["divisions"].map((x) => AttendenceDivisions.fromJson(x)));
       attendenceDivisionList.addAll(templist);
       print('correct');
+      setLoading(false);
       notifyListeners();
     } else {
+      setLoading(false);
       print('Error in AttendenceDivisionList stf');
     }
     return true;

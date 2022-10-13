@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Domain/Student/Flashnews.dart';
@@ -64,34 +65,40 @@ class ProfileProvider with ChangeNotifier {
   //   }
   // }
 
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future profileData() async {
-    isLoading = true;
-    LoadingIcon();
     Map<String, dynamic> data = await parseJWT();
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     // print(headers);
+    setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
         headers: headers);
     try {
       if (response.statusCode == 200) {
+        setLoading(true);
         // print("corect");
         var jsonData = await json.decode(response.body);
-        //  log(jsonData.toString());
-        //  print("corect..........");
+
         mapResponse = await json.decode(response.body);
         dataResponse = await mapResponse!['studentDetails'];
-        // studResponse = await dataResponse!['studentPhoto'];
-        // print(studResponse);
+        ;
         print("corect..........");
         print(dataResponse);
+        setLoading(true);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);
-        //   StudentPhoto asa = StudentPhoto.fromJson(dataResponse!['studentPhoto']);
         studPhoto = std.studentPhoto;
 
         // log(studPhoto.toString());
@@ -124,7 +131,7 @@ class ProfileProvider with ChangeNotifier {
 
         // print(studName);
         // print("corect2..........");
-        isLoading = false;
+        setLoading(false);
         notifyListeners();
 
         // print(response.body);
@@ -140,11 +147,13 @@ class ProfileProvider with ChangeNotifier {
     // flashNewsModel = await flashNewsData(context);
     late FlashNewsModel flashNewsModel;
     Map<String, dynamic> data = await parseJWT();
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
+    setLoading(true);
 
     try {
       final response = await http.get(
@@ -152,11 +161,13 @@ class ProfileProvider with ChangeNotifier {
           headers: headers);
 
       if (response.statusCode == 200) {
+        setLoading(true);
         final data = json.decode(response.body.toString());
         dataRsponse = data['flashNews'];
         // print(data);
         // print(dataRsponse);
         flashNewsModel = FlashNewsModel.fromJson(data);
+        setLoading(false);
         notifyListeners();
       } else {
         print("Something went wrong in flashnews");

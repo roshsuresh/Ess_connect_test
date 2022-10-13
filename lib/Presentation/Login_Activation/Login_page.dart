@@ -132,12 +132,34 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         kheight20,
-                        SizedBox(
+                        // Container(
+                        //   color: UIGuide.light_Purple,
+                        //   width: 150,
+                        //   height: 50,
+                        //   child: ElevatedButton(
+                        //       style: ElevatedButton.styleFrom(
+                        //           shadowColor: UIGuide.light_Purple),
+                        //       onPressed: () async {
+                        //         if (_formKey.currentState!.validate()) {
+                        //           checkLogin(_username.text, _password.text);
+
+                        //           print(_username);
+                        //           print(_password);
+                        //         } else {
+                        //           print("Enter some value");
+                        //         }
+                        //       },
+                        //       child: Text('Login ->')),
+                        // ),
+                        Container(
                           width: 150,
                           height: 50,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shadowColor: UIGuide.light_Purple),
+                          decoration: BoxDecoration(
+                            // color: UIGuide.light_Purple,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: MaterialButton(
+                              color: UIGuide.light_Purple,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   checkLogin(_username.text, _password.text);
@@ -148,7 +170,10 @@ class _LoginPageState extends State<LoginPage> {
                                   print("Enter some value");
                                 }
                               },
-                              child: Text('Login ->')),
+                              child: Text(
+                                'Login ->',
+                                style: TextStyle(color: Colors.white),
+                              )),
                         )
                       ],
                     ),

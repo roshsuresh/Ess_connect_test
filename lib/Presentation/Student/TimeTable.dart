@@ -1,3 +1,4 @@
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
@@ -31,87 +32,94 @@ class Timetable extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            kheight20,
-            Table(
-              columnWidths: {
-                0: FlexColumnWidth(4),
-                1: FlexColumnWidth(2),
-              },
-              children: const [
-                TableRow(
-                    decoration: BoxDecoration(
-                      //  border: Border.all(),
-                      color: UIGuide.light_black,
-                    ),
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        child: Center(
-                          child: Text(
-                            'Class TimeTable',
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        child: Center(
-                            child: Text(
-                          'View',
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        )),
-                      ),
-                    ]),
-              ],
-            ),
-            Consumer<Timetableprovider>(
-              builder: (context, value, child) {
-                return Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(4),
-                    1: FlexColumnWidth(2),
-
-                    // 3: FlexColumnWidth(2)
-                  },
-                  //  border: TableBorder.all(),
+        child: Consumer<Timetableprovider>(
+          builder: (context, value, child) => value.loading
+              ? spinkitLoader()
+              : ListView(
                   children: [
-                    TableRow(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 245, 242, 242),
-                        ),
-                        children: [
-                          Center(
-                            child: Text(
-                              '${value.name.toString() == null ? '--' : value.name.toString()}',
-                              style: TextStyle(fontSize: 15),
+                    kheight20,
+                    Table(
+                      columnWidths: {
+                        0: FlexColumnWidth(4),
+                        1: FlexColumnWidth(2),
+                      },
+                      children: const [
+                        TableRow(
+                            decoration: BoxDecoration(
+                              //  border: Border.all(),
+                              color: UIGuide.light_black,
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (value.extension == '.pdf') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PdfDownloader()),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PdfViewPages()),
-                                );
-                              }
-                            },
-                            child: Icon(Icons.remove_red_eye),
-                          ),
-                        ]),
+                            children: [
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    'Class TimeTable',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  'View',
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                )),
+                              ),
+                            ]),
+                      ],
+                    ),
+                    Consumer<Timetableprovider>(
+                      builder: (context, value, child) {
+                        return Table(
+                          columnWidths: const {
+                            0: FlexColumnWidth(4),
+                            1: FlexColumnWidth(2),
+
+                            // 3: FlexColumnWidth(2)
+                          },
+                          //  border: TableBorder.all(),
+                          children: [
+                            TableRow(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 245, 242, 242),
+                                ),
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      '${value.name.toString() == null ? '--' : value.name.toString()}',
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (value.extension == '.pdf') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PdfDownloader()),
+                                        );
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PdfViewPages()),
+                                        );
+                                      }
+                                    },
+                                    child: Icon(Icons.remove_red_eye),
+                                  ),
+                                ]),
+                          ],
+                        );
+                      },
+                    )
                   ],
-                );
-              },
-            )
-          ],
+                ),
         ),
       ),
     );

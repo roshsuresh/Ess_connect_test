@@ -103,105 +103,105 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: LimitedBox(
-                                      maxHeight: size.height - 300,
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: studReportinitvalues_stf!.length,
-                                          itemBuilder: (context, index) {
-                                            // print(snapshot
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: LimitedBox(
+                              maxHeight: size.height - 300,
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: studReportinitvalues_stf!.length,
+                                  itemBuilder: (context, index) {
+                                    // print(snapshot
 
-                                            //     .attendenceInitialValues.length);
+                                    //     .attendenceInitialValues.length);
 
-                                            value.removeSectionAll();
-                                            return ListTile(
-                                              selectedTileColor: Colors.blue.shade100,
-                                              selectedColor: UIGuide.PRIMARY2,
-                                              // selected:
-                                              //     studReportinitvalues_stf![index],
-                                              onTap: () async {
-                                                print(
-                                                    'guh.....${studReportinitvalues_stf![index]}');
-                                                studReportInitialValuesController.text =
-                                                    await studReportinitvalues_stf![
+                                    value.removeSectionAll();
+                                    return ListTile(
+                                      selectedTileColor: Colors.blue.shade100,
+                                      selectedColor: UIGuide.PRIMARY2,
+                                      // selected:
+                                      //     studReportinitvalues_stf![index],
+                                      onTap: () async {
+                                        print(
+                                            'guh.....${studReportinitvalues_stf![index]}');
+                                        studReportInitialValuesController.text =
+                                            await studReportinitvalues_stf![
                                                     index]['value'] ??
-                                                        '--';
-                                                studReportInitialValuesController1
-                                                    .text =
-                                                    await studReportinitvalues_stf![
+                                                '--';
+                                        studReportInitialValuesController1
+                                                .text =
+                                            await studReportinitvalues_stf![
                                                     index]['text'] ??
-                                                        '--';
-                                                sectionId =
-                                                    studReportInitialValuesController
-                                                        .text
-                                                        .toString();
+                                                '--';
+                                        sectionId =
+                                            studReportInitialValuesController
+                                                .text
+                                                .toString();
 
-                                                // snapshot.addSelectedCourse(
-                                                //     attendecourse![index]);
-                                                print(sectionId);
-                                                await Provider.of<
+                                        // snapshot.addSelectedCourse(
+                                        //     attendecourse![index]);
+                                        print(sectionId);
+                                        await Provider.of<
                                                     StudReportListProvider_stf>(
-                                                    context,
-                                                    listen: false)
-                                                    .getCourseList(sectionId);
-                                                Navigator.of(context).pop();
-                                              },
-                                              title: Text(
-                                                studReportinitvalues_stf![index]
+                                                context,
+                                                listen: false)
+                                            .getCourseList(sectionId);
+                                        Navigator.of(context).pop();
+                                      },
+                                      title: Text(
+                                        studReportinitvalues_stf![index]
                                                 ['text'] ??
-                                                    '--',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          }),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Section",
-                                    hintText: "Section",
-                                  ),
-                                  enabled: false,
-                                ),
+                                            '--',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  }),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
-                              ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               SizedBox(
@@ -209,106 +209,111 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: Container(
-                                      child: LimitedBox(
-                                        maxHeight: size.height - 300,
-                                        // mainAxisSize: MainAxisSize.min,
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: LimitedBox(
+                                maxHeight: size.height - 300,
+                                // mainAxisSize: MainAxisSize.min,
 
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: snapshot.courselist.length,
-                                            itemBuilder: (context, index) {
-                                              print(snapshot.courselist.length);
-                                              // value.removeDivisionAll();
-                                              return ListTile(
-                                                selectedTileColor: Colors.blue.shade100,
-                                                selectedColor: UIGuide.PRIMARY2,
-                                                selected: snapshot.isCourseSelected(
-                                                    snapshot.courselist[index]),
-                                                onTap: () async {
-                                                  print(snapshot.courselist.length);
-                                                  StudReportcourseController.text =
-                                                      snapshot.courselist[index]
-                                                          .value ??
-                                                          '---';
-                                                  StudReportcourseController1.text =
-                                                      snapshot.courselist[index].text ??
-                                                          '---';
-                                                  snapshot.addSelectedCourse(
-                                                      snapshot.courselist[index]);
-                                                  courseId = StudReportcourseController
-                                                      .text
-                                                      .toString();
-                                                  print(
-                                                      StudReportcourseController.text);
-                                                  sectionId =
-                                                      studReportInitialValuesController
-                                                          .text
-                                                          .toString();
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.courselist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.courselist.length);
+                                      // value.removeDivisionAll();
+                                      return ListTile(
+                                        selectedTileColor: Colors.blue.shade100,
+                                        selectedColor: UIGuide.PRIMARY2,
+                                        selected: snapshot.isCourseSelected(
+                                            snapshot.courselist[index]),
+                                        onTap: () async {
+                                          print(snapshot.courselist.length);
+                                          StudReportcourseController.text =
+                                              snapshot.courselist[index]
+                                                      .value ??
+                                                  '---';
+                                          StudReportcourseController1.text =
+                                              snapshot.courselist[index].text ==
+                                                      null
+                                                  ? '---'
+                                                  : snapshot
+                                                      .courselist[index].text;
+                                          snapshot.addSelectedCourse(
+                                              snapshot.courselist[index]);
+                                          courseId = StudReportcourseController
+                                              .text
+                                              .toString();
+                                          print(
+                                              StudReportcourseController.text);
+                                          sectionId =
+                                              studReportInitialValuesController
+                                                  .text
+                                                  .toString();
 
-                                                  await Provider.of<
+                                          await Provider.of<
                                                       StudReportListProvider_stf>(
-                                                      context,
-                                                      listen: false)
-                                                      .getDivisionList(sectionId);
+                                                  context,
+                                                  listen: false)
+                                              .getDivisionList(sectionId);
 
-                                                  Navigator.of(context).pop();
-                                                },
-                                                title: Text(
-                                                  snapshot.courselist[index].text ??
-                                                      '---',
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              );
-                                            }),
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportcourseController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Course",
-                                    hintText: "Course",
-                                  ),
-                                  enabled: false,
-                                ),
+                                          Navigator.of(context).pop();
+                                        },
+                                        title: Text(
+                                          snapshot.courselist[index].text ==
+                                                  null
+                                              ? '---'
+                                              : snapshot.courselist[index].text,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportcourseController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
@@ -319,107 +324,107 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: LimitedBox(
-                                        maxHeight: size.height - 300,
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: snapshot.divisionlist.length,
-                                            itemBuilder: (context, index) {
-                                              print(snapshot.divisionlist.length);
-                                              // value.removeDivisionAll();
-                                              return Column(
-                                                children: [
-                                                  ListTile(
-                                                    selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                    selectedColor: UIGuide.PRIMARY2,
-                                                    selected: snapshot
-                                                        .isDivisionSelected(snapshot
-                                                        .divisionlist[index]),
-                                                    onTap: () async {
-                                                      print(
-                                                          snapshot.divisionlist.length);
-                                                      StudReportDivisionController
-                                                          .text = snapshot
-                                                          .divisionlist[index]
-                                                          .value ??
-                                                          '---';
-                                                      StudReportDivisionController1
-                                                          .text = snapshot
-                                                          .divisionlist[index]
-                                                          .text ??
-                                                          '---';
-                                                      snapshot.addSelectedDivision(
-                                                          snapshot.divisionlist[index]);
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: LimitedBox(
+                                maxHeight: size.height - 300,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.divisionlist.length,
+                                    itemBuilder: (context, index) {
+                                      print(snapshot.divisionlist.length);
+                                      // value.removeDivisionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot
+                                                .isDivisionSelected(snapshot
+                                                    .divisionlist[index]),
+                                            onTap: () async {
+                                              print(
+                                                  snapshot.divisionlist.length);
+                                              StudReportDivisionController
+                                                  .text = snapshot
+                                                      .divisionlist[index]
+                                                      .value ??
+                                                  '---';
+                                              StudReportDivisionController1
+                                                  .text = snapshot
+                                                      .divisionlist[index]
+                                                      .text ??
+                                                  '---';
+                                              snapshot.addSelectedDivision(
+                                                  snapshot.divisionlist[index]);
 
-                                                      print(StudReportDivisionController
-                                                          .text);
-                                                      divisionId =
-                                                          StudReportDivisionController
-                                                              .text
-                                                              .toString();
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    title: Text(
-                                                      snapshot.divisionlist[index]
-                                                          .text ??
-                                                          '---',
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }),
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportDivisionController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Division",
-                                    hintText: "Division",
-                                  ),
-                                  enabled: false,
-                                ),
+                                              print(StudReportDivisionController
+                                                  .text);
+                                              divisionId =
+                                                  StudReportDivisionController
+                                                      .text
+                                                      .toString();
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.divisionlist[index]
+                                                      .text ??
+                                                  '---',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportDivisionController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               MaterialButton(
@@ -434,10 +439,10 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                   sectionId = studReportInitialValuesController.text.toString();
 
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .clearViewList();
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
@@ -474,8 +479,8 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => StudProfileView_Staff(
-                                    indexx: index,
-                                  )),
+                                        indexx: index,
+                                      )),
                             );
                           },
                           child: Container(
@@ -484,7 +489,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 236, 233, 233),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                    BorderRadius.all(Radius.circular(10))),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -495,11 +500,11 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                     height: 70,
                                     decoration: BoxDecoration(
                                         color:
-                                        Color.fromARGB(255, 236, 233, 233),
+                                            Color.fromARGB(255, 236, 233, 233),
                                         image: DecorationImage(
                                             image: NetworkImage(provider
-                                                .viewStudReportListt[index]
-                                                .studentPhoto ??
+                                                    .viewStudReportListt[index]
+                                                    .studentPhoto ??
                                                 'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10))),
@@ -509,7 +514,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -523,16 +528,16 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.black,
                                                 ),
                                                 text: provider
-                                                    .viewStudReportListt[
-                                                index]
-                                                    .name ??
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .name ??
                                                     '---'),
                                           ),
                                         ],
@@ -550,23 +555,23 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .rollNo ==
-                                                  null
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
                                                   ? '---'
                                                   : provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .rollNo
-                                                  .toString(),
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
                                             ),
                                           ),
                                           kWidth,
@@ -591,9 +596,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                     color: Colors.black,
                                                   ),
                                                   text: provider
-                                                      .viewStudReportListt[
-                                                  index]
-                                                      .division ??
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .division ??
                                                       '---',
                                                 ),
                                               ),
@@ -614,16 +619,16 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .admnNo ??
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .admnNo ??
                                                   '---',
                                             ),
                                           ),
@@ -632,15 +637,15 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                       GestureDetector(
                                         onTap: () async {
                                           phn = provider
-                                              .viewStudReportListt[
-                                          index]
-                                              .mobNo ==
-                                              null
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ==
+                                                  null
                                               ? '--'
                                               : provider
-                                              .viewStudReportListt[index]
-                                              .mobNo
-                                              .toString();
+                                                  .viewStudReportListt[index]
+                                                  .mobNo
+                                                  .toString();
 
                                           _makingPhoneCall(phn.toString());
                                         },
@@ -666,9 +671,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                   color: Colors.black,
                                                 ),
                                                 text: provider
-                                                    .viewStudReportListt[
-                                                index]
-                                                    .mobNo ??
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .mobNo ??
                                                     '---',
                                               ),
                                             ),
@@ -752,251 +757,251 @@ class StudProfileView_Staff extends StatelessWidget {
 
     return SafeArea(
         child: Scaffold(
-          body: Consumer<StudReportListProvider_stf>(
-            builder: (context, value, child) => ListView(
+      body: Consumer<StudReportListProvider_stf>(
+        builder: (context, value, child) => ListView(
+          children: [
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 260,
-                      width: size.width,
-                      // color: UIGuide.WHITE,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: gradient,
-                          stops: stops,
-                          end: Alignment.bottomCenter,
-                          begin: Alignment.topCenter,
-                        ),
-                      ),
+                Container(
+                  height: 260,
+                  width: size.width,
+                  // color: UIGuide.WHITE,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradient,
+                      stops: stops,
+                      end: Alignment.bottomCenter,
+                      begin: Alignment.topCenter,
                     ),
-                    Positioned(
-                      top: 70,
-                      left: 30,
-                      right: 30,
-                      child: Container(
-                          decoration: const BoxDecoration(
-                              color: UIGuide.WHITE,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromARGB(255, 128, 125, 125),
-                                  offset: Offset(
-                                    2,
-                                    5.0,
-                                  ),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 2.0,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.all(Radius.circular(10))),
-                          width: size.width - 50,
-                          height: 170,
-                          child: Column(
-                            children: [
-                              kheight20,
-                              kheight20,
-                              kheight20,
-                              kheight10,
-                              Text(
-                                value.viewStudReportListt[indexx].name ?? '---',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
+                  ),
+                ),
+                Positioned(
+                  top: 70,
+                  left: 30,
+                  right: 30,
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: UIGuide.WHITE,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 128, 125, 125),
+                              offset: Offset(
+                                2,
+                                5.0,
                               ),
-                              kheight10,
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Table(
-                                  // defaultColumnWidth: FixedColumnWidth(120.0),
-                                  border: TableBorder.all(
-                                      color:
+                              blurRadius: 5.0,
+                              spreadRadius: 2.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      width: size.width - 50,
+                      height: 170,
+                      child: Column(
+                        children: [
+                          kheight20,
+                          kheight20,
+                          kheight20,
+                          kheight10,
+                          Text(
+                            value.viewStudReportListt[indexx].name ?? '---',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),
+                          ),
+                          kheight10,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Table(
+                              // defaultColumnWidth: FixedColumnWidth(120.0),
+                              border: TableBorder.all(
+                                  color:
                                       const Color.fromARGB(255, 213, 213, 243),
-                                      style: BorderStyle.solid,
-                                      width: 2),
-                                  children: [
-                                    TableRow(children: [
-                                      Column(
-                                        children: [
-                                          const Text('Division',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Colors.grey)),
-                                          Text(
-                                              value.viewStudReportListt[indexx]
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                              children: [
+                                TableRow(children: [
+                                  Column(
+                                    children: [
+                                      const Text('Division',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
                                                   .division ??
-                                                  '---',
-                                              style:
+                                              '---',
+                                          style:
                                               const TextStyle(fontSize: 16.0)),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          const Text('Roll No',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Colors.grey)),
-                                          Text(
-                                              value.viewStudReportListt[indexx]
-                                                  .rollNo ==
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      const Text('Roll No',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
+                                                      .rollNo ==
                                                   null
-                                                  ? '---'
-                                                  : value
+                                              ? '---'
+                                              : value
                                                   .viewStudReportListt[indexx]
                                                   .rollNo
                                                   .toString(),
-                                              style:
+                                          style:
                                               const TextStyle(fontSize: 16.0)),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          const Text('Adm No',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Colors.grey)),
-                                          Text(
-                                              value.viewStudReportListt[indexx]
-                                                  .admnNo ??
-                                                  '---',
-                                              style:
-                                              const TextStyle(fontSize: 16.0)),
-                                        ],
-                                      ),
-                                    ])
-                                  ],
-                                ),
-                              )
-                            ],
-                          )),
-                    ),
-                    Center(
-                      child: CircleAvatar(
-                        foregroundColor: Colors.white,
-                        foregroundImage: NetworkImage(
-                          value.viewStudReportListt[indexx].studentPhoto ??
-                              'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
-                        ),
-                        radius: 65,
-                        backgroundColor: UIGuide.WHITE,
-                        // child: Image(
-                        //   image: NetworkImage(
-                        //     value.viewStudReportListt[indexx].studentPhoto ??
-                        //         'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
-                        //   ),
-                        //   // fit: BoxFit.fill,
-                        // ),
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 170,
-                    width: size.width,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 238, 234, 234),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 238, 234, 234),
-                          ),
-                          width: size.width,
-                          height: 85,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Permenent Address',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Flexible(
-                                child: RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  strutStyle: const StrutStyle(fontSize: 13),
-                                  maxLines: 3,
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Color.fromARGB(255, 44, 43, 43)),
-                                    text:
-                                    value.viewStudReportListt[indexx].address ??
-                                        '---',
+                                    ],
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Bus Name : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
+                                  Column(
+                                    children: [
+                                      const Text('Adm No',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              color: Colors.grey)),
+                                      Text(
+                                          value.viewStudReportListt[indexx]
+                                                  .admnNo ??
+                                              '---',
+                                          style:
+                                              const TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
+                                ])
+                              ],
                             ),
-                            Flexible(
-                              child: Text(
-                                value.viewStudReportListt[indexx].bus ?? '---',
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            )
-                          ],
-                        ),
-                        kheight10,
-                        Row(
-                          children: [
-                            Text(
-                              'Bus Stop : ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 13),
-                            ),
-                            Flexible(
-                              child: Text(
-                                value.viewStudReportListt[indexx].stop ?? '---',
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            )
-                          ],
-                        ),
-                        kheight10,
-                        GestureDetector(
-                          onTap: () {
-                            _makingPhoneCall(phn.toString());
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                'Phone No : ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 13),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  phn = value.viewStudReportListt[indexx].mobNo ??
-                                      '---',
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                          )
+                        ],
+                      )),
+                ),
+                Center(
+                  child: CircleAvatar(
+                    foregroundColor: Colors.white,
+                    foregroundImage: NetworkImage(
+                      value.viewStudReportListt[indexx].studentPhoto ??
+                          'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
                     ),
+                    radius: 65,
+                    backgroundColor: UIGuide.WHITE,
+                    // child: Image(
+                    //   image: NetworkImage(
+                    //     value.viewStudReportListt[indexx].studentPhoto ??
+                    //         'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
+                    //   ),
+                    //   // fit: BoxFit.fill,
+                    // ),
                   ),
                 )
               ],
             ),
-          ),
-        ));
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 170,
+                width: size.width,
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 238, 234, 234),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 238, 234, 234),
+                      ),
+                      width: size.width,
+                      height: 85,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Permenent Address',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Flexible(
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: const StrutStyle(fontSize: 13),
+                              maxLines: 3,
+                              text: TextSpan(
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 44, 43, 43)),
+                                text:
+                                    value.viewStudReportListt[indexx].address ??
+                                        '---',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Bus Name : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 13),
+                        ),
+                        Flexible(
+                          child: Text(
+                            value.viewStudReportListt[indexx].bus ?? '---',
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        )
+                      ],
+                    ),
+                    kheight10,
+                    Row(
+                      children: [
+                        Text(
+                          'Bus Stop : ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 13),
+                        ),
+                        Flexible(
+                          child: Text(
+                            value.viewStudReportListt[indexx].stop ?? '---',
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        )
+                      ],
+                    ),
+                    kheight10,
+                    GestureDetector(
+                      onTap: () {
+                        _makingPhoneCall(phn.toString());
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'Phone No : ',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 13),
+                          ),
+                          Flexible(
+                            child: Text(
+                              phn = value.viewStudReportListt[indexx].mobNo ??
+                                  '---',
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    ));
   }
 
   _makingPhoneCall(String phn) async {
@@ -1060,117 +1065,117 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: studReportinitvalues_stf!.length,
-                                            itemBuilder: (context, index) {
-                                              // print(snapshot
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: studReportinitvalues_stf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
 
-                                              //     .attendenceInitialValues.length);
+                                      //     .attendenceInitialValues.length);
 
-                                              value.removeSectionAll();
-                                              return Column(
-                                                children: [
-                                                  ListTile(
-                                                    selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                    selectedColor: UIGuide.PRIMARY2,
-                                                    // selected:
-                                                    //     studReportinitvalues_stf![index],
-                                                    onTap: () async {
-                                                      print(
-                                                          'guh.....${studReportinitvalues_stf![index]}');
-                                                      studReportInitialValuesController
-                                                          .text =
-                                                          await studReportinitvalues_stf![
+                                      value.removeSectionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selected:
+                                            //     studReportinitvalues_stf![index],
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${studReportinitvalues_stf![index]}');
+                                              studReportInitialValuesController
+                                                      .text =
+                                                  await studReportinitvalues_stf![
                                                           index]['value'] ??
-                                                              '--';
-                                                      studReportInitialValuesController1
-                                                          .text =
-                                                          await studReportinitvalues_stf![
+                                                      '--';
+                                              studReportInitialValuesController1
+                                                      .text =
+                                                  await studReportinitvalues_stf![
                                                           index]['text'] ??
-                                                              '--';
-                                                      sectionId =
-                                                          studReportInitialValuesController
-                                                              .text
-                                                              .toString();
+                                                      '--';
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
 
-                                                      // snapshot.addSelectedCourse(
-                                                      //     attendecourse![index]);
-                                                      print(sectionId);
-                                                      await Provider.of<
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(sectionId);
+                                              await Provider.of<
                                                           StudReportListProvider_stf>(
-                                                          context,
-                                                          listen: false)
-                                                          .getCourseList(sectionId);
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    title: Text(
-                                                      studReportinitvalues_stf![index]
+                                                      context,
+                                                      listen: false)
+                                                  .getCourseList(sectionId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              studReportinitvalues_stf![index]
                                                       ['text'] ??
-                                                          '--',
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    height: 1,
-                                                    color: Colors.black,
-                                                  )
-                                                ],
-                                              );
-                                            }),
-                                      ],
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Section",
-                                    hintText: "Section",
-                                  ),
-                                  enabled: false,
-                                ),
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
-                              ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               SizedBox(
@@ -1178,113 +1183,121 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: Container(
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: snapshot.courselist.length,
-                                                itemBuilder: (context, index) {
-                                                  print(snapshot.courselist.length);
-                                                  // value.removeDivisionAll();
-                                                  return ListTile(
-                                                    selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                    selectedColor: UIGuide.PRIMARY2,
-                                                    selected: snapshot.isCourseSelected(
-                                                        snapshot.courselist[index]),
-                                                    onTap: () async {
-                                                      print(snapshot.courselist.length);
-                                                      StudReportcourseController.text =
-                                                          snapshot.courselist[index]
-                                                              .value ??
-                                                              '---';
-                                                      StudReportcourseController1.text =
-                                                          snapshot.courselist[index]
-                                                              .text ??
-                                                              '---';
-                                                      snapshot.addSelectedCourse(
-                                                          snapshot.courselist[index]);
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.courselist.length,
+                                        itemBuilder: (context, index) {
+                                          print(snapshot.courselist.length);
+                                          // value.removeDivisionAll();
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isCourseSelected(
+                                                snapshot.courselist[index]),
+                                            onTap: () async {
+                                              print(snapshot.courselist.length);
+                                              StudReportcourseController.text =
+                                                  snapshot.courselist[index]
+                                                          .value ??
+                                                      '---';
+                                              StudReportcourseController1.text =
+                                                  snapshot.courselist[index]
+                                                              .text ==
+                                                          null
+                                                      ? '---'
+                                                      : snapshot
+                                                          .courselist[index]
+                                                          .text;
+                                              snapshot.addSelectedCourse(
+                                                  snapshot.courselist[index]);
 
-                                                      print(StudReportcourseController
-                                                          .text);
-                                                      sectionId =
-                                                          studReportInitialValuesController
-                                                              .text
-                                                              .toString();
-                                                      courseId =
-                                                          StudReportcourseController
-                                                              .text
-                                                              .toString();
+                                              print(StudReportcourseController
+                                                  .text);
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
+                                              courseId =
+                                                  StudReportcourseController
+                                                      .text
+                                                      .toString();
 
-                                                      await Provider.of<
+                                              await Provider.of<
                                                           StudReportListProvider_stf>(
-                                                          context,
-                                                          listen: false)
-                                                          .getDivisionList(sectionId);
+                                                      context,
+                                                      listen: false)
+                                                  .getDivisionList(sectionId);
 
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    title: Text(
-                                                      snapshot.courselist[index].text == null?
-                                                          "---":snapshot.courselist[index].text.toString(),
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  );
-                                                }),
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportcourseController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Course",
-                                    hintText: "Course",
-                                  ),
-                                  enabled: false,
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.courselist[index].text ==
+                                                      null
+                                                  ? "---"
+                                                  : snapshot
+                                                      .courselist[index].text
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportcourseController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
@@ -1295,117 +1308,117 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          ListView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: snapshot.divisionlist.length,
-                                              itemBuilder: (context, index) {
-                                                print(snapshot.divisionlist.length);
-                                                // value.removeDivisionAll();
-                                                return Column(
-                                                  children: [
-                                                    ListTile(
-                                                      selectedTileColor:
-                                                      Colors.blue.shade100,
-                                                      selectedColor: UIGuide.PRIMARY2,
-                                                      selected: snapshot
-                                                          .isDivisionSelected(snapshot
-                                                          .divisionlist[index]),
-                                                      onTap: () async {
-                                                        print(snapshot
-                                                            .divisionlist.length);
-                                                        StudReportDivisionController
-                                                            .text = snapshot
-                                                            .divisionlist[index]
-                                                            .value ??
-                                                            '---';
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.divisionlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot.divisionlist.length);
+                                        // value.removeDivisionAll();
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isDivisionSelected(snapshot
+                                                      .divisionlist[index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .divisionlist.length);
+                                                StudReportDivisionController
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .value ??
+                                                    '---';
 
-                                                        divisionId =
-                                                            StudReportDivisionController
-                                                                .text
-                                                                .toString();
-                                                        StudReportDivisionController1
-                                                            .text = snapshot
-                                                            .divisionlist[index]
-                                                            .text ??
-                                                            '---';
-                                                        snapshot.addSelectedDivision(
-                                                            snapshot
-                                                                .divisionlist[index]);
+                                                divisionId =
+                                                    StudReportDivisionController
+                                                        .text
+                                                        .toString();
+                                                StudReportDivisionController1
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .text ??
+                                                    '---';
+                                                snapshot.addSelectedDivision(
+                                                    snapshot
+                                                        .divisionlist[index]);
 
-                                                        print(
-                                                            StudReportDivisionController
-                                                                .text);
+                                                print(
+                                                    StudReportDivisionController
+                                                        .text);
 
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      title: Text(
-                                                        snapshot.divisionlist[index]
-                                                            .text ??
-                                                            '---',
-                                                        textAlign: TextAlign.center,
-                                                      ),
-                                                    ),
-                                                    Divider(
-                                                      height: 1,
-                                                      color: Colors.black,
-                                                    )
-                                                  ],
-                                                );
-                                              }),
-                                        ],
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportDivisionController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Division",
-                                    hintText: "Division",
-                                  ),
-                                  enabled: false,
-                                ),
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot.divisionlist[index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ],
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportDivisionController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               MaterialButton(
@@ -1416,10 +1429,10 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                   courseId = StudReportcourseController.text.toString();
                   divisionId = StudReportDivisionController.text.toString();
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .clearViewList();
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
@@ -1454,8 +1467,8 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => StudProfileView_Staff(
-                                    indexx: index,
-                                  )),
+                                        indexx: index,
+                                      )),
                             );
                           },
                           child: Container(
@@ -1464,7 +1477,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                             decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 236, 233, 233),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                    BorderRadius.all(Radius.circular(10))),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -1475,11 +1488,11 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                     height: 70,
                                     decoration: BoxDecoration(
                                         color:
-                                        Color.fromARGB(255, 236, 233, 233),
+                                            Color.fromARGB(255, 236, 233, 233),
                                         image: DecorationImage(
                                             image: NetworkImage(provider
-                                                .viewStudReportListt[index]
-                                                .studentPhoto ??
+                                                    .viewStudReportListt[index]
+                                                    .studentPhoto ??
                                                 'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(10))),
@@ -1489,7 +1502,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -1503,16 +1516,16 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.black,
                                                 ),
                                                 text: provider
-                                                    .viewStudReportListt[
-                                                index]
-                                                    .name ??
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .name ??
                                                     '---'),
                                           ),
                                         ],
@@ -1530,23 +1543,23 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .rollNo ==
-                                                  null
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
                                                   ? '---'
                                                   : provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .rollNo
-                                                  .toString(),
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
                                             ),
                                           ),
                                           kWidth,
@@ -1571,9 +1584,9 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                     color: Colors.black,
                                                   ),
                                                   text: provider
-                                                      .viewStudReportListt[
-                                                  index]
-                                                      .division ??
+                                                          .viewStudReportListt[
+                                                              index]
+                                                          .division ??
                                                       '---',
                                                 ),
                                               ),
@@ -1594,16 +1607,16 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .admnNo ??
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .admnNo ??
                                                   '---',
                                             ),
                                           ),
@@ -1612,15 +1625,15 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                       GestureDetector(
                                         onTap: () async {
                                           phn = provider
-                                              .viewStudReportListt[
-                                          index]
-                                              .mobNo ==
-                                              null
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ==
+                                                  null
                                               ? '--'
                                               : provider
-                                              .viewStudReportListt[index]
-                                              .mobNo
-                                              .toString();
+                                                  .viewStudReportListt[index]
+                                                  .mobNo
+                                                  .toString();
 
                                           _makingPhoneCall(phn.toString());
                                         },
@@ -1646,9 +1659,9 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                   color: Colors.black,
                                                 ),
                                                 text: provider
-                                                    .viewStudReportListt[
-                                                index]
-                                                    .mobNo ??
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .mobNo ??
                                                     '---',
                                               ),
                                             ),
@@ -1745,117 +1758,117 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: studReportinitvalues_stf!.length,
-                                            itemBuilder: (context, index) {
-                                              // print(snapshot
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: studReportinitvalues_stf!.length,
+                                    itemBuilder: (context, index) {
+                                      // print(snapshot
 
-                                              //     .attendenceInitialValues.length);
+                                      //     .attendenceInitialValues.length);
 
-                                              value.removeSectionAll();
-                                              return Column(
-                                                children: [
-                                                  ListTile(
-                                                    selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                    selectedColor: UIGuide.PRIMARY2,
-                                                    // selected:
-                                                    //     studReportinitvalues_stf![index],
-                                                    onTap: () async {
-                                                      print(
-                                                          'guh.....${studReportinitvalues_stf![index]}');
-                                                      studReportInitialValuesController
-                                                          .text =
-                                                          await studReportinitvalues_stf![
+                                      value.removeSectionAll();
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selected:
+                                            //     studReportinitvalues_stf![index],
+                                            onTap: () async {
+                                              print(
+                                                  'guh.....${studReportinitvalues_stf![index]}');
+                                              studReportInitialValuesController
+                                                      .text =
+                                                  await studReportinitvalues_stf![
                                                           index]['value'] ??
-                                                              '--';
-                                                      studReportInitialValuesController1
-                                                          .text =
-                                                          await studReportinitvalues_stf![
+                                                      '--';
+                                              studReportInitialValuesController1
+                                                      .text =
+                                                  await studReportinitvalues_stf![
                                                           index]['text'] ??
-                                                              '--';
-                                                      sectionId =
-                                                          studReportInitialValuesController
-                                                              .text
-                                                              .toString();
+                                                      '--';
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
 
-                                                      // snapshot.addSelectedCourse(
-                                                      //     attendecourse![index]);
-                                                      print(sectionId);
-                                                      await Provider.of<
+                                              // snapshot.addSelectedCourse(
+                                              //     attendecourse![index]);
+                                              print(sectionId);
+                                              await Provider.of<
                                                           StudReportListProvider_stf>(
-                                                          context,
-                                                          listen: false)
-                                                          .getCourseList(sectionId);
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    title: Text(
-                                                      studReportinitvalues_stf![index]
+                                                      context,
+                                                      listen: false)
+                                                  .getCourseList(sectionId);
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              studReportinitvalues_stf![index]
                                                       ['text'] ??
-                                                          '--',
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  Divider(
-                                                    height: 1,
-                                                    color: Colors.black,
-                                                  )
-                                                ],
-                                              );
-                                            }),
-                                      ],
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Section",
-                                    hintText: "Section",
-                                  ),
-                                  enabled: false,
-                                ),
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 1,
+                                            color: Colors.black,
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ],
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Section",
+                                hintText: "Section",
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: studReportInitialValuesController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
-                              ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: studReportInitialValuesController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               SizedBox(
@@ -1863,113 +1876,120 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: Container(
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ListView.builder(
-                                                shrinkWrap: true,
-                                                itemCount: snapshot.courselist.length,
-                                                itemBuilder: (context, index) {
-                                                  print(snapshot.courselist.length);
-                                                  // value.removeDivisionAll();
-                                                  return ListTile(
-                                                    selectedTileColor:
-                                                    Colors.blue.shade100,
-                                                    selectedColor: UIGuide.PRIMARY2,
-                                                    selected: snapshot.isCourseSelected(
-                                                        snapshot.courselist[index]),
-                                                    onTap: () async {
-                                                      print(snapshot.courselist.length);
-                                                      StudReportcourseController.text =
-                                                          snapshot.courselist[index]
-                                                              .value ??
-                                                              '---';
-                                                      StudReportcourseController1.text =
-                                                          snapshot.courselist[index]
-                                                              .text ??
-                                                              '---';
-                                                      snapshot.addSelectedCourse(
-                                                          snapshot.courselist[index]);
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.courselist.length,
+                                        itemBuilder: (context, index) {
+                                          print(snapshot.courselist.length);
+                                          // value.removeDivisionAll();
+                                          return ListTile(
+                                            selectedTileColor:
+                                                Colors.blue.shade100,
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isCourseSelected(
+                                                snapshot.courselist[index]),
+                                            onTap: () async {
+                                              print(snapshot.courselist.length);
+                                              StudReportcourseController.text =
+                                                  snapshot.courselist[index]
+                                                          .value ??
+                                                      '---';
+                                              StudReportcourseController1.text =
+                                                  snapshot.courselist[index]
+                                                              .text ==
+                                                          null
+                                                      ? '---'
+                                                      : snapshot
+                                                          .courselist[index]
+                                                          .text;
+                                              snapshot.addSelectedCourse(
+                                                  snapshot.courselist[index]);
 
-                                                      print(StudReportcourseController
-                                                          .text);
-                                                      courseId =
-                                                          StudReportcourseController
-                                                              .text
-                                                              .toString();
-                                                      sectionId =
-                                                          studReportInitialValuesController
-                                                              .text
-                                                              .toString();
+                                              print(StudReportcourseController
+                                                  .text);
+                                              courseId =
+                                                  StudReportcourseController
+                                                      .text
+                                                      .toString();
+                                              sectionId =
+                                                  studReportInitialValuesController
+                                                      .text
+                                                      .toString();
 
-                                                      await Provider.of<
+                                              await Provider.of<
                                                           StudReportListProvider_stf>(
-                                                          context,
-                                                          listen: false)
-                                                          .getDivisionList(sectionId);
+                                                      context,
+                                                      listen: false)
+                                                  .getDivisionList(sectionId);
 
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                    title: Text(
-                                                      snapshot.courselist[index].text ??
-                                                          '---',
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  );
-                                                }),
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportcourseController1,
-                                  decoration: const InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Course",
-                                    hintText: "Course",
-                                  ),
-                                  enabled: false,
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.courselist[index].text ==
+                                                      null
+                                                  ? '---'
+                                                  : snapshot
+                                                      .courselist[index].text,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportcourseController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportcourseController1,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportcourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
             ],
           ),
@@ -1980,116 +2000,116 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                 width: MediaQuery.of(context).size.width * 0.49,
                 child: Consumer<StudReportListProvider_stf>(
                     builder: (context, snapshot, child) {
-                      return InkWell(
-                        onTap: () async {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          ListView.builder(
-                                              shrinkWrap: true,
-                                              itemCount: snapshot.divisionlist.length,
-                                              itemBuilder: (context, index) {
-                                                print(snapshot.divisionlist.length);
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.divisionlist.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot.divisionlist.length);
 
-                                                return Column(
-                                                  children: [
-                                                    ListTile(
-                                                      selectedTileColor:
-                                                      Colors.blue.shade100,
-                                                      selectedColor: UIGuide.PRIMARY2,
-                                                      selected: snapshot
-                                                          .isDivisionSelected(snapshot
-                                                          .divisionlist[index]),
-                                                      onTap: () async {
-                                                        print(snapshot
-                                                            .divisionlist.length);
-                                                        StudReportDivisionController
-                                                            .text = snapshot
-                                                            .divisionlist[index]
-                                                            .value ??
-                                                            '---';
-                                                        StudReportDivisionController1
-                                                            .text = snapshot
-                                                            .divisionlist[index]
-                                                            .text ??
-                                                            '---';
-                                                        divisionId =
-                                                            StudReportDivisionController
-                                                                .text
-                                                                .toString();
-                                                        snapshot.addSelectedDivision(
-                                                            snapshot
-                                                                .divisionlist[index]);
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              selectedTileColor:
+                                                  Colors.blue.shade100,
+                                              selectedColor: UIGuide.PRIMARY2,
+                                              selected: snapshot
+                                                  .isDivisionSelected(snapshot
+                                                      .divisionlist[index]),
+                                              onTap: () async {
+                                                print(snapshot
+                                                    .divisionlist.length);
+                                                StudReportDivisionController
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .value ??
+                                                    '---';
+                                                StudReportDivisionController1
+                                                    .text = snapshot
+                                                        .divisionlist[index]
+                                                        .text ??
+                                                    '---';
+                                                divisionId =
+                                                    StudReportDivisionController
+                                                        .text
+                                                        .toString();
+                                                snapshot.addSelectedDivision(
+                                                    snapshot
+                                                        .divisionlist[index]);
 
-                                                        print(
-                                                            StudReportDivisionController
-                                                                .text);
+                                                print(
+                                                    StudReportDivisionController
+                                                        .text);
 
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                      title: Text(
-                                                        snapshot.divisionlist[index]
-                                                            .text ??
-                                                            '---',
-                                                        textAlign: TextAlign.center,
-                                                      ),
-                                                    ),
-                                                    Divider(
-                                                      height: 1,
-                                                      color: Colors.black,
-                                                    )
-                                                  ],
-                                                );
-                                              }),
-                                        ],
-                                      ),
-                                    ));
-                              });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: TextField(
-                                  textAlign: TextAlign.center,
-                                  controller: StudReportDivisionController1,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "Select Division",
-                                    hintText: "Division",
-                                  ),
-                                  enabled: false,
-                                ),
+                                                Navigator.of(context).pop();
+                                              },
+                                              title: Text(
+                                                snapshot.divisionlist[index]
+                                                        .text ??
+                                                    '---',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.black,
+                                            )
+                                          ],
+                                        );
+                                      }),
+                                ],
                               ),
-                              SizedBox(
-                                height: 0,
-                                child: TextField(
-                                  controller: StudReportDivisionController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Color.fromARGB(255, 238, 237, 237),
-                                    border: OutlineInputBorder(),
-                                    labelText: "",
-                                    hintText: "",
-                                  ),
-                                  enabled: false,
-                                ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: StudReportDivisionController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
                               ),
-                            ],
+                              enabled: false,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: StudReportDivisionController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
               Spacer(),
               MaterialButton(
@@ -2100,10 +2120,10 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                   courseId = StudReportcourseController.text.toString();
                   divisionId = StudReportDivisionController.text.toString();
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .clearViewList();
                   await Provider.of<StudReportListProvider_stf>(context,
-                      listen: false)
+                          listen: false)
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
@@ -2132,8 +2152,8 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => StudProfileView_Staff(
-                                  indexx: index,
-                                )),
+                                      indexx: index,
+                                    )),
                           );
                         },
                         child: Container(
@@ -2142,7 +2162,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                           decoration: const BoxDecoration(
                               color: Color.fromARGB(255, 236, 233, 233),
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
+                                  BorderRadius.all(Radius.circular(10))),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -2155,8 +2175,8 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                       color: Color.fromARGB(255, 236, 233, 233),
                                       image: DecorationImage(
                                           image: NetworkImage(provider
-                                              .viewStudReportListt[index]
-                                              .studentPhoto ??
+                                                  .viewStudReportListt[index]
+                                                  .studentPhoto ??
                                               'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10))),
@@ -2179,16 +2199,16 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           strutStyle:
-                                          const StrutStyle(fontSize: 8.0),
+                                              const StrutStyle(fontSize: 8.0),
                                           text: TextSpan(
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .name ??
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .name ??
                                                   '---'),
                                         ),
                                       ],
@@ -2206,22 +2226,22 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           strutStyle:
-                                          const StrutStyle(fontSize: 8.0),
+                                              const StrutStyle(fontSize: 8.0),
                                           text: TextSpan(
                                             style: TextStyle(
                                               fontSize: 12,
                                               color: Colors.black,
                                             ),
                                             text: provider
-                                                .viewStudReportListt[
-                                            index]
-                                                .rollNo ==
-                                                null
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .rollNo ==
+                                                    null
                                                 ? '---'
                                                 : provider
-                                                .viewStudReportListt[index]
-                                                .rollNo
-                                                .toString(),
+                                                    .viewStudReportListt[index]
+                                                    .rollNo
+                                                    .toString(),
                                           ),
                                         ),
                                         kWidth,
@@ -2246,9 +2266,9 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                   color: Colors.black,
                                                 ),
                                                 text: provider
-                                                    .viewStudReportListt[
-                                                index]
-                                                    .division ??
+                                                        .viewStudReportListt[
+                                                            index]
+                                                        .division ??
                                                     '---',
                                               ),
                                             ),
@@ -2269,15 +2289,15 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           strutStyle:
-                                          const StrutStyle(fontSize: 8.0),
+                                              const StrutStyle(fontSize: 8.0),
                                           text: TextSpan(
                                             style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.black,
                                             ),
                                             text: provider
-                                                .viewStudReportListt[index]
-                                                .admnNo ??
+                                                    .viewStudReportListt[index]
+                                                    .admnNo ??
                                                 '---',
                                           ),
                                         ),
@@ -2286,14 +2306,14 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                     GestureDetector(
                                       onTap: () async {
                                         phn = provider
-                                            .viewStudReportListt[index]
-                                            .mobNo ==
-                                            null
+                                                    .viewStudReportListt[index]
+                                                    .mobNo ==
+                                                null
                                             ? '--'
                                             : provider
-                                            .viewStudReportListt[index]
-                                            .mobNo
-                                            .toString();
+                                                .viewStudReportListt[index]
+                                                .mobNo
+                                                .toString();
 
                                         _makingPhoneCall(phn.toString());
                                       },
@@ -2312,16 +2332,16 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             strutStyle:
-                                            const StrutStyle(fontSize: 8.0),
+                                                const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
                                               style: const TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.black,
                                               ),
                                               text: provider
-                                                  .viewStudReportListt[
-                                              index]
-                                                  .mobNo ??
+                                                      .viewStudReportListt[
+                                                          index]
+                                                      .mobNo ??
                                                   '---',
                                             ),
                                           ),

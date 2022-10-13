@@ -1,4 +1,5 @@
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
@@ -72,48 +73,51 @@ class Staff_Timetable extends StatelessWidget {
             ),
             Consumer<StaffTimetableProvider>(
               builder: (context, value, child) {
-                return Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(4),
-                    1: FlexColumnWidth(2),
+                return value.loading
+                    ? spinkitLoader()
+                    : Table(
+                        columnWidths: const {
+                          0: FlexColumnWidth(4),
+                          1: FlexColumnWidth(2),
 
-                    // 3: FlexColumnWidth(2)
-                  },
-                  //  border: TableBorder.all(),
-                  children: [
-                    TableRow(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 245, 242, 242),
-                        ),
+                          // 3: FlexColumnWidth(2)
+                        },
+                        //  border: TableBorder.all(),
                         children: [
-                          Center(
-                            child: Text(
-                              value.name ?? '---',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (value.extension == '.pdf') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PdfViewStaff()),
-                                );
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          StaffTimetableimage()),
-                                );
-                              }
-                            },
-                            child: Icon(Icons.remove_red_eye),
-                          ),
-                        ]),
-                  ],
-                );
+                          TableRow(
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 245, 242, 242),
+                              ),
+                              children: [
+                                Center(
+                                  child: Text(
+                                    value.name ?? '---',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    if (value.extension == '.pdf') {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PdfViewStaff()),
+                                      );
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                StaffTimetableimage()),
+                                      );
+                                    }
+                                  },
+                                  child: Icon(Icons.remove_red_eye),
+                                ),
+                              ]),
+                        ],
+                      );
               },
             )
           ],

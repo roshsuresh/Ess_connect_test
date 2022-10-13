@@ -183,9 +183,16 @@ class NotificationToGuardian_Providers with ChangeNotifier {
   }
 
   //view NotificationList
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
 
   List<StudentViewbyCourseDivision_notification_Stf> notificationView = [];
   Future<bool> getNotificationView(String course, String division) async {
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     notifyListeners();
     var headers = {
@@ -212,7 +219,9 @@ class NotificationToGuardian_Providers with ChangeNotifier {
               data["studentViewbyCourseDivision"].map((x) =>
                   StudentViewbyCourseDivision_notification_Stf.fromJson(x)));
       notificationView.addAll(templist);
+
       print('correct');
+      setLoading(false);
       notifyListeners();
     } else {
       print('Error in notificationView stf');
@@ -225,6 +234,7 @@ class NotificationToGuardian_Providers with ChangeNotifier {
     notifyListeners();
   }
 
+//selelct............
   bool isSelected(StudentViewbyCourseDivision_notification_Stf model) {
     StudentViewbyCourseDivision_notification_Stf selected = notificationView
         .firstWhere((element) => element.admnNo == model.admnNo);
@@ -256,7 +266,7 @@ class NotificationToGuardian_Providers with ChangeNotifier {
 
     notifyListeners();
   }
-
+//send notification
 
   sendNotification(BuildContext context, String text, List<String> to,
       {required String sentTo}) async {
@@ -274,9 +284,8 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       "SchoolId": data["SchoolId"],
       "Title": "Notification",
       "Body": text,
-      "FromStaffId": data['role'] == "Guardian"
-          ? data['GuardianId']
-          : data["StaffId"],
+      "FromStaffId":
+          data['role'] == "Guardian" ? data['GuardianId'] : data["StaffId"],
       "SentTo": sentTo,
       "ToId": to,
       "IsSeen": false
@@ -285,9 +294,8 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       "SchoolId": data["SchoolId"],
       "Title": "Student Notification",
       "Body": text,
-      "FromStaffId": data['role'] == "Guardian"
-          ? data['GuardianId']
-          : data["StaffId"],
+      "FromStaffId":
+          data['role'] == "Guardian" ? data['GuardianId'] : data["StaffId"],
       "SentTo": sentTo,
       "ToId": to,
       "IsSeen": false
@@ -320,11 +328,11 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       ));
     } else {
       print('selected.....');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>Text_Matter_Notification()
-          ));
+      print(notificationView
+          .where((element) => element.selected == true)
+          .toList());
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Text_Matter_Notification()));
     }
   }
 }

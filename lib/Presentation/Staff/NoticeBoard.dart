@@ -313,45 +313,56 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Center(child: Text('From  $time')),
-              color: Colors.white,
-              onPressed: (() async {
-                _mydatetimeFrom = await showDatePicker(
-                    context: context,
-                    initialDate: _mydatetimeFrom ?? DateTime.now(),
-                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
-                    lastDate: DateTime(2030));
-                setState(() {
-                  time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
-                  print(time);
-                });
-              }),
+            SizedBox(
+              // height: 30,
+              // width: MediaQuery.of(context).size.width * 0.47,
+              child: MaterialButton(
+                minWidth: size.width - 216,
+                child: Center(child: Text('From  $time')),
+                color: Colors.white,
+                onPressed: (() async {
+                  _mydatetimeFrom = await showDatePicker(
+                      context: context,
+                      initialDate: _mydatetimeFrom ?? DateTime.now(),
+                      firstDate:
+                          DateTime.now().subtract(const Duration(days: 0)),
+                      lastDate: DateTime(2030));
+                  setState(() {
+                    time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
+                    print(time);
+                  });
+                }),
+              ),
             ),
             Spacer(),
-            MaterialButton(
-              minWidth: size.width - 200,
-              child: Center(child: Text('To  ${timeNow}')),
-              color: Colors.white,
-              onPressed: (() async {
-                _mydatetimeTo = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 0)),
-                  lastDate: DateTime(2100),
-                );
-                // _mydatetimeTo = await showDatePicker(
-                //     context: context,
-                //     initialDate: _mydatetimeTo ?? DateTime.now(),
-                //     firstDate: DateTime(2022),
-                //     lastDate: DateTime(2030));
-                setState(() {
-                  timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
-                  print(timeNow);
-                });
-              }),
+            //  kWidth, kWidth,
+            SizedBox(
+              // height: 30,
+              // width: MediaQuery.of(context).size.width * 0.47,
+              child: MaterialButton(
+                minWidth: size.width - 216,
+                child: Center(child: Text('To  ${timeNow}')),
+                color: Colors.white,
+                onPressed: (() async {
+                  _mydatetimeTo = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2100),
+                  );
+                  // _mydatetimeTo = await showDatePicker(
+                  //     context: context,
+                  //     initialDate: _mydatetimeTo ?? DateTime.now(),
+                  //     firstDate: DateTime(2022),
+                  //     lastDate: DateTime(2030));
+                  setState(() {
+                    timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
+                    print(timeNow);
+                  });
+                }),
+              ),
             ),
           ],
         ),

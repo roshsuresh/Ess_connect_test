@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:Ess_test/Domain/Staff/GalleryListViewStaff.dart';
 import 'package:Ess_test/Domain/Staff/GallerySendStaff.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -248,6 +248,73 @@ class GallerySendProvider_Stf with ChangeNotifier {
       print(await response.stream.bytesToString());
     } else {
       print('Error in gallery save respo');
+    }
+  }
+
+  //gallery view staff
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  List<GalleryViewList_staff> galleryViewList = [];
+  Future<bool> galleryViewListStaff() async {
+    setLoading(true);
+
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/staffdet/gallery-list'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
+
+      log(data.toString());
+
+      List<GalleryViewList_staff> templist = List<GalleryViewList_staff>.from(
+          data["galleryView"].map((x) => GalleryViewList_staff.fromJson(x)));
+      galleryViewList.addAll(templist);
+      setLoading(false);
+      notifyListeners();
+    } else {
+      setLoading(false);
+      print('Error in galleryViewList stf');
+    }
+    return true;
+  }
+
+//delete gallery
+
+  Future galleryDeleteStaff(String eventID) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request('DELETE',
+        Uri.parse('${UIGuide.baseURL}/gallery/delete-event/$eventID'));
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 204) {
+      print(await response.stream.bytesToString());
+      print('correct');
+      notifyListeners();
+    } else {
+      print('Error in galleryDelete stf');
     }
   }
 }

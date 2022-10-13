@@ -19,25 +19,33 @@ class FeesProvider with ChangeNotifier {
   late int installamount;
   bool? allowPartialPayment;
 
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   List<FeeFeesInstallments> feeList = [];
   List<FeeBusInstallments> busFeeList = [];
   Future<bool> feesData() async {
     // isLoading = true;
     // notifyListeners();
-
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-
+    setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/feevalues"),
         headers: headers);
 
     try {
       if (response.statusCode == 200) {
+        setLoading(true);
         var jsonData = json.decode(response.body);
 
         print("Fee Response..........");
@@ -47,12 +55,12 @@ class FeesProvider with ChangeNotifier {
             data['onlineFeePaymentStudentDetails'];
         // feeResponse = dataResponss!['feeFeesInstallments'];
         // busfeeResponse = dataResponss!['feeBusInstallments'];
-
+        setLoading(true);
         List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
             feeinitial['feeFeesInstallments']
                 .map((x) => FeeFeesInstallments.fromJson(x)));
         feeList.addAll(templist);
-
+        setLoading(true);
         List<FeeBusInstallments> templistt = List<FeeBusInstallments>.from(
             feeinitial['feeBusInstallments']
                 .map((x) => FeeBusInstallments.fromJson(x)));
@@ -80,11 +88,14 @@ class FeesProvider with ChangeNotifier {
 
         // print(installmentTerm);
         // isLoading = false;
+        setLoading(false);
         notifyListeners();
       } else {
+        setLoading(false);
         print("Error in fee response");
       }
     } catch (e) {
+      setLoading(false);
       print(e);
     }
     return true;

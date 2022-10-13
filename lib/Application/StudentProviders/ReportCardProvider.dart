@@ -15,13 +15,22 @@ class ReportCardProvider with ChangeNotifier {
   String? extension;
   bool isLoading = false;
   String? url;
+
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future getReportCard() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    isLoading = true;
+    setLoading(true);
     var response = await http.get(
         Uri.parse(
             "${UIGuide.baseURL}/mobileapp/parents/tabulation/initialvalues"),
@@ -30,12 +39,14 @@ class ReportCardProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         reportResponse = data['reportCardList'];
-        isLoading = false;
+        setLoading(false);
         notifyListeners();
       } else {
+        setLoading(false);
         print("Error in response");
       }
     } catch (e) {
+      setLoading(false);
       print(e);
     }
   }

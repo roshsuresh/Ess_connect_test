@@ -8,16 +8,25 @@ import '../../utils/constants.dart';
 List? dataRsponse;
 
 class FlashnewsProvider with ChangeNotifier {
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future flashNewsProvider(context) async {
     // flashNewsModel = await flashNewsData(context);
+
     late FlashNewsModel flashNewsModel;
     Map<String, dynamic> data = await parseJWT();
+    setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-
+    setLoading(true);
     try {
       final response = await http.get(
           Uri.parse("${UIGuide.baseURL}/mobileapp/staff/flashnews"),
@@ -29,8 +38,10 @@ class FlashnewsProvider with ChangeNotifier {
         // print(data);
         // print(dataRsponse);
         flashNewsModel = FlashNewsModel.fromJson(data);
+        setLoading(false);
         notifyListeners();
       } else {
+        setLoading(false);
         print("Something went wrong in flashnews");
       }
     } catch (e) {
