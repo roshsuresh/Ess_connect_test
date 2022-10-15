@@ -54,11 +54,8 @@ class LoginProvider with ChangeNotifier {
         'POST', Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusertoken'));
     request.body = json.encode({
       "SchoolId": data["SchoolId"],
-      "AcademicyearId": data["AcademicYearId"],
       "MobileToken": token,
       "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
-      "StudentPresentDetailsId":
-          data.containsKey('PresentDetailId') ? data["PresentDetailId"] : null,
       "GuardianId": data['GuardianId'],
       "Type": data['role'] == "Guardian" ? "Student" : "Staff"
     });

@@ -268,7 +268,7 @@ class NotificationToGuardian_Providers with ChangeNotifier {
   }
 //send notification
 
-  sendNotification(BuildContext context, String text, List<String> to,
+  sendNotification(BuildContext context, String body,String content, List<String> to,
       {required String sentTo}) async {
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -282,20 +282,20 @@ class NotificationToGuardian_Providers with ChangeNotifier {
     print(Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusernotification'));
     request.body = json.encode({
       "SchoolId": data["SchoolId"],
-      "Title": "Notification",
-      "Body": text,
+      "Title": body,
+      "Body": content,
       "FromStaffId":
-          data['role'] == "Guardian" ? data['GuardianId'] : data["StaffId"],
+          data['role'] == "Guardian" ? data['StudentId'] : data["StaffId"],
       "SentTo": sentTo,
       "ToId": to,
       "IsSeen": false
     });
     print({
       "SchoolId": data["SchoolId"],
-      "Title": "Student Notification",
-      "Body": text,
+      "Title": body,
+      "Body": content,
       "FromStaffId":
-          data['role'] == "Guardian" ? data['GuardianId'] : data["StaffId"],
+          data['role'] == "Guardian" ? data['StudentId'] : data["StaffId"],
       "SentTo": sentTo,
       "ToId": to,
       "IsSeen": false
@@ -332,7 +332,9 @@ class NotificationToGuardian_Providers with ChangeNotifier {
           .where((element) => element.selected == true)
           .toList());
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Text_Matter_Notification()));
+          MaterialPageRoute(builder: (context) => Text_Matter_Notification(toList: selectedList.map((e) => e.studentId)
+              .toList(),
+            type: "Student",)));
     }
   }
 }

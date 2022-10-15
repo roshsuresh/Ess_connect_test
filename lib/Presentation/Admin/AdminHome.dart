@@ -1,7 +1,9 @@
+import 'package:Ess_test/Domain/Admin/DashboardModel.dart';
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Constants.dart';
@@ -897,75 +899,83 @@ class AdminHomeContent extends StatelessWidget {
 
 class AdminProfileTop extends StatelessWidget {
   const AdminProfileTop({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return SafeArea(
-      child: CarouselSlider(
-        items: [
-          Container(
-            width: size.width,
-            //  width: wwidth,
-            margin: const EdgeInsets.all(6.0),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border:
+      child: Consumer<Dashboard>(
+        builder: (context, value, child) {
+          int tt= value.totalStudentStrength;
+          return CarouselSlider(
+
+            items: [
+              Container(
+                width: size.width,
+                //  width: wwidth,
+                margin: const EdgeInsets.all(6.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border:
                     Border.all(color: const Color.fromARGB(255, 210, 199, 240)),
-                borderRadius: const BorderRadius.all(Radius.circular(5))),
-            child: Column(
-              children: const [
-                Text(
-                  'Student Info',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
+                child: Column(
+                  children: const [
+                    Text(
+                      'Student Info',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
+                    ),
+                    Text("Total Strength :",
+                    ),
+
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Container(
-            width: size.width,
-            margin: const EdgeInsets.all(6.0),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border:
-                    Border.all(color: const Color.fromARGB(255, 210, 199, 240)),
-                borderRadius: const BorderRadius.all(Radius.circular(5))),
-            child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Staff Info',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
-                ),
-                //kheight10,
-              ],
-            ),
-          ),
-          Container(
-            width: size.width,
-            margin: const EdgeInsets.all(6.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
-                fit: BoxFit.cover,
               ),
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.all(6.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border:
+                    Border.all(color: const Color.fromARGB(255, 210, 199, 240)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
+                child: Column(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Staff Info',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
+                    ),
+                    //kheight10,
+                  ],
+                ),
+              ),
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.all(6.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+            options: CarouselOptions(
+              height: 140.0,
+              enlargeCenterPage: false,
+              autoPlay: true,
+              aspectRatio: 16 / 9,
+              //  autoPlayCurve: Curves.fastOutSlowIn,
+              enableInfiniteScroll: true,
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              viewportFraction: 0.8,
             ),
-          ),
-        ],
-        options: CarouselOptions(
-          height: 140.0,
-          enlargeCenterPage: false,
-          autoPlay: true,
-          aspectRatio: 16 / 9,
-          //  autoPlayCurve: Curves.fastOutSlowIn,
-          enableInfiniteScroll: true,
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          viewportFraction: 0.8,
-        ),
+          );
+        }
       ),
     );
   }

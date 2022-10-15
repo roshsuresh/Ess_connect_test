@@ -1,25 +1,22 @@
 import 'dart:io';
-
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
-
 import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
-
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Application/AdminProviders/Student_list_provider.dart';
@@ -30,25 +27,74 @@ import 'Application/StudentProviders/AttendenceProvider.dart';
 import 'Application/StudentProviders/FeesProvider.dart';
 import 'Application/StudentProviders/GalleryProvider.dart';
 import 'Application/StudentProviders/LoginProvider.dart';
-
 import 'Application/StudentProviders/NoticProvider.dart';
 import 'Application/StudentProviders/PasswordChangeProvider.dart';
 import 'Application/StudentProviders/ProfileProvider.dart';
 import 'Application/StudentProviders/ReportCardProvider.dart';
 import 'Application/StudentProviders/SiblingsProvider.dart';
 import 'Application/StudentProviders/TimetableProvider.dart';
+import 'Firebase_options.dart';
 import 'Presentation/Admin/AdminHome.dart';
 import 'Presentation/Login_Activation/ActivatePage.dart';
-import 'Presentation/Login_Activation/LoginPageWeb.dart';
 import 'Presentation/Login_Activation/Login_page.dart';
 import 'Presentation/Staff/StaffHome.dart';
 import 'Presentation/Student/Student_home.dart';
 
-import 'package:path_provider/path_provider.dart';
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  RemoteNotification? notification = message.notification;
+  print('Handling a background message ${message.messageId}');
+
+  flutterLocalNotificationsPlugin.show(
+    notification.hashCode,
+    notification!.title,
+    notification.body,
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        channel.id,
+        channel.name,
+        icon: 'launch_background',
+      ),
+    ),
+  );
+}
+
+
+late AndroidNotificationChannel channel;
+
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  if (!kIsWeb) {
+    channel = const AndroidNotificationChannel(
+      'offer_notification_channel', // id
+      'offer notification channel', // title
+
+      importance: Importance.high,
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+  if (Platform.isAndroid) {
+   // await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+  }
   if (Platform.isAndroid) {
     //await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
@@ -87,6 +133,25 @@ class _GjInfoTechState extends State<GjInfoTech> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       if (prefs.getBool('activated') != null) {
         activated = true;
+      }
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+
+              channel.name,
+              icon: 'launch_background',
+            ),
+          ),
+        );
       }
     });
     super.initState();

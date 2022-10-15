@@ -1,3 +1,4 @@
+import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/ToGuardian_TextSMS.dart';
@@ -407,11 +408,11 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
           child: MaterialButton(
             color: UIGuide.light_Purple,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Text_Matter_Notification()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => Text_Matter_Notification()),
+              // );
             },
             child: const Text('Proceed',
                 style: TextStyle(
@@ -468,7 +469,9 @@ class TextSMS_studListView extends StatelessWidget {
 }
 
 class Text_Matter_Notification extends StatelessWidget {
-  Text_Matter_Notification({Key? key}) : super(key: key);
+  final List<String> toList;
+  final String type;
+  Text_Matter_Notification({Key? key,required this.toList, required this.type}) : super(key: key);
 
   final titleController = TextEditingController();
   final matterController = TextEditingController();
@@ -548,13 +551,20 @@ class Text_Matter_Notification extends StatelessWidget {
           SizedBox(
             width: 150,
             height: 40,
-            child: MaterialButton(
-              onPressed: () {},
-              child: Text(
-                'Send',
-                style: TextStyle(color: Colors.white),
-              ),
-              color: UIGuide.light_Purple,
+            child: Consumer<NotificationToGuardian_Providers>(
+              builder: (context,snapshot,value) {
+                return MaterialButton(
+                  onPressed: () {
+
+                   snapshot.sendNotification(context, titleController.text, matterController.text,toList, sentTo: type);
+                  },
+                  child: Text(
+                    'Send',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: UIGuide.light_Purple,
+                );
+              }
             ),
           )
         ],
