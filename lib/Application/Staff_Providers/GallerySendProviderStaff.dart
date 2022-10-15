@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:Ess_test/Domain/Staff/GalleryListViewStaff.dart';
 import 'package:Ess_test/Domain/Staff/GallerySendStaff.dart';
+
 import 'package:Ess_test/utils/constants.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,6 +52,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
   removeCourseAll() {
     galleryCourse.clear();
+    notifyListeners();
   }
 
   isCourseSelected(
@@ -63,6 +67,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
   courseClear() {
     courselistt.clear();
+    notifyListeners();
   }
 
   List<GalleryCourseListStaff> courselistt = [];
@@ -210,6 +215,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
   //gallery save
 
   Future gallerySave(
+      context,
       String entryDate,
       String DisplayStartDate,
       String DisplayEndDate,
@@ -245,6 +251,9 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       print('Correct...______________________________');
+      //  Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => AwesomeDilogue()));
+
       print(await response.stream.bytesToString());
     } else {
       print('Error in gallery save respo');

@@ -189,7 +189,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryInitialValuesController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -205,7 +205,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryInitialValuesController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -222,7 +222,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                       );
                     }),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   SizedBox(
                     height: 50,
                     width: MediaQuery.of(context).size.width * 0.49,
@@ -313,7 +313,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryDivisionListController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -328,7 +328,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                 height: 0,
                                 child: TextField(
                                   controller: markEntryDivisionListController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -351,8 +351,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MaterialButton(
-                      color: Color.fromARGB(255, 172, 170, 170),
-                      child: Text('View'),
+                      color: const Color.fromARGB(255, 172, 170, 170),
+                      child: const Text('View'),
                       onPressed: () async {
                         print(dateFinal);
                         print(divisionId);
@@ -456,7 +456,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 // Provider.of<AttendenceStaffProvider>(context, listen: false)
                 //     .getstudentsAttendenceView(dateFinal, divisionId);
                 return value.loading
-                    ? spinkitLoader()
+                    ? const spinkitLoader()
                     : LimitedBox(
                         maxHeight: 530,
                         child: ListView.builder(
@@ -499,7 +499,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                       .name ??
                                                   '--',
                                               textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 14),
+                                              style: const TextStyle(fontSize: 14),
                                             ),
                                             GestureDetector(
                                                 onTap: () {
@@ -509,14 +509,13 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                           .studentsAttendenceView[
                                                               index]
                                                           .name);
-                                                  child:
-                                                  Text('At');
+                                                  
                                                   setState(() {
                                                     _attendence = !_attendence;
                                                   });
                                                 },
                                                 child: _attendence
-                                                    ? Text(
+                                                    ? const Text(
                                                         'A',
                                                         style: TextStyle(
                                                             color: Colors.red,
@@ -525,7 +524,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                                 FontWeight
                                                                     .bold),
                                                       )
-                                                    : Text(
+                                                    : const Text(
                                                         'P',
                                                         style: TextStyle(
                                                             color: Colors.green,
@@ -534,6 +533,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                                 FontWeight
                                                                     .bold),
                                                       )),
+                                                  
+
                                             Text(
                                               value
                                                       .studentsAttendenceView[
@@ -560,11 +561,11 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 kWidth,
-                Spacer(),
+                const Spacer(),
                 MaterialButton(
                   onPressed: () {},
                   color: UIGuide.light_Purple,
-                  child: Text(
+                  child: const Text(
                     'Save',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -573,7 +574,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 MaterialButton(
                   onPressed: () {},
                   color: Colors.red,
-                  child: Text(
+                  child: const Text(
                     'Delete',
                     style: TextStyle(color: Colors.white),
                   ),

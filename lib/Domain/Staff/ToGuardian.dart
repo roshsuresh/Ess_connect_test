@@ -1,35 +1,120 @@
+// class NotificationToGuardian_initialValues {
+//   bool? isClassTeacher;
+//   bool? isDualAttendance;
+//   List<CommunicationToGuardian_course>? course;
+
+//   NotificationToGuardian_initialValues(
+//       {this.isClassTeacher, this.isDualAttendance, this.course});
+
+//   NotificationToGuardian_initialValues.fromJson(Map<String, dynamic> json) {
+//     isClassTeacher = json['isClassTeacher'];
+//     isDualAttendance = json['isDualAttendance'];
+//     if (json['course'] != null) {
+//       course = [];
+//       json['course'].forEach((v) {
+//         course!.add(CommunicationToGuardian_course.fromJson(v));
+//       });
+//     }
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = Map<String, dynamic>();
+//     data['isClassTeacher'] = this.isClassTeacher;
+//     data['isDualAttendance'] = this.isDualAttendance;
+//     if (this.course != null) {
+//       data['course'] = this.course!.map((v) => v.toJson()).toList();
+//     }
+
+//     return data;
+//   }
+// }
+
+// //course
+
+// class CommunicationToGuardian_course {
+//   String? value;
+//   String? text;
+//   Null selected;
+//   Null active;
+//   int? order;
+
+//   CommunicationToGuardian_course(
+//       {this.value, this.text, this.selected, this.active, this.order});
+
+//   CommunicationToGuardian_course.fromJson(Map<String, dynamic> json) {
+//     value = json['value'];
+//     text = json['text'];
+//     selected = json['selected'];
+//     active = json['active'];
+//     order = json['order'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['value'] = this.value;
+//     data['text'] = this.text;
+//     data['selected'] = this.selected;
+//     data['active'] = this.active;
+//     data['order'] = this.order;
+//     return data;
+//   }
+// }
+
+// //Division
+
+// class CommunicationToGuardian_Division {
+//   String? value;
+//   String? text;
+//   Null selected;
+//   Null active;
+//   Null order;
+
+//   CommunicationToGuardian_Division(
+//       {this.value, this.text, this.selected, this.active, this.order});
+
+//   CommunicationToGuardian_Division.fromJson(Map<String, dynamic> json) {
+//     value = json['value'];
+//     text = json['text'];
+//     selected = json['selected'];
+//     active = json['active'];
+//     order = json['order'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['value'] = this.value;
+//     data['text'] = this.text;
+//     data['selected'] = this.selected;
+//     data['active'] = this.active;
+//     data['order'] = this.order;
+//     return data;
+//   }
+// }
+
 class NotificationToGuardian_initialValues {
+  List<CommunicationToGuardian_course>? courseList;
   bool? isClassTeacher;
-  bool? isDualAttendance;
-  List<CommunicationToGuardian_course>? course;
-
-  NotificationToGuardian_initialValues(
-      {this.isClassTeacher, this.isDualAttendance, this.course});
-
+  NotificationToGuardian_initialValues({this.courseList, this.isClassTeacher});
   NotificationToGuardian_initialValues.fromJson(Map<String, dynamic> json) {
-    isClassTeacher = json['isClassTeacher'];
-    isDualAttendance = json['isDualAttendance'];
-    if (json['course'] != null) {
-      course = [];
-      json['course'].forEach((v) {
-        course!.add(CommunicationToGuardian_course.fromJson(v));
+    if (json['courseList'] != null) {
+      courseList = [];
+      json['courseList'].forEach((v) {
+        courseList!.add(CommunicationToGuardian_course.fromJson(v));
       });
     }
+    isClassTeacher = json['isClassTeacher'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['isClassTeacher'] = this.isClassTeacher;
-    data['isDualAttendance'] = this.isDualAttendance;
-    if (this.course != null) {
-      data['course'] = this.course!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.courseList != null) {
+      data['courseList'] = this.courseList!.map((v) => v.toJson()).toList();
     }
 
+    data['isClassTeacher'] = this.isClassTeacher;
     return data;
   }
 }
-
-//course
 
 class CommunicationToGuardian_course {
   String? value;
@@ -59,8 +144,6 @@ class CommunicationToGuardian_course {
     return data;
   }
 }
-
-//Division
 
 class CommunicationToGuardian_Division {
   String? value;

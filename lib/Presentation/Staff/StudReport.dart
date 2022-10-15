@@ -498,7 +498,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
           ),
           ViewStaffReport(size: size),
           LimitedBox(
-            maxHeight: size.height - 250,
+            maxHeight: size.height - 230,
             child: Consumer<StudReportListProvider_stf>(
               builder: (context, provider, child) => provider.loading
                   ? spinkitLoader()
@@ -1519,7 +1519,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
           ),
           ViewStaffReport(size: size),
           LimitedBox(
-            maxHeight: size.height - 200,
+            maxHeight: size.height - 230,
             child: Consumer<StudReportListProvider_stf>(
               builder: (context, provider, child) => provider.loading
                   ? const spinkitLoader()
@@ -2242,7 +2242,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
           ),
           ViewStaffReport(size: size),
           LimitedBox(
-            maxHeight: size.height - 200,
+            maxHeight: size.height - 230,
             child: Consumer<StudReportListProvider_stf>(
               builder: (context, provider, child) => provider.loading
                   ? spinkitLoader()

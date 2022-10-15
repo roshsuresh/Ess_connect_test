@@ -2,6 +2,7 @@ import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProv
 import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
 import 'package:Ess_test/Presentation/Staff/ToGuard_textSMS.dart';
 import 'package:Ess_test/utils/spinkit.dart';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -169,383 +170,388 @@ class _Notification_StaffToGuardainState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-          children: [
-            SizedBox(
-              height: 3,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<NotificationToGuardian_Providers>(
-                      builder: (context, snapshot, child) {
-                    return InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                  child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: staffToGuardianRespo!.length,
-                                        itemBuilder: (context, index) {
-                                          // print(snapshot
+      body: ListView(
+        children: [
+          SizedBox(
+            height: 3,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<NotificationToGuardian_Providers>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot
+                                          .communicationToGuardianInitialValues
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          selectedTileColor:
+                                              Colors.blue.shade100,
+                                          selectedColor: UIGuide.PRIMARY2,
 
-                                          //     .attendenceInitialValues.length);
+                                          // selected: snapshot.isCourseSelected(
+                                          //     attendecourse![index]),
 
-                                          // snapshot.clearStudentList();
+                                          onTap: () async {
+                                            print(
+                                                'guh.....${snapshot.communicationToGuardianInitialValues[index]}');
+                                            notificationCourseController
+                                                .text = snapshot
+                                                    .communicationToGuardianInitialValues[
+                                                        index]
+                                                    .value ??
+                                                '--';
+                                            notificationCourseController1
+                                                .text = snapshot
+                                                    .communicationToGuardianInitialValues[
+                                                        index]
+                                                    .text ??
+                                                '--';
+                                            courseId =
+                                                notificationCourseController
+                                                    .text
+                                                    .toString();
 
-                                          return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-
-                                            // selected: snapshot.isCourseSelected(
-                                            //     attendecourse![index]),
-
-                                            onTap: () async {
-                                              print(
-                                                  'guh.....${staffToGuardianRespo![index]}');
-                                              notificationCourseController
-                                                      .text =
-                                                  await staffToGuardianRespo![
-                                                          index]['value'] ??
-                                                      '--';
-                                              notificationCourseController1
-                                                      .text =
-                                                  await staffToGuardianRespo![
-                                                          index]['text'] ??
-                                                      '--';
-                                              courseId =
-                                                  notificationCourseController
-                                                      .text
-                                                      .toString();
-
-                                              // snapshot.addSelectedCourse(
-                                              //     attendecourse![index]);
-                                              print(courseId);
-                                              await Provider.of<
-                                                          NotificationToGuardian_Providers>(
-                                                      context,
-                                                      listen: false)
-                                                  .communicationToGuardianDivisionStaff(
-                                                      courseId);
-                                              Navigator.of(context).pop();
-                                            },
-                                            title: Text(
-                                              staffToGuardianRespo![index]
-                                                      ['text'] ??
-                                                  '--',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          );
-                                        }),
-                                  ],
-                                ),
-                              ));
-                            });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: notificationCourseController1,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Select Course",
-                                  hintText: "Course",
-                                ),
-                                enabled: false,
+                                            // snapshot.addSelectedCourse(
+                                            //     attendecourse![index]);
+                                            print(courseId);
+                                            await Provider.of<
+                                                        NotificationToGuardian_Providers>(
+                                                    context,
+                                                    listen: false)
+                                                .communicationToGuardianDivisionStaff(
+                                                    courseId);
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(
+                                            snapshot
+                                                    .communicationToGuardianInitialValues[
+                                                        index]
+                                                    .text ??
+                                                '--',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      }),
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 0,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: notificationCourseController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "",
-                                  hintText: "",
-                                ),
-                                enabled: false,
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: notificationCourseController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Course",
+                                hintText: "Course",
                               ),
+                              enabled: false,
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: notificationCourseController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
                       ),
-                    );
-                  }),
-                ),
-                Spacer(),
-                SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.49,
-                  child: Consumer<NotificationToGuardian_Providers>(
-                      builder: (context, snapshot, child) {
-                    return InkWell(
-                      onTap: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                  child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: snapshot
-                                            .notificationDivisionList.length,
-                                        itemBuilder: (context, index) {
-                                          print(snapshot
-                                              .notificationDivisionList.length);
-
-                                          // value.removeDivisionAll();
-                                          return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-                                            // selected: snapshot
-                                            //     .isDivisonSelected(snapshot
-                                            //             .attendenceDivisionList[
-                                            //         index]),
-                                            onTap: () async {
-                                              print(snapshot
-                                                  .notificationDivisionList
-                                                  .length);
-                                              notificationDivisionListController
-                                                  .text = snapshot
-                                                      .notificationDivisionList[
-                                                          index]
-                                                      .value ??
-                                                  '---';
-                                              notificationDivisionListController1
-                                                  .text = snapshot
-                                                      .notificationDivisionList[
-                                                          index]
-                                                      .text ??
-                                                  '---';
-                                              // snapshot.addSelectedDivision(
-                                              //     snapshot.attendenceDivisionList[
-                                              //         index]);
-
-                                              print(
-                                                  notificationDivisionListController
-                                                      .text);
-                                              divisionId =
-                                                  notificationDivisionListController
-                                                      .text
-                                                      .toString();
-                                              courseId =
-                                                  notificationCourseController1
-                                                      .text
-                                                      .toString();
-
-                                              Navigator.of(context).pop();
-                                            },
-                                            title: Text(
-                                              snapshot
-                                                      .notificationDivisionList[
-                                                          index]
-                                                      .text ??
-                                                  '---',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          );
-                                        }),
-                                  ],
-                                ),
-                              ));
-                            });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: TextField(
-                                textAlign: TextAlign.center,
-                                controller: notificationDivisionListController1,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Select Division",
-                                  hintText: "Division",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0,
-                              child: TextField(
-                                controller: notificationDivisionListController,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Color.fromARGB(255, 238, 237, 237),
-                                  border: OutlineInputBorder(),
-                                  labelText: "",
-                                  hintText: "",
-                                ),
-                                enabled: false,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MaterialButton(
-                    color: Color.fromARGB(255, 172, 170, 170),
-                    child: Text('View'),
-                    onPressed: () async {
-                      if (notificationCourseController.text.isEmpty &&
-                          notificationDivisionListController.text.isEmpty) {
-                        return AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.error,
-                                animType: AnimType.rightSlide,
-                                headerAnimationLoop: false,
-                                title: 'Error',
-                                desc: 'Select course & Division',
-                                btnOkOnPress: () {
-                                  return;
-                                },
-                                btnOkIcon: Icons.cancel,
-                                btnOkColor: Colors.red)
-                            .show();
-                      } else {
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
-                                listen: false)
-                            .clearStudentList();
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
-                                listen: false)
-                            .divisionClear();
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
-                                listen: false)
-                            .removeDivisionAll();
-                        divisionId =
-                            notificationDivisionListController.text.toString();
-                        courseId = notificationCourseController.text.toString();
-
-                        await Provider.of<NotificationToGuardian_Providers>(
-                                context,
-                                listen: false)
-                            .getNotificationView(courseId, divisionId);
-                      }
-                    }),
-              ],
-            ),
-            kheight20,
-            Table(
-              columnWidths: const {
-                0: FlexColumnWidth(1.5),
-                1: FlexColumnWidth(4),
-                2: FlexColumnWidth(1.2),
-              },
-              children: [
-                TableRow(children: [
-                  Text(
-                    '   NO.',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    //   textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    'Name',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  Consumer<NotificationToGuardian_Providers>(
-                    builder: (context, value, child) => GestureDetector(
-                        onTap: () {
-                          value.selectAll();
-                        },
-                        child: value.isselectAll
-                            ? Padding(
-                                padding: const EdgeInsets.only(left: 13),
-                                child: SvgPicture.asset(
-                                  UIGuide.check,
-                                  // width: 25,
-                                  // height: 25,
-                                  color: UIGuide.light_Purple,
-                                ),
-                              )
-                            : Text(
-                                'Select All',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: UIGuide.light_Purple),
-                              )),
-                  )
-                ])
-              ],
-            ),
-            Consumer<NotificationToGuardian_Providers>(
-              builder: (context, value, child) {
-                return LimitedBox(
-                  maxHeight: widget.size.height - 360,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.notificationView.isEmpty
-                        ? 0
-                        : value.notificationView.length,
-                    itemBuilder: ((context, index) {
-                      return Notification_StudList(
-                        viewStud: value.notificationView[index],
-                        indexx: index,
-                      );
-                    }),
-                  ),
-                );
-              },
-            ),
-            kheight20,
-            kheight20
-          ],
-        ),
-        bottomNavigationBar: BottomAppBar(
-            elevation: 3.0,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MaterialButton(
-                color: UIGuide.light_Purple,
-                onPressed: () {
-                  Provider.of<NotificationToGuardian_Providers>(context,
-                          listen: false)
-                      .submitStudent(context);
-                },
-                child: const Text('Proceed',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400)),
+                    ),
+                  );
+                }),
               ),
-            )));
+              Spacer(),
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<NotificationToGuardian_Providers>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot
+                                          .notificationDivisionList.length,
+                                      itemBuilder: (context, index) {
+                                        print(snapshot
+                                            .notificationDivisionList.length);
+
+                                        // value.removeDivisionAll();
+                                        return ListTile(
+                                          selectedTileColor:
+                                              Colors.blue.shade100,
+                                          selectedColor: UIGuide.PRIMARY2,
+                                          // selected: snapshot
+                                          //     .isDivisonSelected(snapshot
+                                          //             .attendenceDivisionList[
+                                          //         index]),
+                                          onTap: () async {
+                                            print(snapshot
+                                                .notificationDivisionList
+                                                .length);
+                                            notificationDivisionListController
+                                                .text = snapshot
+                                                    .notificationDivisionList[
+                                                        index]
+                                                    .value ??
+                                                '---';
+                                            notificationDivisionListController1
+                                                .text = snapshot
+                                                    .notificationDivisionList[
+                                                        index]
+                                                    .text ??
+                                                '---';
+                                            // snapshot.addSelectedDivision(
+                                            //     snapshot.attendenceDivisionList[
+                                            //         index]);
+
+                                            print(
+                                                notificationDivisionListController
+                                                    .text);
+                                            divisionId =
+                                                notificationDivisionListController
+                                                    .text
+                                                    .toString();
+                                            courseId =
+                                                notificationCourseController1
+                                                    .text
+                                                    .toString();
+
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(
+                                            snapshot
+                                                    .notificationDivisionList[
+                                                        index]
+                                                    .text ??
+                                                '---',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: notificationDivisionListController1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Division",
+                                hintText: "Division",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              controller: notificationDivisionListController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MaterialButton(
+                  color: Color.fromARGB(255, 172, 170, 170),
+                  child: Text('View'),
+                  onPressed: () async {
+                    if (notificationCourseController.text.isEmpty &&
+                        notificationDivisionListController.text.isEmpty) {
+                      return AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.rightSlide,
+                              headerAnimationLoop: false,
+                              title: 'Error',
+                              desc: 'Select course & Division',
+                              btnOkOnPress: () {
+                                return;
+                              },
+                              btnOkIcon: Icons.cancel,
+                              btnOkColor: Colors.red)
+                          .show();
+                    } else {
+                      await Provider.of<NotificationToGuardian_Providers>(
+                              context,
+                              listen: false)
+                          .clearStudentList();
+                      await Provider.of<NotificationToGuardian_Providers>(
+                              context,
+                              listen: false)
+                          .divisionClear();
+                      await Provider.of<NotificationToGuardian_Providers>(
+                              context,
+                              listen: false)
+                          .removeDivisionAll();
+                      divisionId =
+                          notificationDivisionListController.text.toString();
+                      courseId = notificationCourseController.text.toString();
+
+                      await Provider.of<NotificationToGuardian_Providers>(
+                              context,
+                              listen: false)
+                          .getNotificationView(courseId, divisionId);
+                    }
+                  }),
+            ],
+          ),
+          kheight20,
+          Table(
+            columnWidths: const {
+              0: FlexColumnWidth(1.5),
+              1: FlexColumnWidth(4),
+              2: FlexColumnWidth(1.2),
+            },
+            children: [
+              TableRow(children: [
+                Text(
+                  '   NO.',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  //   textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Name',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+                Consumer<NotificationToGuardian_Providers>(
+                  builder: (context, value, child) => GestureDetector(
+                      onTap: () {
+                        value.selectAll();
+                      },
+                      child: value.isselectAll
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: SvgPicture.asset(
+                                UIGuide.check,
+                                // width: 25,
+                                // height: 25,
+                                color: UIGuide.light_Purple,
+                              ),
+                            )
+                          : Text(
+                              'Select All',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: UIGuide.light_Purple),
+                            )),
+                )
+              ])
+            ],
+          ),
+          Consumer<NotificationToGuardian_Providers>(
+            builder: (context, value, child) {
+              return value.loading
+                  ? LimitedBox(
+                      maxHeight: widget.size.height - 330,
+                      child: Center(child: spinkitLoader()),
+                    )
+                  : LimitedBox(
+                      maxHeight: widget.size.height - 330,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: value.notificationView.isEmpty
+                            ? 0
+                            : value.notificationView.length,
+                        itemBuilder: ((context, index) {
+                          return Notification_StudList(
+                            viewStud: value.notificationView[index],
+                            indexx: index,
+                          );
+                        }),
+                      ),
+                    );
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 3.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: MaterialButton(
+            color: UIGuide.light_Purple,
+            onPressed: () {
+              Provider.of<NotificationToGuardian_Providers>(context,
+                      listen: false)
+                  .submitStudent(context);
+            },
+            child: const Text('Proceed',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400)),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -560,7 +566,7 @@ class Notification_StudList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<NotificationToGuardian_Providers>(
       builder: (context, value, child) => SizedBox(
-        height: 50,
+        height: 53,
         child: ListTile(
           style: ListTileStyle.list,
           selectedColor: UIGuide.light_Purple,
@@ -577,14 +583,10 @@ class Notification_StudList extends StatelessWidget {
           trailing: viewStud.selected != null && viewStud.selected!
               ? SvgPicture.asset(
                   UIGuide.check,
-                  // width: 25,
-                  // height: 25,
                   color: UIGuide.light_Purple,
                 )
               : SvgPicture.asset(
                   UIGuide.notcheck,
-                  // width: 25,
-                  // height: 25,
                   color: UIGuide.light_Purple,
                 ),
         ),

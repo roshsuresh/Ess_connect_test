@@ -2,6 +2,7 @@ import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/ToGuardian_TextSMS.dart';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,26 +27,29 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
   final notificationDivisionListController = TextEditingController();
 
   final notificationDivisionListController1 = TextEditingController();
+  final smsFormats = TextEditingController();
+  final smsFormats1 = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<TextSMS_ToGuardian_Providers>(context, listen: false);
-      p.communicationToGuardianCourseStaff();
+      p.getCourseList();
+      p.getFormatList();
       p.clearAllFilters();
-      p.selectedCourse.clear();
+      p.removeCourseAll();
       p.courseClear();
       p.divisionClear();
       p.removeDivisionAll();
       p.clearStudentList();
-      p.selectedList.clear();
-      // p.selectAll();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<TextSMS_ToGuardian_Providers>(context, listen: false)
+    //     .getCourseList();
     var size = MediaQuery.of(context).size;
     return Scaffold(
         body: ListView(
@@ -73,14 +77,13 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                                     ListView.builder(
                                         shrinkWrap: true,
                                         itemCount:
-                                            staffTextSMSToGuardRespo!.length,
+                                            snapshot.smscourseList.length,
                                         itemBuilder: (context, index) {
                                           // print(snapshot
 
                                           //     .attendenceInitialValues.length);
 
-                                          // snapshot.clearStudentList();
-
+                                          // value.removeCourseAll();
                                           return ListTile(
                                             selectedTileColor:
                                                 Colors.blue.shade100,
@@ -91,36 +94,33 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
 
                                             onTap: () async {
                                               print(
-                                                  'guh.....${staffTextSMSToGuardRespo![index]}');
+                                                  'guh.....${snapshot.smscourseList[index]}');
                                               notificationCourseController
-                                                      .text =
-                                                  await staffTextSMSToGuardRespo![
-                                                          index]['value'] ??
-                                                      '--';
+                                                  .text = snapshot
+                                                      .smscourseList[index]
+                                                      .value ??
+                                                  '--';
                                               notificationCourseController1
-                                                      .text =
-                                                  await staffTextSMSToGuardRespo![
-                                                          index]['text'] ??
-                                                      '--';
-                                              courseId =
+                                                  .text = snapshot
+                                                      .smscourseList[index]
+                                                      .text ??
+                                                  '--';
+                                              String courseId =
                                                   notificationCourseController
                                                       .text
                                                       .toString();
 
-                                              // snapshot.addSelectedCourse(
-                                              //     attendecourse![index]);
                                               print(courseId);
                                               await Provider.of<
                                                           TextSMS_ToGuardian_Providers>(
                                                       context,
                                                       listen: false)
-                                                  .communicationToGuardianDivisionStaff(
-                                                      courseId);
+                                                  .getDivisionList(courseId);
                                               Navigator.of(context).pop();
                                             },
                                             title: Text(
-                                              staffTextSMSToGuardRespo![index]
-                                                      ['text'] ??
+                                              snapshot.smscourseList[index]
+                                                      .text ??
                                                   '--',
                                               textAlign: TextAlign.center,
                                             ),
@@ -178,77 +178,56 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                   child: Consumer<TextSMS_ToGuardian_Providers>(
                       builder: (context, snapshot, child) {
                     return InkWell(
-                      onTap: () async {
+                      onTap: () {
                         showDialog(
                             context: context,
                             builder: (context) {
                               return Dialog(
                                   child: Container(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListView.builder(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: LimitedBox(
+                                    maxHeight: size.height - 300,
+                                    child: ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: snapshot
-                                            .notificationDivisionList.length,
+                                        itemCount: snapshot.divisionlist.length,
                                         itemBuilder: (context, index) {
-                                          print(snapshot
-                                              .notificationDivisionList.length);
+                                          // print(snapshot
 
-                                          // value.removeDivisionAll();
+                                          //     .attendenceInitialValues.length);
+
+                                          // value.removeCourseAll();
                                           return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
+                                            selectedTileColor: Color.fromARGB(
+                                                255, 15, 104, 177),
                                             selectedColor: UIGuide.PRIMARY2,
-                                            // selected: snapshot
-                                            //     .isDivisonSelected(snapshot
-                                            //             .attendenceDivisionList[
-                                            //         index]),
+                                            // selected: snapshot.isFormatSelected(
+                                            //     snapshot.divisionlist[index]),
                                             onTap: () async {
-                                              print(snapshot
-                                                  .notificationDivisionList
-                                                  .length);
                                               notificationDivisionListController
                                                   .text = snapshot
-                                                      .notificationDivisionList[
-                                                          index]
+                                                      .divisionlist[index]
                                                       .value ??
-                                                  '---';
+                                                  '--';
+
+                                              print(smsFormats.text);
                                               notificationDivisionListController1
                                                   .text = snapshot
-                                                      .notificationDivisionList[
-                                                          index]
+                                                      .divisionlist[index]
                                                       .text ??
-                                                  '---';
-                                              // snapshot.addSelectedDivision(
-                                              //     snapshot.attendenceDivisionList[
-                                              //         index]);
-
-                                              print(
-                                                  notificationDivisionListController
-                                                      .text);
-                                              divisionId =
-                                                  notificationDivisionListController
-                                                      .text
-                                                      .toString();
-                                              courseId =
-                                                  notificationCourseController1
-                                                      .text
-                                                      .toString();
+                                                  '--';
 
                                               Navigator.of(context).pop();
                                             },
                                             title: Text(
-                                              snapshot
-                                                      .notificationDivisionList[
-                                                          index]
+                                              snapshot.divisionlist[index]
                                                       .text ??
-                                                  '---',
+                                                  '--',
                                               textAlign: TextAlign.center,
                                             ),
                                           );
                                         }),
-                                  ],
+                                  ),
                                 ),
                               ));
                             });
@@ -275,6 +254,7 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                             SizedBox(
                               height: 0,
                               child: TextField(
+                                textAlign: TextAlign.center,
                                 controller: notificationDivisionListController,
                                 decoration: InputDecoration(
                                   filled: true,
@@ -295,8 +275,106 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.49,
+                  child: Consumer<TextSMS_ToGuardian_Providers>(
+                      builder: (context, snapshot, child) {
+                    // attachmentid = snapshot.id ?? '';
+                    return InkWell(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                  child: Container(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: LimitedBox(
+                                    maxHeight: size.height - 300,
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: snapshot.smsFormats.length,
+                                        itemBuilder: (context, index) {
+                                          // print(snapshot
+
+                                          //     .attendenceInitialValues.length);
+
+                                          // value.removeCourseAll();
+                                          return ListTile(
+                                            selectedTileColor: Color.fromARGB(
+                                                255, 15, 104, 177),
+                                            selectedColor: UIGuide.PRIMARY2,
+                                            selected: snapshot.isFormatSelected(
+                                                snapshot.smsFormats[index]),
+                                            onTap: () async {
+                                              smsFormats.text = snapshot
+                                                      .smsFormats[index]
+                                                      .value ??
+                                                  '--';
+
+                                              print(smsFormats.text);
+                                              smsFormats1.text = snapshot
+                                                      .smsFormats[index].text ??
+                                                  '--';
+
+                                              Navigator.of(context).pop();
+                                            },
+                                            title: Text(
+                                              snapshot.smsFormats[index].text ??
+                                                  '--',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              ));
+                            });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: smsFormats1,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color.fromARGB(255, 238, 237, 237),
+                                  border: OutlineInputBorder(),
+                                  labelText: "Select SMS Formats",
+                                  hintText: "SMS Formats",
+                                ),
+                                enabled: false,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 0,
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                controller: smsFormats,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color.fromARGB(255, 238, 237, 237),
+                                  border: OutlineInputBorder(),
+                                  labelText: "",
+                                  hintText: "",
+                                ),
+                                enabled: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+                Spacer(),
                 MaterialButton(
                     color: Color.fromARGB(255, 172, 170, 170),
                     child: Text('View'),
@@ -319,22 +397,30 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                       } else {
                         await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
-                            .clearStudentList();
-                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
-                                listen: false)
                             .divisionClear();
                         await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
                             .removeDivisionAll();
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
+                                listen: false)
+                            .courseClear();
+                        await Provider.of<TextSMS_ToGuardian_Providers>(context,
+                                listen: false)
+                            .removeCourseAll();
                         divisionId =
                             notificationDivisionListController.text.toString();
                         courseId = notificationCourseController.text.toString();
 
                         await Provider.of<TextSMS_ToGuardian_Providers>(context,
                                 listen: false)
-                            .getNotificationView(courseId, divisionId);
+                            .getSMSView(courseId, divisionId);
                       }
                     }),
+                kWidth,
+                kWidth,
+                kWidth,
+                kWidth,
+                kWidth,
               ],
             ),
             kheight20,
@@ -346,12 +432,12 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
               },
               children: [
                 TableRow(children: [
-                  Text(
+                  const Text(
                     '   NO.',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     //   textAlign: TextAlign.center,
                   ),
-                  Text(
+                  const Text(
                     'Name',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
@@ -361,11 +447,14 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                           value.selectAll();
                         },
                         child: value.isselectAll
-                            ? SvgPicture.asset(
-                                UIGuide.check,
-                                // width: 25,
-                                // height: 25,
-                                color: UIGuide.light_Purple,
+                            ? Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: SvgPicture.asset(
+                                  UIGuide.check,
+                                  // width: 25,
+                                  // height: 25,
+                                  color: UIGuide.light_Purple,
+                                ),
                               )
                             : Text(
                                 'Select All',
@@ -380,21 +469,28 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
             ),
             Consumer<TextSMS_ToGuardian_Providers>(
               builder: (context, value, child) {
-                return LimitedBox(
-                  maxHeight: size.height - 360,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.notificationView.isEmpty
-                        ? 0
-                        : value.notificationView.length,
-                    itemBuilder: ((context, index) {
-                      return TextSMS_studListView(
-                        viewStud: value.notificationView[index],
-                        indexx: index,
+                return value.loading
+                    ? LimitedBox(
+                        maxHeight: size.height - 330,
+                        child: Center(
+                          child: spinkitLoader(),
+                        ),
+                      )
+                    : LimitedBox(
+                        maxHeight: size.height - 330,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: value.notificationView.isEmpty
+                              ? 0
+                              : value.notificationView.length,
+                          itemBuilder: ((context, index) {
+                            return TextSMS_studListView(
+                              viewStud: value.notificationView[index],
+                              indexx: index,
+                            );
+                          }),
+                        ),
                       );
-                    }),
-                  ),
-                );
               },
             ),
             kheight20,
@@ -409,8 +505,7 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => Text_Matter_Notification()),
+                MaterialPageRoute(builder: (context) => Text_Matter_SMS()),
               );
             },
             child: const Text('Proceed',
@@ -424,7 +519,7 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
 }
 
 class TextSMS_studListView extends StatelessWidget {
-  final TExtSMS_VIEW_byStaff viewStud;
+  final TextSMSToGuardianCourseDivision_notification_Stf viewStud;
   const TextSMS_studListView(
       {Key? key, required this.viewStud, required this.indexx})
       : super(key: key);
@@ -434,7 +529,7 @@ class TextSMS_studListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TextSMS_ToGuardian_Providers>(
       builder: (context, value, child) => SizedBox(
-        height: 50,
+        height: 54,
         child: ListTile(
           style: ListTileStyle.list,
           selectedColor: UIGuide.light_Purple,
@@ -467,17 +562,17 @@ class TextSMS_studListView extends StatelessWidget {
   }
 }
 
-class Text_Matter_Notification extends StatelessWidget {
-  Text_Matter_Notification({Key? key}) : super(key: key);
+class Text_Matter_SMS extends StatelessWidget {
+  Text_Matter_SMS({Key? key}) : super(key: key);
 
-  final titleController = TextEditingController();
-  final matterController = TextEditingController();
-
+  final smsFormats = TextEditingController();
+  final smsFormats1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Send Notification'),
+        title: Text('Send SMS'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -489,75 +584,165 @@ class Text_Matter_Notification extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 40,
-              child: TextFormField(
-                controller: titleController,
-                minLines: 1,
-                maxLines: 1,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  labelText: 'Title*',
-                  hintText: 'Enter Title',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+          kheight20,
+          Row(
+            children: [
+              kWidth,
+              SizedBox(
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(10.0),
+                //   //  color: UIGuide.light_Purple,
+                //   border: Border.all(
+                //       color: UIGuide.light_Purple,
+                //       width: 1.0,
+                //       style: BorderStyle.solid),
+                // ),
+                height: 42,
+                width: MediaQuery.of(context).size.width * 0.45,
+                child: Consumer<TextSMS_ToGuardian_Providers>(
+                    builder: (context, snapshot, child) {
+                  // attachmentid = snapshot.id ?? '';
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: LimitedBox(
+                                  maxHeight: size.height - 300,
+                                  child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.smsFormatList.length,
+                                      itemBuilder: (context, index) {
+                                        // print(snapshot
+
+                                        //     .attendenceInitialValues.length);
+
+                                        // value.removeCourseAll();
+                                        return ListTile(
+                                          selectedTileColor:
+                                              Color.fromARGB(255, 15, 104, 177),
+                                          selectedColor: UIGuide.PRIMARY2,
+                                          // selected: snapshot.isFormatSelected(
+                                          //     snapshot.smsFormats[index]),
+                                          onTap: () async {
+                                            smsFormats.text = snapshot
+                                                    .smsFormatList[index].id ??
+                                                '--';
+
+                                            print(smsFormats.text);
+                                            smsFormats1.text = snapshot
+                                                    .smsFormatList[index]
+                                                    .name ??
+                                                '--';
+
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(
+                                            snapshot.smsFormatList[index]
+                                                    .name ??
+                                                '--',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: smsFormats1,
+                              decoration: InputDecoration(
+                                filled: true,
+                                focusColor:
+                                    const Color.fromARGB(255, 213, 215, 218),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: UIGuide.light_Purple, width: 1.0),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                labelText: "Select SMS Formats",
+                                hintText: "SMS Formats",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          Container(
+                            height: 0,
+                            width: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: smsFormats,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Spacer(),
+              SizedBox(
+                height: 38,
+                width: MediaQuery.of(context).size.width * 0.30,
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Preview',
+                    style: TextStyle(color: Colors.white),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: UIGuide.light_Purple, width: 1.0),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+                  color: UIGuide.light_Purple,
                 ),
               ),
-            ),
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 100,
-              child: TextFormField(
-                controller: matterController,
-                minLines: 1,
-                maxLines: 5,
-                keyboardType: TextInputType.multiline,
-                decoration: InputDecoration(
-                  labelText: 'Matter*',
-                  hintText: 'Enter Matter',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        color: UIGuide.light_Purple, width: 1.0),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 150,
-            height: 40,
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: SizedBox(
+            width: 120,
+            height: 50,
             child: MaterialButton(
               onPressed: () {},
               child: Text(
                 'Send',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               color: UIGuide.light_Purple,
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

@@ -1,17 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:Ess_test/Presentation/Staff/ToGuardian.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../Domain/Staff/StaffAttandenceModel.dart';
-import '../../Presentation/Staff/ToGuard_textSMS.dart';
-
-Map? staffNotificationToGuardianRespo;
-List? staffToGuardianRespo;
 
 class NotificationToGuardian_Providers with ChangeNotifier {
   List<CommunicationToGuardian_course> selectedCourse = [];
@@ -74,7 +68,6 @@ class NotificationToGuardian_Providers with ChangeNotifier {
   List<CommunicationToGuardian_course> communicationToGuardianInitialValues =
       [];
   bool? isClassTeacher;
-  bool? isDualAttendance;
 
   Future communicationToGuardianCourseStaff() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -84,7 +77,8 @@ class NotificationToGuardian_Providers with ChangeNotifier {
     };
 
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/staff/AttendenceInitialvalues"),
+        Uri.parse(
+            "${UIGuide.baseURL}/mobileapp/staffdet/noticeBoard/initialValues"),
         headers: headers);
 
     try {
@@ -92,16 +86,22 @@ class NotificationToGuardian_Providers with ChangeNotifier {
         print("corect");
         final data = json.decode(response.body);
 
+        Map<String, dynamic> smsiniti = await data['initialValues'];
+
+        List<CommunicationToGuardian_course> templist =
+            List<CommunicationToGuardian_course>.from(smsiniti["courseList"]
+                .map((x) => CommunicationToGuardian_course.fromJson(x)));
+        communicationToGuardianInitialValues.addAll(templist);
         print(data);
-        staffNotificationToGuardianRespo = data['attendenceinitvalues'];
+        // staffNotificationToGuardianRespo = data['attendenceinitvalues'];
         NotificationToGuardian_initialValues att =
             NotificationToGuardian_initialValues.fromJson(
-                data['attendenceinitvalues']);
+                data['initialValues']);
 
         isClassTeacher = att.isClassTeacher;
-        staffToGuardianRespo = staffNotificationToGuardianRespo!['course'];
-        print(staffToGuardianRespo);
-        print(isClassTeacher);
+        // staffToGuardianRespo = staffNotificationToGuardianRespo!['course'];
+        // print(staffToGuardianRespo);
+        // print(isClassTeacher);
 
         notifyListeners();
       } else {
@@ -150,15 +150,17 @@ class NotificationToGuardian_Providers with ChangeNotifier {
   }
 
   List<CommunicationToGuardian_Division> notificationDivisionList = [];
-  Future<bool> communicationToGuardianDivisionStaff(String id) async {
+  Future<bool> communicationToGuardianDivisionStaff(String courseId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    var request = http.Request('GET',
-        Uri.parse('${UIGuide.baseURL}/mobileapp/staff/AttendenceDivision/$id'));
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staffdet/noticeboard/divisions/$courseId'));
 
     request.headers.addAll(headers);
 

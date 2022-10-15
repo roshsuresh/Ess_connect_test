@@ -156,7 +156,7 @@ class StaffHome extends StatelessWidget {
                 kheight10,
                 kheight20,
                 Container(
-                  color: Color.fromARGB(255, 235, 232, 232),
+                  color: Color.fromARGB(255, 236, 237, 245),
                   height: 170,
                   width: size.width,
                   child: Column(

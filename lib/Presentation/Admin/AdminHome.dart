@@ -1,23 +1,20 @@
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
+import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
 import '../Student/AdvancePay.dart';
 import '../Student/Attendence.dart';
 import '../Student/PasswordChange.dart';
-
 import '../Student/Reportcard.dart';
-
 import 'FeeReport.dart';
 import 'StaffInfo.dart';
 import 'StaffReport.dart';
-import 'StudReport.dart';
 import 'StudentFeeDetails.dart';
-import 'StudentReport.dart';
 
 class AdminHome extends StatelessWidget {
   AdminHome({Key? key}) : super(key: key);
@@ -101,8 +98,7 @@ class AdminHomeContent extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => StudentReport()),
+                        MaterialPageRoute(builder: (context) => StudReport()),
                       );
                     },
                     child: Padding(
@@ -672,7 +668,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminStudReport()),
+                              builder: (context) => spinkitLoader()),
                         );
                       },
                       child: Column(
@@ -765,7 +761,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AdminStudReport()),
+                              builder: (context) => spinkitLoader()),
                         );
                       },
                       child: Column(
@@ -906,12 +902,10 @@ class AdminProfileTop extends StatelessWidget {
         items: [
           Container(
             width: size.width,
-            //  width: wwidth,
             margin: const EdgeInsets.all(6.0),
             decoration: BoxDecoration(
                 color: Colors.white,
-                border:
-                    Border.all(color: const Color.fromARGB(255, 210, 199, 240)),
+                border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
             child: Column(
               children: const [
@@ -928,11 +922,9 @@ class AdminProfileTop extends StatelessWidget {
             margin: const EdgeInsets.all(6.0),
             decoration: BoxDecoration(
                 color: Colors.white,
-                border:
-                    Border.all(color: const Color.fromARGB(255, 210, 199, 240)),
+                border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
                   'Staff Info',
@@ -957,14 +949,14 @@ class AdminProfileTop extends StatelessWidget {
           ),
         ],
         options: CarouselOptions(
-          height: 140.0,
-          enlargeCenterPage: false,
+          height: 150.0,
+          enlargeCenterPage: true,
           autoPlay: true,
           aspectRatio: 16 / 9,
-          //  autoPlayCurve: Curves.fastOutSlowIn,
+          autoPlayCurve: Curves.fastOutSlowIn,
           enableInfiniteScroll: true,
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          viewportFraction: 0.8,
+          autoPlayAnimationDuration: const Duration(milliseconds: 700),
+          viewportFraction: 0.75,
         ),
       ),
     );

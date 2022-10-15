@@ -872,7 +872,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                               columnWidths: const {
                                                 0: FlexColumnWidth(1),
                                                 1: FlexColumnWidth(4),
-                                                2: FlexColumnWidth(1.5),
+                                                2: FlexColumnWidth(.7),
                                                 3: FlexColumnWidth(1.5),
                                               },
                                               children: [

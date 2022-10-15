@@ -1,6 +1,7 @@
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Presentation/Staff/GalleryList.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -83,26 +84,27 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
   final divisionvalueController = TextEditingController();
   final divisionvalueController1 = TextEditingController();
   final titleController = TextEditingController();
-  String? attachmentid;
+  String attachmentid = '';
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<GallerySendProvider_Stf>(context, listen: false);
-
+      p.sendGallery();
       p.clearAllFilters();
       p.galleryCourse.clear();
       p.courseClear();
       p.divisionClear();
       p.removeCourseAll();
       p.removeDivisionAll();
+      titleController.clear();
+      //  p.courselistt.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<GallerySendProvider_Stf>(context, listen: false).sendGallery();
     var size = MediaQuery.of(context).size;
     datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
 
@@ -177,7 +179,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
         Row(
           children: [
             MaterialButton(
-              minWidth: size.width - 200,
+              minWidth: size.width - 216,
               child: Center(child: Text('From  $time')),
               color: Colors.white,
               onPressed: (() async {
@@ -194,7 +196,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
             ),
             Spacer(),
             MaterialButton(
-              minWidth: size.width - 200,
+              minWidth: size.width - 216,
               child: Center(child: Text('To  $timeNow')),
               color: Colors.white,
               onPressed: (() async {
@@ -241,14 +243,10 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                                       print('hii');
                                       print(snapshot.courselistt[index].value);
                                       print('hii');
-                                      // value.removeCourseAll();
+                                      //snapshot.removeCourseAll();
                                       return ListTile(
                                         selectedTileColor: Colors.blue.shade100,
                                         selectedColor: UIGuide.PRIMARY2,
-
-                                        // selected: snapshot.isCourseSelected(
-                                        //     attendecourse![index]),
-
                                         onTap: () async {
                                           coursevalueController.text = snapshot
                                                   .courselistt[index].value ??
@@ -438,16 +436,34 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               ),
               color: Color.fromARGB(179, 145, 143, 143),
               onPressed: (() async {
-                await Provider.of<GallerySendProvider_Stf>(context,
-                        listen: false)
-                    .gallerySave(
-                        datee.toString(),
-                        time,
-                        timeNow,
-                        titleController.text,
-                        coursevalueController.text,
-                        divisionvalueController.text,
-                        attachmentid!);
+                if (titleController.text.isNotEmpty &&
+                    coursevalueController.text.isNotEmpty &&
+                    divisionvalueController.text.isNotEmpty &&
+                    attachmentid.isNotEmpty) {
+                  await Provider.of<GallerySendProvider_Stf>(context,
+                          listen: false)
+                      .gallerySave(
+                          context,
+                          datee.toString(),
+                          time,
+                          timeNow,
+                          titleController.text,
+                          coursevalueController.text,
+                          divisionvalueController.text,
+                          attachmentid);
+
+                  return AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.success,
+                          animType: AnimType.rightSlide,
+                          headerAnimationLoop: false,
+                          title: 'Success',
+                          desc: 'Uploaded Successfully',
+                          btnOkOnPress: () {},
+                          btnOkIcon: Icons.cancel,
+                          btnOkColor: Colors.green)
+                      .show();
+                }
 
                 print(datee);
                 print(time);
@@ -458,6 +474,42 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 print(divisionvalueController);
 
                 print(attachmentid);
+                coursevalueController.clear();
+                titleController.clear();
+                divisionvalueController.clear();
+                divisionvalueController1.clear();
+                coursevalueController1.clear();
+                await Provider.of<GallerySendProvider_Stf>(context,
+                        listen: false)
+                    .removeCourseAll();
+                await Provider.of<GallerySendProvider_Stf>(context,
+                        listen: false)
+                    .courseClear();
+                await Provider.of<GallerySendProvider_Stf>(context,
+                        listen: false)
+                    .removeDivisionAll();
+                await Provider.of<GallerySendProvider_Stf>(context,
+                        listen: false)
+                    .divisionClear();
+
+                if (attachmentid.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Select Image..',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: Duration(seconds: 1),
+                  ));
+                }
+                if (titleController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Enter Title..',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: Duration(seconds: 1),
+                  ));
+                }
               }),
             ),
           ),
