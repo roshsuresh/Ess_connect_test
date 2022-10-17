@@ -333,10 +333,10 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       print(notificationView
           .where((element) => element.selected == true)
           .toList());
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => Text_Matter_Notification(toList: selectedList.map((e) => e.studentId)
-              .toList(),
-            type: "Student",)));
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => Text_Matter_Notification(toList: selectedList.map((e) => e.studentId)
+      //         .toList(),
+      //       type: "Student",)));
     }
   }
 }

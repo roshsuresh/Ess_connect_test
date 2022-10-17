@@ -59,8 +59,8 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
   }
 
   isCourseSelected(
-    TextSMSToGuardianCourseList item,
-  ) {
+      TextSMSToGuardianCourseList item,
+      ) {
     if (smsCourse.contains(item)) {
       return true;
     } else {
@@ -93,8 +93,8 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
       Map<String, dynamic> smsiniti = await data['initialValues'];
 
       List<TextSMSToGuardianCourseList> templist =
-          List<TextSMSToGuardianCourseList>.from(smsiniti["courseList"]
-              .map((x) => TextSMSToGuardianCourseList.fromJson(x)));
+      List<TextSMSToGuardianCourseList>.from(smsiniti["courseList"]
+          .map((x) => TextSMSToGuardianCourseList.fromJson(x)));
       smscourseList.addAll(templist);
 
       // isClassTeacher = sd.isClassTeacher;
@@ -131,8 +131,8 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
   }
 
   isDivisionSelected(
-    TextSMSToGuardianDivisionList item,
-  ) {
+      TextSMSToGuardianDivisionList item,
+      ) {
     if (noticeDivision.contains(item)) {
       return true;
     } else {
@@ -164,13 +164,13 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
-          jsonDecode(await response.stream.bytesToString());
+      jsonDecode(await response.stream.bytesToString());
       print('Division');
       log(data.toString());
 
       List<TextSMSToGuardianDivisionList> templist =
-          List<TextSMSToGuardianDivisionList>.from(data["divisions"]
-              .map((x) => TextSMSToGuardianDivisionList.fromJson(x)));
+      List<TextSMSToGuardianDivisionList>.from(data["divisions"]
+          .map((x) => TextSMSToGuardianDivisionList.fromJson(x)));
       divisionlist.addAll(templist);
 
       notifyListeners();
@@ -205,8 +205,8 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
   }
 
   isFormatSelected(
-    SmsFormatByStaff item,
-  ) {
+      SmsFormatByStaff item,
+      ) {
     if (formats.contains(item)) {
       return true;
     } else {
@@ -236,7 +236,7 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
-          jsonDecode(await response.stream.bytesToString());
+      jsonDecode(await response.stream.bytesToString());
       Map<String, dynamic> smsSettings = data['smsSettings'];
       log(data.toString());
 
@@ -281,15 +281,15 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
     if (response.statusCode == 200) {
       setLoading(true);
       Map<String, dynamic> data =
-          jsonDecode(await response.stream.bytesToString());
+      jsonDecode(await response.stream.bytesToString());
 
       log(data.toString());
       setLoading(true);
       List<TextSMSToGuardianCourseDivision_notification_Stf> templist =
-          List<TextSMSToGuardianCourseDivision_notification_Stf>.from(
-              data["studentViewbyCourseDivision"].map((x) =>
-                  TextSMSToGuardianCourseDivision_notification_Stf.fromJson(
-                      x)));
+      List<TextSMSToGuardianCourseDivision_notification_Stf>.from(
+          data["studentViewbyCourseDivision"].map((x) =>
+              TextSMSToGuardianCourseDivision_notification_Stf.fromJson(
+                  x)));
       notificationView.addAll(templist);
       print('correct');
       setLoading(false);
@@ -380,7 +380,7 @@ class TextSMS_ToGuardian_Providers with ChangeNotifier {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
-          jsonDecode(await response.stream.bytesToString());
+      jsonDecode(await response.stream.bytesToString());
 
       log(data.toString());
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../Application/Staff_Providers/StudListProvider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
@@ -97,35 +98,35 @@ class _TeachingStaffState extends State<TeachingStaff> {
 
                               //     .attendenceInitialValues.length);
 
-                              value.removeSectionAll();
+                              // value.removeSectionAll();
                               return ListTile(
                                 selectedTileColor: Colors.blue.shade100,
                                 selectedColor: UIGuide.PRIMARY2,
                                 // selected:
                                 //     studReportinitvalues_stf![index],
                                 onTap: () async {
-                                  print(
-                                      'guh.....${studReportinitvalues_stf![index]}');
-                                  studReportInitialValuesController.text =
-                                      await studReportinitvalues_stf![index]
-                                              ['value'] ??
-                                          '--';
-                                  studReportInitialValuesController1.text =
-                                      await studReportinitvalues_stf![index]
-                                              ['text'] ??
-                                          '--';
-                                  sectionId = studReportInitialValuesController
-                                      .text
-                                      .toString();
+                                  // print(
+                                  //     'guh.....${studReportinitvalues_stf![index]}');
+                                  // studReportInitialValuesController.text =
+                                  //     await studReportinitvalues_stf![index]
+                                  //             ['value'] ??
+                                  //         '--';
+                                  // studReportInitialValuesController1.text =
+                                  //     await studReportinitvalues_stf![index]
+                                  //             ['text'] ??
+                                  //         '--';
+                                  // sectionId = studReportInitialValuesController
+                                  //     .text
+                                  //     .toString();
 
                                   // snapshot.addSelectedCourse(
                                   //     attendecourse![index]);
-                                  print(sectionId);
-                                  await Provider.of<StudReportListProvider_stf>(
-                                          context,
-                                          listen: false)
-                                      .getCourseList(sectionId);
-                                  Navigator.of(context).pop();
+                                  // print(sectionId);
+                                  // await Provider.of<StudReportListProvider_stf>(
+                                  //         context,
+                                  //         listen: false)
+                                  //     .getCourseList(sectionId);
+                                  // Navigator.of(context).pop();
                                 },
                                 title: Text(
                                   studReportinitvalues_stf![index]['text'] ??
@@ -145,7 +146,7 @@ class _TeachingStaffState extends State<TeachingStaff> {
                       height: 40,
                       child: TextField(
                         textAlign: TextAlign.center,
-                        controller: studReportInitialValuesController1,
+                       // controller: studReportInitialValuesController1,
                         decoration: const InputDecoration(
                           filled: true,
                           fillColor: UIGuide.light_black,
@@ -160,7 +161,7 @@ class _TeachingStaffState extends State<TeachingStaff> {
                       height: 0,
                       child: TextField(
                         textAlign: TextAlign.center,
-                        controller: studReportInitialValuesController,
+                        //controller: studReportInitialValuesController,
                         decoration: const InputDecoration(
                           filled: true,
                           fillColor: UIGuide.light_black,

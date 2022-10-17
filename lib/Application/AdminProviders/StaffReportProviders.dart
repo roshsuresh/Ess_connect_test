@@ -132,9 +132,9 @@ class StaffReportProviders with ChangeNotifier {
         Map<String, dynamic> data = json.decode(response.body);
 
         //print(data);
-        staffStudReportRespo = data['studentReportInitialValues'];
-        studReportinitvalues_stf = staffStudReportRespo!['sectionList'];
-        print(studReportinitvalues_stf);
+        // staffStudReportRespo = data['studentReportInitialValues'];
+        // studReportinitvalues_stf = staffStudReportRespo!['sectionList'];
+        // print(studReportinitvalues_stf);
         // print(staffStudReportRespo);
 
         notifyListeners();
