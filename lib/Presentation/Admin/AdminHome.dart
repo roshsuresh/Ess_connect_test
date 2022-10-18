@@ -1,4 +1,5 @@
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
+import 'package:Ess_test/Presentation/Admin/StaffReport/studInfoo.dart';
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
 import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -177,7 +178,7 @@ class AdminHomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Attendence()),
+                            builder: (context) => const CheckBoxExample()),
                       );
                     },
                     child: Padding(

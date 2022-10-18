@@ -142,8 +142,9 @@ class _TeachingStaffState extends State<TeachingStaff> {
                                                         .staffReportList[index]
                                                         .staffPhoto
                                                         .toString())),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10))),
                                       ),
                                     ),
                                     Padding(

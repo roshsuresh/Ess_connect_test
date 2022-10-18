@@ -200,7 +200,6 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = jsonDecode(await response.stream.bytesToString());
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
       LoginModel res = LoginModel.fromJson(data);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('accesstoken', res.accessToken);
@@ -214,27 +213,33 @@ class _LoginPageState extends State<LoginPage> {
           isLoading = true;
         });
         await Future.delayed(const Duration(seconds: 3));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StudentHome()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => StudentHome()));
       } else if (parsedResponse['role'] == "SystemAdmin") {
         if (isLoading) return;
         setState(() {
           isLoading = true;
         });
         await Future.delayed(const Duration(seconds: 3));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AdminHome()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => AdminHome()));
       } else if (parsedResponse['role'] == "Teacher") {
         if (isLoading) return;
         setState(() {
           isLoading = true;
         });
         await Future.delayed(const Duration(seconds: 3));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StaffHome()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => StaffHome()));
       } else {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StudentHome()));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => StudentHome()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => StudentHome()));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

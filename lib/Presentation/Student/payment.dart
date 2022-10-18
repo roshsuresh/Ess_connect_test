@@ -1,10 +1,7 @@
-
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Application/StudentProviders/ProfileProvider.dart';
 import '../../Application/StudentProviders/TimetableProvider.dart';
 import '../../Constants.dart';
