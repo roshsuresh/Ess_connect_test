@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 import 'package:Ess_test/Application/AdminProviders/AdminHomeProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/SearchstaffProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/StaffReportProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
+import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/MarkReportProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
@@ -50,7 +53,6 @@ import 'Presentation/Login_Activation/Login_page.dart';
 import 'Presentation/Staff/StaffHome.dart';
 import 'Presentation/Student/Student_home.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   RemoteNotification? notification = message.notification;
   print('Handling a background message ${message.messageId}');
@@ -69,12 +71,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 }
 
-
 late AndroidNotificationChannel channel;
 
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,7 +93,7 @@ Future<void> main() async {
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     await FirebaseMessaging.instance
@@ -105,7 +104,7 @@ Future<void> main() async {
     );
   }
   if (Platform.isAndroid) {
-   // await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+    // await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
   if (Platform.isAndroid) {
     //await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -158,7 +157,6 @@ class _GjInfoTechState extends State<GjInfoTech> {
           NotificationDetails(
             android: AndroidNotificationDetails(
               channel.id,
-
               channel.name,
               icon: 'launch_background',
             ),
@@ -189,7 +187,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
             create: (context) => StudReportListProvider_stf()),
         ChangeNotifierProvider(create: (context) => MarkEntryProvider()),
         ChangeNotifierProvider(create: (context) => StaffTimetableProvider()),
-       // ChangeNotifierProvider(create: (context) => AttendenceStaffProvider()),
+        ChangeNotifierProvider(create: (context) => AttendenceStaffProvider()),
         ChangeNotifierProvider(create: (context) => FlashnewsProvider()),
         ChangeNotifierProvider(
             create: (context) => StaffNoticeboardSendProviders()),
@@ -203,6 +201,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
             create: (context) => MarkEntryReportProvider_stf()),
         ChangeNotifierProvider(create: (context) => AdminHomeProviders()),
         ChangeNotifierProvider(create: (context) => StaffReportProviders()),
+        ChangeNotifierProvider(create: (context) => DashboardAdmin()),
+        ChangeNotifierProvider(create: (context) => SearchStaffProviders()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

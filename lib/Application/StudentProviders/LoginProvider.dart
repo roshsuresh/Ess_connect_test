@@ -57,6 +57,7 @@ class LoginProvider with ChangeNotifier {
       "MobileToken": token,
       "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
       "GuardianId": data['GuardianId'],
+      "StudentId": data['StudentId'],
       "Type": data['role'] == "Guardian" ? "Student" : "Staff"
     });
     print('Responde body  ${request.body}');

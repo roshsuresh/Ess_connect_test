@@ -1,11 +1,7 @@
 import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
 import 'package:Ess_test/Constants.dart';
-import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -58,21 +54,8 @@ class _SearchStudent_stfState extends State<SearchStudent_stf> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        // prefixIcon: IconButton(
-                        //   icon: Icon(Icons.search),
-                        //   color: Colors.grey,
-                        //   onPressed: (() {
-                        //     Provider.of<Screen_Search_Providers>(context,
-                        //             listen: false)
-                        //         .getSearch_View(clearValue.text.toString());
-                        //     Provider.of<Screen_Search_Providers>(context,
-                        //             listen: false)
-                        //         .clearStudentList();
-                        //   }),
-                        // ),
                         suffixIcon: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // mainAxisAlignment: MainAxisAlignment.end,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
@@ -343,8 +326,6 @@ class _SearchStudent_stfState extends State<SearchStudent_stf> {
                                           _makingPhoneCall(phn.toString());
                                         },
                                         child: Row(
-                                          //mainAxisAlignment: MainAxisAlignment.center,
-                                          //crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             const Text(
                                               'Phone : ',

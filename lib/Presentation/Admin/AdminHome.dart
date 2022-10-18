@@ -1,9 +1,11 @@
+import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
 import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
@@ -243,13 +245,13 @@ class AdminHomeContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const StaffInfo()),
-                        );
-                      },
+                      // onTap: () {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>  StaffInfo()),
+                      //   );
+                      // },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Column(
@@ -891,8 +893,22 @@ class AdminHomeContent extends StatelessWidget {
   }
 }
 
-class AdminProfileTop extends StatelessWidget {
+class AdminProfileTop extends StatefulWidget {
   const AdminProfileTop({Key? key}) : super(key: key);
+
+  @override
+  State<AdminProfileTop> createState() => _AdminProfileTopState();
+}
+
+class _AdminProfileTopState extends State<AdminProfileTop> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<DashboardAdmin>(context, listen: false);
+      p.getDashboard();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -907,14 +923,75 @@ class AdminProfileTop extends StatelessWidget {
                 color: Colors.white,
                 border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
-            child: Column(
-              children: const [
-                Text(
-                  'Student Info',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
+            child: Consumer<DashboardAdmin>(
+              builder: (context, value, child) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      'Student Info',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 37, 37, 117),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    kheight10,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Total Strength:  ',
+                          ),
+                          Text(
+                            value.totalStudentStrength == null
+                                ? '--'
+                                : value.totalStudentStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Boys Strength:  ',
+                          ),
+                          Text(
+                            value.boysStrength == null
+                                ? '--'
+                                : value.boysStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Girls Strength:  ',
+                          ),
+                          Text(
+                            value.girlsStrength == null
+                                ? '--'
+                                : value.girlsStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           Container(
@@ -924,15 +1001,75 @@ class AdminProfileTop extends StatelessWidget {
                 color: Colors.white,
                 border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
-            child: Column(
-              children: const [
-                Text(
-                  'Staff Info',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color.fromARGB(255, 37, 37, 117)),
+            child: Consumer<DashboardAdmin>(
+              builder: (context, value, child) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      'Staff Info',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 37, 37, 117),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    kheight10,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Total Strength:  ',
+                          ),
+                          Text(
+                            value.totalStaffStrength == null
+                                ? '--'
+                                : value.totalStaffStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Teaching:  ',
+                          ),
+                          Text(
+                            value.teachingStrength == null
+                                ? '--'
+                                : value.teachingStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Non-Teaching:  ',
+                          ),
+                          Text(
+                            value.nonTeachingStrength == null
+                                ? '--'
+                                : value.nonTeachingStrength.toString(),
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                //kheight10,
-              ],
+              ),
             ),
           ),
           Container(

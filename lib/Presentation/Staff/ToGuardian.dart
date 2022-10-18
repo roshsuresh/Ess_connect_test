@@ -578,7 +578,7 @@ class Notification_StudList extends StatelessWidget {
             value.selectItem(viewStud);
           },
           selectedTileColor: Color.fromARGB(255, 10, 27, 141),
-          title: Text(viewStud.name ?? '---'),
+          title: Text(viewStud.name == null ? '---' : viewStud.name.toString()),
           subtitle: Text(viewStud.admnNo ?? '---'),
           trailing: viewStud.selected != null && viewStud.selected!
               ? SvgPicture.asset(
@@ -595,10 +595,21 @@ class Notification_StudList extends StatelessWidget {
   }
 }
 
-class Text_Matter_Notification extends StatelessWidget {
-  Text_Matter_Notification({Key? key}) : super(key: key);
+class Text_Matter_Notification extends StatefulWidget {
+  final List<String> toList;
+  final String type;
+  const Text_Matter_Notification(
+      {Key? key, required this.toList, required this.type})
+      : super(key: key);
 
+  @override
+  State<Text_Matter_Notification> createState() =>
+      _Text_Matter_NotificationState();
+}
+
+class _Text_Matter_NotificationState extends State<Text_Matter_Notification> {
   final titleController = TextEditingController();
+
   final matterController = TextEditingController();
 
   @override

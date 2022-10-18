@@ -99,9 +99,6 @@ class NotificationToGuardian_Providers with ChangeNotifier {
                 data['initialValues']);
 
         isClassTeacher = att.isClassTeacher;
-        // staffToGuardianRespo = staffNotificationToGuardianRespo!['course'];
-        // print(staffToGuardianRespo);
-        // print(isClassTeacher);
 
         notifyListeners();
       } else {
@@ -270,7 +267,8 @@ class NotificationToGuardian_Providers with ChangeNotifier {
   }
 //send notification
 
-  sendNotification(BuildContext context, String body,String content, List<String> to,
+  sendNotification(
+      BuildContext context, String body, String content, List<String> to,
       {required String sentTo}) async {
     Map<String, dynamic> data = await parseJWT();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -333,10 +331,14 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       print(notificationView
           .where((element) => element.selected == true)
           .toList());
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => Text_Matter_Notification(toList: selectedList.map((e) => e.studentId)
-      //         .toList(),
-      //       type: "Student",)));
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => Text_Matter_Notification(
+      //               toList: selectedList.map((e) => e.),
+      //               type: '',
+      //             ),
+      //             ));
     }
   }
 }
