@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
-import 'package:Ess_test/Application/AdminProviders/AdminHomeProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/GalleryProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/NoticeBoardadmin.dart';
+import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/SearchstaffProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/StaffReportProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
@@ -199,10 +201,13 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => GallerySendProvider_Stf()),
         ChangeNotifierProvider(
             create: (context) => MarkEntryReportProvider_stf()),
-        ChangeNotifierProvider(create: (context) => AdminHomeProviders()),
+        //  ChangeNotifierProvider(create: (context) => AdminHomeProviders()),
         ChangeNotifierProvider(create: (context) => StaffReportProviders()),
         ChangeNotifierProvider(create: (context) => DashboardAdmin()),
         ChangeNotifierProvider(create: (context) => SearchStaffProviders()),
+        ChangeNotifierProvider(create: (context) => SchoolPhotoProviders()),
+        ChangeNotifierProvider(create: (context) => GalleryProviderAdmin()),
+        ChangeNotifierProvider(create: (context) => NoticeBoardAdminProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

@@ -1,9 +1,15 @@
+import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
-import 'package:Ess_test/Presentation/Admin/StaffReport/studInfoo.dart';
+import 'package:Ess_test/Presentation/Admin/Communication/ToGuardian.dart';
+import 'package:Ess_test/Presentation/Admin/Gallery/GalleryScreen.dart';
+import 'package:Ess_test/Presentation/Admin/MarkentryReport.dart';
+import 'package:Ess_test/Presentation/Admin/NoticeBoard/NoticeboardScreen.dart';
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
+import 'package:Ess_test/Presentation/Admin/demo.dart';
 import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,17 +17,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
 import '../Student/AdvancePay.dart';
-import '../Student/Attendence.dart';
 import '../Student/PasswordChange.dart';
 import '../Student/Reportcard.dart';
 import 'FeeReport.dart';
-import 'StaffInfo.dart';
 import 'StaffReport.dart';
 import 'StudentFeeDetails.dart';
 
 class AdminHome extends StatelessWidget {
-  AdminHome({Key? key}) : super(key: key);
-  bool isLoading = false;
+  const AdminHome({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -178,7 +182,7 @@ class AdminHomeContent extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const CheckBoxExample()),
+                            builder: (context) => const NonTeachingStaff()),
                       );
                     },
                     child: Padding(
@@ -246,13 +250,12 @@ class AdminHomeContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      // onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>  StaffInfo()),
-                      //   );
-                      // },
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Demo()),
+                        );
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         child: Column(
@@ -323,7 +326,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AdvancePay()),
+                              builder: (context) => MarkentryReportByAdmin()),
                         );
                       },
                       child: Padding(
@@ -345,7 +348,7 @@ class AdminHomeContent extends StatelessWidget {
                             ),
                             kheight10,
                             const Text(
-                              'Class Teacher\n       Report',
+                              'Mark Entry\n       Report',
                               style: TextStyle(
                                   fontSize: 11, color: Colors.black38),
                             )
@@ -671,7 +674,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => spinkitLoader()),
+                              builder: (context) => AdminToGuardian()),
                         );
                       },
                       child: Column(
@@ -725,29 +728,38 @@ class AdminHomeContent extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AdminGallery()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/Profile.png',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'Gallery',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
+                          kheight10,
+                          const Text(
+                            'Gallery',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -792,29 +804,39 @@ class AdminHomeContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NoticeBoardAdnin()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/Profile.png',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'NoticeBoard',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
+                          kheight10,
+                          const Text(
+                            'NoticeBoard',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -868,15 +890,42 @@ class AdminHomeContent extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
                       onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        print("accesstoken  $prefs");
-                        prefs.remove("accesstoken");
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.info,
+                          borderSide: const BorderSide(
+                              color: UIGuide.light_Purple, width: 2),
+                          buttonsBorderRadius:
+                              const BorderRadius.all(Radius.circular(2)),
+                          headerAnimationLoop: false,
+                          animType: AnimType.bottomSlide,
+                          title: 'SignOut',
+                          desc: 'Are you sure want to sign out',
+                          showCloseIcon: true,
+                          btnCancelOnPress: () {
+                            return;
+                          },
+                          btnOkOnPress: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            print("accesstoken  $prefs");
+                            prefs.remove("accesstoken");
 
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                            (Route<dynamic> route) => false);
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                                (Route<dynamic> route) => false);
+                          },
+                        ).show();
+                        // SharedPreferences prefs =
+                        //     await SharedPreferences.getInstance();
+                        // print("accesstoken  $prefs");
+                        // prefs.remove("accesstoken");
+
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //     MaterialPageRoute(
+                        //         builder: (context) => LoginPage()),
+                        //     (Route<dynamic> route) => false);
                       },
                       child: const Icon(
                         Icons.logout_outlined,
@@ -908,6 +957,8 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<DashboardAdmin>(context, listen: false);
       p.getDashboard();
+      // var m = Provider.of<SchoolPhotoProviders>(context, listen: false);
+      // m.getSchoolPhoto();
     });
   }
 
@@ -925,74 +976,76 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
                 border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
             child: Consumer<DashboardAdmin>(
-              builder: (context, value, child) => SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      'Student Info',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 37, 37, 117),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    kheight10,
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+              builder: (context, value, child) => value.loading
+                  ? spinkitLoader()
+                  : SingleChildScrollView(
+                      child: Column(
                         children: [
                           Text(
-                            'Total Strength:  ',
-                          ),
-                          Text(
-                            value.totalStudentStrength == null
-                                ? '--'
-                                : value.totalStudentStrength.toString(),
+                            'Student Info',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: UIGuide.light_Purple,
+                                color: Color.fromARGB(255, 37, 37, 117),
                                 fontWeight: FontWeight.bold),
                           ),
+                          kheight10,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Total Strength:  ',
+                                ),
+                                Text(
+                                  value.totalStudentStrength == null
+                                      ? '--'
+                                      : value.totalStudentStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Boys Strength:  ',
+                                ),
+                                Text(
+                                  value.boysStrength == null
+                                      ? '--'
+                                      : value.boysStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Girls Strength:  ',
+                                ),
+                                Text(
+                                  value.girlsStrength == null
+                                      ? '--'
+                                      : value.girlsStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Boys Strength:  ',
-                          ),
-                          Text(
-                            value.boysStrength == null
-                                ? '--'
-                                : value.boysStrength.toString(),
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Girls Strength:  ',
-                          ),
-                          Text(
-                            value.girlsStrength == null
-                                ? '--'
-                                : value.girlsStrength.toString(),
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
             ),
           ),
           Container(
@@ -1003,88 +1056,92 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
                 border: Border.all(color: UIGuide.THEME_LIGHT),
                 borderRadius: const BorderRadius.all(Radius.circular(5))),
             child: Consumer<DashboardAdmin>(
-              builder: (context, value, child) => SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      'Staff Info',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 37, 37, 117),
-                          fontWeight: FontWeight.bold),
-                    ),
-                    kheight10,
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+              builder: (context, value, child) => value.loading
+                  ? spinkitLoader()
+                  : SingleChildScrollView(
+                      child: Column(
                         children: [
                           Text(
-                            'Total Strength:  ',
-                          ),
-                          Text(
-                            value.totalStaffStrength == null
-                                ? '--'
-                                : value.totalStaffStrength.toString(),
+                            'Staff Info',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: UIGuide.light_Purple,
+                                color: Color.fromARGB(255, 37, 37, 117),
                                 fontWeight: FontWeight.bold),
                           ),
+                          kheight10,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Total Strength:  ',
+                                ),
+                                Text(
+                                  value.totalStaffStrength == null
+                                      ? '--'
+                                      : value.totalStaffStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Teaching:  ',
+                                ),
+                                Text(
+                                  value.teachingStrength == null
+                                      ? '--'
+                                      : value.teachingStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Non-Teaching:  ',
+                                ),
+                                Text(
+                                  value.nonTeachingStrength == null
+                                      ? '--'
+                                      : value.nonTeachingStrength.toString(),
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Teaching:  ',
-                          ),
-                          Text(
-                            value.teachingStrength == null
-                                ? '--'
-                                : value.teachingStrength.toString(),
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Non-Teaching:  ',
-                          ),
-                          Text(
-                            value.nonTeachingStrength == null
-                                ? '--'
-                                : value.nonTeachingStrength.toString(),
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
             ),
           ),
-          Container(
-            width: size.width,
-            margin: const EdgeInsets.all(6.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Consumer<SchoolPhotoProviders>(
+          //   builder: (context, value, child) => Container(
+          //     width: size.width,
+          //     margin: const EdgeInsets.all(6.0),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.circular(8.0),
+          //       image: DecorationImage(
+          //         image: NetworkImage(value.url ??
+          //             "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
+          //         fit: BoxFit.cover,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
         options: CarouselOptions(
           height: 150.0,

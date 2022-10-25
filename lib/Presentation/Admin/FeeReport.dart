@@ -23,23 +23,16 @@ class _FeeReportState extends State<FeeReport> {
     'LP',
     'HS',
     'HSS',
+    'ss',
+    'fs',
+    'df',
+    'dg',
+    'dg',
+    'gd',
+    'sdg',
   ];
-  void selectAll() {
-    if (_items.first == true) {
-      _items.forEach((element) {});
-      isselectAll = false;
-    } else {
-      _items.forEach((element) {
-        ;
-      });
-      isselectAll = true;
-    }
-  }
 
   void _showMultiSelect() async {
-    // a list of selectable items
-    // these items can be hard-coded or dynamically fetched from a database/API
-
     final List<String>? results = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -50,7 +43,6 @@ class _FeeReportState extends State<FeeReport> {
     // Update UI
     if (results != null) {
       setState(() {
-        // _selectedItems.addAll(_items);
         _selectedItems = results;
         print(results);
       });
@@ -151,11 +143,7 @@ class _FeeReportState extends State<FeeReport> {
                   ),
                   style: TextButton.styleFrom(
                       backgroundColor: UIGuide.light_Purple),
-                  onPressed: (() {
-                    setState(() {
-                      showFee();
-                    });
-                  }),
+                  onPressed: (() {}),
                 ),
               ],
             ),
@@ -163,10 +151,6 @@ class _FeeReportState extends State<FeeReport> {
         ),
       ),
     );
-  }
-
-  Widget showFee() {
-    return Text('data');
   }
 }
 
@@ -179,10 +163,8 @@ class MultiSelect extends StatefulWidget {
 }
 
 class _MultiSelectState extends State<MultiSelect> {
-  // this variable holds the selected items
   final List<String> _selectedItems = [];
 
-// This function is triggered when a checkbox is checked or unchecked
   void _itemChange(String itemValue, bool isSelected) {
     setState(() {
       if (isSelected) {
@@ -195,30 +177,12 @@ class _MultiSelectState extends State<MultiSelect> {
     });
   }
 
-  // this function is called when the Cancel button is pressed
   void _cancel() {
     Navigator.pop(context);
   }
 
-// this function is called when the Submit button is tapped
   void _submit() {
     Navigator.pop(context, _selectedItems);
-  }
-
-  final List<String> _items = [
-    'LP',
-    'HS',
-    'HSS',
-  ];
-  bool isselectAll = false;
-  void selectAll() {
-    if (_items.first == true) {
-      _items.forEach((element) {});
-      isselectAll = false;
-    } else {
-      _items.forEach((element) {});
-      isselectAll = true;
-    }
   }
 
   @override

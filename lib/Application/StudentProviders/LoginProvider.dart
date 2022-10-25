@@ -15,10 +15,14 @@ class LoginProvider with ChangeNotifier {
   String subDomain = "";
   Future<int> getActivation(String key) async {
     String res;
-    var headers = {'Content-Type': 'application/json'};
+
+    var headers = {
+      'Content-Type': 'application/json',
+    };
     var params = {
       "code": key,
     };
+
     var response = await http.post(
         Uri.parse("${UIGuide.baseURL}/mobileapp/common/get-schooldomain"),
         body: json.encode(params),
@@ -45,8 +49,11 @@ class LoginProvider with ChangeNotifier {
 
   Future getToken(BuildContext context) async {
     Map<String, dynamic> data = await parseJWT();
-
-    var headers = {'Content-Type': 'application/json'};
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
     String? token = await FirebaseMessaging.instance.getToken();
     print("firebase token");
     print(token);
@@ -57,7 +64,7 @@ class LoginProvider with ChangeNotifier {
       "MobileToken": token,
       "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
       "GuardianId": data['GuardianId'],
-      "StudentId": data['StudentId'],
+      "StudentId": data['ChildId'],
       "Type": data['role'] == "Guardian" ? "Student" : "Staff"
     });
     print('Responde body  ${request.body}');

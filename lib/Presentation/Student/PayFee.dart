@@ -365,11 +365,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                         padding: const EdgeInsets.only(left: 20, right: 8),
                         child: LimitedBox(
                             maxHeight: 280,
-                            child:
-                                // Consumer<FeesProvider>(
-                                //   builder: (context, value, child) {
-                                //     return
-                                Consumer<FeesProvider>(
+                            child: Consumer<FeesProvider>(
                               builder: (context, value, child) =>
                                   ListView.builder(
                                       shrinkWrap: true,
@@ -377,9 +373,6 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                       itemCount: value.busFeeList.length == null
                                           ? 0
                                           : value.busFeeList.length,
-                                      //  busfeeResponse == null
-                                      //     ? 0
-                                      //     : busfeeResponse!.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return CheckboxListTile(

@@ -13,6 +13,9 @@ class MarkEntryReport extends StatefulWidget {
 
 class _MarkEntryReportState extends State<MarkEntryReport> {
   String courseId = '';
+  String divisionId = '';
+  String partId = '';
+  String subjectId = '';
 
   final courseController = TextEditingController();
 
@@ -26,6 +29,10 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
 
   final partController1 = TextEditingController();
 
+  final subjectController = TextEditingController();
+
+  final subjectController1 = TextEditingController();
+
   final examController = TextEditingController();
 
   final examController1 = TextEditingController();
@@ -37,13 +44,11 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
       var p = Provider.of<MarkEntryReportProvider_stf>(context, listen: false);
       p.markReportcourse();
       p.removeCourseAll();
-      // p.selectedCourse.clear();
       p.courseClear();
       p.divisionClear();
       p.removeDivisionAll();
-      // p.clearStudentList();
-      // p.selectedList.clear();
-      // p.selectAll();
+      p.partClear();
+      p.removePartAll();
     });
   }
 
@@ -172,13 +177,6 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: courseController,
-                              decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: Color.fromARGB(255, 238, 237, 237),
-                                border: OutlineInputBorder(),
-                                labelText: "",
-                                hintText: "",
-                              ),
                               enabled: false,
                             ),
                           ),
@@ -232,7 +230,8 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                                                 '--';
                                             courseId = courseController.text
                                                 .toString();
-
+                                            divisionId = divisionController.text
+                                                .toString();
                                             snapshot.addSelectedDivision(
                                                 snapshot.markReportDivisions[
                                                     index]);
@@ -343,11 +342,18 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                                                     .markReportPartList[index]
                                                     .text ??
                                                 '--';
-
+                                            partId =
+                                                partController.text.toString();
                                             snapshot.addSelectedPart(snapshot
                                                 .markReportPartList[index]);
                                             print(courseId);
 
+                                            await Provider.of<
+                                                        MarkEntryReportProvider_stf>(
+                                                    context,
+                                                    listen: false)
+                                                .markReportSubject(courseId,
+                                                    divisionId, partId);
                                             Navigator.of(context).pop();
                                           },
                                           title: Text(
@@ -372,7 +378,7 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: partController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -421,48 +427,39 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                                 children: [
                                   ListView.builder(
                                       shrinkWrap: true,
-                                      itemCount:
-                                          snapshot.markReportDivisions.length,
+                                      itemCount: markReportSub!.length == null
+                                          ? 0
+                                          : markReportSub!.length,
                                       itemBuilder: (context, index) {
-                                        print(snapshot
-                                            .markReportDivisions.length);
-                                        //    value.removeCourseAll();
+                                        print(markReportSub?.length);
+
                                         return ListTile(
                                           selectedTileColor:
                                               Colors.blue.shade100,
                                           selectedColor: UIGuide.PRIMARY2,
-                                          selected: snapshot.isDivisionSelected(
-                                              snapshot
-                                                  .markReportDivisions[index]),
                                           onTap: () async {
-                                            print(snapshot
-                                                .markReportDivisions.length);
-                                            divisionController.text = snapshot
-                                                    .markReportDivisions[index]
-                                                    .value ??
-                                                '--';
-                                            divisionController1.text = snapshot
-                                                    .markReportDivisions[index]
-                                                    .text ??
-                                                '--';
-                                            courseId = courseController.text
+                                            subjectController1.text =
+                                                markReportSub![index]['text'] ??
+                                                    '';
+                                            subjectController.text =
+                                                markReportSub![index]
+                                                        ['value'] ??
+                                                    '';
+                                            subjectId = subjectController.text
                                                 .toString();
-
-                                            snapshot.addSelectedDivision(
-                                                snapshot.markReportDivisions[
-                                                    index]);
-                                            print(courseId);
-                                            // await Provider.of<
-                                            //             MarkEntryReportProvider_stf>(
-                                            //         context,
-                                            //         listen: false)
-                                            //     .getMarkEntryDivisionValues(
-                                            //         courseId);
+                                            await Provider.of<
+                                                        MarkEntryReportProvider_stf>(
+                                                    context,
+                                                    listen: false)
+                                                .markReportExam(
+                                                    courseId,
+                                                    divisionId,
+                                                    partId,
+                                                    subjectId);
                                             Navigator.of(context).pop();
                                           },
                                           title: Text(
-                                            snapshot.markReportDivisions[index]
-                                                    .text ??
+                                            markReportSub![index]['text'] ??
                                                 '--',
                                             textAlign: TextAlign.center,
                                           ),
@@ -481,13 +478,13 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
-                              controller: divisionController1,
+                              controller: subjectController1,
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Division",
-                                hintText: "Division",
+                                labelText: "Select Subject",
+                                hintText: "Subject",
                               ),
                               enabled: false,
                             ),
@@ -496,7 +493,7 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                             height: 0,
                             child: TextField(
                               textAlign: TextAlign.center,
-                              controller: divisionController,
+                              controller: subjectController,
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
@@ -513,6 +510,118 @@ class _MarkEntryReportState extends State<MarkEntryReport> {
                   );
                 }),
               ),
+            ],
+          ),
+          Row(
+            children: [
+              SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<MarkEntryReportProvider_stf>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: markRepoExam!.length == null
+                                          ? 0
+                                          : markRepoExam!.length,
+                                      itemBuilder: (context, index) {
+                                        print(markRepoExam?.length);
+
+                                        return ListTile(
+                                          selectedTileColor:
+                                              Colors.blue.shade100,
+                                          selectedColor: UIGuide.PRIMARY2,
+                                          onTap: () async {
+                                            examController1.text =
+                                                markRepoExam![index]['text'] ??
+                                                    '';
+                                            examController.text =
+                                                markRepoExam![index]['value'] ??
+                                                    '';
+
+                                            await Provider.of<
+                                                        MarkEntryReportProvider_stf>(
+                                                    context,
+                                                    listen: false)
+                                                .markReportView();
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(
+                                            markRepoExam![index]['text'] ??
+                                                '--',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: examController1,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "Select Exam",
+                                hintText: "Exam",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: examController,
+                              decoration: const InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              kWidth,
+              MaterialButton(
+                color: UIGuide.light_Purple,
+                onPressed: () {},
+                child: const Text(
+                  'View',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
             ],
           ),
           kheight20,

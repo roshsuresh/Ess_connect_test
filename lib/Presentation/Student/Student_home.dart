@@ -2,6 +2,7 @@ import 'package:Ess_test/Presentation/Student/payment.dart';
 import 'package:Ess_test/Presentation/Student/selection.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
@@ -871,15 +872,42 @@ class StudentHome extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0)),
                         onPressed: () async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          print("accesstoken  $prefs");
-                          prefs.remove("accesstoken");
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.info,
+                            borderSide: const BorderSide(
+                                color: UIGuide.light_Purple, width: 2),
+                            buttonsBorderRadius:
+                                const BorderRadius.all(Radius.circular(2)),
+                            headerAnimationLoop: false,
+                            animType: AnimType.bottomSlide,
+                            title: 'SignOut',
+                            desc: 'Are you sure want to sign out',
+                            showCloseIcon: true,
+                            btnCancelOnPress: () {
+                              return;
+                            },
+                            btnOkOnPress: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              print("accesstoken  $prefs");
+                              prefs.remove("accesstoken");
 
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()),
-                              (Route<dynamic> route) => false);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (Route<dynamic> route) => false);
+                            },
+                          ).show();
+                          // SharedPreferences prefs =
+                          //     await SharedPreferences.getInstance();
+                          // print("accesstoken  $prefs");
+                          // prefs.remove("accesstoken");
+
+                          // Navigator.of(context).pushAndRemoveUntil(
+                          //     MaterialPageRoute(
+                          //         builder: (context) => LoginPage()),
+                          //     (Route<dynamic> route) => false);
                         },
                         child: const Icon(
                           Icons.logout_outlined,
