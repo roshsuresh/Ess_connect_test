@@ -1334,7 +1334,7 @@ class Text_Matter_Notification extends StatelessWidget {
             child: SizedBox(
               height: 40,
               child: TextFormField(
-                inputFormatters: [LengthLimitingTextInputFormatter(25)],
+                inputFormatters: [LengthLimitingTextInputFormatter(50)],
                 controller: titleController,
                 minLines: 1,
                 maxLines: 1,

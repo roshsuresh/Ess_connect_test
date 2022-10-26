@@ -2,29 +2,19 @@ import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.da
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+
 import 'package:provider/provider.dart';
 
-class GalleryListStaff extends StatefulWidget {
+class GalleryListStaff extends StatelessWidget {
   const GalleryListStaff({Key? key}) : super(key: key);
 
   @override
-  State<GalleryListStaff> createState() => _GalleryListStaffState();
-}
-
-class _GalleryListStaffState extends State<GalleryListStaff> {
-  @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<GallerySendProvider_Stf>(context, listen: false);
       p.galleryViewListStaff();
       p.galleryViewList.clear();
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Consumer<GallerySendProvider_Stf>(
       builder: (context, provider, child) {
@@ -52,7 +42,7 @@ class _GalleryListStaffState extends State<GalleryListStaff> {
                               children: [
                                 Text('Created Date: '),
                                 Text(
-                                  provider.galleryViewList[index].entryDate ??
+                                  provider.galleryViewList[index].createdAt ??
                                       '--',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,

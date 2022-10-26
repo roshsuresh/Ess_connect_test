@@ -54,3 +54,34 @@ class GalleryViewList_staff {
     return data;
   }
 }
+
+//gallery received
+
+class GalleryEventListReceived {
+  String? title;
+  String? galleryId;
+  String? caption;
+  String? url;
+
+  GalleryEventListReceived(
+      {this.title, this.galleryId, this.caption, this.url});
+
+  GalleryEventListReceived.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    galleryId = json['galleryId'];
+    caption = json['caption'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['galleryId'] = this.galleryId;
+    data['caption'] = this.caption;
+    data['url'] = this.url;
+    return data;
+  }
+}
+
+
+//Gallery  Attachment

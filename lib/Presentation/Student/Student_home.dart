@@ -395,29 +395,40 @@ class StudentHome extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/payNew.png',
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PaymentHistory()),
+                                );
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      image: const DecorationImage(
+                                        opacity: 20,
+                                        image: AssetImage(
+                                          'assets/payNew.png',
+                                        ),
                                       ),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Payment \n History',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                  kheight,
+                                  const Text(
+                                    'Payment \n History',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.black38),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],

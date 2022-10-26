@@ -957,8 +957,8 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<DashboardAdmin>(context, listen: false);
       p.getDashboard();
-      // var m = Provider.of<SchoolPhotoProviders>(context, listen: false);
-      // m.getSchoolPhoto();
+      var m = Provider.of<SchoolPhotoProviders>(context, listen: false);
+      m.getSchoolPhoto();
     });
   }
 
@@ -1128,20 +1128,20 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
                     ),
             ),
           ),
-          // Consumer<SchoolPhotoProviders>(
-          //   builder: (context, value, child) => Container(
-          //     width: size.width,
-          //     margin: const EdgeInsets.all(6.0),
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(8.0),
-          //       image: DecorationImage(
-          //         image: NetworkImage(value.url ??
-          //             "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
-          //         fit: BoxFit.cover,
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Consumer<SchoolPhotoProviders>(
+            builder: (context, value, child) => Container(
+              width: size.width,
+              margin: const EdgeInsets.all(6.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: NetworkImage(value.url ??
+                      "https://previews.123rf.com/images/dualororua/dualororua1707/dualororua170700237/82718617-happy-school-children-in-front-of-school-building.jpg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
         ],
         options: CarouselOptions(
           height: 150.0,

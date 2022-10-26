@@ -14,8 +14,11 @@ import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
+import 'package:Ess_test/Application/Staff_Providers/StaffNotificationScreen.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
+import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
+import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
 import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -207,7 +210,12 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => SearchStaffProviders()),
         ChangeNotifierProvider(create: (context) => SchoolPhotoProviders()),
         ChangeNotifierProvider(create: (context) => GalleryProviderAdmin()),
+        ChangeNotifierProvider(create: (context) => PaymentHistoryProvider()),
         ChangeNotifierProvider(create: (context) => NoticeBoardAdminProvider()),
+        ChangeNotifierProvider(
+            create: (context) => NotificationReceivedProviderStudent()),
+        ChangeNotifierProvider(
+            create: (context) => StaffNotificationScreenProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

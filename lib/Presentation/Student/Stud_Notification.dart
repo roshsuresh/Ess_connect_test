@@ -1,6 +1,10 @@
+import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
+import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/TextWrap(moreOption).dart';
 import '../../utils/constants.dart';
@@ -14,6 +18,11 @@ class Stud_Notification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<NotificationReceivedProviderStudent>(context,
+          listen: false);
+      p.getNotificationReceived();
+    });
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
@@ -32,67 +41,98 @@ class Stud_Notification extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (BuildContext context, index) {
-          return Column(
-            children: [
-              kheight,
-              Container(
-                width: width - 4,
-                // height: 150,
-                decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 2,
-                      )
-                    ],
-                    color: Color.fromARGB(255, 239, 231, 245),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Consumer<NotificationReceivedProviderStudent>(
+        builder: (context, value, child) => value.loading
+            ? spinkitLoader()
+            : ListView.builder(
+                itemCount: value.notificationstud?.length == null
+                    ? 0
+                    : value.notificationstud!.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Column(
                     children: [
-                      const Text('Exam Reminder 🔔'),
                       kheight,
-                      const TextWrapper(
-                        text:
-                            '  SSC CGL exam is conducted in Tiers. Tier-I & II will be conducted online. On the other hand, Tier-III & IV will be conducted in offline mode. The candidate has to clear every tier and score cut-off marks, decided by the SSC board, to proceed further in this exam. ',
-                      ),
-                      kheight,
-                      Row(
-                        children: const [
-                          Text(
-                            'Date',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                      Container(
+                        width: width - 4,
+                        // height: 150,
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 2,
+                              )
+                            ],
+                            color: Color.fromARGB(255, 221, 224, 243),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                value.notificationstud![index]['title'] == null
+                                    ? '--'
+                                    : value.notificationstud![index]['title']
+                                        .toString(),
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              ),
+                              kheight,
+                              TextWrapper(
+                                text: value.notificationstud![index]['body'] ==
+                                        null
+                                    ? '--'
+                                    : value.notificationstud![index]['body']
+                                        .toString(),
+                              ),
+                              kheight,
+                              Row(
+                                children: [
+                                  Text(
+                                    'Date',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                  Text(
+                                    value.notificationstud![index]
+                                                ['createdDate'] ==
+                                            null
+                                        ? '--'
+                                        : value.notificationstud![index]
+                                                ['createdDate']
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 49, 47, 47),
+                                        fontSize: 12),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    'Send by ',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                  Text(
+                                    value.notificationstud![index]
+                                                ['fromStaff'] ==
+                                            null
+                                        ? '--'
+                                        : value.notificationstud![index]
+                                                ['fromStaff']
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 49, 47, 47),
+                                        fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            '10/02/2022',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 49, 47, 47),
-                                fontSize: 12),
-                          ),
-                          Spacer(),
-                          Text(
-                            'Send by ',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
-                          ),
-                          Text(
-                            'Teacher name',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 49, 47, 47),
-                                fontSize: 12),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
-                  ),
-                ),
+                  );
+                },
               ),
-            ],
-          );
-        },
       ),
     );
   }

@@ -326,4 +326,45 @@ class GallerySendProvider_Stf with ChangeNotifier {
       print('Error in galleryDelete stf');
     }
   }
+
+  bool _loadingg = false;
+  bool get loadingg => _loading;
+  setLoadingg(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+//Gallery Received
+  List<GalleryEventListReceived> galleryReceived = [];
+  Future getGalleyReceived() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoadingg(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    setLoadingg(true);
+    var response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/mobileapp/staffdet/getgalleryview"),
+        headers: headers);
+    //print(response);
+    try {
+      if (response.statusCode == 200) {
+        setLoadingg(true);
+        print("corect");
+        final data = json.decode(response.body);
+        print(data);
+
+        setLoadingg(false);
+        notifyListeners();
+      } else {
+        setLoadingg(false);
+        print("Error in Response");
+      }
+    } catch (e) {
+      setLoading(false);
+      print(e);
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:Ess_test/Presentation/Staff/NotificationStaff.dart';
+import 'package:Ess_test/Presentation/Staff/ScreenNotification.dart';
 import 'package:Ess_test/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -454,7 +455,7 @@ class StaffHome extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Stud_Notification()),
+                              builder: (context) => StaffNotificationScreen()),
                         );
                       },
                       child: Padding(

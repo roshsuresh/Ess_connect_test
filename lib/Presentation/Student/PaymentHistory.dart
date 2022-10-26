@@ -1,5 +1,9 @@
-
+import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:pdfdownload/pdfdownload.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
@@ -8,6 +12,11 @@ class PaymentHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<PaymentHistoryProvider>(context, listen: false);
+      p.getHistoryList();
+      p.historyList.clear();
+    });
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -25,215 +34,200 @@ class PaymentHistory extends StatelessWidget {
         ),
         backgroundColor: UIGuide.light_Purple,
       ),
-      body: ListView(
-        children: [
-          kheight10,
-          // Center(
-          //   child: Container(
-          //     height: 160,
-          //     width: width - 120,
-          //     decoration: BoxDecoration(
-          //         color: Color.fromARGB(255, 252, 250, 250),
-          //         border: Border.all(),
-          //         borderRadius: BorderRadius.all(Radius.circular(20))),
-          //     child: ListView(children: [
-          //       RadioButtonForPayment(),
-          //       Center(
-          //         child: MaterialButton(
-          //           onPressed: () {
-          //             // view();
-          //             //  ViewPaymentHistory();
-          //           },
-          //           child: Text('👁️ View'),
-          //         ),
-          //       )
-          //     ]),
-          //   ),
-          // ),
-          kheight20,
-          //  view(),
-          //  ViewPaymentHistory(),
-          Table(
-            columnWidths: const {
-              0: FlexColumnWidth(2),
-              1: FlexColumnWidth(2),
-              2: FlexColumnWidth(3),
-              3: FlexColumnWidth(2)
-            },
-            //  border: TableBorder.all(),
-            children: const [
-              TableRow(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 196, 210, 235),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+      body: Consumer<PaymentHistoryProvider>(builder: (context, value, child) {
+        return value.loading
+            ? spinkitLoader()
+            : ListView(
+                children: [
+                  kheight10,
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Table(
+                      columnWidths: const {
+                        0: FlexColumnWidth(.5),
+                        1: FlexColumnWidth(2),
+                        2: FlexColumnWidth(3),
+                        3: FlexColumnWidth(2.4),
+                        4: FlexColumnWidth(1.2),
+                      },
+                      children: const [
+                        TableRow(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 196, 210, 235),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                topRight: Radius.circular(5),
+                              ),
+                            ),
+                            children: [
+                              Center(
+                                  child: Text(
+                                'Sl No.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              )),
+                              Center(
+                                  child: Text(
+                                'Bill Date',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              )),
+                              Center(
+                                  child: Text(
+                                'Payment \nGateway',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              )),
+                              Center(
+                                  child: Text(
+                                'Amount \n paid',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              )),
+                              Center(
+                                  child: Text(
+                                'Receipt',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ))
+                            ]),
+                      ],
                     ),
                   ),
-                  children: [
-                    Center(
-                        child: Text(
-                      'Bill No.',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )),
-                    Center(
-                        child: Text(
-                      'Bill Date',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )),
-                    Center(
-                        child: Text(
-                      'Amount \n paid',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )),
-                    Center(
-                        child: Text(
-                      'Receipt',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ))
-                  ]),
+                  ListView.builder(
+                      itemCount: value.historyList.length == null
+                          ? 0
+                          : value.historyList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        String newtime =
+                            value.historyList[index].billDate.toString();
+                        String timee = newtime.replaceRange(9, 18, '');
+                        return Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Table(
+                            columnWidths: const {
+                              0: FlexColumnWidth(.5),
+                              1: FlexColumnWidth(2.1),
+                              2: FlexColumnWidth(2.2),
+                              3: FlexColumnWidth(2.2),
+                              4: FlexColumnWidth(1.2)
+                            },
+                            //  border: TableBorder.all(),
+                            children: [
+                              TableRow(
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 238, 235, 235),
+                                  ),
+                                  children: [
+                                    Text(
+                                      "\n${(index + 1).toString()}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                    Center(
+                                        child: Text(
+                                      '\n${timee.toString()}',
+                                      style: TextStyle(fontSize: 13),
+                                    )),
+                                    Center(
+                                        child: Text(
+                                      '\n${value.historyList[index].paymentGateWay}',
+                                      style: TextStyle(fontSize: 13),
+                                    )),
+                                    Center(
+                                        child: Text(
+                                      '\n${value.historyList[index].billAmount}',
+                                      style: TextStyle(fontSize: 13),
+                                    )),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.remove_red_eye,
+                                        size: 20,
+                                      ),
+                                      onPressed: () async {
+                                        String reAttach = value
+                                            .historyList[index].orderId
+                                            .toString();
+                                        await Provider.of<
+                                                    PaymentHistoryProvider>(
+                                                context,
+                                                listen: false)
+                                            .feeHistoryAttachment(reAttach);
+                                        if (value.extension.toString() ==
+                                            '.pdf') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PdfDownloadFee()),
+                                          );
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const NoAttachmentScreenFee()),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  ]),
+                            ],
+                          ),
+                        );
+                      })
+                ],
+              );
+      }),
+    );
+  }
+}
+
+class PdfDownloadFee extends StatelessWidget {
+  PdfDownloadFee({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<PaymentHistoryProvider>(
+      builder: (context, value, child) => Scaffold(
+          appBar: AppBar(
+            title: Text('Receipt'),
+            titleSpacing: 00.0,
+            centerTitle: true,
+            toolbarHeight: 50.2,
+            toolbarOpacity: 0.8,
+            backgroundColor: UIGuide.light_Purple,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: DownloandPdf(
+                  isUseIcon: true,
+                  pdfUrl: value.url.toString() == null
+                      ? '--'
+                      : value.url.toString(),
+                  fileNames: value.name.toString() == null
+                      ? '---'
+                      : value.name.toString(),
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
-          ListView.builder(
-              itemCount: 5,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(2),
-                    2: FlexColumnWidth(3),
-                    3: FlexColumnWidth(2)
-                  },
-                  //  border: TableBorder.all(),
-                  children: [
-                    TableRow(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 230, 227, 227),
-                        ),
-                        children: [
-                          const Center(
-                              child: Text(
-                            '\nText',
-                            style: TextStyle(fontSize: 13),
-                          )),
-                          const Center(
-                              child: Text(
-                            '\n18/10/2022',
-                            style: TextStyle(fontSize: 13),
-                          )),
-                          const Center(
-                              child: Text(
-                            '\n2000',
-                            style: TextStyle(fontSize: 13),
-                          )),
-                          IconButton(
-                            icon: const Icon(Icons.download),
-                            onPressed: () {},
-                          )
-                        ]),
-                  ],
-                );
-              })
-        ],
+          body: SfPdfViewer.network(
+            value.url.toString() == null ? '--' : value.url.toString(),
+          )),
+    );
+  }
+}
+
+class NoAttachmentScreenFee extends StatelessWidget {
+  const NoAttachmentScreenFee({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('Invalid attachment'),
       ),
     );
   }
-}
-
-class RadioButtonForPayment extends StatefulWidget {
-  const RadioButtonForPayment({Key? key}) : super(key: key);
-
-  @override
-  State<RadioButtonForPayment> createState() => _RadioButtonForPaymentState();
-}
-
-String _selected = 'Fees Payment';
-
-class _RadioButtonForPaymentState extends State<RadioButtonForPayment> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          leading: Radio<String>(
-            value: 'Fees Payment',
-            groupValue: _selected,
-            onChanged: (value) {
-              setState(() {
-                _selected = value!;
-                print(value);
-              });
-            },
-          ),
-          title: const Text('Fees Payment'),
-        ),
-        ListTile(
-          leading: Radio<String>(
-            value: 'Advance Pay',
-            groupValue: _selected,
-            onChanged: (value) {
-              setState(() {
-                _selected = value!;
-                print(value);
-              });
-            },
-          ),
-          title: const Text('Advance Pay'),
-        ),
-      ],
-    );
-  }
-}
-
-Widget view() {
-  // print('fgj');
-  return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: ListView(
-        children: [
-          Table(
-            children: const [
-              TableRow(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 196, 210, 235),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                  ),
-                  children: [
-                    Center(child: Text('Bill No.')),
-                    Center(child: Text('Bill Date')),
-                    Center(child: Text('Amount \n paid')),
-                    Center(child: Text('Receipt'))
-                  ]),
-            ],
-          ),
-          ListView.builder(
-              itemCount: 10,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Table(
-                  //  border: TableBorder.all(),
-                  children: [
-                    TableRow(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 230, 227, 227),
-                        ),
-                        children: [
-                          Center(child: Text('\n text')),
-                          Center(child: Text('\n18/10/2022')),
-                          Center(child: Text('\n2000')),
-                          IconButton(
-                            icon: Icon(Icons.download),
-                            onPressed: () {},
-                          )
-                        ]),
-                  ],
-                );
-              })
-        ],
-      ));
 }

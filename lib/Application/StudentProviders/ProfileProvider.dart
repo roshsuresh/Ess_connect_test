@@ -93,7 +93,7 @@ class ProfileProvider with ChangeNotifier {
 
         mapResponse = await json.decode(response.body);
         dataResponse = await mapResponse!['studentDetails'];
-        ;
+
         print("corect..........");
         print(dataResponse);
         setLoading(true);
