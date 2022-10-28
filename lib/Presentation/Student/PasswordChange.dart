@@ -1,4 +1,4 @@
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +12,12 @@ class PasswordChange extends StatelessWidget {
   final _confirmpassword = TextEditingController();
   final _passwordNew = TextEditingController();
   final _password = TextEditingController();
+  // String? oldPass;
+  // String? newPass;
+  // String? confirmPass;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    Provider.of<PasswordChangeprovider>(context, listen: false)
-        .oldPasswordCheck();
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -87,10 +88,18 @@ class PasswordChange extends StatelessWidget {
                         labelText: 'Current Password',
                       ),
                       validator: (value) {
+                        RegExp regEx = RegExp(
+                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
                         if (value == null || value.isEmpty) {
                           return 'Please enter New password';
                         }
+                        // else {
+                        //   if (!regEx.hasMatch(value)) {
+                        //     return 'Enter ____ password';
+                        //   } else {
                         return null;
+                        //   }
+                        // }
                       },
                     ),
                   ),
@@ -126,13 +135,22 @@ class PasswordChange extends StatelessWidget {
                         labelText: 'New Password',
                       ),
                       validator: (value) {
+                        RegExp regExpp = RegExp(
+                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+
                         if (value == null || value.isEmpty) {
                           return 'Please enter New password';
                         }
-                        if (_passwordNew.text != _confirmpassword.text) {
-                          return 'Password do not match..!';
-                        }
+                        // else {
+                        // if (!regExpp.hasMatch(value)) {
+                        //   if (_passwordNew.text != _confirmpassword.text) {
+                        //     return 'Password do not match..!';
+                        //   }
+                        //   return 'Enter valid password';
+                        // } else {
                         return null;
+                        // }
+                        //  }
                       },
                     ),
                   ),
@@ -167,38 +185,78 @@ class PasswordChange extends StatelessWidget {
                         labelText: 'Confirm Password',
                       ),
                       validator: (value) {
+                        RegExp regExp = RegExp(
+                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
                         }
-                        print(_passwordNew.text);
-                        print(_confirmpassword.text);
-                        if (_passwordNew.text != _confirmpassword.text) {
-                          return 'Password do not match..!';
-                        }
+                        //  else {
+                        //   if (!regExp.hasMatch(value)) {
+                        // if (_passwordNew.text != _confirmpassword.text) {
+                        //   return 'Password do not match..!';
+                        // }
+                        //   return 'Enter valid password';
+                        // } else {
                         return null;
+                        //   }
+                        // }
                       },
                     ),
                   ),
                   kheight20,
                   SizedBox(
                     width: 200,
-                    child: MaterialButton(
-                      height: 60,
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          print('validated');
-                        } else {
-                          print('Error in conection');
-                        }
-                      },
-                      child: const Text(
-                        'Update',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16),
+                    child: Consumer<PasswordChangeprovider>(
+                      builder: (context, value, child) => MaterialButton(
+                        height: 60,
+                        onPressed: () async {
+                          String pass = _password.text.toString();
+                          String newPass = _passwordNew.text.toString();
+                          String confirmPass = _confirmpassword.text.toString();
+                          if (await _formkey.currentState!.validate()) {
+                            print('validated');
+                            await Provider.of<PasswordChangeprovider>(context,
+                                    listen: false)
+                                .checkOldPassword(pass);
+                            String check = value.oldPasswordCorrect.toString();
+                            print(value.oldPasswordCorrect.toString());
+                            if (check.toString() == true.toString()) {
+                              print('success');
+                              await Provider.of<PasswordChangeprovider>(context,
+                                      listen: false)
+                                  .updatePassword(pass, newPass, confirmPass);
+                              await AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.success,
+                                      animType: AnimType.rightSlide,
+                                      headerAnimationLoop: false,
+                                      title: 'Success',
+                                      desc: 'Password Changed Successfully',
+                                      btnOkOnPress: () {
+                                        Navigator.pop(context);
+                                      },
+                                      btnOkColor: Colors.green)
+                                  .show();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Incorrect Old Password")));
+                              print('Fail');
+                            }
+                          } else {
+                            print('Error in conection');
+                          }
+                        },
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16),
+                        ),
+                        color: UIGuide.light_Purple,
                       ),
-                      color: UIGuide.light_Purple,
                     ),
                   ),
                 ],

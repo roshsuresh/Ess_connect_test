@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:Ess_test/Domain/Staff/NotifcationSendModel.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,6 +49,59 @@ class StaffNotificationScreenProvider with ChangeNotifier {
         print(data);
         notificationStaff = data;
 
+        setLoading(false);
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in Notification screen send Response");
+      }
+    } catch (e) {
+      setLoading(false);
+      print(e);
+    }
+  }
+
+  //send history
+  List<StaffNotificationHistory> historyList = [];
+  Future getNotificationHistory() async {
+    Map<String, dynamic> parse = await parseJWT();
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var request = http.Request(
+        'GET', Uri.parse("${UIGuide.baseURL}/mobileapp/token/sentlist"));
+    request.body = json.encode({
+      "SchoolId": _pref.getString('schoolId'),
+      "CreatedDate": null,
+      "StaffGuardianStudId": parse['StaffId'],
+      "Type": "Student"
+    });
+    print(json.encode({
+      "SchoolId": _pref.getString('schoolId'),
+      "CreatedDate": null,
+      "StaffGuardianStudId": parse['StaffId'],
+      "Type": "Student"
+    }));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    try {
+      if (response.statusCode == 200) {
+        print("corect");
+
+        Map<String, dynamic> data =
+            jsonDecode(await response.stream.bytesToString());
+
+        log(data.toString());
+
+        List<StaffNotificationHistory> templist =
+            List<StaffNotificationHistory>.from(data["results"]
+                .map((x) => StaffNotificationHistory.fromJson(x)));
+        historyList.addAll(templist);
         setLoading(false);
         notifyListeners();
       } else {

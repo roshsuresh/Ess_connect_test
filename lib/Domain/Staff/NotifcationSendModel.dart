@@ -1,18 +1,18 @@
-class Results {
+class StaffNotificationHistory {
   String? createdDate;
   List<String>? toStudent;
   String? fromStaff;
   String? title;
   String? body;
 
-  Results(
+  StaffNotificationHistory(
       {this.createdDate,
       this.toStudent,
       this.fromStaff,
       this.title,
       this.body});
 
-  Results.fromJson(Map<String, dynamic> json) {
+  StaffNotificationHistory.fromJson(Map<String, dynamic> json) {
     createdDate = json['createdDate'];
     toStudent = json['toStudent'].cast<String>();
     fromStaff = json['fromStaff'];

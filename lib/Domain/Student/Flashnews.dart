@@ -32,3 +32,19 @@ class FlashNews {
     return _data;
   }
 }
+
+class FlashNewsModelStud {
+  String? news;
+
+  FlashNewsModelStud({this.news});
+
+  FlashNewsModelStud.fromJson(Map<String, dynamic> json) {
+    news = json['news'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['news'] = this.news;
+    return data;
+  }
+}

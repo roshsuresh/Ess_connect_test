@@ -15,11 +15,8 @@ class FlashnewsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<FlashNewsModelStud> flashnew = [];
   Future flashNewsProvider(context) async {
-    // flashNewsModel = await flashNewsData(context);
-
-    late FlashNewsModel flashNewsModel;
-    Map<String, dynamic> data = await parseJWT();
     setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -34,10 +31,9 @@ class FlashnewsProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body.toString());
-        dataRsponse = data['flashNews'];
-        // print(data);
-        // print(dataRsponse);
-        flashNewsModel = FlashNewsModel.fromJson(data);
+        List<FlashNewsModelStud> templist = List<FlashNewsModelStud>.from(
+            data["flashNews"].map((x) => FlashNewsModelStud.fromJson(x)));
+        flashnew.addAll(templist);
         setLoading(false);
         notifyListeners();
       } else {

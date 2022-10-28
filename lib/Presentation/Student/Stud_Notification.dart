@@ -61,7 +61,7 @@ class Stud_Notification extends StatelessWidget {
                                 blurRadius: 2,
                               )
                             ],
-                            color: Color.fromARGB(255, 221, 224, 243),
+                            color: Color.fromARGB(255, 236, 236, 241),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: Padding(

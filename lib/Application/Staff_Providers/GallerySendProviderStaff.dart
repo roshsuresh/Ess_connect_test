@@ -327,6 +327,41 @@ class GallerySendProvider_Stf with ChangeNotifier {
     }
   }
 
+//Gallery Received
+  // List<GalleryEventListReceived> galleryReceived = [];
+  // Future getGalleyReceived() async {
+  //   SharedPreferences _pref = await SharedPreferences.getInstance();
+  //   setLoadingg(true);
+  //   var headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+  //   };
+
+  //   setLoadingg(true);
+  //   var response = await http.get(
+  //       Uri.parse("${UIGuide.baseURL}/mobileapp/staffdet/getgalleryview"),
+  //       headers: headers);
+  //   //print(response);
+  //   try {
+  //     if (response.statusCode == 200) {
+  //       setLoadingg(true);
+  //       print("corect");
+  //       final data = json.decode(response.body);
+  //       print(data);
+
+  //       setLoadingg(false);
+  //       notifyListeners();
+  //     } else {
+  //       setLoadingg(false);
+  //       print("Error in Response");
+  //     }
+  //   } catch (e) {
+  //     setLoading(false);
+  //     print(e);
+  //   }
+  // }
+  //gallery received
+
   bool _loadingg = false;
   bool get loadingg => _loading;
   setLoadingg(bool value) {
@@ -355,15 +390,58 @@ class GallerySendProvider_Stf with ChangeNotifier {
         print("corect");
         final data = json.decode(response.body);
         print(data);
+        List<GalleryEventListReceived> templist =
+            List<GalleryEventListReceived>.from(data["galleryEventList"]
+                .map((x) => GalleryEventListReceived.fromJson(x)));
+        galleryReceived.addAll(templist);
 
         setLoadingg(false);
         notifyListeners();
       } else {
         setLoadingg(false);
-        print("Error in Response");
+        print("Error in galleryEventList Response");
       }
     } catch (e) {
       setLoading(false);
+      print(e);
+    }
+  }
+
+  bool _load = false;
+  bool get load => _load;
+  setLoad(bool value) {
+    _load = value;
+    notifyListeners();
+  }
+
+  List? galleryAttachResponse;
+  Future galleyAttachment(String galleryId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoad(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/systemadmindashboard/gallery-photos/$galleryId"),
+        headers: headers);
+    setLoad(true);
+    try {
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        galleryAttachResponse = data;
+
+        setLoad(false);
+        notifyListeners();
+      } else {
+        setLoad(false);
+        print("error in gallery response");
+      }
+    } catch (e) {
+      setLoad(false);
       print(e);
     }
   }

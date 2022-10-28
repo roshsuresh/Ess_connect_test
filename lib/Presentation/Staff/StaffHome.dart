@@ -709,14 +709,17 @@ class StaffFlashNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<FlashnewsProvider>(context, listen: false)
-        .flashNewsProvider(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<FlashnewsProvider>(context, listen: false);
+      p.flashNewsProvider(context);
+    });
 
     var size = MediaQuery.of(context).size;
     return Consumer<FlashnewsProvider>(builder: (context, value, child) {
       return ListView.builder(
+          //scrollDirection: AxisDirection.left,
           shrinkWrap: true,
-          itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
+          itemCount: value.flashnew.length == null ? 0 : value.flashnew.length,
           itemBuilder: (context, index) {
             return value.loading
                 ? Container(
@@ -728,9 +731,7 @@ class StaffFlashNews extends StatelessWidget {
                     width: 30,
                     child: Marquee(
                       //scrolling  text
-                      text: dataRsponse![index]['flashNews'] == null
-                          ? '------------'
-                          : dataRsponse![index]['flashNews'].toString(),
+                      text: value.flashnew[index].news ?? '-----',
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,

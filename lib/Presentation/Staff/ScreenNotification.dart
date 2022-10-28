@@ -88,7 +88,7 @@ class StaffNotificationReceived extends StatelessWidget {
                               blurRadius: 2,
                             )
                           ],
-                          color: Color.fromARGB(255, 221, 224, 243),
+                          color: Color.fromARGB(255, 245, 246, 248),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
@@ -170,86 +170,104 @@ class StaffNotificationSendHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p =
+          Provider.of<StaffNotificationScreenProvider>(context, listen: false);
+      p.getNotificationHistory();
+      p.historyList.clear();
+    });
     var size = MediaQuery.of(context).size;
-    return ListView(
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: LimitedBox(
-                maxHeight: 100,
-                child: Container(
-                  width: size.width,
-                  // height: 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: UIGuide.light_Purple)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+    return Consumer<StaffNotificationScreenProvider>(
+      builder: (context, value, child) => value.loading
+          ? spinkitLoader()
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: value.historyList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: LimitedBox(
+                    maxHeight: 100,
+                    child: Container(
+                      width: size.width,
+                      // height: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: UIGuide.light_Purple)),
+                      child: Column(
                         children: [
-                          Text(
-                            'Title: ',
-                            style: TextStyle(
-                                fontSize: 15, color: UIGuide.light_Purple),
+                          SizedBox(
+                            height: 2,
                           ),
-                          Flexible(
-                            child: Text(
-                              'SchoolId":"0cead469-c94b-4538-adc6-47658c616f34","MobileToken":"dcxEVMj2S6msn-Q4FBBbkQ:APA91bEX6err6MFLaqTnSZhFXOGTmCqFwSvWsrnljMIzJMpO2nd',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Title: ',
+                                style: TextStyle(
+                                    fontSize: 15, color: UIGuide.light_Purple),
+                              ),
+                              Flexible(
+                                child: Text(
+                                  value.historyList[index].title ?? '--',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Matter: ',
+                                style: TextStyle(
+                                    fontSize: 15, color: UIGuide.light_Purple),
+                              ),
+                              Flexible(
+                                child: RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  strutStyle: const StrutStyle(fontSize: 13),
+                                  maxLines: 3,
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color.fromARGB(255, 44, 43, 43)),
+                                    text: value.historyList[index].body ?? '--',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Created At: ',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: UIGuide.light_Purple),
+                                ),
+                                Text(
+                                  value.historyList[index].createdDate ?? '--',
+                                ),
+                              ],
                             ),
                           )
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Matter: ',
-                            style: TextStyle(
-                                fontSize: 15, color: UIGuide.light_Purple),
-                          ),
-                          Flexible(
-                            child: RichText(
-                              overflow: TextOverflow.ellipsis,
-                              strutStyle: const StrutStyle(fontSize: 13),
-                              maxLines: 3,
-                              text: TextSpan(
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Color.fromARGB(255, 44, 43, 43)),
-                                  text:
-                                      '-SchoolId":"VMj2S6msn-Q4FBBbkQ:A0MQuOkCbr7YNPvZolrPvh4ogs5nWV0Gf","StaffId":"7769c40f-5e1d-4acc-bc4e-df816f33b2b3","GuardianId":null,"StudentId":null,"Type":"Staff"---'),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Created At: ',
-                            style: TextStyle(
-                                fontSize: 15, color: UIGuide.light_Purple),
-                          ),
-                          Text(
-                            '20/120/2020 ',
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
-        ),
-      ],
+                );
+              },
+            ),
     );
   }
 }

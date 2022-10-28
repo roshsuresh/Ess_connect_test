@@ -34,8 +34,8 @@ class StudentHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Provider.of<ProfileProvider>(context, listen: false).profileData();
-    Provider.of<ProfileProvider>(context, listen: false)
-        .flashNewsProvider(context);
+    // Provider.of<ProfileProvider>(context, listen: false)
+    //     .flashNewsProvider(context);
     Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
     //Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
     // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
@@ -1454,8 +1454,11 @@ class Flashnews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false)
-        .flashNewsProvider(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<ProfileProvider>(context, listen: false);
+      p.flashNewsProvider(context);
+      p.flashnew.clear();
+    });
 
     var size = MediaQuery.of(context).size;
     return Consumer<ProfileProvider>(
@@ -1466,17 +1469,20 @@ class Flashnews extends StatelessWidget {
                 width: 30,
               )
             : ListView.builder(
+                //scrollDirection: Axis.horizontal,
+                physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: dataRsponse == null ? 0 : dataRsponse!.length,
+                itemCount:
+                    value.flashnew.length == null ? 0 : value.flashnew.length,
                 itemBuilder: (context, index) {
                   return Container(
                     height: 30,
                     width: 30,
                     child: Marquee(
                       //scrolling  text
-                      text: dataRsponse![index]['flashNews'] == null
-                          ? '------------'
-                          : dataRsponse![index]['flashNews'].toString(),
+                      text: value.flashnew[index].news ?? '--------',
+                      // ? '------------'
+                      // : dataRsponse![index]['flashNews'].toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -1489,7 +1495,7 @@ class Flashnews extends StatelessWidget {
                       showFadingOnlyWhenScrolling: true,
                       fadingEdgeStartFraction: 0.3,
                       fadingEdgeEndFraction: 0.3,
-                      numberOfRounds: 2000,
+                      numberOfRounds: 3000,
                       startPadding: 10.0,
                       accelerationDuration: const Duration(seconds: 1),
                       accelerationCurve: Curves.linear,

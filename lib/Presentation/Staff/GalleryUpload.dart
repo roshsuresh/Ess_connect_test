@@ -1,6 +1,7 @@
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Presentation/Staff/GalleryList.dart';
+import 'package:Ess_test/Presentation/Staff/GalleryReceived.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
       p.removeCourseAll();
       p.removeDivisionAll();
       titleController.clear();
-      //  p.courselistt.clear();
     });
   }
 
@@ -117,7 +117,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 onPressed: () async {
                   return;
                 }),
-            // Spacer(),
           ],
         ),
         Padding(
@@ -517,14 +516,5 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
 
   void openFile(PlatformFile file) {
     OpenFile.open(file.path);
-  }
-}
-
-class StaffGalleryView extends StatelessWidget {
-  const StaffGalleryView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

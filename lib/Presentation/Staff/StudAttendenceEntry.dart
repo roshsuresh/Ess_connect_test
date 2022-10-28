@@ -499,42 +499,61 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                       .name ??
                                                   '--',
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(fontSize: 14),
+                                              style:
+                                                  const TextStyle(fontSize: 14),
                                             ),
-                                            GestureDetector(
-                                                onTap: () {
-                                                  attende(
-                                                      _attendence,
-                                                      value
-                                                          .studentsAttendenceView[
-                                                              index]
-                                                          .name);
-                                                  
-                                                  setState(() {
-                                                    _attendence = !_attendence;
-                                                  });
-                                                },
-                                                child: _attendence
-                                                    ? const Text(
-                                                        'A',
-                                                        style: TextStyle(
-                                                            color: Colors.red,
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )
-                                                    : const Text(
-                                                        'P',
-                                                        style: TextStyle(
-                                                            color: Colors.green,
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )),
-                                                  
+                                            SizedBox(
+                                                width: 4,
+                                                height: 20,
+                                                child: Checkbox(
+                                                    value: selecteCategorys
+                                                        .contains(value
+                                                            .studentsAttendenceView[
+                                                                index]
+                                                            .afternoon),
+                                                    onChanged:
+                                                        (bool? selected) {
+                                                      //_isCheck = selected!;
+                                                      onFeeSelected(
+                                                          selected!,
+                                                          value
+                                                              .studentsAttendenceView[
+                                                                  index]
+                                                              .afternoon,
+                                                          index);
+                                                    })),
+                                            // GestureDetector(
+                                            //     onTap: () {
+                                            //       attende(
+                                            //           _attendence,
+                                            //           value
+                                            //               .studentsAttendenceView[
+                                            //                   index]
+                                            //               .name);
 
+                                            //       setState(() {
+                                            //         _attendence = !_attendence;
+                                            //       });
+                                            //     },
+                                            //     child: _attendence
+                                            //         ? const Text(
+                                            //             'A',
+                                            //             style: TextStyle(
+                                            //                 color: Colors.red,
+                                            //                 fontSize: 15,
+                                            //                 fontWeight:
+                                            //                     FontWeight
+                                            //                         .bold),
+                                            //           )
+                                            //         : const Text(
+                                            //             'P',
+                                            //             style: TextStyle(
+                                            //                 color: Colors.green,
+                                            //                 fontSize: 15,
+                                            //                 fontWeight:
+                                            //                     FontWeight
+                                            //                         .bold),
+                                            //           )),
                                             Text(
                                               value
                                                       .studentsAttendenceView[
@@ -583,5 +602,22 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
             ),
           ),
         ));
+  }
+
+  bool _isCheck = true;
+  List selecteCategorys = [];
+  void onFeeSelected(
+    bool selected,
+    feeName,
+    int index,
+  ) {
+    if (selected == true) {
+      selecteCategorys.add(feeName);
+      print(index);
+    } else {
+      if (selecteCategorys.remove(feeName)) {
+        // final double tot = feeNetDue;
+      }
+    }
   }
 }

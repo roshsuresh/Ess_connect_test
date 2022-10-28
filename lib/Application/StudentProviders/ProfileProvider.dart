@@ -143,6 +143,7 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 
+  List<FlashNewsModelStud> flashnew = [];
   Future flashNewsProvider(context) async {
     // flashNewsModel = await flashNewsData(context);
     late FlashNewsModel flashNewsModel;
@@ -166,6 +167,9 @@ class ProfileProvider with ChangeNotifier {
         dataRsponse = data['flashNews'];
         // print(data);
         // print(dataRsponse);
+        List<FlashNewsModelStud> templist = List<FlashNewsModelStud>.from(
+            data["flashNews"].map((x) => FlashNewsModelStud.fromJson(x)));
+        flashnew.addAll(templist);
         flashNewsModel = FlashNewsModel.fromJson(data);
         setLoading(false);
         notifyListeners();
