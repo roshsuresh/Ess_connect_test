@@ -1,10 +1,7 @@
-import 'package:Ess_test/Presentation/Admin/NoticeBoard/ReceivedNoticeBoard.dart';
+import 'package:Ess_test/Presentation/Admin/NoticeBoard/NoticeList.dart';
 import 'package:Ess_test/Presentation/Admin/NoticeBoard/SendNoticeBoard.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class NoticeBoardAdnin extends StatelessWidget {
   const NoticeBoardAdnin({Key? key}) : super(key: key);
@@ -40,7 +37,7 @@ class NoticeBoardAdnin extends StatelessWidget {
             ),
             body: TabBarView(children: [
               SendNoticeBoardAdmin(),
-              ReceivedNoticeBoardAdmin(),
+              NoticeBoardListAdmin(),
             ])));
   }
 }

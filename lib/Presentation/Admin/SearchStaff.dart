@@ -593,7 +593,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Name : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -610,7 +610,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                     kheight10,
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Stop : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -631,7 +631,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                       },
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Phone No : ',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 13),
@@ -640,7 +640,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                             child: Text(
                               phn = value.searchStudent[indexx].mobNo ?? '---',
                               overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           )
                         ],

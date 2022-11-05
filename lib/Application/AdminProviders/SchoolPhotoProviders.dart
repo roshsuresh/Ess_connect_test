@@ -17,6 +17,13 @@ class SchoolPhotoProviders with ChangeNotifier {
     notifyListeners();
   }
 
+  //len
+  int courseLen = 0;
+  len() {
+    courseLen = 0;
+    notifyListeners();
+  }
+
   String? url;
   Future<int> getSchoolPhoto() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -86,11 +93,29 @@ class SchoolPhotoProviders with ChangeNotifier {
     }
   }
 
-  //division
+  //course
 
   List<StudReportCourse> courselist = [];
   List<MultiSelectItem> courseDrop = [];
   List<MultiSelectItem> divisionDrop = [];
+  clearSection() {
+    dropDown.clear();
+    stdReportInitialValues.clear();
+    notifyListeners();
+  }
+
+  clearCourse() {
+    courseDrop.clear();
+    courselist.clear();
+    notifyListeners();
+  }
+
+  clearDivision() async {
+    divisionDrop.clear();
+    divisionlist.clear();
+    notifyListeners();
+  }
+
   Future<bool> getCourseList(String sectionId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
@@ -105,14 +130,15 @@ class SchoolPhotoProviders with ChangeNotifier {
             '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/course/$sectionId'));
     request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
     request.headers.addAll(headers);
-
+    print(http.Request(
+        'GET',
+        Uri.parse(
+            '${UIGuide.baseURL}/mobileapp/staffdet/studentreport/course/$sectionId')));
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
-
-      // log(data.toString());
 
       List<StudReportCourse> templist = List<StudReportCourse>.from(
           data["course"].map((x) => StudReportCourse.fromJson(x)));
@@ -151,7 +177,7 @@ class SchoolPhotoProviders with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      log(data.toString());
+      //log(data.toString());
 
       List<StudReportDivision> templist = List<StudReportDivision>.from(
           data["divisionbyCourse"].map((x) => StudReportDivision.fromJson(x)));

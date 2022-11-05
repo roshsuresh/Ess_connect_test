@@ -116,7 +116,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
                 await Provider.of<GalleryProviderAdmin>(context, listen: false)
-                    .galleryImageSave(file.path.toString());
+                    .galleryImageSave(context, file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -133,7 +133,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
         Row(
           children: [
             SizedBox(
-              width: size.width * .44,
+              width: size.width * .45,
               height: 35,
               child: MaterialButton(
                 minWidth: size.width - 216,
@@ -155,7 +155,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
             ),
             Spacer(),
             SizedBox(
-              width: size.width * .44,
+              width: size.width * .45,
               height: 35,
               child: MaterialButton(
                 minWidth: size.width - 216,
@@ -184,7 +184,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
-                  width: size.width * .42,
+                  width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
                     // height: 200,
@@ -242,7 +242,6 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       await Provider.of<GalleryProviderAdmin>(context,
                               listen: false)
                           .getDivisionList(course);
-                      // print(courseData.join('","'));
                     },
                   ),
                 ),
@@ -253,7 +252,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
-                  width: size.width * .42,
+                  width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
                     // height: 200,

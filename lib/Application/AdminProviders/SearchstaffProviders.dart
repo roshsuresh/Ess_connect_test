@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:Ess_test/Domain/Staff/SearchStudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,6 @@ class SearchStaffProviders with ChangeNotifier {
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
-      //  log(data.toString());
       List<StaffReportByAdmin> templist = List<StaffReportByAdmin>.from(
           data["staffReport"].map((x) => StaffReportByAdmin.fromJson(x)));
       staffReportList.addAll(templist);

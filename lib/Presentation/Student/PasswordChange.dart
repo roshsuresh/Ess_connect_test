@@ -1,21 +1,35 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../Application/StudentProviders/PasswordChangeProvider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
-class PasswordChange extends StatelessWidget {
+class PasswordChange extends StatefulWidget {
   PasswordChange({Key? key}) : super(key: key);
+
+  @override
+  State<PasswordChange> createState() => _PasswordChangeState();
+}
+
+class _PasswordChangeState extends State<PasswordChange> {
   bool _isObscure = false;
+
   final _confirmpassword = TextEditingController();
+
   final _passwordNew = TextEditingController();
+
   final _password = TextEditingController();
+
   // String? oldPass;
-  // String? newPass;
-  // String? confirmPass;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  RegExp pass_valid = RegExp(r"(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W)");
+
+  bool _isVisible = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -88,9 +102,9 @@ class PasswordChange extends StatelessWidget {
                         labelText: 'Current Password',
                       ),
                       validator: (value) {
-                        RegExp regEx = RegExp(
-                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
-                        if (value == null || value.isEmpty) {
+                        // RegExp regEx = RegExp(
+                        //     r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+                        if (value!.isEmpty) {
                           return 'Please enter New password';
                         }
                         // else {
@@ -106,156 +120,208 @@ class PasswordChange extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
-                      obscureText: !_isObscure,
-                      controller: _passwordNew,
-                      decoration: InputDecoration(
-                        focusColor: const Color.fromARGB(255, 213, 215, 218),
-                        prefixIcon: const Icon(
-                          Icons.key_outlined,
-                          color: Colors.grey,
+                        obscureText: !_isObscure,
+                        controller: _passwordNew,
+                        decoration: InputDecoration(
+                          focusColor: const Color.fromARGB(255, 213, 215, 218),
+                          prefixIcon: const Icon(
+                            Icons.key_outlined,
+                            color: Colors.grey,
+                          ),
+                          //errorText: "Please enter valid username",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 123, 181, 228),
+                                width: 1.0),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          fillColor: Colors.grey,
+                          hintText: "Enter Your New Password",
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                            fontFamily: "verdana_regular",
+                            fontWeight: FontWeight.w400,
+                          ),
+                          labelText: 'New Password',
                         ),
-                        //errorText: "Please enter valid username",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 123, 181, 228),
-                              width: 1.0),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        fillColor: Colors.grey,
-                        hintText: "Enter Your New Password",
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                          fontFamily: "verdana_regular",
-                          fontWeight: FontWeight.w400,
-                        ),
-                        labelText: 'New Password',
-                      ),
-                      validator: (value) {
-                        RegExp regExpp = RegExp(
-                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+                        // onChanged: (value) {
+                        //   _formkey.currentState!.validate();
+                        // },
+                        validator: (valuee) {
+                          if (valuee!.isEmpty) {
+                            return 'Please enter New password';
+                          } else if (RegExp(
+                                  r"^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$")
+                              .hasMatch(valuee)) {
+                            print(valuee);
+                            return "please enter a valid email";
+                          }
+                          // if (_passwordNew.text != _confirmpassword.text) {
+                          //   return 'Password do not match..!';
+                          // }
 
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter New password';
+//                         else {
+// //call function to check password
+//                           bool result = validatePassword(_passwordNew.text);
+//                           print(result);
+//                           if (result) {
+// // create account event
+//                             return null;
+//                           } else {
+//                             return " Password should contain Capital, small letter & Number & Special";
+//                           }
+//                         }
+
+                          return null;
                         }
-                        // else {
-                        // if (!regExpp.hasMatch(value)) {
-                        //   if (_passwordNew.text != _confirmpassword.text) {
-                        //     return 'Password do not match..!';
-                        //   }
-                        //   return 'Enter valid password';
-                        // } else {
-                        return null;
-                        // }
                         //  }
-                      },
-                    ),
+                        //  },
+                        ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      obscureText: !_isObscure,
-                      controller: _confirmpassword,
-                      decoration: InputDecoration(
-                        focusColor: const Color.fromARGB(255, 213, 215, 218),
-                        prefixIcon: const Icon(
-                          Icons.key_outlined,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 123, 181, 228),
-                              width: 1.0),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        fillColor: Colors.grey,
-                        hintText: "Enter Confirm Password",
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                          fontFamily: "verdana_regular",
-                          fontWeight: FontWeight.w400,
-                        ),
-                        labelText: 'Confirm Password',
+                  Consumer<PasswordChangeprovider>(
+                    builder: (context, value, child) => Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: FlutterPwValidator(
+                        controller: _passwordNew,
+                        minLength: 8,
+                        uppercaseCharCount: 1,
+                        numericCharCount: 1,
+                        specialCharCount: 1,
+                        normalCharCount: 3,
+                        width: 300,
+                        height: 120,
+                        onSuccess: () {
+                          print("MATCHED");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Password is matched")));
+                          value.visiblee();
+                          // return _isVisible = true;
+                          // setState(() {
+                          //   _isVisible = !_isVisible;
+                          // });
+                        },
+                        onFail: () {
+                          // ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                          //     content: new Text("Password not matched")));
+                          print("NOT MATCHED");
+                        },
                       ),
-                      validator: (value) {
-                        RegExp regExp = RegExp(
-                            r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
-
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        //  else {
-                        //   if (!regExp.hasMatch(value)) {
-                        // if (_passwordNew.text != _confirmpassword.text) {
-                        //   return 'Password do not match..!';
-                        // }
-                        //   return 'Enter valid password';
-                        // } else {
-                        return null;
-                        //   }
-                        // }
-                      },
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: TextFormField(
+                  //     obscureText: !_isObscure,
+                  //     controller: _confirmpassword,
+                  //     decoration: InputDecoration(
+                  //       focusColor: const Color.fromARGB(255, 213, 215, 218),
+                  //       prefixIcon: const Icon(
+                  //         Icons.key_outlined,
+                  //         color: Colors.grey,
+                  //       ),
+                  //       border: OutlineInputBorder(
+                  //         borderRadius: BorderRadius.circular(10.0),
+                  //       ),
+                  //       focusedBorder: OutlineInputBorder(
+                  //         borderSide: const BorderSide(
+                  //             color: Color.fromARGB(255, 123, 181, 228),
+                  //             width: 1.0),
+                  //         borderRadius: BorderRadius.circular(10.0),
+                  //       ),
+                  //       fillColor: Colors.grey,
+                  //       hintText: "Enter Confirm Password",
+                  //       hintStyle: const TextStyle(
+                  //         color: Colors.grey,
+                  //         fontSize: 16,
+                  //         fontFamily: "verdana_regular",
+                  //         fontWeight: FontWeight.w400,
+                  //       ),
+                  //       labelText: 'Confirm Password',
+                  //     ),
+                  //     validator: (value) {
+                  //       // RegExp regExp = RegExp(
+                  //       //     r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
+
+                  //       if (value!.isEmpty) {
+                  //         return 'Please enter your password';
+                  //       } else
+                  //       //   if (!regExp.hasMatch(value)) {
+                  //       if (_passwordNew.text != _confirmpassword.text) {
+                  //         return 'Password do not match..!';
+                  //       }
+                  //       //   return 'Enter valid password';
+                  //       // } else {
+                  //       return null;
+                  //       //   }
+                  //       // }
+                  //       // else {
+                  //       //   bool result = validatePassword(value);
+                  //       //   if (result) {
+                  //       //     return null;
+                  //       //   } else {
+                  //       //     return " Password should contain Capital, small letter & Number & Special";
+                  //       //   }
+                  //       // }
+                  //     },
+                  //   ),
+                  // ),
                   kheight20,
                   SizedBox(
-                    width: 200,
-                    child: Consumer<PasswordChangeprovider>(
-                      builder: (context, value, child) => MaterialButton(
-                        height: 60,
-                        onPressed: () async {
-                          String pass = _password.text.toString();
-                          String newPass = _passwordNew.text.toString();
-                          String confirmPass = _confirmpassword.text.toString();
-                          if (await _formkey.currentState!.validate()) {
-                            print('validated');
-                            await Provider.of<PasswordChangeprovider>(context,
-                                    listen: false)
-                                .checkOldPassword(pass);
-                            String check = value.oldPasswordCorrect.toString();
-                            print(value.oldPasswordCorrect.toString());
-                            if (check.toString() == true.toString()) {
-                              print('success');
+                    height: 100,
+                  ),
+                  Consumer<PasswordChangeprovider>(
+                    builder: (context, value, child) => Visibility(
+                      visible: value.isVisible,
+                      child: SizedBox(
+                        width: 200,
+                        child: MaterialButton(
+                          height: 60,
+                          onPressed: () async {
+                            String pass = _password.text.toString();
+                            String newPass = _passwordNew.text.toString();
+                            String confirmPass = newPass;
+                            if (_formkey.currentState!.validate()) {
+                              print('validated');
                               await Provider.of<PasswordChangeprovider>(context,
                                       listen: false)
-                                  .updatePassword(pass, newPass, confirmPass);
-                              await AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.success,
-                                      animType: AnimType.rightSlide,
-                                      headerAnimationLoop: false,
-                                      title: 'Success',
-                                      desc: 'Password Changed Successfully',
-                                      btnOkOnPress: () {
-                                        Navigator.pop(context);
-                                      },
-                                      btnOkColor: Colors.green)
-                                  .show();
+                                  .checkOldPassword(pass);
+                              String check =
+                                  value.oldPasswordCorrect.toString();
+                              print(value.oldPasswordCorrect.toString());
+                              if (check.toString() == true.toString()) {
+                                print('success');
+                                await Provider.of<PasswordChangeprovider>(
+                                        context,
+                                        listen: false)
+                                    .updatePassword(
+                                        context, pass, newPass, confirmPass);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text("Incorrect Old Password")));
+                                //  print('Fail');
+                              }
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("Incorrect Old Password")));
-                              print('Fail');
+                              //   print('Error in conection');
                             }
-                          } else {
-                            print('Error in conection');
-                          }
-                        },
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16),
+                            _password.clear();
+                            _passwordNew.clear();
+                          },
+                          child: const Text(
+                            'Update',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16),
+                          ),
+                          color: UIGuide.light_Purple,
                         ),
-                        color: UIGuide.light_Purple,
                       ),
                     ),
                   ),

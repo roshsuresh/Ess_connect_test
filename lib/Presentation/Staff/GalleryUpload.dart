@@ -159,7 +159,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 print('Extension: ${file.extension}');
                 await Provider.of<GallerySendProvider_Stf>(context,
                         listen: false)
-                    .galleryImageSave(file.path.toString());
+                    .galleryImageSave(context, file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -447,18 +447,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                           coursevalueController.text,
                           divisionvalueController.text,
                           attachmentid);
-
-                  return AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.success,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: 'Success',
-                          desc: 'Uploaded Successfully',
-                          btnOkOnPress: () {},
-                          btnOkIcon: Icons.cancel,
-                          btnOkColor: Colors.green)
-                      .show();
                 }
 
                 print(datee);

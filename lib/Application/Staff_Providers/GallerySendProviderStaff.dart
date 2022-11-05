@@ -185,7 +185,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
 //find image id
 
   String? id;
-  Future galleryImageSave(String path) async {
+  Future galleryImageSave(BuildContext context, String path) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -206,8 +206,12 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
       GalleryImageId idd = GalleryImageId.fromJson(data);
       id = idd.id;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
       print('...............   $id');
     } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something went Wrong")));
       print(response.reasonPhrase);
     }
   }
@@ -251,11 +255,25 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       print('Correct...______________________________');
-      //  Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => AwesomeDilogue()));
 
-      print(await response.stream.bytesToString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
+      return AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              headerAnimationLoop: false,
+              title: 'Success',
+              desc: 'Uploaded Successfully',
+              btnOkOnPress: () {},
+              btnOkIcon: Icons.cancel,
+              btnOkColor: Colors.green)
+          .show();
+
+      //print(await response.stream.bytesToString());
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Something went wrong...")));
       print('Error in gallery save respo');
     }
   }
@@ -305,7 +323,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
 //delete gallery
 
-  Future galleryDeleteStaff(String eventID) async {
+  Future galleryDeleteStaff(BuildContext context, String eventID) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -321,46 +339,17 @@ class GallerySendProvider_Stf with ChangeNotifier {
     if (response.statusCode == 204) {
       print(await response.stream.bytesToString());
       print('correct');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Deleted Successfully")));
       notifyListeners();
     } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
       print('Error in galleryDelete stf');
     }
   }
 
 //Gallery Received
-  // List<GalleryEventListReceived> galleryReceived = [];
-  // Future getGalleyReceived() async {
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   setLoadingg(true);
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-
-  //   setLoadingg(true);
-  //   var response = await http.get(
-  //       Uri.parse("${UIGuide.baseURL}/mobileapp/staffdet/getgalleryview"),
-  //       headers: headers);
-  //   //print(response);
-  //   try {
-  //     if (response.statusCode == 200) {
-  //       setLoadingg(true);
-  //       print("corect");
-  //       final data = json.decode(response.body);
-  //       print(data);
-
-  //       setLoadingg(false);
-  //       notifyListeners();
-  //     } else {
-  //       setLoadingg(false);
-  //       print("Error in Response");
-  //     }
-  //   } catch (e) {
-  //     setLoading(false);
-  //     print(e);
-  //   }
-  // }
-  //gallery received
 
   bool _loadingg = false;
   bool get loadingg => _loading;

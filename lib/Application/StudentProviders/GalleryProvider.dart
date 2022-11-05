@@ -63,6 +63,7 @@ class GalleryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List galleryList = [];
   Future galleyAttachment(String galleryId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoadingg(true);
@@ -73,8 +74,7 @@ class GalleryProvider with ChangeNotifier {
     String galleryid = galleryId.toString();
     // print('Headres   $headers');
     var response = await http.get(
-        Uri.parse(
-            "${UIGuide.baseURL}/mobileapp/parents/gallery-photos/$galleryid"),
+        Uri.parse("${UIGuide.baseURL}/parent-home/gallery-photos/$galleryid"),
         headers: headers);
     setLoadingg(true);
     try {
@@ -83,10 +83,10 @@ class GalleryProvider with ChangeNotifier {
         // print("corect");
         final data = json.decode(response.body);
         print(data);
-        galleryAttachResponse = data["galleryphotos"];
+        galleryList = data;
         // galleryphotosModel = GalleryphotosModel.fromJson(data);
         // print(galleryAttachResponse);
-        // print(galleryphotosModel);
+        print(galleryList);
         setLoadingg(false);
         notifyListeners();
       } else {

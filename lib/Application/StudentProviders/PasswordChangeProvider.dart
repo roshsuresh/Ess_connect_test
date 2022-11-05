@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:Ess_test/Domain/Password/PasswordModel.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,8 +36,8 @@ class PasswordChangeprovider with ChangeNotifier {
     }
   }
 
-  Future updatePassword(
-      String oldPass, String newPass, String confirmPass) async {
+  Future updatePassword(BuildContext context, String oldPass, String newPass,
+      String confirmPass) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -50,13 +51,34 @@ class PasswordChangeprovider with ChangeNotifier {
     try {
       if (response.statusCode == 201) {
         print('_____Password Changed_____');
-
+        AwesomeDialog(
+                context: context,
+                dialogType: DialogType.success,
+                animType: AnimType.rightSlide,
+                headerAnimationLoop: false,
+                title: 'Success',
+                desc: 'Password Changed Successfully',
+                btnOkOnPress: () {
+                  //  Navigator.pop(context);
+                },
+                btnOkColor: Colors.green)
+            .show();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Password Changed")));
         notifyListeners();
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Something Went Wrong")));
         print(response.reasonPhrase);
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  bool isVisible = false;
+  visiblee() async {
+    isVisible = true;
+    notifyListeners();
   }
 }

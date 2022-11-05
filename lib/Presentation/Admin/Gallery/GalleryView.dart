@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+
+import '../../../utils/LoadingIndication.dart';
 
 class AdminGalleryView extends StatelessWidget {
   const AdminGalleryView({Key? key}) : super(key: key);
@@ -116,15 +120,16 @@ class AdminGalleryView extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () async {
-                                  // await Provider.of<GalleryProviderAdmin>(context,
-                                  //         listen: false)
-                                  //     .galleyAttachment(idd);
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           GalleryonTap(id: idd)),
-                                  // );
+                                  await Provider.of<GalleryProviderAdmin>(
+                                          context,
+                                          listen: false)
+                                      .galleyAttachment(idd);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GalleryonTapAdmin(id: idd)),
+                                  );
                                 },
                               ),
                             ],
@@ -134,6 +139,92 @@ class AdminGalleryView extends StatelessWidget {
                     })),
               ],
             ),
+    );
+  }
+}
+
+class GalleryonTapAdmin extends StatelessWidget {
+  GalleryonTapAdmin({Key? key, required String id}) : super(key: key);
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Consumer<GalleryProviderAdmin>(
+          builder: (context, value, child) => value.load
+              ? spinkitLoader()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 4,
+                    children: List.generate(
+                        value.galleryAttachResponse == null
+                            ? 0
+                            : value.galleryAttachResponse!.length, (index) {
+                      return GestureDetector(
+                        child: isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Container(
+                                height: 100,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.black12,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            value.galleryAttachResponse![index]
+                                                    ['url'] ??
+                                                const AssetImage(
+                                                    'assets/noimages.png')))),
+                              ),
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewImageOntapAdmin(
+                                      inde: index,
+                                    )),
+                          );
+                        },
+                      );
+                    }),
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class ViewImageOntapAdmin extends StatelessWidget {
+  ViewImageOntapAdmin({Key? key, required int inde}) : super(key: key);
+  bool isLoading = false;
+  int? indee;
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<GalleryProviderAdmin>(
+      builder: (context, value, child) => PhotoViewGallery.builder(
+          scrollPhysics: const BouncingScrollPhysics(),
+          enableRotation: false,
+          itemCount: value.galleryAttachResponse == null
+              ? 0
+              : value.galleryAttachResponse!.length,
+          builder: ((context, inde) {
+            final imgUrl = value.galleryAttachResponse![inde]['url'];
+            return PhotoViewGalleryPageOptions(
+                imageProvider: NetworkImage(
+                    imgUrl ?? const AssetImage('assets/noimages.png')),
+                initialScale: PhotoViewComputedScale.contained * 0.8,
+                heroAttributes: PhotoViewHeroAttributes(
+                    tag: value.galleryAttachResponse![inde]['url']));
+          }),
+          loadingBuilder: (context, event) => const LoadingIcon()),
     );
   }
 }

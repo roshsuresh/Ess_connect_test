@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:Ess_test/Domain/Staff/NoticeboardSendModel.dart';
@@ -123,7 +124,7 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
   }
 
   String? id;
-  Future noticeImageSave(String path) async {
+  Future noticeImageSave(BuildContext context, String path) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -145,7 +146,8 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
       NoticeImageId idd = NoticeImageId.fromJson(data);
       id = idd.id;
       print('...............   $id');
-      // print(await response.stream.bytesToString());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
     } else {
       print(response.reasonPhrase);
     }
@@ -154,6 +156,7 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
   //Noticeboard  save
 
   Future noticeBoardSave(
+      BuildContext context,
       String entryDate,
       String DisplayStartDate,
       String DisplayEndDate,
@@ -208,7 +211,22 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
     if (response.statusCode == 200) {
       print('Correct........______________________________');
       print(await response.stream.bytesToString());
+      await AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              headerAnimationLoop: false,
+              title: 'Success',
+              desc: 'Successfully send',
+              btnOkOnPress: () {
+                return;
+              },
+              btnOkIcon: Icons.cancel,
+              btnOkColor: Colors.green)
+          .show();
     } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
       print('Error Response notice send stf');
     }
   }

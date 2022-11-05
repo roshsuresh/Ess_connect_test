@@ -45,10 +45,10 @@ class PaymentHistory extends StatelessWidget {
                     child: Table(
                       columnWidths: const {
                         0: FlexColumnWidth(.5),
-                        1: FlexColumnWidth(2),
-                        2: FlexColumnWidth(3),
-                        3: FlexColumnWidth(2.4),
-                        4: FlexColumnWidth(1.2),
+                        1: FlexColumnWidth(2.1),
+                        2: FlexColumnWidth(2.3),
+                        3: FlexColumnWidth(2.2),
+                        4: FlexColumnWidth(1.2)
                       },
                       children: const [
                         TableRow(
@@ -105,7 +105,7 @@ class PaymentHistory extends StatelessWidget {
                             columnWidths: const {
                               0: FlexColumnWidth(.5),
                               1: FlexColumnWidth(2.1),
-                              2: FlexColumnWidth(2.2),
+                              2: FlexColumnWidth(2.3),
                               3: FlexColumnWidth(2.2),
                               4: FlexColumnWidth(1.2)
                             },

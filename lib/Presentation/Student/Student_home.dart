@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
+import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/StudentProviders/GalleryProvider.dart';
 import '../../Application/StudentProviders/ProfileProvider.dart';
@@ -211,52 +212,6 @@ class StudentHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Consumer<ProfileProvider>(
-                      builder: (context, value, child) {
-                        return GestureDetector(
-                          onTap: () async {
-                            var divId = value.divisionId == null
-                                ? 'divId is null'
-                                : value.divisionId.toString();
-                            await Provider.of<Timetableprovider>(context,
-                                    listen: false)
-                                .getTimeTable(divId);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Timetable(divid: divId)),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Timetable',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -285,6 +240,41 @@ class StudentHome extends StatelessWidget {
                             kheight,
                             const Text(
                               'Notice Board',
+                              style: TextStyle(
+                                  fontSize: 11, color: Colors.black38),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Gallery()),
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  opacity: 20,
+                                  image: AssetImage(
+                                    'assets/Gallery.png',
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            kheight,
+                            const Text(
+                              'Gallery',
                               style: TextStyle(
                                   fontSize: 11, color: Colors.black38),
                             )
@@ -668,77 +658,89 @@ class StudentHome extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ReportCard()),
-                          );
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Reportcard.png',
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 10, right: 10),
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => const ReportCard()),
+                    //       );
+                    //     },
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //       children: [
+                    //         Container(
+                    //           height: 50,
+                    //           width: 40,
+                    //           decoration: BoxDecoration(
+                    //             image: const DecorationImage(
+                    //               opacity: 20,
+                    //               image: AssetImage(
+                    //                 'assets/Reportcard.png',
+                    //               ),
+                    //             ),
+                    //             borderRadius: BorderRadius.circular(10),
+                    //           ),
+                    //         ),
+                    //         kheight,
+                    //         const Text(
+                    //           'Report Card',
+                    //           style: TextStyle(
+                    //               fontSize: 11, color: Colors.black38),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    Consumer<ProfileProvider>(
+                      builder: (context, value, child) {
+                        return GestureDetector(
+                          onTap: () async {
+                            var divId = value.divisionId == null
+                                ? 'divId is null'
+                                : value.divisionId.toString();
+                            await Provider.of<Timetableprovider>(context,
+                                    listen: false)
+                                .getTimeTable(divId);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Timetable(divid: divId)),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      opacity: 20,
+                                      image: AssetImage(
+                                        'assets/Profile.png',
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                                kheight,
+                                const Text(
+                                  'Timetable',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.black38),
+                                )
+                              ],
                             ),
-                            kheight,
-                            const Text(
-                              'Report Card',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Gallery()),
-                          );
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Gallery.png',
-                                  ),
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Gallery',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+
                     // Padding(
                     //   padding: const EdgeInsets.only(left: 10, right: 10),
                     //   child: GestureDetector(
@@ -1449,17 +1451,37 @@ class ProfileHome extends StatelessWidget {
   }
 }
 
-class Flashnews extends StatelessWidget {
+class Flashnews extends StatefulWidget {
   const Flashnews({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<Flashnews> createState() => _FlashnewsState();
+}
+
+class _FlashnewsState extends State<Flashnews> {
+  var scrollcontroller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<ProfileProvider>(context, listen: false);
       p.flashNewsProvider(context);
       p.flashnew.clear();
     });
 
+    scrollcontroller.addListener(() {
+      if (scrollcontroller.position.pixels ==
+          scrollcontroller.position.maxScrollExtent) {
+        var p = Provider.of<ProfileProvider>(context, listen: false);
+        p.flashNewsProvider(context);
+        p.flashnew.clear();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Consumer<ProfileProvider>(
       builder: (context, value, child) {
@@ -1468,42 +1490,63 @@ class Flashnews extends StatelessWidget {
                 height: 30,
                 width: 30,
               )
-            : ListView.builder(
-                //scrollDirection: Axis.horizontal,
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:
-                    value.flashnew.length == null ? 0 : value.flashnew.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 30,
-                    width: 30,
-                    child: Marquee(
-                      //scrolling  text
-                      text: value.flashnew[index].news ?? '--------',
-                      // ? '------------'
-                      // : dataRsponse![index]['flashNews'].toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                          fontSize: 12),
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      blankSpace: 20.0,
-                      velocity: 40.0,
-                      pauseAfterRound: const Duration(seconds: 1),
-                      showFadingOnlyWhenScrolling: true,
-                      fadingEdgeStartFraction: 0.3,
-                      fadingEdgeEndFraction: 0.3,
-                      numberOfRounds: 3000,
-                      startPadding: 10.0,
-                      accelerationDuration: const Duration(seconds: 1),
-                      accelerationCurve: Curves.linear,
-                      decelerationDuration: const Duration(milliseconds: 500),
-                      decelerationCurve: Curves.easeOut,
-                    ),
-                  );
-                });
+            : LimitedBox(
+                maxHeight: 40,
+                child: ScrollLoopAutoScroll(
+                    child: ListView.builder(
+                        controller: scrollcontroller,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: value.flashnew.length == null
+                            ? 0
+                            : value.flashnew.length,
+                        itemBuilder: ((context, index) => Text(
+                              value.flashnew[index].news ?? '--------',
+                            ))),
+                    delay: Duration(seconds: 1),
+                    duration: Duration(seconds: 160),
+                    gap: 35,
+                    scrollDirection: Axis.horizontal)
+
+                //  ListView.builder(
+                //     // scrollDirection: Axis.horizontal,
+                //     //physics: NeverScrollableScrollPhysics(),
+                //     shrinkWrap: true,
+                //     itemCount: value.flashnew.length == null
+                //         ? 0
+                //         : value.flashnew.length,
+                //     itemBuilder: (context, index) {
+                //       return LimitedBox(
+                //         maxHeight: 20,
+                //         // maxWidth: 20,
+                //         child: Marquee(
+                //           //scrolling  text
+                //           text: value.flashnew[index].news ?? '--------',
+                //           // ? '------------'
+                //           // : dataRsponse![index]['flashNews'].toString(),
+                //           style: const TextStyle(
+                //               fontWeight: FontWeight.bold,
+                //               color: Colors.grey,
+                //               fontSize: 12),
+                //           scrollAxis: Axis.horizontal,
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           blankSpace: 20.0,
+                //           velocity: 40.0,
+                //           pauseAfterRound: const Duration(seconds: 1),
+                //           showFadingOnlyWhenScrolling: true,
+                //           fadingEdgeStartFraction: 0.3,
+                //           fadingEdgeEndFraction: 0.3,
+                //           numberOfRounds: 3000,
+                //           startPadding: 10.0,
+                //           accelerationDuration: const Duration(seconds: 1),
+                //           accelerationCurve: Curves.linear,
+                //           decelerationDuration:
+                //               const Duration(milliseconds: 500),
+                //           decelerationCurve: Curves.easeOut,
+                //         ),
+                //       );
+                //     }),
+                );
       },
     );
   }

@@ -16,7 +16,7 @@ class FlashnewsProvider with ChangeNotifier {
   }
 
   List<FlashNewsModelStud> flashnew = [];
-  Future flashNewsProvider(context) async {
+  Future flashNewsProvider() async {
     setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -35,6 +35,7 @@ class FlashnewsProvider with ChangeNotifier {
             data["flashNews"].map((x) => FlashNewsModelStud.fromJson(x)));
         flashnew.addAll(templist);
         setLoading(false);
+        print("flashnews");
         notifyListeners();
       } else {
         setLoading(false);

@@ -124,6 +124,7 @@ class FeesProvider with ChangeNotifier {
   double? total = 0;
   double totalBusFee = 0;
   List selecteCategorys = [];
+
   void onFeeSelected(bool selected, feeName, int index, feeNetDue) {
     if (selected == true) {
       selecteCategorys.add(feeName);
@@ -135,6 +136,7 @@ class FeesProvider with ChangeNotifier {
       print(totalFees);
       total = totalFees + totalBusFee;
       print(total);
+      print("selecteCategorys   $selecteCategorys");
       notifyListeners();
     } else {
       if (selecteCategorys.remove(feeName)) {

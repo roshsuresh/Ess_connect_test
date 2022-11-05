@@ -189,51 +189,46 @@ class GalleryonTap extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Consumer<GalleryProvider>(
-          builder: (context, value, child) => value.loadingg
-              ? spinkitLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 4,
-                    children: List.generate(
-                        galleryResponse == null
-                            ? 0
-                            : galleryAttachResponse!.length, (index) {
-                      return GestureDetector(
-                        child: isLoading
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : Container(
-                                height: 100,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    color: Colors.black12,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            galleryAttachResponse![index]
-                                                    ['url'] ??
-                                                const AssetImage(
-                                                    'assets/noimages.png')))),
-                              ),
-                        onTap: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewImageOntap(
-                                      inde: index,
-                                    )),
-                          );
-                        },
-                      );
-                    }),
-                  ),
-                ),
+          builder: (context, value, child) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.count(
+              crossAxisCount: 3,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 4,
+              children: List.generate(value.galleryList.length,
+                  // galleryResponse == null ? 0 : galleryAttachResponse!.length,
+                  (index) {
+                return GestureDetector(
+                  child: isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Container(
+                          height: 100,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(value.galleryList[index]
+                                          ['url']
+                                      .toString()))),
+                        ),
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ViewImageOntap(
+                                inde: index,
+                              )),
+                    );
+                  },
+                );
+              }),
+            ),
+          ),
         ),
       ),
     );
@@ -246,31 +241,21 @@ class ViewImageOntap extends StatelessWidget {
   int? indee;
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-        value: GalleryProvider(),
-        child: isLoading
-            ? const LoadingIcon()
-            : Scaffold(
-                body: isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : PhotoViewGallery.builder(
-                        scrollPhysics: const BouncingScrollPhysics(),
-                        enableRotation: false,
-                        itemCount: galleryAttachResponse == null
-                            ? 0
-                            : galleryAttachResponse!.length,
-                        builder: ((context, inde) {
-                          final imgUrl = galleryAttachResponse![inde]['url'];
-                          return PhotoViewGalleryPageOptions(
-                              imageProvider: NetworkImage(imgUrl ??
-                                  const AssetImage('assets/noimages.png')),
-                              initialScale:
-                                  PhotoViewComputedScale.contained * 0.8,
-                              heroAttributes: PhotoViewHeroAttributes(
-                                  tag: galleryAttachResponse![inde]['url']));
-                        }),
-                        loadingBuilder: (context, event) =>
-                            const LoadingIcon()),
-              ));
+    return Consumer<GalleryProvider>(
+      builder: (context, value, child) => PhotoViewGallery.builder(
+          scrollPhysics: const BouncingScrollPhysics(),
+          enableRotation: false,
+          itemCount: value.galleryList == null ? 0 : value.galleryList.length,
+          builder: ((context, inde) {
+            final imgUrl = value.galleryList[inde]['url'];
+            return PhotoViewGalleryPageOptions(
+                imageProvider: NetworkImage(
+                    imgUrl ?? const AssetImage('assets/noimages.png')),
+                initialScale: PhotoViewComputedScale.contained * 0.8,
+                heroAttributes: PhotoViewHeroAttributes(
+                    tag: value.galleryList[inde]['url']));
+          }),
+          loadingBuilder: (context, event) => const LoadingIcon()),
+    );
   }
 }

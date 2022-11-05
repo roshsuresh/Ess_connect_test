@@ -1,10 +1,14 @@
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
 import 'package:Ess_test/Presentation/Admin/Communication/ToGuardian.dart';
+import 'package:Ess_test/Presentation/Admin/Communication/ToStaff.dart';
+import 'package:Ess_test/Presentation/Admin/FlashNews/FlashnewsScreen.dart';
 import 'package:Ess_test/Presentation/Admin/Gallery/GalleryScreen.dart';
+import 'package:Ess_test/Presentation/Admin/History/NotificationHistoryStaff.dart';
 import 'package:Ess_test/Presentation/Admin/MarkentryReport.dart';
 import 'package:Ess_test/Presentation/Admin/NoticeBoard/NoticeboardScreen.dart';
 import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
+import 'package:Ess_test/Presentation/Admin/TimeTable/TimeTableScreen.dart';
 import 'package:Ess_test/Presentation/Admin/demo.dart';
 import 'package:Ess_test/Presentation/Staff/StudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -19,7 +23,7 @@ import '../Login_Activation/Login_page.dart';
 import '../Student/AdvancePay.dart';
 import '../Student/PasswordChange.dart';
 import '../Student/Reportcard.dart';
-import 'FeeReport.dart';
+import 'FeeCollectionReport/FeeReport.dart';
 import 'StaffReport.dart';
 import 'StudentFeeDetails.dart';
 
@@ -495,30 +499,40 @@ class AdminHomeContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/Reportcard.png',
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationHistory()),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: 50,
+                              width: 40,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  opacity: 20,
+                                  image: AssetImage(
+                                    'assets/Reportcard.png',
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          kheight10,
-                          const Text(
-                            '   Student\nAttendence',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
+                            kheight10,
+                            const Text(
+                              'Notification\nHistory',
+                              style: TextStyle(
+                                  fontSize: 11, color: Colors.black38),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -642,29 +656,38 @@ class AdminHomeContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/staff notification.png',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AdminToStaff()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/staff notification.png',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        kheight10,
-                        const Text(
-                          'To Staff',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
+                          kheight10,
+                          const Text(
+                            'To Staff',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -705,27 +728,37 @@ class AdminHomeContent extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              opacity: 20,
-                              image: AssetImage(
-                                'assets/Profile.png',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScreenTimeTable()),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 40,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                opacity: 20,
+                                image: AssetImage(
+                                  'assets/Profile.png',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        kheight10,
-                        const Text(
-                          '   Upload\nTimetable',
-                          style: TextStyle(fontSize: 11, color: Colors.black38),
-                        )
-                      ],
+                          kheight10,
+                          const Text(
+                            '   Upload\nTimetable',
+                            style:
+                                TextStyle(fontSize: 11, color: Colors.black38),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   GestureDetector(
@@ -776,7 +809,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => spinkitLoader()),
+                              builder: (context) => ScreenFlashNews()),
                         );
                       },
                       child: Column(

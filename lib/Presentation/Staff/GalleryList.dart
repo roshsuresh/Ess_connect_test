@@ -54,7 +54,8 @@ class GalleryListStaff extends StatelessWidget {
                                     String event = provider
                                         .galleryViewList[index].id
                                         .toString();
-                                    await provider.galleryDeleteStaff(event);
+                                    await provider.galleryDeleteStaff(
+                                        context, event);
 
                                     provider.galleryViewList.clear();
                                     await provider.galleryViewListStaff();

@@ -1215,7 +1215,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),

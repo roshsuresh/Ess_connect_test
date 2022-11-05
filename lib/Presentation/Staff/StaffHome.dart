@@ -598,9 +598,10 @@ class StaffProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<StaffProfileProvider>(context, listen: false)
-        .staff_profileData();
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<StaffProfileProvider>(context, listen: false);
+      p.staff_profileData();
+    });
     var size = MediaQuery.of(context).size;
     const Color background = Colors.white;
     final Color fill1 = Color.fromARGB(255, 7, 110, 206);
@@ -711,48 +712,53 @@ class StaffFlashNews extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<FlashnewsProvider>(context, listen: false);
-      p.flashNewsProvider(context);
+      p.flashNewsProvider();
+      p.flashnew.clear();
     });
 
     var size = MediaQuery.of(context).size;
     return Consumer<FlashnewsProvider>(builder: (context, value, child) {
-      return ListView.builder(
-          //scrollDirection: AxisDirection.left,
-          shrinkWrap: true,
-          itemCount: value.flashnew.length == null ? 0 : value.flashnew.length,
-          itemBuilder: (context, index) {
-            return value.loading
-                ? Container(
-                    height: 30,
-                    width: 30,
-                  )
-                : Container(
-                    height: 30,
-                    width: 30,
-                    child: Marquee(
-                      //scrolling  text
-                      text: value.flashnew[index].news ?? '-----',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                          fontSize: 12),
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      blankSpace: 20.0,
-                      velocity: 40.0,
-                      pauseAfterRound: const Duration(seconds: 1),
-                      showFadingOnlyWhenScrolling: true,
-                      fadingEdgeStartFraction: 0.3,
-                      fadingEdgeEndFraction: 0.3,
-                      numberOfRounds: null,
-                      startPadding: 10.0,
-                      accelerationDuration: const Duration(seconds: 1),
-                      accelerationCurve: Curves.linear,
-                      decelerationDuration: const Duration(milliseconds: 500),
-                      decelerationCurve: Curves.easeOut,
-                    ),
-                  );
-          });
+      return LimitedBox(
+        maxHeight: 30,
+        child: ListView.builder(
+            //scrollDirection: AxisDirection.left,
+            shrinkWrap: true,
+            itemCount:
+                value.flashnew.length == null ? 0 : value.flashnew.length,
+            itemBuilder: (context, index) {
+              return value.loading
+                  ? Container(
+                      height: 30,
+                      width: 30,
+                    )
+                  : Container(
+                      height: 30,
+                      width: 30,
+                      child: Marquee(
+                        //scrolling  text
+                        text: value.flashnew[index].news ?? '-----',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                            fontSize: 12),
+                        scrollAxis: Axis.horizontal,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        blankSpace: 20.0,
+                        velocity: 40.0,
+                        pauseAfterRound: const Duration(seconds: 1),
+                        showFadingOnlyWhenScrolling: true,
+                        fadingEdgeStartFraction: 0.3,
+                        fadingEdgeEndFraction: 0.3,
+                        numberOfRounds: null,
+                        startPadding: 10.0,
+                        accelerationDuration: const Duration(seconds: 1),
+                        accelerationCurve: Curves.linear,
+                        decelerationDuration: const Duration(milliseconds: 500),
+                        decelerationCurve: Curves.easeOut,
+                      ),
+                    );
+            }),
+      );
     });
   }
 }

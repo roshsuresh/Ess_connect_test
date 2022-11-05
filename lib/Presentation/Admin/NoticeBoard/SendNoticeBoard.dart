@@ -299,7 +299,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
-                  width: size.width * .42,
+                  width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
                     // height: 200,
@@ -368,7 +368,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: SizedBox(
-                  width: size.width * .42,
+                  width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
                     // height: 200,
@@ -466,6 +466,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   await Provider.of<NoticeBoardAdminProvider>(context,
                           listen: false)
                       .noticeBoardSave(
+                          context,
                           datee.toString(),
                           time,
                           timeNow,
@@ -485,20 +486,6 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   print(categoryvalueController);
                   print(attachmentid);
 
-                  await AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.success,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: 'Success',
-                          desc: 'Successfully send',
-                          btnOkOnPress: () {
-                            return;
-                          },
-                          btnOkIcon: Icons.cancel,
-                          btnOkColor: Colors.green)
-                      .show();
-
                   titleController.clear();
                   mattercontroller.clear();
 
@@ -512,9 +499,5 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         ),
       ],
     );
-  }
-
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path);
   }
 }

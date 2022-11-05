@@ -1,16 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:Ess_test/Domain/Admin/Course&DivsionList.dart';
 import 'package:Ess_test/Domain/Admin/GalleryEdit.dart';
 import 'package:Ess_test/Domain/Staff/GallerySendStaff.dart';
-import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Domain/Staff/GalleryListViewStaff.dart';
 
 List? galleryAdm;
@@ -94,7 +91,7 @@ class GalleryProviderAdmin with ChangeNotifier {
   //find image id
 
   String? id;
-  Future galleryImageSave(String path) async {
+  Future galleryImageSave(BuildContext context, String path) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -116,7 +113,11 @@ class GalleryProviderAdmin with ChangeNotifier {
       GalleryImageId idd = GalleryImageId.fromJson(data);
       id = idd.id;
       print('...............   $id');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Image Uploaded")));
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Something went wrong...")));
       print(response.reasonPhrase);
     }
   }
@@ -175,9 +176,12 @@ class GalleryProviderAdmin with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       print('Correct...______________________________');
-
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
       //  print(await response.stream.bytesToString());
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Something went wrong...")));
       print('Error in gallery save respo');
     }
   }
@@ -226,7 +230,7 @@ class GalleryProviderAdmin with ChangeNotifier {
 
 //delete gallery
 
-  Future galleryDelete(String eventID) async {
+  Future galleryDelete(String eventID, BuildContext context) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -242,6 +246,9 @@ class GalleryProviderAdmin with ChangeNotifier {
     if (response.statusCode == 204) {
       print(await response.stream.bytesToString());
       print('correct');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Deleted Successfully")));
+
       notifyListeners();
     } else {
       print('Error in galleryDelete stf');
@@ -279,12 +286,13 @@ class GalleryProviderAdmin with ChangeNotifier {
             data["galleryView"].map((x) => GalleryEditAdmin.fromJson(x)));
         galleryEditList.addAll(templist);
 
-        galleryAdm = data['photo'];
+        // galleryAdm = data['photo'];
         // editGallery = galleryAdm['f'];
-        File as = File.fromJson(data['photo']);
-        url = as.url;
-        print(url);
-        Map<String, dynamic> gallery = setLoading(false);
+        // File as = File.fromJson(data['photo']);
+        // url = as.url;
+        //log(url.toString());
+        // Map<String, dynamic> gallery =
+        setLoading(false);
         notifyListeners();
       } else {
         print("Error in Response");
@@ -294,6 +302,36 @@ class GalleryProviderAdmin with ChangeNotifier {
     }
   }
 
+//gallery Aproove
+
+  Future galleryAproove(BuildContext context, String eventID) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'GET', Uri.parse('${UIGuide.baseURL}/gallery/approve-event/$eventID'));
+    request.headers.addAll(headers);
+    print(http.Request(
+        'GET', Uri.parse('${UIGuide.baseURL}/gallery/approve-event/$eventID')));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      print('correct');
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Approved Successfully")));
+      notifyListeners();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
+      print('Error in galleryApprove');
+    }
+  }
 //gallery received
 
   bool _loadingg = false;
@@ -337,6 +375,46 @@ class GalleryProviderAdmin with ChangeNotifier {
       }
     } catch (e) {
       setLoading(false);
+      print(e);
+    }
+  }
+
+//attachment
+  bool _load = false;
+  bool get load => _load;
+  setLoad(bool value) {
+    _load = value;
+    notifyListeners();
+  }
+
+  List? galleryAttachResponse;
+  Future galleyAttachment(String galleryId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoad(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/systemadmindashboard/gallery-photos/$galleryId"),
+        headers: headers);
+    setLoad(true);
+    try {
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        galleryAttachResponse = data;
+
+        setLoad(false);
+        notifyListeners();
+      } else {
+        setLoad(false);
+        print("error in gallery response");
+      }
+    } catch (e) {
+      setLoad(false);
       print(e);
     }
   }

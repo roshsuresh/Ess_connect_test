@@ -299,7 +299,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 print('Extension: ${file.extension}');
                 await Provider.of<StaffNoticeboardSendProviders>(context,
                         listen: false)
-                    .noticeImageSave(file.path.toString());
+                    .noticeImageSave(context, file.path.toString());
                 //openFile(file);
                 if (file.name.length >= 6) {
                   setState(() {
@@ -443,7 +443,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController1,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
@@ -458,7 +458,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
@@ -487,50 +487,46 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                         context: context,
                         builder: (context) {
                           return Dialog(
-                              child: Container(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.divisionlistt.length,
-                                    itemBuilder: (context, index) {
-                                      // print(snapshot
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.divisionlistt.length,
+                                  itemBuilder: (context, index) {
+                                    // print(snapshot
 
-                                      //     .attendenceInitialValues.length);
+                                    //     .attendenceInitialValues.length);
 
-                                      // value.removeCourseAll();
-                                      return ListTile(
-                                        selectedTileColor: Colors.blue.shade100,
-                                        selectedColor: UIGuide.PRIMARY2,
-                                        // selected: snapshot.isDivisionSelected(
-                                        //     snapshot.noticeDivision[index]),
-                                        onTap: () async {
-                                          divisionvalueController.text =
-                                              snapshot.divisionlistt[index]
-                                                      .value ??
-                                                  '--';
+                                    // value.removeCourseAll();
+                                    return ListTile(
+                                      selectedTileColor: Colors.blue.shade100,
+                                      selectedColor: UIGuide.PRIMARY2,
+                                      // selected: snapshot.isDivisionSelected(
+                                      //     snapshot.noticeDivision[index]),
+                                      onTap: () async {
+                                        divisionvalueController.text = snapshot
+                                                .divisionlistt[index].value ??
+                                            '--';
 
-                                          print(divisionvalueController.text);
-                                          divisionvalueController1.text =
-                                              snapshot.divisionlistt[index]
-                                                      .text ??
-                                                  '--';
-                                          String divisionId =
-                                              divisionvalueController.text
-                                                  .toString();
+                                        print(divisionvalueController.text);
+                                        divisionvalueController1.text = snapshot
+                                                .divisionlistt[index].text ??
+                                            '--';
+                                        String divisionId =
+                                            divisionvalueController.text
+                                                .toString();
 
-                                          Navigator.of(context).pop();
-                                        },
-                                        title: Text(
-                                          snapshot.divisionlistt[index].text ??
-                                              '--',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      );
-                                    }),
-                              ],
-                            ),
+                                        Navigator.of(context).pop();
+                                      },
+                                      title: Text(
+                                        snapshot.divisionlistt[index].text ??
+                                            '--',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  }),
+                            ],
                           ));
                         });
                   },
@@ -543,7 +539,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController1,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
@@ -558,7 +554,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
@@ -611,6 +607,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                   await Provider.of<StaffNoticeboardSendProviders>(context,
                           listen: false)
                       .noticeBoardSave(
+                          context,
                           datee.toString(),
                           time,
                           timeNow,
@@ -630,20 +627,6 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                   print(divisionvalueController);
                   print(categoryvalueController);
                   print(attachmentid);
-
-                  await AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.success,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: 'Success',
-                          desc: 'Successfully send',
-                          btnOkOnPress: () {
-                            return;
-                          },
-                          btnOkIcon: Icons.cancel,
-                          btnOkColor: Colors.green)
-                      .show();
 
                   titleController.clear();
                   mattercontroller.clear();

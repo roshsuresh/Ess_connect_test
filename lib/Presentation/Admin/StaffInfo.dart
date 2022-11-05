@@ -166,7 +166,7 @@ class StaffInfo extends StatelessWidget {
                       ),
                       Text('Birthday : '),
                       Text(
-                        '--',
+                        value.staffReportList[index].dateOfBirth ?? '--',
                         style: TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
@@ -183,7 +183,7 @@ class StaffInfo extends StatelessWidget {
                       ),
                       Text('Gender : '),
                       Text(
-                        'Male',
+                        value.staffReportList[index].gender ?? '--',
                         style: TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
@@ -204,13 +204,13 @@ class StaffInfo extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           strutStyle: const StrutStyle(fontSize: 13),
                           maxLines: 3,
-                          text: const TextSpan(
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 15,
-                                  color: Color.fromARGB(255, 44, 43, 43)),
-                              text:
-                                  'Reloaded 1 Reloaded 1 of 1770 libraries in 1,986ms (compile: 27 ms, reload: 861 ms, reassemble: 946 ms). of 1770 libraries in 1,986ms (compile: 27 ms, reload: 861 ms, reassemble: 946 ms).'),
+                          text: TextSpan(
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 44, 43, 43)),
+                            text: value.staffReportList[index].address ?? '--',
+                          ),
                         ),
                       ),
                     ],

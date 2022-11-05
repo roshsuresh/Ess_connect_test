@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:Ess_test/utils/constants.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,6 +153,7 @@ class NoticeBoardAdminProvider with ChangeNotifier {
   final List course = [];
   final List division = [];
   Future noticeBoardSave(
+      BuildContext context,
       String entryDate,
       String DisplayStartDate,
       String DisplayEndDate,
@@ -205,8 +207,26 @@ class NoticeBoardAdminProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       print('Correct______..........______');
-      print(await response.stream.bytesToString());
+
+      AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              headerAnimationLoop: false,
+              title: 'Success',
+              desc: 'Uploaded Successfully',
+              btnOkOnPress: () {},
+              btnOkIcon: Icons.cancel,
+              btnOkColor: Colors.green)
+          .show();
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 1),
+      ));
       print('Error Response notice send admin');
     }
   }

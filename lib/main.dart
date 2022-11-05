@@ -1,11 +1,18 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
+import 'package:Ess_test/Application/AdminProviders/FeeReportProvider.dart';
+import 'package:Ess_test/Application/AdminProviders/FlashNewsProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/GalleryProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/NoticeBoardList.dart';
 import 'package:Ess_test/Application/AdminProviders/NoticeBoardadmin.dart';
+import 'package:Ess_test/Application/AdminProviders/NotificationStaff.dart';
+import 'package:Ess_test/Application/AdminProviders/NotificationToGuardian.dart';
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/SearchstaffProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/StaffReportProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/TimeTableProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/TimeTableStaff.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
@@ -37,7 +44,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Application/AdminProviders/Student_list_provider.dart';
+
 import 'Application/Staff_Providers/MarkEntryProvider.dart';
 import 'Application/Staff_Providers/StaffProfile.dart';
 import 'Application/Staff_Providers/StudListProvider.dart';
@@ -187,7 +194,6 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => PasswordChangeprovider()),
         ChangeNotifierProvider(create: (context) => SibingsProvider()),
         ChangeNotifierProvider(create: (context) => StaffProfileProvider()),
-        ChangeNotifierProvider(create: (context) => StudentNotification()),
         ChangeNotifierProvider(
             create: (context) => StudReportListProvider_stf()),
         ChangeNotifierProvider(create: (context) => MarkEntryProvider()),
@@ -204,7 +210,6 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => GallerySendProvider_Stf()),
         ChangeNotifierProvider(
             create: (context) => MarkEntryReportProvider_stf()),
-        //  ChangeNotifierProvider(create: (context) => AdminHomeProviders()),
         ChangeNotifierProvider(create: (context) => StaffReportProviders()),
         ChangeNotifierProvider(create: (context) => DashboardAdmin()),
         ChangeNotifierProvider(create: (context) => SearchStaffProviders()),
@@ -216,6 +221,17 @@ class _GjInfoTechState extends State<GjInfoTech> {
             create: (context) => NotificationReceivedProviderStudent()),
         ChangeNotifierProvider(
             create: (context) => StaffNotificationScreenProvider()),
+        ChangeNotifierProvider(
+            create: (context) => NotificationToGuardianAdmin()),
+        ChangeNotifierProvider(
+            create: (context) => NotificationToStaffAdminProviders()),
+        ChangeNotifierProvider(create: (context) => FeeReportProvider()),
+        ChangeNotifierProvider(
+            create: (context) => NoticeBoardListAdminProvider()),
+        ChangeNotifierProvider(create: (context) => FlashNewsProviderAdmin()),
+        ChangeNotifierProvider(
+            create: (context) => TimeTableClassProvidersAdmin()),
+        ChangeNotifierProvider(create: (context) => TimetableStaffProviders()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

@@ -565,6 +565,33 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                           ]),
                                     ],
                                   ),
+
+                                  // ListTile(
+                                  //   leading: Text(
+                                  //     value.studentsAttendenceView[index]
+                                  //                 .rollNo ==
+                                  //             null
+                                  //         ? '0'
+                                  //         : value.studentsAttendenceView[index]
+                                  //             .rollNo
+                                  //             .toString(),
+                                  //     textAlign: TextAlign.center,
+                                  //     style: const TextStyle(fontSize: 12),
+                                  //   ),
+                                  //   title: Text(
+                                  //     value.studentsAttendenceView[index]
+                                  //                 .name ==
+                                  //             null
+                                  //         ? '0'
+                                  //         : value.studentsAttendenceView[index]
+                                  //             .name
+                                  //             .toString(),
+                                  //     textAlign: TextAlign.start,
+                                  //     style: const TextStyle(fontSize: 14),
+                                  //   ),
+                                  //   trailing: Text('A'),
+                                  // ),
+
                                   kheight20,
                                 ],
                               );
@@ -604,7 +631,6 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
         ));
   }
 
-  bool _isCheck = true;
   List selecteCategorys = [];
   void onFeeSelected(
     bool selected,
@@ -613,6 +639,9 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
   ) {
     if (selected == true) {
       selecteCategorys.add(feeName);
+      setState(() {
+        selected = selected;
+      });
       print(index);
     } else {
       if (selecteCategorys.remove(feeName)) {

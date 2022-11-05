@@ -35,12 +35,12 @@ class PayFee extends StatelessWidget {
               indicatorColor: UIGuide.light_Purple,
               indicatorWeight: 0.1,
               tabs: [
-                Tab(
+                const Tab(
                   text: "Installment",
                 ),
                 Consumer<FeesProvider>(builder: ((context, value, child) {
                   if (value.allowPartialPayment == false) {
-                    return Tab(
+                    return const Tab(
                       text: 'Partial',
                     );
                   } else {
@@ -257,16 +257,21 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                           onChanged: (bool? selected) async {
                                             // selected == true;
 
-                                            // for (int i = 0; i <= feeResponse!.length; i++) {
-                                            //   _onFeeSelected(
+                                            // for (int i = 0;
+                                            //     i <= feeResponse!.length;
+                                            //     i++) {
+                                            //   enable = true;
+                                            //   value.onFeeSelected(
                                             //       selected!,
-                                            //       feeResponse![index]['installmentName'],
+                                            //       value.feeList[index]
+                                            //           .installmentName,
                                             //       index,
-                                            //       feeResponse![index]['installmentNetDue']);
+                                            //       value.feeList[index]
+                                            //           .installmentNetDue);
                                             //   print(selected);
                                             // }
-                                            //   if (index == 0) {
-                                            //  enable = true;
+                                            // if (index == 3) {
+                                            //   enable = true;
                                             value.onFeeSelected(
                                                 selected!,
                                                 value.feeList[index]
@@ -275,7 +280,10 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                 value.feeList[index]
                                                     .installmentNetDue);
                                             print(selected);
+                                            // } else {
+                                            //   return null;
                                             // }
+
                                             // await index == 0 && selected == true;
                                             // else if (index == 1 && enable == false) {
                                             //   _onFeeSelected(
@@ -375,6 +383,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                           : value.busFeeList.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
+                                        print(
+                                            '-----=====--------${value.busFeeList[index]}');
                                         return CheckboxListTile(
                                           activeColor: const Color.fromARGB(
                                               255, 238, 236, 236),
@@ -385,13 +395,16 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                               value.busFeeList[index]
                                                   .installmentName),
                                           onChanged: (bool? selected) {
-                                            value.onBusSelected(
-                                                selected!,
-                                                value.busFeeList[index]
-                                                    .installmentName,
-                                                index,
-                                                value.busFeeList[index]
-                                                    .installmentNetDue);
+                                            print(
+                                                '-------------------${value.busFeeList[index]}');
+                                            if (index == 1)
+                                              value.onBusSelected(
+                                                  selected!,
+                                                  value.busFeeList[index]
+                                                      .installmentName,
+                                                  index,
+                                                  value.busFeeList[index]
+                                                      .installmentNetDue);
                                             print(selected);
                                           },
                                           title: Padding(

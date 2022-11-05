@@ -59,7 +59,7 @@ class ReportCardProvider with ChangeNotifier {
     };
     String file = fileId.toString();
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parents/preview/$file"),
+        Uri.parse("${UIGuide.baseURL}/parent-report-card/preview/$file"),
         headers: headers);
     print(response);
     try {

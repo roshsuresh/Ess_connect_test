@@ -74,7 +74,8 @@ class Stud_Notification extends StatelessWidget {
                                     ? '--'
                                     : value.notificationstud![index]['title']
                                         .toString(),
-                                style: TextStyle(fontWeight: FontWeight.w700),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.center,
                               ),
                               kheight,
@@ -88,7 +89,7 @@ class Stud_Notification extends StatelessWidget {
                               kheight,
                               Row(
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Date',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 12),
@@ -101,12 +102,12 @@ class Stud_Notification extends StatelessWidget {
                                         : value.notificationstud![index]
                                                 ['createdDate']
                                             .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color.fromARGB(255, 49, 47, 47),
                                         fontSize: 12),
                                   ),
                                   Spacer(),
-                                  Text(
+                                  const Text(
                                     'Send by ',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 12),
@@ -119,7 +120,7 @@ class Stud_Notification extends StatelessWidget {
                                         : value.notificationstud![index]
                                                 ['fromStaff']
                                             .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color.fromARGB(255, 49, 47, 47),
                                         fontSize: 12),
                                   ),

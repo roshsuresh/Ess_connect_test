@@ -1,14 +1,29 @@
+import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Constants.dart';
+import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 class Student_statistics_admin extends StatelessWidget {
-  const Student_statistics_admin({Key? key}) : super(key: key);
-
+  Student_statistics_admin({Key? key}) : super(key: key);
+  String course = '';
+  String section = '';
+  List subjectData = [];
+  List diviData = [];
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<SchoolPhotoProviders>(context, listen: false);
+      p.stdReportSectionStaff();
+      p.courseDrop.clear();
+
+      p.dropDown.clear();
+      p.stdReportInitialValues.clear();
+      p.courselist.clear();
+    });
     var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
@@ -28,38 +43,156 @@ class Student_statistics_admin extends StatelessWidget {
           children: [
             Row(
               children: [
-                kWidth,
-                kWidth,
-                MaterialButton(
-                  minWidth: size.width - 230,
-                  child: Row(
-                    children: [
-                      Text('Select Course'),
-                    ],
+                Consumer<SchoolPhotoProviders>(
+                  builder: (context, value, child) => Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: size.width * .42,
+                      height: 50,
+                      child: MultiSelectDialogField(
+                        // height: 200,
+                        items: value.dropDown,
+
+                        listType: MultiSelectListType.CHIP,
+                        title: const Text(
+                          "Select Section",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        selectedItemsTextStyle: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: UIGuide.light_Purple),
+                        confirmText: Text(
+                          'OK',
+                          style: TextStyle(color: UIGuide.light_Purple),
+                        ),
+                        cancelText: Text(
+                          'Cancel',
+                          style: TextStyle(color: UIGuide.light_Purple),
+                        ),
+                        separateSelectedItems: true,
+
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
+                        ),
+                        buttonIcon: const Icon(
+                          Icons.arrow_drop_down_outlined,
+                          color: Colors.grey,
+                        ),
+                        buttonText: Text(
+                          "Select Section",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        chipDisplay: MultiSelectChipDisplay.none(),
+                        onConfirm: (results) async {
+                          subjectData = [];
+                          for (var i = 0; i < results.length; i++) {
+                            StudReportSectionList data =
+                                results[i] as StudReportSectionList;
+                            print(data.text);
+                            print(data.value);
+                            subjectData.add(data.value);
+                            subjectData.map((e) => data.value);
+                            print("${subjectData.map((e) => data.value)}");
+                          }
+                          section = subjectData.join('&');
+                          await Provider.of<SchoolPhotoProviders>(context,
+                                  listen: false)
+                              .getCourseList(section);
+                          print("data $subjectData");
+
+                          print(subjectData.join('&'));
+                        },
+                      ),
+                    ),
                   ),
-                  color: Colors.white70,
-                  onPressed: (() {}),
                 ),
                 Spacer(),
-                MaterialButton(
-                  minWidth: size.width - 230,
-                  child: Row(
-                    children: [
-                      const Text('Select Division'),
-                    ],
+                Consumer<SchoolPhotoProviders>(
+                  builder: (context, value, child) => Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: size.width * .42,
+                      height: 50,
+                      child: MultiSelectDialogField(
+                        // height: 200,
+                        items: value.courseDrop,
+                        listType: MultiSelectListType.CHIP,
+                        title: const Text(
+                          "Select Course",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        // selectedColor: Color.fromARGB(255, 157, 232, 241),
+                        selectedItemsTextStyle: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: UIGuide.light_Purple),
+                        confirmText: Text(
+                          'OK',
+                          style: TextStyle(color: UIGuide.light_Purple),
+                        ),
+                        cancelText: Text(
+                          'Cancel',
+                          style: TextStyle(color: UIGuide.light_Purple),
+                        ),
+                        separateSelectedItems: true,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 2,
+                          ),
+                        ),
+                        buttonIcon: const Icon(
+                          Icons.arrow_drop_down_outlined,
+                          color: Colors.grey,
+                        ),
+                        buttonText: Text(
+                          "Select Course",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                        chipDisplay: MultiSelectChipDisplay.none(),
+                        onConfirm: (results) async {
+                          diviData = [];
+                          for (var i = 0; i < results.length; i++) {
+                            StudReportCourse data =
+                                results[i] as StudReportCourse;
+                            print(data.value);
+                            print(data.text);
+                            diviData.add(data.value);
+                            diviData.map((e) => data.value);
+                            print("${diviData.map((e) => data.value)}");
+                          }
+                          course = diviData.join('&');
+                          await Provider.of<SchoolPhotoProviders>(context,
+                                  listen: false)
+                              .getDivisionList(course);
+
+                          print(diviData.join('&'));
+                        },
+                      ),
+                    ),
                   ),
-                  color: Colors.white70,
-                  onPressed: (() {}),
-                ),
-                kWidth,
-                kWidth,
+                )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 MaterialButton(
-                  minWidth: 60, color: UIGuide.light_Purple,
+                  minWidth: 100, color: UIGuide.light_Purple,
                   //   style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                   onPressed: () {},
                   child: Text(
@@ -76,10 +209,11 @@ class Student_statistics_admin extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: Table(
                 columnWidths: const {
-                  0: FlexColumnWidth(4),
-                  1: FlexColumnWidth(1.5),
-                  2: FlexColumnWidth(1.5),
-                  3: FlexColumnWidth(2),
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(2.5),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(1),
                 },
                 children: const [
                   TableRow(
@@ -88,6 +222,15 @@ class Student_statistics_admin extends StatelessWidget {
                         color: Color.fromARGB(255, 228, 224, 224),
                       ),
                       children: [
+                        SizedBox(
+                          height: 30,
+                          child: Center(
+                              child: Text(
+                            'Sl No.',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 12),
+                          )),
+                        ),
                         SizedBox(
                           height: 30,
                           child: Center(
@@ -143,57 +286,37 @@ class Student_statistics_admin extends StatelessWidget {
                             Table(
                               //  border: TableBorder.all(color: Colors.grey),
                               columnWidths: const {
-                                0: FlexColumnWidth(4),
-                                1: FlexColumnWidth(1.5),
-                                2: FlexColumnWidth(1.5),
-                                3: FlexColumnWidth(2),
+                                0: FlexColumnWidth(1),
+                                1: FlexColumnWidth(2.5),
+                                2: FlexColumnWidth(1),
+                                3: FlexColumnWidth(1),
+                                4: FlexColumnWidth(1),
                               },
                               children: [
                                 TableRow(
                                     decoration: const BoxDecoration(),
                                     children: [
                                       Text(
+                                        (index + 1).toString(),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      Text(
                                         'VII-A',
-                                        // value.studentsAttendenceView[index]
-                                        //             .rollNo ==
-                                        //         null
-                                        //     ? '0'
-                                        //     : value
-                                        //         .studentsAttendenceView[index]
-                                        //         .rollNo
-                                        //         .toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       Text(
                                         '12',
-                                        // value.studentsAttendenceView[index]
-                                        //         .name ??
-                                        //     '--',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 14),
                                       ),
-                                      // TextButton(onPressed: (){}, child: Text('f'))
-
-                                      // Text(
-                                      //   value.studentsAttendenceView[index]
-                                      //           .forenoon ??
-                                      //       '--',
-                                      //   textAlign: TextAlign.center,
-                                      // ),
                                       Text(
                                         '20',
-                                        // value.studentsAttendenceView[index]
-                                        //         .afternoon ??
-                                        //     '--',
                                         textAlign: TextAlign.center,
                                       ),
-
                                       Text(
                                         '32',
-                                        // value.studentsAttendenceView[index]
-                                        //         .afternoon ??
-                                        //     '--',
                                         textAlign: TextAlign.center,
                                       )
                                     ]),

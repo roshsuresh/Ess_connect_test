@@ -46,6 +46,7 @@ dependencies:
   flutter_custom_selector: ^0.0.3
   flutter_downloader: any
   flutter_local_notifications: ^9.9.0
+  flutter_pw_validator: ^1.4.2
   flutter_spinkit: ^5.1.0
   flutter_svg: ^1.1.5
   get: ^4.6.5
@@ -61,8 +62,10 @@ dependencies:
   photo_view: ^0.14.0
   provider: any
   rect_getter: ^1.1.0
+  scroll_loop_auto_scroll: ^0.0.5
   shared_preferences: ^2.0.9
   syncfusion_flutter_pdfviewer: ^20.2.46-beta
+  text_scroll: ^0.1.0
   url_launcher: ^6.1.5
   webview_flutter: ^3.0.4
 
