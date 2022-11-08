@@ -720,44 +720,44 @@ class StaffFlashNews extends StatelessWidget {
     return Consumer<FlashnewsProvider>(builder: (context, value, child) {
       return LimitedBox(
         maxHeight: 30,
-        child: ListView.builder(
-            //scrollDirection: AxisDirection.left,
-            shrinkWrap: true,
-            itemCount:
-                value.flashnew.length == null ? 0 : value.flashnew.length,
-            itemBuilder: (context, index) {
-              return value.loading
-                  ? Container(
-                      height: 30,
-                      width: 30,
-                    )
-                  : Container(
-                      height: 30,
-                      width: 30,
-                      child: Marquee(
-                        //scrolling  text
-                        text: value.flashnew[index].news ?? '-----',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                            fontSize: 12),
-                        scrollAxis: Axis.horizontal,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        blankSpace: 20.0,
-                        velocity: 40.0,
-                        pauseAfterRound: const Duration(seconds: 1),
-                        showFadingOnlyWhenScrolling: true,
-                        fadingEdgeStartFraction: 0.3,
-                        fadingEdgeEndFraction: 0.3,
-                        numberOfRounds: null,
-                        startPadding: 10.0,
-                        accelerationDuration: const Duration(seconds: 1),
-                        accelerationCurve: Curves.linear,
-                        decelerationDuration: const Duration(milliseconds: 500),
-                        decelerationCurve: Curves.easeOut,
-                      ),
-                    );
-            }),
+        child: value.loading
+            ? Container(
+                height: 30,
+                width: 30,
+              )
+            : ListView.builder(
+                //scrollDirection: AxisDirection.left,
+                shrinkWrap: true,
+                itemCount:
+                    value.flashnew.length == null ? 0 : value.flashnew.length,
+                itemBuilder: (context, index) {
+                  return LimitedBox(
+                    maxHeight: 30,
+                    // width: 30,
+                    child: Marquee(
+                      //scrolling  text
+                      text: value.flashnew[index].news ?? '-----',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: 12),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 20.0,
+                      velocity: 40.0,
+                      pauseAfterRound: const Duration(seconds: 1),
+                      showFadingOnlyWhenScrolling: true,
+                      fadingEdgeStartFraction: 0.3,
+                      fadingEdgeEndFraction: 0.3,
+                      numberOfRounds: null,
+                      startPadding: 10.0,
+                      accelerationDuration: const Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: const Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    ),
+                  );
+                }),
       );
     });
   }

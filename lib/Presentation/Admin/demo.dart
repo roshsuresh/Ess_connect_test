@@ -153,25 +153,114 @@ class _DemoState extends State<Demo> {
               ],
             ),
           ),
-          Column(
-            children: [
-              Text(
-                'School Fees',
-                style: TextStyle(
-                    color: UIGuide.light_Purple,
-                    fontWeight: FontWeight.w700,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.dotted,
-                    fontSize: 18),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: UIGuide.light_Purple, width: .1),
+                  borderRadius: BorderRadius.circular(5)),
+              child: Column(
+                children: [
+                  Text(
+                    'School Fees',
+                    style: TextStyle(
+                        color: UIGuide.light_Purple,
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dotted,
+                        fontSize: 18),
+                  ),
+                  LimitedBox(
+                    maxHeight: 150,
+                    child: ListView.builder(
+                        itemCount: 2,
+                        shrinkWrap: true,
+                        itemBuilder: ((context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Text(
+                                  'Term 1',
+                                  style: TextStyle(color: UIGuide.light_Purple),
+                                ),
+                              ),
+                              ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: 0, vertical: -4),
+                                title: Text('Amount to be Paid'),
+                                trailing: Text('3500.00'),
+                              ),
+                              ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: 0, vertical: -4),
+                                title: Text('Paid Amount'),
+                                trailing: Text('3500.00'),
+                              )
+                            ],
+                          );
+                        })),
+                  )
+                ],
               ),
-              ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: ((context, index) {
-                    return Column(
-                      children: [],
-                    );
-                  }))
-            ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: UIGuide.light_Purple, width: .1),
+                  borderRadius: BorderRadius.circular(5)),
+              child: Column(
+                children: [
+                  Text(
+                    'Bus Fees',
+                    style: TextStyle(
+                        color: UIGuide.light_Purple,
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dotted,
+                        fontSize: 18),
+                  ),
+                  LimitedBox(
+                    maxHeight: 150,
+                    child: ListView.builder(
+                        itemCount: 12,
+                        shrinkWrap: true,
+                        itemBuilder: ((context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: Text(
+                                  'August',
+                                  style: TextStyle(color: UIGuide.light_Purple),
+                                ),
+                              ),
+                              ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: 0, vertical: -4),
+                                horizontalTitleGap: 0,
+                                title: Text('Amount to be Paid'),
+                                trailing: Text('3500.00'),
+                              ),
+                              ListTile(
+                                visualDensity:
+                                    VisualDensity(horizontal: 0, vertical: -4),
+                                title: Text('Paid Amount'),
+                                trailing: Text('3500.00'),
+                              )
+                            ],
+                          );
+                        })),
+                  )
+                ],
+              ),
+            ),
           )
         ],
       ),
