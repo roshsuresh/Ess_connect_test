@@ -154,6 +154,10 @@ class SchoolPhotoProviders with ChangeNotifier {
   }
 
   //Division
+  divisionListClear() {
+    divisionlist.clear();
+    notifyListeners();
+  }
 
   List<StudReportDivision> divisionlist = [];
 
@@ -177,7 +181,7 @@ class SchoolPhotoProviders with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      //log(data.toString());
+      log(data.toString());
 
       List<StudReportDivision> templist = List<StudReportDivision>.from(
           data["divisionbyCourse"].map((x) => StudReportDivision.fromJson(x)));

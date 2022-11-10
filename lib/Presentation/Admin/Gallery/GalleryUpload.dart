@@ -13,6 +13,7 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class AdminGalleryUpload extends StatefulWidget {
   AdminGalleryUpload({Key? key}) : super(key: key);
@@ -57,6 +58,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
     });
   }
 
+  String toggleVal = 'All';
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -86,10 +88,16 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
+              labelStyle: TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Title',
               hintStyle: TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: UIGuide.light_Purple, width: 2.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ),
@@ -115,20 +123,40 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
-                await Provider.of<GalleryProviderAdmin>(context, listen: false)
-                    .galleryImageSave(context, file.path.toString());
-                //openFile(file);
-                if (file.name.length >= 6) {
-                  setState(() {
-                    checkname = file.name.replaceRange(6, file.name.length, '');
-                  });
 
-                  print(checkname);
+                int sizee = file.size;
+
+                if (sizee <= 200000) {
+                  await Provider.of<GalleryProviderAdmin>(context,
+                          listen: false)
+                      .galleryImageSave(context, file.path.toString());
+                  //openFile(file);
+                  if (file.name.length >= 6) {
+                    setState(() {
+                      checkname =
+                          file.name.replaceRange(6, file.name.length, '');
+                    });
+
+                    print(checkname);
+                  }
+                } else {
+                  print('Size Exceed');
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    "Size Exceed (Less than 200KB allowed)",
+                    textAlign: TextAlign.center,
+                  )));
                 }
               }),
             ),
           ),
         ),
+        Center(
+            child: Text(
+          'Maximum allowed file size is 200 KB',
+          style:
+              TextStyle(fontSize: 9, color: Color.fromARGB(255, 241, 104, 94)),
+        )),
         kheight10,
         Row(
           children: [
@@ -241,6 +269,9 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       course = courseData.join(',');
                       await Provider.of<GalleryProviderAdmin>(context,
                               listen: false)
+                          .divisionClear();
+                      await Provider.of<GalleryProviderAdmin>(context,
+                              listen: false)
                           .getDivisionList(course);
                     },
                   ),
@@ -317,18 +348,44 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
             )
           ],
         ),
+        kheight10,
+        Center(
+          child: ToggleSwitch(
+            labels: ['All', "Students", 'Staff'],
+            onToggle: (index) {
+              print('Swiched index $index');
+              if (index == 0) {
+                toggleVal = 'All';
+                print(toggleVal);
+              } else if (index == 1) {
+                toggleVal = 'student';
+                print(toggleVal);
+              } else {
+                toggleVal = 'staff';
+                print(toggleVal);
+              }
+            },
+            fontSize: 14,
+            minHeight: 30,
+            minWidth: 150,
+            activeBgColor: [UIGuide.light_Purple],
+          ),
+        ),
         kheight20,
         kheight20,
         Center(
           child: SizedBox(
-            width: 150,
+            width: 100,
             child: MaterialButton(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               minWidth: size.width - 150,
               child: const Text(
                 'Save',
+                style: TextStyle(color: UIGuide.WHITE, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-              color: Color.fromARGB(179, 145, 143, 143),
+              color: UIGuide.light_Purple,
               onPressed: (() async {
                 if (titleController.text.isNotEmpty &&
                     course.toString().isNotEmpty &&
@@ -344,31 +401,26 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                           titleController.text,
                           courseData,
                           divisionData,
+                          toggleVal.toString(),
                           attachmentid);
-
-                  await AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.success,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: 'Success',
-                          desc: 'Uploaded Successfully',
-                          btnOkOnPress: () {},
-                          btnOkIcon: Icons.cancel,
-                          btnOkColor: Colors.green)
-                      .show();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Please enter mandatory fields',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: Duration(seconds: 1),
+                  ));
                 }
 
                 print(datee);
                 print(time);
                 print(timeNow);
                 print(titleController);
-
                 print(attachmentid);
-
-                //titleController.clear();
-                // courseData.clear();
-                // divisionData.clear();
+                titleController.clear();
+                courseData.clear();
+                divisionData.clear();
 
                 if (attachmentid.toString().isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

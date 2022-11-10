@@ -86,6 +86,7 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
 
   divisionClear() {
     divisionlistt.clear();
+    notifyListeners();
   }
 
   List<NoticeBoardDivision> divisionlistt = [];

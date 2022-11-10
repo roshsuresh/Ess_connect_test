@@ -120,8 +120,13 @@ class NoticeBoardAdminProvider with ChangeNotifier {
     return true;
   }
 
+  divisionClear() {
+    divisionList.clear();
+    notifyListeners();
+  }
+
   String? id;
-  Future noticeImageSave(String path) async {
+  Future noticeImageSave(BuildContext context, String path) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var headers = {
@@ -142,8 +147,22 @@ class NoticeBoardAdminProvider with ChangeNotifier {
 
       NoticeImageId idd = NoticeImageId.fromJson(data);
       id = idd.id;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Uploaded Successfully...',
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 1),
+      ));
       print('...............   $id');
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+        duration: Duration(seconds: 1),
+      ));
       print(response.reasonPhrase);
     }
   }
@@ -159,6 +178,7 @@ class NoticeBoardAdminProvider with ChangeNotifier {
       String DisplayEndDate,
       String Titlee,
       String Matter,
+      String toggle,
       course,
       division,
       String CategoryId,
@@ -177,11 +197,11 @@ class NoticeBoardAdminProvider with ChangeNotifier {
       "DisplayEndDate": DisplayEndDate,
       "Title": Titlee,
       "Matter": Matter,
-      "DisplayTo": "student",
+      "DisplayTo": toggle,
       "StaffRole": "null",
       "CourseId": course,
       "DivisionId": division,
-      "SectionList": null,
+      "SectionList": "null",
       "CategoryId": CategoryId,
       "ForClassTeachersOnly": "false",
       "AttachmentId": AttachmentId
@@ -192,11 +212,11 @@ class NoticeBoardAdminProvider with ChangeNotifier {
       "DisplayEndDate": DisplayEndDate,
       "Title": Titlee,
       "Matter": Matter,
-      "DisplayTo": "student",
+      "DisplayTo": toggle,
       "StaffRole": "null",
       "CourseId": course,
       "DivisionId": division,
-      "SectionList": null,
+      "SectionList": "null",
       "CategoryId": CategoryId,
       "ForClassTeachersOnly": "false",
       "AttachmentId": AttachmentId

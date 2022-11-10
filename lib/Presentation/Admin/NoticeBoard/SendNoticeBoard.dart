@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../../Application/Staff_Providers/NoticeboardSend.dart';
 import '../../../Domain/Admin/Course&DivsionList.dart';
@@ -53,7 +54,8 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
     });
   }
 
-  String? attachmentid;
+  String toggleVal = 'All';
+  String attachmentid = '';
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -224,21 +226,40 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
-                await Provider.of<NoticeBoardAdminProvider>(context,
-                        listen: false)
-                    .noticeImageSave(file.path.toString());
-                //openFile(file);
-                if (file.name.length >= 6) {
-                  setState(() {
-                    checkname = file.name.replaceRange(6, file.name.length, '');
-                  });
 
-                  print(checkname);
+                int sizee = file.size;
+
+                if (sizee <= 200000) {
+                  await Provider.of<NoticeBoardAdminProvider>(context,
+                          listen: false)
+                      .noticeImageSave(context, file.path.toString());
+                  //openFile(file);
+                  if (file.name.length >= 6) {
+                    setState(() {
+                      checkname =
+                          file.name.replaceRange(6, file.name.length, '');
+                    });
+
+                    print(checkname);
+                  }
+                } else {
+                  print('Size Exceed');
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    "Size Exceed(Less than 200KB allowed)",
+                    textAlign: TextAlign.center,
+                  )));
                 }
               }),
             ),
           ),
         ),
+        Center(
+            child: Text(
+          'Maximum allowed file size is 200 KB',
+          style:
+              TextStyle(fontSize: 9, color: Color.fromARGB(255, 241, 104, 94)),
+        )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -279,11 +300,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
                   );
-                  // _mydatetimeTo = await showDatePicker(
-                  //     context: context,
-                  //     initialDate: _mydatetimeTo ?? DateTime.now(),
-                  //     firstDate: DateTime(2022),
-                  //     lastDate: DateTime(2030));
+
                   setState(() {
                     timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
                     print(timeNow);
@@ -354,6 +371,9 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       }
                       print("courseData${courseData}");
                       course = courseData.join(',');
+                      await Provider.of<NoticeBoardAdminProvider>(context,
+                              listen: false)
+                          .divisionClear();
                       await Provider.of<NoticeBoardAdminProvider>(context,
                               listen: false)
                           .getDivisionList(course);
@@ -433,6 +453,29 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             )
           ],
         ),
+        kheight10,
+        Center(
+          child: ToggleSwitch(
+            labels: ['All', "Students", 'Staff'],
+            onToggle: (index) {
+              print('Swiched index $index');
+              if (index == 0) {
+                toggleVal = 'All';
+                print(toggleVal);
+              } else if (index == 1) {
+                toggleVal = 'student';
+                print(toggleVal);
+              } else {
+                toggleVal = 'staff';
+                print(toggleVal);
+              }
+            },
+            fontSize: 14,
+            minHeight: 30,
+            minWidth: 150,
+            activeBgColor: [UIGuide.light_Purple],
+          ),
+        ),
         kheight20,
         kheight20,
         Center(
@@ -440,16 +483,37 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             width: 150,
             child: MaterialButton(
               minWidth: size.width - 150,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               child: const Text(
                 'Save',
+                style: TextStyle(color: UIGuide.WHITE),
                 textAlign: TextAlign.center,
               ),
-              color: Color.fromARGB(179, 145, 143, 143),
+              color: UIGuide.light_Purple,
               onPressed: (() async {
-                if (titleController.text.isEmpty &&
-                    mattercontroller.text.isEmpty &&
-                    categoryvalueController.text.isEmpty) {
-                  return await AwesomeDialog(
+                if (titleController.text.isNotEmpty &&
+                    course.toString().isNotEmpty &&
+                    division.toString().isNotEmpty &&
+                    mattercontroller.text.isNotEmpty &&
+                    categoryvalueController.text.isNotEmpty &&
+                    categoryvalueController1.text.isNotEmpty) {
+                  await Provider.of<NoticeBoardAdminProvider>(context,
+                          listen: false)
+                      .noticeBoardSave(
+                          context,
+                          datee.toString(),
+                          time,
+                          timeNow,
+                          titleController.text,
+                          mattercontroller.text,
+                          toggleVal,
+                          courseData,
+                          divisionData,
+                          categoryvalueController.text,
+                          attachmentid);
+                } else {
+                  AwesomeDialog(
                           context: context,
                           dialogType: DialogType.error,
                           animType: AnimType.rightSlide,
@@ -462,35 +526,16 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                           btnOkIcon: Icons.cancel,
                           btnOkColor: Colors.red)
                       .show();
-                } else {
-                  await Provider.of<NoticeBoardAdminProvider>(context,
-                          listen: false)
-                      .noticeBoardSave(
-                          context,
-                          datee.toString(),
-                          time,
-                          timeNow,
-                          titleController.text,
-                          mattercontroller.text,
-                          courseData,
-                          divisionData,
-                          categoryvalueController.text,
-                          attachmentid!);
-
                   print(datee);
                   print(time);
                   print(timeNow);
                   print(titleController);
                   print(mattercontroller);
-
                   print(categoryvalueController);
                   print(attachmentid);
-
                   titleController.clear();
                   mattercontroller.clear();
-
                   categoryvalueController.clear();
-
                   categoryvalueController1.clear();
                 }
               }),

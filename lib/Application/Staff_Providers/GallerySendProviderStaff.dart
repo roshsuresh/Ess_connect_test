@@ -145,6 +145,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
   divisionClear() {
     divisionlistt.clear();
+    notifyListeners();
   }
 
   List<GalleryDivisionListStaff> divisionlistt = [];

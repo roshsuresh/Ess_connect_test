@@ -1,5 +1,6 @@
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class Demo extends StatefulWidget {
   Demo({Key? key}) : super(key: key);
@@ -17,254 +18,27 @@ class _DemoState extends State<Demo> {
     });
   }
 
+  String _selectedGender = 'Student';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: UIGuide.light_Purple,
-        title: Text(''),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Name: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Flexible(
-                  child: RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    strutStyle: StrutStyle(fontSize: 13.0),
-                    text: TextSpan(
-                        style: TextStyle(
-                            color: UIGuide.light_Purple,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                        text: 'Ravidranath@gmail.com (compile: 56 ms,.'),
-                  ),
-                ),
-              ],
-            ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: UIGuide.light_Purple,
+          title: Text(''),
+        ),
+        body: Center(
+          child: ToggleSwitch(
+            labels: ['All', "Students", 'Staff'],
+            onToggle: (index) {
+              print('Swiched index $index');
+            },
+            fontSize: 14,
+            minHeight: 30,
+            minWidth: 150,
+            activeBgColor: [UIGuide.light_Purple],
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Adm No: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  '879684',
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: UIGuide.light_Purple),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Division: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  'IV',
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: UIGuide.light_Purple),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Date: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Text(
-                  '12/65/2022',
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: UIGuide.light_Purple),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Order Id: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Flexible(
-                  child: RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    strutStyle: StrutStyle(fontSize: 13.0),
-                    text: TextSpan(
-                        style: TextStyle(
-                            color: UIGuide.light_Purple,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                        text: '84654648746548484'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                Text(
-                  'Transaction Id: ',
-                  style: TextStyle(fontSize: 15),
-                ),
-                Flexible(
-                  child: RichText(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    strutStyle: StrutStyle(fontSize: 13.0),
-                    text: TextSpan(
-                        style: TextStyle(
-                            color: UIGuide.light_Purple,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                        text: '8465464646465464654658746548484'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: UIGuide.light_Purple, width: .1),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Column(
-                children: [
-                  Text(
-                    'School Fees',
-                    style: TextStyle(
-                        color: UIGuide.light_Purple,
-                        fontWeight: FontWeight.w700,
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dotted,
-                        fontSize: 18),
-                  ),
-                  LimitedBox(
-                    maxHeight: 150,
-                    child: ListView.builder(
-                        itemCount: 2,
-                        shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Text(
-                                  'Term 1',
-                                  style: TextStyle(color: UIGuide.light_Purple),
-                                ),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(horizontal: 0, vertical: -4),
-                                title: Text('Amount to be Paid'),
-                                trailing: Text('3500.00'),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(horizontal: 0, vertical: -4),
-                                title: Text('Paid Amount'),
-                                trailing: Text('3500.00'),
-                              )
-                            ],
-                          );
-                        })),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: UIGuide.light_Purple, width: .1),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Column(
-                children: [
-                  Text(
-                    'Bus Fees',
-                    style: TextStyle(
-                        color: UIGuide.light_Purple,
-                        fontWeight: FontWeight.w700,
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dotted,
-                        fontSize: 18),
-                  ),
-                  LimitedBox(
-                    maxHeight: 150,
-                    child: ListView.builder(
-                        itemCount: 12,
-                        shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Text(
-                                  'August',
-                                  style: TextStyle(color: UIGuide.light_Purple),
-                                ),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(horizontal: 0, vertical: -4),
-                                horizontalTitleGap: 0,
-                                title: Text('Amount to be Paid'),
-                                trailing: Text('3500.00'),
-                              ),
-                              ListTile(
-                                visualDensity:
-                                    VisualDensity(horizontal: 0, vertical: -4),
-                                title: Text('Paid Amount'),
-                                trailing: Text('3500.00'),
-                              )
-                            ],
-                          );
-                        })),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
 }
 // @override

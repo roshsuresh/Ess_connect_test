@@ -87,6 +87,12 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<GallerySendProvider_Stf>(context, listen: false);
       p.sendGallery();
@@ -98,13 +104,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
       p.removeDivisionAll();
       titleController.clear();
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
-
     return ListView(
       children: [
         Row(
@@ -146,32 +145,52 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
 
               color: Colors.white70,
               onPressed: (() async {
-                final result = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowMultiple: true,
-                    allowedExtensions: ['png', 'jpeg', 'jpg']);
+                final result =
+                    await FilePicker.platform.pickFiles(type: FileType.custom,
+                        //  allowMultiple: true,
+                        allowedExtensions: ['png', 'jpeg', 'jpg']);
                 if (result == null) {
                   return;
                 }
+
                 final file = result.files.first;
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
-                await Provider.of<GallerySendProvider_Stf>(context,
-                        listen: false)
-                    .galleryImageSave(context, file.path.toString());
-                //openFile(file);
-                if (file.name.length >= 6) {
-                  setState(() {
-                    checkname = file.name.replaceRange(6, file.name.length, '');
-                  });
+                print('Size : ${file.size}');
+                int sizee = file.size;
 
-                  print(checkname);
+                if (sizee <= 200000) {
+                  await Provider.of<GallerySendProvider_Stf>(context,
+                          listen: false)
+                      .galleryImageSave(context, file.path.toString());
+                  //openFile(file);
+                  if (file.name.length >= 6) {
+                    setState(() {
+                      checkname =
+                          file.name.replaceRange(6, file.name.length, '');
+                    });
+
+                    print(checkname);
+                  }
+                } else {
+                  print('Size Exceed');
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    "Size Exceed(Less than 200KB allowed)",
+                    textAlign: TextAlign.center,
+                  )));
                 }
               }),
             ),
           ),
         ),
+        Center(
+            child: Text(
+          'Maximum allowed file size is 200 KB',
+          style:
+              TextStyle(fontSize: 9, color: Color.fromARGB(255, 241, 104, 94)),
+        )),
         Row(
           children: [
             MaterialButton(
@@ -223,7 +242,13 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               child: Consumer<GallerySendProvider_Stf>(
                   builder: (context, snapshot, child) {
                 return InkWell(
-                  onTap: () {
+                  onTap: () async {
+                    await Provider.of<GallerySendProvider_Stf>(context,
+                            listen: false)
+                        .courseClear();
+                    await Provider.of<GallerySendProvider_Stf>(context,
+                            listen: false)
+                        .sendGallery();
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -256,6 +281,11 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                                           await snapshot.addSelectedCourse(
                                               snapshot.courselistt[index]);
                                           print(courseId);
+                                          await Provider.of<
+                                                      GallerySendProvider_Stf>(
+                                                  context,
+                                                  listen: false)
+                                              .divisionClear();
                                           await Provider.of<
                                                       GallerySendProvider_Stf>(
                                                   context,
@@ -323,7 +353,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                   builder: (context, snapshot, child) {
                 attachmentid = snapshot.id ?? '';
                 return InkWell(
-                  onTap: () {
+                  onTap: () async {
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -337,9 +367,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                                     itemCount: snapshot.divisionlistt.length,
                                     itemBuilder: (context, index) {
                                       // print(snapshot
-
                                       //     .attendenceInitialValues.length);
-
                                       // value.removeCourseAll();
                                       return ListTile(
                                         selectedTileColor: Colors.blue.shade100,
@@ -423,14 +451,17 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
         kheight20,
         Center(
           child: SizedBox(
-            width: 150,
+            width: 100,
             child: MaterialButton(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               minWidth: size.width - 150,
               child: const Text(
                 'Save',
+                style: TextStyle(color: UIGuide.WHITE, fontSize: 18),
                 textAlign: TextAlign.center,
               ),
-              color: Color.fromARGB(179, 145, 143, 143),
+              color: UIGuide.light_Purple,
               onPressed: (() async {
                 if (titleController.text.isNotEmpty &&
                     coursevalueController.text.isNotEmpty &&

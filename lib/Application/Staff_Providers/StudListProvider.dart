@@ -72,6 +72,7 @@ class StudReportListProvider_stf with ChangeNotifier {
 
   sectionClear() {
     stdReportInitialValues.clear();
+    notifyListeners();
   }
 
   List<StudReportSectionList> stdReportInitialValues = [];
@@ -146,6 +147,7 @@ class StudReportListProvider_stf with ChangeNotifier {
 
   courseClear() {
     courselist.clear();
+    notifyListeners();
   }
 
   List<StudReportCourse> courselist = [];
@@ -231,6 +233,7 @@ class StudReportListProvider_stf with ChangeNotifier {
 
   divisionClear() {
     divisionlist.clear();
+    notifyListeners();
   }
 
   List<StudReportDivision> divisionlist = [];

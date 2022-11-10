@@ -4,6 +4,7 @@ import 'package:Ess_test/Domain/Admin/Course&DivsionList.dart';
 import 'package:Ess_test/Domain/Admin/GalleryEdit.dart';
 import 'package:Ess_test/Domain/Staff/GallerySendStaff.dart';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:multi_select_flutter/util/multi_select_item.dart';
@@ -88,6 +89,11 @@ class GalleryProviderAdmin with ChangeNotifier {
     return true;
   }
 
+  divisionClear() {
+    divisionList.clear();
+    notifyListeners();
+  }
+
   //find image id
 
   String? id;
@@ -101,7 +107,7 @@ class GalleryProviderAdmin with ChangeNotifier {
     var request = http.MultipartRequest(
         'POST', Uri.parse('${UIGuide.baseURL}/files/single/School'));
     request.fields.addAll({'': ''});
-    request.files.add(await http.MultipartFile.fromPath('', '$path'));
+    request.files.add(await http.MultipartFile.fromPath('', path));
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -133,6 +139,7 @@ class GalleryProviderAdmin with ChangeNotifier {
       String Titlee,
       coursee,
       divisionn,
+      String toggle,
       String AttachmentId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
@@ -150,7 +157,7 @@ class GalleryProviderAdmin with ChangeNotifier {
       "CourseId": coursee,
       "DivisionId": divisionn,
       "ForClassTeacherOnly": "false",
-      "DisplayTo": "All",
+      "DisplayTo": toggle,
       "StaffRole": "null",
       "PhotoList": [
         {"PhotoCaption": "null", "FileId": AttachmentId, "IsMaster": "true"},
@@ -164,7 +171,7 @@ class GalleryProviderAdmin with ChangeNotifier {
       "CourseId": coursee,
       "DivisionId": divisionn,
       "ForClassTeacherOnly": "false",
-      "DisplayTo": "All",
+      "DisplayTo": toggle,
       "StaffRole": "null",
       "PhotoList": [
         {"PhotoCaption": "null", "FileId": AttachmentId, "IsMaster": "true"},
@@ -176,6 +183,17 @@ class GalleryProviderAdmin with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 204) {
       print('Correct...______________________________');
+      await AwesomeDialog(
+              context: context,
+              dialogType: DialogType.success,
+              animType: AnimType.rightSlide,
+              headerAnimationLoop: false,
+              title: 'Success',
+              desc: 'Uploaded Successfully',
+              btnOkOnPress: () {},
+              btnOkIcon: Icons.cancel,
+              btnOkColor: Colors.green)
+          .show();
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
       //  print(await response.stream.bytesToString());
@@ -274,13 +292,16 @@ class GalleryProviderAdmin with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-
+        print("corect..........");
         Map<String, dynamic> data = await json.decode(response.body);
+        print(data);
         GalleryEditAdmin gall = GalleryEditAdmin.fromJson(data);
         title = gall.title;
         displayStartDate = gall.displayStartDate;
         displayEndDate = gall.displayEndDate;
         entryDate = gall.entryDate;
+        print(title);
+        print(displayEndDate);
         print("corect..........");
         List<GalleryEditAdmin> templist = List<GalleryEditAdmin>.from(
             data["galleryView"].map((x) => GalleryEditAdmin.fromJson(x)));

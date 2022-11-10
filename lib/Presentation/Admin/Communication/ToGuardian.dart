@@ -86,7 +86,7 @@ class _Notification_AdminToGuardainState
   List courseData = [];
 
   String course = '';
-  String courseDiv = '';
+  //String courseDiv = '';
 
   String section = '';
   int length = 0;
@@ -175,13 +175,16 @@ class _Notification_AdminToGuardainState
                           subjectData.map((e) => data.value);
                           print("${subjectData.map((e) => data.value)}");
                         }
-                        section = subjectData.join('&');
+                        section = subjectData.join(',');
+                        await Provider.of<SchoolPhotoProviders>(context,
+                                listen: false)
+                            .clearCourse();
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
                             .getCourseList(section);
                         print("data $subjectData");
 
-                        print(subjectData.join('&'));
+                        print(subjectData.join(','));
                       },
                     ),
                   ),
@@ -248,13 +251,24 @@ class _Notification_AdminToGuardainState
                           diviData.map((e) => data.value);
                           print("${diviData.map((e) => data.value)}");
                         }
-                        course = diviData.join('&');
-                        courseDiv = diviData.join('%');
+                        course = '';
+                        course = diviData.join(',');
+                        // courseDiv = diviData.join(',');
+                        // await Provider.of<NotificationToGuardianAdmin>(context,
+                        //         listen: false)
+                        //     .clearStudentList();
+
+                        // courseData.clear();
+                        // value.divisionDrop.clear();
+                        await Provider.of<SchoolPhotoProviders>(context,
+                                listen: false)
+                            .divisionListClear();
+
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
                             .getDivisionList(course);
 
-                        print(diviData.join('&'));
+                        print(diviData.join(','));
                       },
                     ),
                   ),
@@ -330,13 +344,13 @@ class _Notification_AdminToGuardainState
                         //   print("length   $length");
                         // });
 
-                        division = courseData.join('%');
+                        division = courseData.join(',');
                         // Provider.of<SchoolPhotoProviders>(context, listen: false)
                         //     .getCourseList(div);
 
-                        print("data $division");
+                        print("data div  $division");
 
-                        print(courseData.join('%'));
+                        print(courseData.join(','));
                       },
                     ),
                   ),
@@ -366,7 +380,7 @@ class _Notification_AdminToGuardainState
                       await Provider.of<NotificationToGuardianAdmin>(context,
                               listen: false)
                           .getNotificationView(
-                              courseDiv.toLowerCase(), division.toLowerCase());
+                              course.toLowerCase(), division.toLowerCase());
 
                       //    p.stdReportSectionStaff();
                       // p.courseDrop.clear();

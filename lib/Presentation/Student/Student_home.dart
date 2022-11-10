@@ -2,6 +2,7 @@ import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1452,29 +1453,33 @@ class Flashnews extends StatefulWidget {
 }
 
 class _FlashnewsState extends State<Flashnews> {
-  var scrollcontroller = ScrollController();
-
+//  var scrollcontroller = ScrollController();
+  ScrollController? _scrollController;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<ProfileProvider>(context, listen: false);
+      //  _scrollController = ScrollController(keepScrollOffset: true);
       p.flashNewsProvider(context);
       p.flashnew.clear();
     });
 
-    scrollcontroller.addListener(() {
-      if (scrollcontroller.position.pixels ==
-          scrollcontroller.position.maxScrollExtent) {
-        var p = Provider.of<ProfileProvider>(context, listen: false);
-        p.flashNewsProvider(context);
-        p.flashnew.clear();
-      }
-    });
+    // scrollcontroller.addListener(() {
+    //   if (scrollcontroller.position.pixels ==
+    //       scrollcontroller.position.maxScrollExtent) {
+    //     var p = Provider.of<ProfileProvider>(context, listen: false);
+    //     p.flashNewsProvider(context);
+    //     p.flashnew.clear();
+    //   }
+    // });
   }
 
+  // ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    // _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+    //     duration: Duration(milliseconds: 200), curve: Curves.easeOut);
     var size = MediaQuery.of(context).size;
     return Consumer<ProfileProvider>(
       builder: (context, value, child) {
@@ -1483,63 +1488,42 @@ class _FlashnewsState extends State<Flashnews> {
                 height: 30,
                 width: 30,
               )
-            : LimitedBox(
-                maxHeight: 40,
-                child: ScrollLoopAutoScroll(
-                    child: ListView.builder(
-                        controller: scrollcontroller,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: value.flashnew.length == null
-                            ? 0
-                            : value.flashnew.length,
-                        itemBuilder: ((context, index) => Text(
-                              value.flashnew[index].news ?? '--------',
-                            ))),
-                    delay: Duration(seconds: 1),
-                    duration: Duration(seconds: 160),
-                    gap: 35,
-                    scrollDirection: Axis.horizontal)
-
-                //  ListView.builder(
-                //     // scrollDirection: Axis.horizontal,
-                //     //physics: NeverScrollableScrollPhysics(),
-                //     shrinkWrap: true,
-                //     itemCount: value.flashnew.length == null
-                //         ? 0
-                //         : value.flashnew.length,
-                //     itemBuilder: (context, index) {
-                //       return LimitedBox(
-                //         maxHeight: 20,
-                //         // maxWidth: 20,
-                //         child: Marquee(
-                //           //scrolling  text
-                //           text: value.flashnew[index].news ?? '--------',
-                //           // ? '------------'
-                //           // : dataRsponse![index]['flashNews'].toString(),
-                //           style: const TextStyle(
-                //               fontWeight: FontWeight.bold,
-                //               color: Colors.grey,
-                //               fontSize: 12),
-                //           scrollAxis: Axis.horizontal,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           blankSpace: 20.0,
-                //           velocity: 40.0,
-                //           pauseAfterRound: const Duration(seconds: 1),
-                //           showFadingOnlyWhenScrolling: true,
-                //           fadingEdgeStartFraction: 0.3,
-                //           fadingEdgeEndFraction: 0.3,
-                //           numberOfRounds: 3000,
-                //           startPadding: 10.0,
-                //           accelerationDuration: const Duration(seconds: 1),
-                //           accelerationCurve: Curves.linear,
-                //           decelerationDuration:
-                //               const Duration(milliseconds: 500),
-                //           decelerationCurve: Curves.easeOut,
-                //         ),
-                //       );
-                //     }),
-                );
+            : ListView.builder(
+                // scrollDirection: Axis.horizontal,
+                //physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount:
+                    value.flashnew.length == null ? 0 : value.flashnew.length,
+                itemBuilder: (context, index) {
+                  return LimitedBox(
+                    maxHeight: 30,
+                    // maxWidth: 20,
+                    child: Marquee(
+                      //scrolling  text
+                      text: value.flashnew[index].news ?? '--------',
+                      // ? '------------'
+                      // : dataRsponse![index]['flashNews'].toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: 12),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 20.0,
+                      velocity: 40.0,
+                      pauseAfterRound: const Duration(seconds: 1),
+                      showFadingOnlyWhenScrolling: true,
+                      fadingEdgeStartFraction: 0.3,
+                      fadingEdgeEndFraction: 0.3,
+                      numberOfRounds: 3000,
+                      startPadding: 10.0,
+                      accelerationDuration: const Duration(seconds: 1),
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: const Duration(milliseconds: 500),
+                      decelerationCurve: Curves.easeOut,
+                    ),
+                  );
+                });
       },
     );
   }

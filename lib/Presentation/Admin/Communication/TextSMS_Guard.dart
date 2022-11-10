@@ -87,7 +87,7 @@ class TextSMSGuardian extends StatelessWidget {
                           .getCourseList(section);
                       print("data $subjectData");
 
-                      print(subjectData.join('&'));
+                      print(subjectData.join(','));
                     },
                   ),
                 ),

@@ -297,21 +297,40 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 print('Name: ${file.name}');
                 print('Path: ${file.path}');
                 print('Extension: ${file.extension}');
-                await Provider.of<StaffNoticeboardSendProviders>(context,
-                        listen: false)
-                    .noticeImageSave(context, file.path.toString());
-                //openFile(file);
-                if (file.name.length >= 6) {
-                  setState(() {
-                    checkname = file.name.replaceRange(6, file.name.length, '');
-                  });
 
-                  print(checkname);
+                int sizee = file.size;
+
+                if (sizee <= 200000) {
+                  await Provider.of<StaffNoticeboardSendProviders>(context,
+                          listen: false)
+                      .noticeImageSave(context, file.path.toString());
+                  //openFile(file);
+                  if (file.name.length >= 6) {
+                    setState(() {
+                      checkname =
+                          file.name.replaceRange(6, file.name.length, '');
+                    });
+
+                    print(checkname);
+                  }
+                } else {
+                  print('Size Exceed');
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                    "Size Exceed(Less than 200KB allowed)",
+                    textAlign: TextAlign.center,
+                  )));
                 }
               }),
             ),
           ),
         ),
+        Center(
+            child: Text(
+          'Maximum allowed file size is 200 KB',
+          style:
+              TextStyle(fontSize: 9, color: Color.fromARGB(255, 241, 104, 94)),
+        )),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -374,7 +393,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
               child: Consumer<StaffNoticeboardSendProviders>(
                   builder: (context, snapshot, child) {
                 return InkWell(
-                  onTap: () {
+                  onTap: () async {
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -415,6 +434,11 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                                                   .toString();
 
                                           print(courseId);
+                                          await Provider.of<
+                                                      StaffNoticeboardSendProviders>(
+                                                  context,
+                                                  listen: false)
+                                              .divisionClear();
                                           await Provider.of<
                                                       StaffNoticeboardSendProviders>(
                                                   context,
@@ -576,14 +600,17 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
         kheight20,
         Center(
           child: SizedBox(
-            width: 150,
+            width: 100,
             child: MaterialButton(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               minWidth: size.width - 150,
               child: const Text(
                 'Save',
+                style: TextStyle(fontSize: 18, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
-              color: Color.fromARGB(179, 145, 143, 143),
+              color: UIGuide.light_Purple,
               onPressed: (() async {
                 if (titleController.text.isEmpty &&
                     mattercontroller.text.isEmpty &&

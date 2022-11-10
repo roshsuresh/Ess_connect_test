@@ -157,6 +157,11 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                     StudReportListProvider_stf>(
                                                 context,
                                                 listen: false)
+                                            .courseClear();
+                                        await Provider.of<
+                                                    StudReportListProvider_stf>(
+                                                context,
+                                                listen: false)
                                             .getCourseList(sectionId);
                                         Navigator.of(context).pop();
                                       },
@@ -235,8 +240,8 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                       print(snapshot.courselist.length);
                                       // value.removeDivisionAll();
                                       return ListTile(
-                                        selectedTileColor: Colors.blue.shade100,
-                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selectedTileColor: Colors.blue.shade100,
+                                        // selectedColor: UIGuide.PRIMARY2,
                                         selected: snapshot.isCourseSelected(
                                             snapshot.courselist[index]),
                                         onTap: () async {
@@ -262,6 +267,11 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                               studReportInitialValuesController
                                                   .text
                                                   .toString();
+                                          await Provider.of<
+                                                      StudReportListProvider_stf>(
+                                                  context,
+                                                  listen: false)
+                                              .divisionClear();
 
                                           await Provider.of<
                                                       StudReportListProvider_stf>(
@@ -351,9 +361,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                       return Column(
                                         children: [
                                           ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selectedTileColor:
+                                            //     Colors.blue.shade100,
+                                            // selectedColor: UIGuide.PRIMARY2,
                                             selected: snapshot
                                                 .isDivisionSelected(snapshot
                                                     .divisionlist[index]),
@@ -488,11 +498,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
+              Spacer()
               // kWidth,
             ],
           ),
@@ -1147,8 +1153,8 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
 
                                       value.removeSectionAll();
                                       return ListTile(
-                                        selectedTileColor: Colors.blue.shade100,
-                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selectedTileColor: Colors.blue.shade100,
+                                        // selectedColor: UIGuide.PRIMARY2,
                                         // selected:
                                         //     studReportinitvalues_stf![index],
                                         onTap: () async {
@@ -1172,6 +1178,12 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                           // snapshot.addSelectedCourse(
                                           //     attendecourse![index]);
                                           print(sectionId);
+                                          await Provider.of<
+                                                      StudReportListProvider_stf>(
+                                                  context,
+                                                  listen: false)
+                                              .courseClear();
+
                                           await Provider.of<
                                                       StudReportListProvider_stf>(
                                                   context,
@@ -1256,9 +1268,9 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                           print(snapshot.courselist.length);
                                           // value.removeDivisionAll();
                                           return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selectedTileColor:
+                                            //     Colors.blue.shade100,
+                                            // selectedColor: UIGuide.PRIMARY2,
                                             selected: snapshot.isCourseSelected(
                                                 snapshot.courselist[index]),
                                             onTap: () async {
@@ -1288,6 +1300,11 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                   StudReportcourseController
                                                       .text
                                                       .toString();
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .divisionClear();
 
                                               await Provider.of<
                                                           StudReportListProvider_stf>(
@@ -1379,9 +1396,9 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                         print(snapshot.divisionlist.length);
                                         // value.removeDivisionAll();
                                         return ListTile(
-                                          selectedTileColor:
-                                              Colors.blue.shade100,
-                                          selectedColor: UIGuide.PRIMARY2,
+                                          // selectedTileColor:
+                                          //     Colors.blue.shade100,
+                                          // selectedColor: UIGuide.PRIMARY2,
                                           selected: snapshot.isDivisionSelected(
                                               snapshot.divisionlist[index]),
                                           onTap: () async {
@@ -1509,12 +1526,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
+              Spacer()
             ],
           ),
           ViewStaffReport(size: size),
@@ -1870,8 +1882,8 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
 
                                       value.removeSectionAll();
                                       return ListTile(
-                                        selectedTileColor: Colors.blue.shade100,
-                                        selectedColor: UIGuide.PRIMARY2,
+                                        // selectedTileColor: Colors.blue.shade100,
+                                        // selectedColor: UIGuide.PRIMARY2,
                                         // selected:
                                         //     studReportinitvalues_stf![index],
                                         onTap: () async {
@@ -1895,6 +1907,12 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                           // snapshot.addSelectedCourse(
                                           //     attendecourse![index]);
                                           print(sectionId);
+                                          await Provider.of<
+                                                      StudReportListProvider_stf>(
+                                                  context,
+                                                  listen: false)
+                                              .courseClear();
+
                                           await Provider.of<
                                                       StudReportListProvider_stf>(
                                                   context,
@@ -1979,9 +1997,9 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                           print(snapshot.courselist.length);
                                           // value.removeDivisionAll();
                                           return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
+                                            // selectedTileColor:
+                                            //     Colors.blue.shade100,
+                                            // selectedColor: UIGuide.PRIMARY2,
                                             selected: snapshot.isCourseSelected(
                                                 snapshot.courselist[index]),
                                             onTap: () async {
@@ -2011,6 +2029,11 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                   studReportInitialValuesController
                                                       .text
                                                       .toString();
+                                              await Provider.of<
+                                                          StudReportListProvider_stf>(
+                                                      context,
+                                                      listen: false)
+                                                  .divisionClear();
 
                                               await Provider.of<
                                                           StudReportListProvider_stf>(
@@ -2102,9 +2125,9 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                         print(snapshot.divisionlist.length);
 
                                         return ListTile(
-                                          selectedTileColor:
-                                              Colors.blue.shade100,
-                                          selectedColor: UIGuide.PRIMARY2,
+                                          // selectedTileColor:
+                                          //     Colors.blue.shade100,
+                                          // selectedColor: UIGuide.PRIMARY2,
                                           selected: snapshot.isDivisionSelected(
                                               snapshot.divisionlist[index]),
                                           onTap: () async {
@@ -2232,12 +2255,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                       .viewStudentReportList(sectionId, courseId, divisionId);
                 }),
               ),
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
-              kWidth,
+              Spacer()
             ],
           ),
           ViewStaffReport(size: size),
