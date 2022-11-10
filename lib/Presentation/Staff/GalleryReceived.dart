@@ -1,6 +1,4 @@
-import 'package:Ess_test/Application/AdminProviders/GalleryProviders.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
-import 'package:Ess_test/Application/StudentProviders/GalleryProvider.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:Ess_test/utils/spinkit.dart';

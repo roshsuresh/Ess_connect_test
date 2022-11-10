@@ -85,55 +85,54 @@ class AttendenceDivisions {
     data['order'] = this.order;
     return data;
   }
-
 }
-  class AttendanceView {
-    AttendanceView({
-  this.studAttId,
-  this.divisionId,
-  this.id,
-  this.forenoon,
-  this.afternoon,
-  this.admNo,
-  this.rollNo,
-  this.name,
-  });
 
-  dynamic studAttId;
-  String? divisionId;
-  String? id;
-  String? forenoon;
-  String? afternoon;
-  String? admNo;
-  int? rollNo;
-  String? name;
+// class AttendanceView {
+//   AttendanceView({
+//     this.studAttId,
+//     this.divisionId,
+//     this.id,
+//     this.forenoon,
+//     this.afternoon,
+//     this.admNo,
+//     this.rollNo,
+//     this.name,
+//     this.select,
+//   });
 
-  factory AttendanceView.fromJson(Map<String, dynamic> json) => AttendanceView(
-  studAttId: json["studAttId"],
-  divisionId: json["divisionId"],
-  id: json["id"],
-  forenoon: json["forenoon"],
-  afternoon: json["afternoon"],
-  admNo: json["admNo"],
-  rollNo: json["rollNo"],
-  name: json["name"],
-  );
+//   dynamic studAttId;
+//   String? divisionId;
+//   String? id;
+//   String? forenoon;
+//   String? afternoon;
+//   String? admNo;
+//   int? rollNo;
+//   String? name;
+//   bool? select;
 
-  Map<String, dynamic> toJson() => {
-  "studAttId": studAttId,
-  "divisionId": divisionId,
-  "id": id,
-  "forenoon": forenoon,
-  "afternoon": afternoon,
-  "admNo": admNo,
-  "rollNo": rollNo,
-  "name": name,
-  };
-  }
+//   factory AttendanceView.fromJson(Map<String, dynamic> json) => AttendanceView(
+//         studAttId: json["studAttId"],
+//         divisionId: json["divisionId"],
+//         id: json["id"],
+//         forenoon: json["forenoon"],
+//         afternoon: json["afternoon"],
+//         admNo: json["admNo"],
+//         rollNo: json["rollNo"],
+//         name: json["name"],
+//       );
 
-
-
-
+//   Map<String, dynamic> toJson() => {
+//         "studAttId": studAttId,
+//         "divisionId": divisionId,
+//         "id": id,
+//         "forenoon": forenoon,
+//         "afternoon": afternoon,
+//         "admNo": admNo,
+//         "rollNo": rollNo,
+//         "name": name,
+//         "id": id,
+//       };
+// }
 
 //view
 
@@ -146,16 +145,21 @@ class StudentsAttendenceView_stf {
   String? admNo;
   int? rollNo;
   String? name;
+  bool? select;
+  bool? selectedd;
 
-  StudentsAttendenceView_stf(
-      {this.studAttId,
-      this.divisionId,
-      this.id,
-      this.forenoon,
-      this.afternoon,
-      this.admNo,
-      this.rollNo,
-      this.name});
+  StudentsAttendenceView_stf({
+    this.studAttId,
+    this.divisionId,
+    this.id,
+    this.forenoon,
+    this.afternoon,
+    this.admNo,
+    this.rollNo,
+    this.name,
+    this.select,
+    this.selectedd,
+  });
 
   StudentsAttendenceView_stf.fromJson(Map<String, dynamic> json) {
     studAttId = json['studAttId'];
@@ -170,14 +174,16 @@ class StudentsAttendenceView_stf {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['studAttId'] = this.studAttId;
-    data['divisionId'] = this.divisionId;
-    data['id'] = this.id;
-    data['forenoon'] = this.forenoon;
-    data['afternoon'] = this.afternoon;
-    data['admNo'] = this.admNo;
-    data['rollNo'] = this.rollNo;
-    data['name'] = this.name;
+    data['studAttId'] = studAttId;
+    data['divisionId'] = divisionId;
+    data['id'] = id;
+    data['forenoon'] = forenoon;
+    data['afternoon'] = afternoon;
+    data['admNo'] = admNo;
+    data['rollNo'] = rollNo;
+    data['name'] = name;
+    data['id'] = id;
+    data['id'] = id;
     return data;
   }
 }

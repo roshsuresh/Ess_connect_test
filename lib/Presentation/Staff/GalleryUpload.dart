@@ -1,14 +1,11 @@
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
-import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Presentation/Staff/GalleryList.dart';
 import 'package:Ess_test/Presentation/Staff/GalleryReceived.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
-
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 

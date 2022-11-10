@@ -22,6 +22,8 @@ class UIGuide {
   static const String profile = "assets/Profile.png";
   static const String reportcard = "assets/Reportcard.png";
   static const String baseURL = "https://api.esstestonline.in";
+  static const String absent = "assets/aa.svg";
+  static const String present = "assets/ppp.svg";
 
   static const Color WHITE = Colors.white;
   static const Color BLACK = Colors.black;

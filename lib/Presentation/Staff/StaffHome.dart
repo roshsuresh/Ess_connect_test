@@ -1,17 +1,13 @@
-import 'package:Ess_test/Presentation/Staff/NotificationStaff.dart';
 import 'package:Ess_test/Presentation/Staff/ScreenNotification.dart';
-import 'package:Ess_test/Presentation/Student/Stud_Notification.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/Staff_Providers/StaffFlashnews.dart';
 import '../../Application/Staff_Providers/StaffProfile.dart';
 import '../../Constants.dart';
-import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
 import '../Login_Activation/Login_page.dart';
 import '../Student/PasswordChange.dart';

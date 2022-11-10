@@ -94,6 +94,7 @@ class AttendenceStaffProvider with ChangeNotifier {
             Attendenceinitvalues.fromJson(data['attendenceinitvalues']);
 
         isClassTeacher = att.isClassTeacher;
+        isDualAttendance = att.isDualAttendance;
         attendecourse = staffAttendeceRespo!['course'];
         print(attendecourse);
         print(isClassTeacher);
@@ -183,43 +184,43 @@ class AttendenceStaffProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> getAttendanceView(String id, String date) async {
-    setLoading(true);
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    setLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    };
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
+  // Future<bool> getAttendanceView(String id, String date) async {
+  //   setLoading(true);
+  //   SharedPreferences _pref = await SharedPreferences.getInstance();
+  //   setLoading(true);
+  //   var headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+  //   };
+  //   var request = http.Request(
+  //       'GET',
+  //       Uri.parse(
+  //           '${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
 
-    request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
+  //   request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
 
-    request.headers.addAll(headers);
-    setLoading(true);
-    http.StreamedResponse response = await request.send();
-    setLoading(true);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data =
-          jsonDecode(await response.stream.bytesToString());
+  //   request.headers.addAll(headers);
+  //   setLoading(true);
+  //   http.StreamedResponse response = await request.send();
+  //   setLoading(true);
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> data =
+  //         jsonDecode(await response.stream.bytesToString());
 
-      log(data.toString());
+  //     log(data.toString());
 
-      List<AttendenceDivisions> templist = List<AttendenceDivisions>.from(
-          data["divisions"].map((x) => AttendenceDivisions.fromJson(x)));
-      attendenceDivisionList.addAll(templist);
-      print('correct');
-      setLoading(false);
-      notifyListeners();
-    } else {
-      setLoading(false);
-      print('Error in AttendenceDivisionList stf');
-    }
-    return true;
-  }
+  //     List<AttendenceDivisions> templist = List<AttendenceDivisions>.from(
+  //         data["divisions"].map((x) => AttendenceDivisions.fromJson(x)));
+  //     attendenceDivisionList.addAll(templist);
+  //     print('correct');
+  //     setLoading(false);
+  //     notifyListeners();
+  //   } else {
+  //     setLoading(false);
+  //     print('Error in AttendenceDivisionList stf');
+  //   }
+  //   return true;
+  // }
 
   //view Attendence
 
@@ -244,7 +245,7 @@ class AttendenceStaffProvider with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      log(data.toString());
+      print(data);
 
       List<StudentsAttendenceView_stf> templist =
           List<StudentsAttendenceView_stf>.from(data["studentsAttendenceView"]
@@ -260,6 +261,37 @@ class AttendenceStaffProvider with ChangeNotifier {
 
   clearStudentList() {
     studentsAttendenceView.clear();
+    notifyListeners();
+  }
+
+  bool isSelected(StudentsAttendenceView_stf model) {
+    StudentsAttendenceView_stf selected = studentsAttendenceView
+        .firstWhere((element) => element.admNo == model.admNo);
+    return selected.select!;
+  }
+
+  void selectItem(StudentsAttendenceView_stf model) {
+    StudentsAttendenceView_stf selected = studentsAttendenceView
+        .firstWhere((element) => element.admNo == model.admNo);
+    selected.select ??= false;
+    selected.select = !selected.select!;
+    print(selected.toJson());
+    notifyListeners();
+  }
+
+  //dual attendence
+  bool isSelect(StudentsAttendenceView_stf model) {
+    StudentsAttendenceView_stf selected = studentsAttendenceView
+        .firstWhere((element) => element.admNo == model.admNo);
+    return selected.selectedd!;
+  }
+
+  void selectItemm(StudentsAttendenceView_stf model) {
+    StudentsAttendenceView_stf selected = studentsAttendenceView
+        .firstWhere((element) => element.admNo == model.admNo);
+    selected.selectedd ??= false;
+    selected.selectedd = !selected.selectedd!;
+    print(selected.toJson());
     notifyListeners();
   }
 

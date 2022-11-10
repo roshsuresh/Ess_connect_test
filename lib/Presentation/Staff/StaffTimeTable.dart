@@ -1,14 +1,11 @@
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_test/utils/spinkit.dart';
-
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-
 import '../../utils/LoadingIndication.dart';
-
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
