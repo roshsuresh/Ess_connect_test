@@ -1483,47 +1483,97 @@ class _FlashnewsState extends State<Flashnews> {
     var size = MediaQuery.of(context).size;
     return Consumer<ProfileProvider>(
       builder: (context, value, child) {
-        return value.loading
-            ? Container(
-                height: 30,
-                width: 30,
-              )
-            : ListView.builder(
-                // scrollDirection: Axis.horizontal,
-                //physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:
-                    value.flashnew.length == null ? 0 : value.flashnew.length,
-                itemBuilder: (context, index) {
-                  return LimitedBox(
-                    maxHeight: 30,
-                    // maxWidth: 20,
-                    child: Marquee(
-                      //scrolling  text
-                      text: value.flashnew[index].news ?? '--------',
-                      // ? '------------'
-                      // : dataRsponse![index]['flashNews'].toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                          fontSize: 12),
-                      scrollAxis: Axis.horizontal,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      blankSpace: 20.0,
-                      velocity: 40.0,
-                      pauseAfterRound: const Duration(seconds: 1),
-                      showFadingOnlyWhenScrolling: true,
-                      fadingEdgeStartFraction: 0.3,
-                      fadingEdgeEndFraction: 0.3,
-                      numberOfRounds: 3000,
-                      startPadding: 10.0,
-                      accelerationDuration: const Duration(seconds: 1),
-                      accelerationCurve: Curves.linear,
-                      decelerationDuration: const Duration(milliseconds: 500),
-                      decelerationCurve: Curves.easeOut,
-                    ),
-                  );
-                });
+        if (value.flashnew.isEmpty) {
+          return Container(
+            height: 25,
+            // width: 30,
+          );
+        } else {
+          return LimitedBox(
+            maxHeight: 30,
+            child: value.loading
+                ? Container(
+                    height: 30,
+                    width: 30,
+                  )
+                : ListView.builder(
+                    //scrollDirection: AxisDirection.left,
+                    shrinkWrap: true,
+                    itemCount: value.flashnew.length == null
+                        ? 0
+                        : value.flashnew.length,
+                    itemBuilder: (context, index) {
+                      return LimitedBox(
+                        maxHeight: 30,
+                        // width: 30,
+                        child: Marquee(
+                          //scrolling  text
+                          text: value.flashnew[index].news ?? '-----',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              fontSize: 12),
+                          scrollAxis: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          blankSpace: 20.0,
+                          velocity: 40.0,
+                          pauseAfterRound: const Duration(seconds: 1),
+                          showFadingOnlyWhenScrolling: true,
+                          fadingEdgeStartFraction: 0.3,
+                          fadingEdgeEndFraction: 0.3,
+                          numberOfRounds: null,
+                          startPadding: 10.0,
+                          accelerationDuration: const Duration(seconds: 1),
+                          accelerationCurve: Curves.linear,
+                          decelerationDuration:
+                              const Duration(milliseconds: 500),
+                          decelerationCurve: Curves.easeOut,
+                        ),
+                      );
+                    }),
+          );
+          // return value.loading
+          //     ? Container(
+          //         height: 30,
+          //         width: 30,
+          //       )
+          //     : ListView.builder(
+          //         // scrollDirection: Axis.horizontal,
+          //         //physics: NeverScrollableScrollPhysics(),
+          //         shrinkWrap: true,
+          //         itemCount:
+          //             value.flashnew.length == null ? 0 : value.flashnew.length,
+          //         itemBuilder: (context, index) {
+          //           return LimitedBox(
+          //             maxHeight: 30,
+          //             // maxWidth: 20,
+          //             child: Marquee(
+          //               //scrolling  text
+          //               text: value.flashnew[index].news ?? '--------',
+          //               // ? '------------'
+          //               // : dataRsponse![index]['flashNews'].toString(),
+          //               style: const TextStyle(
+          //                   fontWeight: FontWeight.bold,
+          //                   color: Colors.grey,
+          //                   fontSize: 12),
+          //               scrollAxis: Axis.horizontal,
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               blankSpace: 20.0,
+          //               velocity: 40.0,
+          //               pauseAfterRound: const Duration(seconds: 1),
+          //               showFadingOnlyWhenScrolling: true,
+          //               fadingEdgeStartFraction: 0.3,
+          //               fadingEdgeEndFraction: 0.3,
+          //               numberOfRounds: 3000,
+          //               startPadding: 10.0,
+          //               accelerationDuration: const Duration(seconds: 1),
+          //               accelerationCurve: Curves.linear,
+          //               decelerationDuration: const Duration(milliseconds: 500),
+          //               decelerationCurve: Curves.easeOut,
+          //             ),
+          //           );
+          //         });
+        }
       },
     );
   }

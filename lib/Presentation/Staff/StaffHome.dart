@@ -714,6 +714,48 @@ class StaffFlashNews extends StatelessWidget {
 
     var size = MediaQuery.of(context).size;
     return Consumer<FlashnewsProvider>(builder: (context, value, child) {
+      // return value.loading
+      //     ? Container(
+      //         height: 30,
+      //         width: 30,
+      //       )
+      //     : ListView.builder(
+      //         // scrollDirection: Axis.horizontal,
+      //         //physics: NeverScrollableScrollPhysics(),
+      //         shrinkWrap: true,
+      //         itemCount:
+      //             value.flashnew.length == null ? 0 : value.flashnew.length,
+      //         itemBuilder: (context, index) {
+      //           return LimitedBox(
+      //             maxHeight: 30,
+      //             // maxWidth: 20,
+      //             child: Marquee(
+      //               //scrolling  text
+      //               text: value.flashnew[index].news ?? '--------',
+      //               // ? '------------'
+      //               // : dataRsponse![index]['flashNews'].toString(),
+      //               style: const TextStyle(
+      //                   fontWeight: FontWeight.bold,
+      //                   color: Colors.grey,
+      //                   fontSize: 12),
+      //               scrollAxis: Axis.horizontal,
+      //               crossAxisAlignment: CrossAxisAlignment.start,
+      //               blankSpace: 20.0,
+      //               velocity: 40.0,
+      //               pauseAfterRound: const Duration(seconds: 1),
+      //               showFadingOnlyWhenScrolling: true,
+      //               fadingEdgeStartFraction: 0.3,
+      //               fadingEdgeEndFraction: 0.3,
+      //               numberOfRounds: 3000,
+      //               startPadding: 10.0,
+      //               accelerationDuration: const Duration(seconds: 1),
+      //               accelerationCurve: Curves.linear,
+      //               decelerationDuration: const Duration(milliseconds: 500),
+      //               decelerationCurve: Curves.easeOut,
+      //             ),
+      //           );
+      //         });
+
       return LimitedBox(
         maxHeight: 30,
         child: value.loading

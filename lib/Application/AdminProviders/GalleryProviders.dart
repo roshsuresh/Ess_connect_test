@@ -27,7 +27,7 @@ class GalleryProviderAdmin with ChangeNotifier {
 
     var request = http.Request(
         'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/common/courselist'));
-    request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
+    // request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();

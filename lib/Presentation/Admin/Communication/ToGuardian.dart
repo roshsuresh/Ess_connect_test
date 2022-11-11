@@ -182,7 +182,7 @@ class _Notification_AdminToGuardainState
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
                             .getCourseList(section);
-                        print("data $subjectData");
+                        print("data $section");
 
                         print(subjectData.join(','));
                       },
@@ -241,12 +241,13 @@ class _Notification_AdminToGuardainState
                       chipDisplay: MultiSelectChipDisplay.none(),
                       onConfirm: (results) async {
                         diviData = [];
+                        diviData.clear();
                         for (var i = 0; i < results.length; i++) {
                           StudReportCourse data =
                               results[i] as StudReportCourse;
-                          print(data.value);
-                          print(data.text);
-                          print(i);
+                          // print(data.value);
+                          // print(data.text);
+                          // print(i);
                           diviData.add(data.value);
                           diviData.map((e) => data.value);
                           print("${diviData.map((e) => data.value)}");
@@ -268,7 +269,7 @@ class _Notification_AdminToGuardainState
                                 listen: false)
                             .getDivisionList(course);
 
-                        print(diviData.join(','));
+                        print("course   $course");
                       },
                     ),
                   ),
@@ -350,7 +351,7 @@ class _Notification_AdminToGuardainState
 
                         print("data div  $division");
 
-                        print(courseData.join(','));
+                        //   print(courseData.join(','));
                       },
                     ),
                   ),

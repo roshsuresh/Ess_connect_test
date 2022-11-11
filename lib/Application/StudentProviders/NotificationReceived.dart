@@ -26,13 +26,13 @@ class NotificationReceivedProviderStudent with ChangeNotifier {
     var request = http.Request(
         'GET', Uri.parse("${UIGuide.baseURL}/mobileapp/token/receivedlist"));
     request.body = json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      //"SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['ChildId'],
       "Type": "student"
     });
     print(json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      //  "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['ChildId'],
       "Type": "student"

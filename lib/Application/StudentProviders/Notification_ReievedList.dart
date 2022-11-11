@@ -17,7 +17,7 @@ class NotificationHistoryBloc with ChangeNotifier {
     var request = http.Request(
         'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/token/receivedlist'));
     request.body = json.encode({
-      "SchoolId": data1["SchoolId"],
+      //  "SchoolId": data1["SchoolId"],
       "AcademicyearId": data1["AcademicYearId"],
       "CreatedDate": DateFormat('yyyy-MM-dd').format(DateTime.now()),
       "StaffGuardianStudId": data1['role'] == "Guardian"

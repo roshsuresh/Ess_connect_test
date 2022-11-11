@@ -27,13 +27,13 @@ class StaffNotificationScreenProvider with ChangeNotifier {
     var request = http.Request(
         'GET', Uri.parse("${UIGuide.baseURL}/mobileapp/token/receivedlist"));
     request.body = json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      // "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['StaffId'],
       "Type": "Staff"
     });
     print(json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      // "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['StaffId'],
       "Type": "Staff"
@@ -74,13 +74,13 @@ class StaffNotificationScreenProvider with ChangeNotifier {
     var request = http.Request(
         'GET', Uri.parse("${UIGuide.baseURL}/mobileapp/token/sentlist"));
     request.body = json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      //   "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['StaffId'],
       "Type": "Student"
     });
     print(json.encode({
-      "SchoolId": _pref.getString('schoolId'),
+      //  "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['StaffId'],
       "Type": "Student"
