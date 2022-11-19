@@ -31,14 +31,14 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
   DateTime? _mydatetimeTo;
   String time = '--';
   String timeNow = '--';
-  String? checkname;
+  String checkname = '';
   List courseData = [];
   List divisionData = [];
   final categoryvalueController = TextEditingController();
   final categoryvalueController1 = TextEditingController();
   final titleController = TextEditingController();
   final mattercontroller = TextEditingController();
-
+  String attach = '';
   @override
   void initState() {
     super.initState();
@@ -51,13 +51,15 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
       p.divisionList.clear();
       p.divisionDropDown.clear();
       titleController.clear();
+      attachmentid.clear();
     });
   }
 
   String toggleVal = 'All';
-  String attachmentid = '';
+  final attachmentid = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    attachmentid.clear();
     var size = MediaQuery.of(context).size;
     datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
 
@@ -211,8 +213,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             width: 120,
             child: MaterialButton(
               // minWidth: size.width - 200,
-              child: Text(
-                  checkname == null ? 'Choose File' : checkname.toString()),
+              child: Text(checkname.isEmpty ? 'Choose File' : checkname),
 
               color: Colors.white70,
               onPressed: (() async {
@@ -359,10 +360,11 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       ),
                     ),
                     chipDisplay: MultiSelectChipDisplay.none(),
-                    onConfirm: (results) async {
+                    onConfirm: (result) async {
                       courseData = [];
-                      for (var i = 0; i < results.length; i++) {
-                        CourseListModel data = results[i] as CourseListModel;
+
+                      for (var i = 0; i < result.length; i++) {
+                        CourseListModel data = result[i] as CourseListModel;
                         print(data.name);
                         print(data.courseId);
                         courseData.add(data.courseId);
@@ -377,7 +379,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       await Provider.of<NoticeBoardAdminProvider>(context,
                               listen: false)
                           .getDivisionList(course);
-                      // print(courseData.join('","'));
+                      print(courseData.join('","'));
                     },
                   ),
                 ),
@@ -431,11 +433,18 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       ),
                     ),
                     chipDisplay: MultiSelectChipDisplay.none(),
-                    onConfirm: (results) async {
-                      divisionData = [];
-                      for (var i = 0; i < results.length; i++) {
-                        DivisionListModel data =
-                            results[i] as DivisionListModel;
+
+                    onConfirm: (result) async {
+                      //  result.clear();
+                      print(result.length);
+                      await result.remove(result.length);
+                      result.remove(result);
+                      // result.length = 0;
+                      print(result.length);
+                      divisionData.clear();
+
+                      for (var a = 0; a < result.length; a++) {
+                        DivisionListModel data = result[a] as DivisionListModel;
                         print(data.text);
                         print(data.value);
                         divisionData.add(data.value);
@@ -445,7 +454,8 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       division = divisionData.join(',');
 
                       print(divisionData.join(','));
-                      attachmentid = value.id.toString();
+
+                      attach = value.id.toString();
                     },
                   ),
                 ),
@@ -492,6 +502,14 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
               ),
               color: UIGuide.light_Purple,
               onPressed: (() async {
+                print(attachmentid);
+                if (checkname.isEmpty) {
+                  attachmentid.clear();
+                } else {
+                  attachmentid.text = attach;
+                }
+
+                //https://api.esstestonline.in/mobileapp/staff/markEntryInitialvalues
                 if (titleController.text.isNotEmpty &&
                     course.toString().isNotEmpty &&
                     division.toString().isNotEmpty &&
@@ -511,7 +529,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                           courseData,
                           divisionData,
                           categoryvalueController.text,
-                          attachmentid);
+                          attachmentid.text.toString());
                 } else {
                   AwesomeDialog(
                           context: context,
@@ -537,6 +555,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   mattercontroller.clear();
                   categoryvalueController.clear();
                   categoryvalueController1.clear();
+                  attachmentid.clear();
                 }
               }),
             ),

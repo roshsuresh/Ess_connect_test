@@ -76,36 +76,34 @@ class _PasswordChangeState extends State<PasswordChange> {
                       obscureText: !_isObscure,
                       controller: _password,
                       decoration: InputDecoration(
-                        focusColor: Color.fromARGB(255, 213, 215, 218),
-                        prefixIcon: const Icon(
-                          Icons.key_outlined,
-                          color: Colors.grey,
-                        ),
-                        //errorText: "Please enter valid username",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 123, 181, 228),
-                              width: 1.0),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        fillColor: Colors.grey,
-                        hintText: "Enter Your Current Password",
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                          fontFamily: "verdana_regular",
-                          fontWeight: FontWeight.w400,
-                        ),
-                        labelText: 'Current Password',
-                      ),
+                          focusColor: Color.fromARGB(255, 213, 215, 218),
+                          prefixIcon: const Icon(
+                            Icons.key_outlined,
+                            color: Colors.grey,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: UIGuide.light_Purple, width: 1.0),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          fillColor: Colors.grey,
+                          hintText: "Enter Your Current Password",
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                            fontFamily: "verdana_regular",
+                            fontWeight: FontWeight.w400,
+                          ),
+                          labelText: 'Current Password',
+                          labelStyle: TextStyle(
+                            color: UIGuide.light_Purple,
+                          )),
                       validator: (value) {
-                        // RegExp regEx = RegExp(
-                        //     r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
                         if (value!.isEmpty) {
-                          return 'Please enter New password';
+                          return 'Please enter old password';
                         }
                         // else {
                         //   if (!regEx.hasMatch(value)) {
@@ -123,64 +121,46 @@ class _PasswordChangeState extends State<PasswordChange> {
                         obscureText: !_isObscure,
                         controller: _passwordNew,
                         decoration: InputDecoration(
-                          focusColor: const Color.fromARGB(255, 213, 215, 218),
-                          prefixIcon: const Icon(
-                            Icons.key_outlined,
-                            color: Colors.grey,
-                          ),
-                          //errorText: "Please enter valid username",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 123, 181, 228),
-                                width: 1.0),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          fillColor: Colors.grey,
-                          hintText: "Enter Your New Password",
-                          hintStyle: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                            fontFamily: "verdana_regular",
-                            fontWeight: FontWeight.w400,
-                          ),
-                          labelText: 'New Password',
-                        ),
-                        // onChanged: (value) {
-                        //   _formkey.currentState!.validate();
-                        // },
-                        validator: (valuee) {
-                          if (valuee!.isEmpty) {
-                            return 'Please enter New password';
-                          } else if (RegExp(
-                                  r"^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$")
-                              .hasMatch(valuee)) {
-                            print(valuee);
-                            return "please enter a valid email";
+                            focusColor:
+                                const Color.fromARGB(255, 213, 215, 218),
+                            prefixIcon: const Icon(
+                              Icons.key_outlined,
+                              color: Colors.grey,
+                            ),
+                            //errorText: "Please enter valid username",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: UIGuide.light_Purple, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fillColor: Colors.grey,
+                            hintText: "Enter Your New Password",
+                            hintStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontFamily: "verdana_regular",
+                              fontWeight: FontWeight.w400,
+                            ),
+                            labelText: 'New Password',
+                            labelStyle: TextStyle(
+                              color: UIGuide.light_Purple,
+                            )),
+                        validator: (PassCurrentValue) {
+                          RegExp regex = RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                          var passNonNullValue = PassCurrentValue ?? "";
+                          if (passNonNullValue.isEmpty) {
+                            return ("Please enter New password");
+                          } else if (passNonNullValue.length < 8) {
+                            return ("Password Must be more than 8 characters");
+                          } else if (!regex.hasMatch(passNonNullValue)) {
+                            return ("Password should contain upper,lower,digit and Special character ");
                           }
-                          // if (_passwordNew.text != _confirmpassword.text) {
-                          //   return 'Password do not match..!';
-                          // }
-
-//                         else {
-// //call function to check password
-//                           bool result = validatePassword(_passwordNew.text);
-//                           print(result);
-//                           if (result) {
-// // create account event
-//                             return null;
-//                           } else {
-//                             return " Password should contain Capital, small letter & Number & Special";
-//                           }
-//                         }
-
                           return null;
-                        }
-                        //  }
-                        //  },
-                        ),
+                        }),
                   ),
                   Consumer<PasswordChangeprovider>(
                     builder: (context, value, child) => Padding(
@@ -200,87 +180,26 @@ class _PasswordChangeState extends State<PasswordChange> {
                               const SnackBar(
                                   content: Text("Password is matched")));
                           value.visiblee();
-                          // return _isVisible = true;
-                          // setState(() {
-                          //   _isVisible = !_isVisible;
-                          // });
                         },
                         onFail: () {
-                          // ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
-                          //     content: new Text("Password not matched")));
                           print("NOT MATCHED");
                         },
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: TextFormField(
-                  //     obscureText: !_isObscure,
-                  //     controller: _confirmpassword,
-                  //     decoration: InputDecoration(
-                  //       focusColor: const Color.fromARGB(255, 213, 215, 218),
-                  //       prefixIcon: const Icon(
-                  //         Icons.key_outlined,
-                  //         color: Colors.grey,
-                  //       ),
-                  //       border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.circular(10.0),
-                  //       ),
-                  //       focusedBorder: OutlineInputBorder(
-                  //         borderSide: const BorderSide(
-                  //             color: Color.fromARGB(255, 123, 181, 228),
-                  //             width: 1.0),
-                  //         borderRadius: BorderRadius.circular(10.0),
-                  //       ),
-                  //       fillColor: Colors.grey,
-                  //       hintText: "Enter Confirm Password",
-                  //       hintStyle: const TextStyle(
-                  //         color: Colors.grey,
-                  //         fontSize: 16,
-                  //         fontFamily: "verdana_regular",
-                  //         fontWeight: FontWeight.w400,
-                  //       ),
-                  //       labelText: 'Confirm Password',
-                  //     ),
-                  //     validator: (value) {
-                  //       // RegExp regExp = RegExp(
-                  //       //     r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$');
-
-                  //       if (value!.isEmpty) {
-                  //         return 'Please enter your password';
-                  //       } else
-                  //       //   if (!regExp.hasMatch(value)) {
-                  //       if (_passwordNew.text != _confirmpassword.text) {
-                  //         return 'Password do not match..!';
-                  //       }
-                  //       //   return 'Enter valid password';
-                  //       // } else {
-                  //       return null;
-                  //       //   }
-                  //       // }
-                  //       // else {
-                  //       //   bool result = validatePassword(value);
-                  //       //   if (result) {
-                  //       //     return null;
-                  //       //   } else {
-                  //       //     return " Password should contain Capital, small letter & Number & Special";
-                  //       //   }
-                  //       // }
-                  //     },
-                  //   ),
-                  // ),
                   kheight20,
                   SizedBox(
-                    height: 100,
+                    height: 60,
                   ),
                   Consumer<PasswordChangeprovider>(
                     builder: (context, value, child) => Visibility(
                       visible: value.isVisible,
                       child: SizedBox(
-                        width: 200,
+                        width: 150,
                         child: MaterialButton(
-                          height: 60,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.0)),
+                          height: 50,
                           onPressed: () async {
                             String pass = _password.text.toString();
                             String newPass = _passwordNew.text.toString();
@@ -305,10 +224,7 @@ class _PasswordChangeState extends State<PasswordChange> {
                                     const SnackBar(
                                         content:
                                             Text("Incorrect Old Password")));
-                                //  print('Fail');
                               }
-                            } else {
-                              //   print('Error in conection');
                             }
                             _password.clear();
                             _passwordNew.clear();

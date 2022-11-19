@@ -79,7 +79,7 @@ class Staff_Timetable extends StatelessWidget {
 
                           // 3: FlexColumnWidth(2)
                         },
-                        //  border: TableBorder.all(),
+                        //border: TableBorder.all(),
                         children: [
                           TableRow(
                               decoration: const BoxDecoration(
@@ -163,12 +163,12 @@ class StaffTimetableimage extends StatelessWidget {
   imageview(String result) {
     return Scaffold(
       body: isLoading
-          ? LoadingIcon()
+          ? spinkitLoader()
           : Center(
               child: Container(
                   child: PhotoView(
                 loadingBuilder: (context, event) {
-                  return LoadingIcon();
+                  return spinkitLoader();
                 },
                 imageProvider: NetworkImage(
                   result == null

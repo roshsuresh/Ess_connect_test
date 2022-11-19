@@ -82,11 +82,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
   String attachmentid = '';
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());

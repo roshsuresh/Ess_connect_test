@@ -33,7 +33,6 @@ class StaffTimetableProvider with ChangeNotifier {
 
     try {
       if (response.statusCode == 200) {
-        setLoading(true);
         print("corect");
         final data = json.decode(response.body);
         staff_timetableRespo = data['timeTable'];

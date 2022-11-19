@@ -168,75 +168,33 @@ class MarkReportSubjectList {
     return data;
   }
 }
+///////////////////////////////////////////////////////////////////////////////////////////
+////////////////                  view markReport                  ///////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
-// view markReport
-
-class MarkEntryREportViewStaff {
-  List<MeList>? meList;
-  // List<Null>? headingList;
-  Null? entryMethod;
-  Null? tabulationTypeCode;
-
-  MarkEntryREportViewStaff(
-      {this.meList,
-      //  this.headingList,
-      this.entryMethod,
-      this.tabulationTypeCode});
-
-  MarkEntryREportViewStaff.fromJson(Map<String, dynamic> json) {
-    if (json['meList'] != null) {
-      meList = [];
-      json['meList'].forEach((v) {
-        meList!.add(new MeList.fromJson(v));
-      });
-    }
-    // if (json['headingList'] != null) {
-    //   headingList = [];
-    //   json['headingList'].forEach((v) {
-    //     headingList!.add(Null.fromJson(v));
-    //   });
-    // }
-    entryMethod = json['entryMethod'];
-    tabulationTypeCode = json['tabulationTypeCode'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.meList != null) {
-      data['meList'] = this.meList!.map((v) => v.toJson()).toList();
-    }
-    // if (this.headingList != null) {
-    //   data['headingList'] = headingList!.map((v) => v!.toJson()).toList();
-    // }
-    data['entryMethod'] = this.entryMethod;
-    data['tabulationTypeCode'] = this.tabulationTypeCode;
-    return data;
-  }
-}
-
-class MeList {
+class MarkEntryReportView {
   String? divisionId;
   String? division;
   int? divisionWiseStudentsCount;
   int? divisionOrder;
-  List<StudentListMarkReport>? studentList;
+  List<MarkReportStudentList>? studentList;
 
-  MeList(
+  MarkEntryReportView(
       {this.divisionId,
       this.division,
       this.divisionWiseStudentsCount,
       this.divisionOrder,
       this.studentList});
 
-  MeList.fromJson(Map<String, dynamic> json) {
+  MarkEntryReportView.fromJson(Map<String, dynamic> json) {
     divisionId = json['divisionId'];
     division = json['division'];
     divisionWiseStudentsCount = json['divisionWiseStudentsCount'];
     divisionOrder = json['divisionOrder'];
     if (json['studentList'] != null) {
-      studentList = [];
+      studentList = <MarkReportStudentList>[];
       json['studentList'].forEach((v) {
-        studentList!.add(StudentListMarkReport.fromJson(v));
+        studentList!.add(MarkReportStudentList.fromJson(v));
       });
     }
   }
@@ -248,33 +206,42 @@ class MeList {
     data['divisionWiseStudentsCount'] = this.divisionWiseStudentsCount;
     data['divisionOrder'] = this.divisionOrder;
     if (this.studentList != null) {
-      data['studentList'] = studentList!.map((v) => v.toJson()).toList();
+      data['studentList'] = this.studentList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class StudentListMarkReport {
+class MarkReportStudentList {
   int? rollNo;
   String? name;
   String? studentId;
   bool? isChecked;
+  double? totalTEMark;
+  double? totalPEMark;
+  double? totalCEMark;
   List<SubjectMarkDetails>? subjectMarkDetails;
 
-  StudentListMarkReport(
+  MarkReportStudentList(
       {this.rollNo,
       this.name,
       this.studentId,
       this.isChecked,
+      this.totalTEMark,
+      this.totalPEMark,
+      this.totalCEMark,
       this.subjectMarkDetails});
 
-  StudentListMarkReport.fromJson(Map<String, dynamic> json) {
+  MarkReportStudentList.fromJson(Map<String, dynamic> json) {
     rollNo = json['rollNo'];
     name = json['name'];
     studentId = json['studentId'];
     isChecked = json['isChecked'];
+    totalTEMark = json['totalTEMark'];
+    totalPEMark = json['totalPEMark'];
+    totalCEMark = json['totalCEMark'];
     if (json['subjectMarkDetails'] != null) {
-      subjectMarkDetails = [];
+      subjectMarkDetails = <SubjectMarkDetails>[];
       json['subjectMarkDetails'].forEach((v) {
         subjectMarkDetails!.add(new SubjectMarkDetails.fromJson(v));
       });
@@ -287,6 +254,9 @@ class StudentListMarkReport {
     data['name'] = this.name;
     data['studentId'] = this.studentId;
     data['isChecked'] = this.isChecked;
+    data['totalTEMark'] = this.totalTEMark;
+    data['totalPEMark'] = this.totalPEMark;
+    data['totalCEMark'] = this.totalCEMark;
     if (this.subjectMarkDetails != null) {
       data['subjectMarkDetails'] =
           this.subjectMarkDetails!.map((v) => v.toJson()).toList();
@@ -296,32 +266,47 @@ class StudentListMarkReport {
 }
 
 class SubjectMarkDetails {
-  Null entryMethod;
-  Null attendance;
+  String? entryMethod;
+  String? attendance;
   String? subject;
-  Null teCaption;
-  Null peCaption;
-  Null ceCaption;
-  Null peMark;
-  Null teMark;
-  Null ceMark;
-  Null peGrade;
-  Null teGrade;
-  Null ceGrade;
+  String? teCaption;
+  String? peCaption;
+  String? ceCaption;
+  double? peMark;
+  double? teMark;
+  double? ceMark;
+  String? peGrade;
+  String? teGrade;
+  String? ceGrade;
+  double? teMaxMark;
+  double? peMaxMark;
+  double? ceMaxMark;
+  double? totalMark;
+  double? totalTEMark;
+  double? totalPEMark;
+  double? totalCEMark;
 
-  SubjectMarkDetails(
-      {this.entryMethod,
-      this.attendance,
-      this.subject,
-      this.teCaption,
-      this.peCaption,
-      this.ceCaption,
-      this.peMark,
-      this.teMark,
-      this.ceMark,
-      this.peGrade,
-      this.teGrade,
-      this.ceGrade});
+  SubjectMarkDetails({
+    this.entryMethod,
+    this.attendance,
+    this.subject,
+    this.teCaption,
+    this.peCaption,
+    this.ceCaption,
+    this.peMark,
+    this.teMark,
+    this.ceMark,
+    this.peGrade,
+    this.teGrade,
+    this.ceGrade,
+    this.teMaxMark,
+    this.peMaxMark,
+    this.ceMaxMark,
+    this.totalMark,
+    this.totalTEMark,
+    this.totalPEMark,
+    this.totalCEMark,
+  });
 
   SubjectMarkDetails.fromJson(Map<String, dynamic> json) {
     entryMethod = json['entryMethod'];
@@ -336,6 +321,13 @@ class SubjectMarkDetails {
     peGrade = json['peGrade'];
     teGrade = json['teGrade'];
     ceGrade = json['ceGrade'];
+    teMaxMark = json['teMaxMark'];
+    peMaxMark = json['peMaxMark'];
+    ceMaxMark = json['ceMaxMark'];
+    totalMark = json['totalMark'];
+    totalTEMark = json['totalTEMark'];
+    totalPEMark = json['totalPEMark'];
+    totalCEMark = json['totalCEMark'];
   }
 
   Map<String, dynamic> toJson() {
@@ -352,6 +344,79 @@ class SubjectMarkDetails {
     data['peGrade'] = this.peGrade;
     data['teGrade'] = this.teGrade;
     data['ceGrade'] = this.ceGrade;
+    data['teMaxMark'] = this.teMaxMark;
+    data['peMaxMark'] = this.peMaxMark;
+    data['ceMaxMark'] = this.ceMaxMark;
+    data['totalMark'] = this.totalMark;
+    data['totalTEMark'] = this.totalTEMark;
+    data['totalPEMark'] = this.totalPEMark;
+    data['totalCEMark'] = this.totalCEMark;
+
+    return data;
+  }
+}
+
+class HeadingList {
+  String? subject;
+  String? subjectId;
+  String? teCaption;
+  String? peCaption;
+  String? ceCaption;
+  double? teMax;
+  double? peMax;
+  double? ceMax;
+  double? course;
+  double? count;
+  double? totalTeMaxMark;
+  double? totalPeMaxMark;
+  double? totalCeMaxMark;
+
+  HeadingList(
+      {this.subject,
+      this.subjectId,
+      this.teCaption,
+      this.peCaption,
+      this.ceCaption,
+      this.teMax,
+      this.peMax,
+      this.ceMax,
+      this.course,
+      this.count,
+      this.totalTeMaxMark,
+      this.totalPeMaxMark,
+      this.totalCeMaxMark});
+
+  HeadingList.fromJson(Map<String, dynamic> json) {
+    subject = json['subject'];
+    subjectId = json['subjectId'];
+    teCaption = json['teCaption'];
+    peCaption = json['peCaption'];
+    ceCaption = json['ceCaption'];
+    teMax = json['teMax'];
+    peMax = json['peMax'];
+    ceMax = json['ceMax'];
+    course = json['course'];
+    count = json['count'];
+    totalTeMaxMark = json['totalTeMaxMark'];
+    totalPeMaxMark = json['totalPeMaxMark'];
+    totalCeMaxMark = json['totalCeMaxMark'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['subject'] = this.subject;
+    data['subjectId'] = this.subjectId;
+    data['teCaption'] = this.teCaption;
+    data['peCaption'] = this.peCaption;
+    data['ceCaption'] = this.ceCaption;
+    data['teMax'] = this.teMax;
+    data['peMax'] = this.peMax;
+    data['ceMax'] = this.ceMax;
+    data['course'] = this.course;
+    data['count'] = this.count;
+    data['totalTeMaxMark'] = this.totalTeMaxMark;
+    data['totalPeMaxMark'] = this.totalPeMaxMark;
+    data['totalCeMaxMark'] = this.totalCeMaxMark;
     return data;
   }
 }

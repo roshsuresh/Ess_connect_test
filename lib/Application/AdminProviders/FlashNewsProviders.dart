@@ -140,4 +140,33 @@ class FlashNewsProviderAdmin with ChangeNotifier {
       print("Error in flashnewsList response");
     }
   }
+
+  //delete flashnews
+
+  Future flashnewsDelete(String eventID, BuildContext context) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var request = http.Request(
+        'DELETE',
+        Uri.parse(
+            '${UIGuide.baseURL}/communication/flashnews/delete-event/$eventID'));
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 204) {
+      print(await response.stream.bytesToString());
+      print('correct');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Deleted Successfully")));
+
+      notifyListeners();
+    } else {
+      print('Error in galleryDelete stf');
+    }
+  }
 }

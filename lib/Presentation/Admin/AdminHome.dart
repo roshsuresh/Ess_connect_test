@@ -20,12 +20,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
-import '../Student/AdvancePay.dart';
 import '../Student/PasswordChange.dart';
 import '../Student/Reportcard.dart';
 import 'FeeCollectionReport/FeeReport.dart';
 import 'StaffReport.dart';
-import 'StudentFeeDetails.dart';
+import 'FeeDetails/StudFeeSearch.dart';
 
 class AdminHome extends StatelessWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -436,7 +435,7 @@ class AdminHomeContent extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const StudFeeDetails()),
+                              builder: (context) => StudentFeeSearch()),
                         );
                       },
                       child: Column(

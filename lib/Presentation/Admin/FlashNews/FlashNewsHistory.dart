@@ -29,9 +29,31 @@ class FlashNewsHistory extends StatelessWidget {
                     ? 0
                     : provider.flashlist.length,
                 itemBuilder: (context, index) {
-                  String date = provider.flashlist[index].createdAt ?? '--';
-                  var updatedDate = DateFormat('yyyy-MM-dd').parse(date);
+                  //created date
+                  String createddate =
+                      provider.flashlist[index].createdAt ?? '--';
+                  var updatedDate = DateFormat('yyyy-MM-dd').parse(createddate);
+                  String newDate = updatedDate.toString();
+                  String finalCreatedDate = newDate.replaceRange(10, 23, '');
+
+                  //start date
+                  String startdate =
+                      provider.flashlist[index].startDate ?? '--';
+                  var updateStartDate =
+                      DateFormat('yyyy-MM-dd').parse(startdate);
+                  String newstartDate = updateStartDate.toString();
+                  String finalStartDate = newstartDate.replaceRange(10, 23, '');
+
+                  //end date
+
+                  String enddate = provider.flashlist[index].endDate ?? '--';
+                  var updateendDate = DateFormat('yyyy-MM-dd').parse(enddate);
+                  String newendDate = updateendDate.toString();
+                  String finalendDate = newstartDate.replaceRange(10, 23, '');
+
+                  ////
                   String even = provider.flashlist[index].id.toString();
+                  ////
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -51,7 +73,9 @@ class FlashNewsHistory extends StatelessWidget {
                                 children: [
                                   Text('Created Date: '),
                                   Text(
-                                    provider.flashlist[index].createdAt ?? '--',
+                                    finalCreatedDate.isEmpty
+                                        ? '--'
+                                        : finalCreatedDate,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
@@ -60,12 +84,14 @@ class FlashNewsHistory extends StatelessWidget {
                                   kWidth,
                                   GestureDetector(
                                     onTap: () async {
-                                      // String event = provider.noticeList[index].id
-                                      //     .toString();
-                                      // await provider.noticeDelete(event, context);
+                                      String event = provider
+                                          .flashlist[index].id
+                                          .toString();
+                                      await provider.flashnewsDelete(
+                                          event, context);
 
-                                      // provider.noticeList.clear();
-                                      // await provider.getNoticeListView(context);
+                                      provider.flashlist.clear();
+                                      await provider.getFlashnewsList();
                                     },
                                     child: Icon(
                                       Icons.delete_forever_outlined,
@@ -100,8 +126,9 @@ class FlashNewsHistory extends StatelessWidget {
                                   Text('Start Date: '),
                                   Flexible(
                                     child: Text(
-                                      provider.flashlist[index].startDate ??
-                                          '--',
+                                      finalStartDate.isEmpty
+                                          ? '--'
+                                          : finalStartDate,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
@@ -118,7 +145,9 @@ class FlashNewsHistory extends StatelessWidget {
                                   Text('End Date: '),
                                   Flexible(
                                     child: Text(
-                                      provider.flashlist[index].endDate ?? '--',
+                                      finalendDate.isEmpty
+                                          ? '--'
+                                          : finalendDate,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,

@@ -27,10 +27,12 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  anim_search_bar: ^2.0.2
   avatar_glow: ^2.0.2
   awesome_dialog: ^3.0.2
   awesome_notifications: any
   carousel_slider: ^4.1.1
+  connectivity_plus: ^3.0.2
   cupertino_icons: ^1.0.2
   dependencies: null
   dropdown_search: ^5.0.3
@@ -52,6 +54,7 @@ dependencies:
   get: ^4.6.5
   getwidget: ^3.0.1
   http: ^0.13.4
+  internet_connection_checker: ^1.0.0+1
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   marquee: ^2.2.3

@@ -196,7 +196,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
     var request = http.MultipartRequest(
         'POST', Uri.parse('${UIGuide.baseURL}/files/single/School'));
     request.fields.addAll({'': ''});
-    request.files.add(await http.MultipartFile.fromPath('', '$path'));
+    request.files.add(await http.MultipartFile.fromPath('', path));
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -288,7 +288,7 @@ class GallerySendProvider_Stf with ChangeNotifier {
   }
 
   List<GalleryViewList_staff> galleryViewList = [];
-  Future<bool> galleryViewListStaff() async {
+  Future<bool> galleryViewListStaff(BuildContext context) async {
     setLoading(true);
 
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -317,6 +317,8 @@ class GallerySendProvider_Stf with ChangeNotifier {
       notifyListeners();
     } else {
       setLoading(false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
       print('Error in galleryViewList stf');
     }
     return true;

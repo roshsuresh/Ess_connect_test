@@ -11,7 +11,7 @@ class GalleryListStaff extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<GallerySendProvider_Stf>(context, listen: false);
-      p.galleryViewListStaff();
+      p.galleryViewListStaff(context);
       p.galleryViewList.clear();
     });
     var size = MediaQuery.of(context).size;
@@ -57,9 +57,10 @@ class GalleryListStaff extends StatelessWidget {
                                         context, event);
 
                                     provider.galleryViewList.clear();
-                                    await provider.galleryViewListStaff();
+                                    await provider
+                                        .galleryViewListStaff(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.delete_forever_outlined,
                                     color: Colors.red,
                                   ),
@@ -68,7 +69,7 @@ class GalleryListStaff extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text('Title: '),
+                                const Text('Title: '),
                                 Flexible(
                                   child: Text(
                                     provider.galleryViewList[index].title ??
@@ -90,7 +91,7 @@ class GalleryListStaff extends StatelessWidget {
                                             .createStaffName ??
                                         '--',
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
                                   ),
@@ -104,7 +105,7 @@ class GalleryListStaff extends StatelessWidget {
                                     value.galleryViewList[index].cancelled ==
                                         false) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Approved',
@@ -122,7 +123,7 @@ class GalleryListStaff extends StatelessWidget {
                                     value.galleryViewList[index].cancelled ==
                                         true) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Cancelled',
@@ -136,7 +137,7 @@ class GalleryListStaff extends StatelessWidget {
                                   );
                                 } else {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Pending',
@@ -151,7 +152,7 @@ class GalleryListStaff extends StatelessWidget {
                                 }
                               },
                               child: Row(
-                                children: [
+                                children: const [
                                   Text('Status : '),
                                   Text(
                                     'Approved',

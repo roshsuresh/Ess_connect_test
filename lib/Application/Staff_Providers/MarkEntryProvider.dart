@@ -75,8 +75,8 @@ class MarkEntryProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    var request = http.Request('GET',
-        Uri.parse('${UIGuide.baseURL}/mobileapp/staff/markEntryInitialvalues'));
+    var request = http.Request(
+        'GET', Uri.parse('${UIGuide.baseURL}/markentry/initialvalues'));
 
     request.headers.addAll(headers);
 
@@ -89,8 +89,7 @@ class MarkEntryProvider with ChangeNotifier {
       log(data.toString());
 
       List<MarkEntryInitialValues> templist = List<MarkEntryInitialValues>.from(
-          data["markEntryInitialValues"]
-              .map((x) => MarkEntryInitialValues.fromJson(x)));
+          data["courseList"].map((x) => MarkEntryInitialValues.fromJson(x)));
       markEntryInitialValues.addAll(templist);
       print(templist);
       notifyListeners();
@@ -146,9 +145,7 @@ class MarkEntryProvider with ChangeNotifier {
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     var request = http.Request(
-        'GET',
-        Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staff/markEntrycoursedetails/$id'));
+        'GET', Uri.parse('${UIGuide.baseURL}/markentry/coursedetails/$id'));
 
     request.headers.addAll(headers);
 
@@ -218,10 +215,8 @@ class MarkEntryProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staff/markEntrypart/$courseId/$divisionId'));
+    var request = http.Request('GET',
+        Uri.parse('${UIGuide.baseURL}/markentry/part/$courseId/$divisionId'));
 
     request.headers.addAll(headers);
 
@@ -234,7 +229,7 @@ class MarkEntryProvider with ChangeNotifier {
       log(data.toString());
 
       List<MarkEntryPartList> templist = List<MarkEntryPartList>.from(
-          data["partList"].map((x) => MarkEntryPartList.fromJson(x)));
+          data["parts"].map((x) => MarkEntryPartList.fromJson(x)));
       markEntryPartList.addAll(templist);
 
       notifyListeners();
@@ -291,10 +286,8 @@ class MarkEntryProvider with ChangeNotifier {
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
 
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staff/markEntrysubjects/$divionId/$partId'));
+    var request = http.Request('GET',
+        Uri.parse('${UIGuide.baseURL}/markentry/subjects/$divionId/$partId'));
 
     request.headers.addAll(headers);
 
@@ -368,7 +361,7 @@ class MarkEntryProvider with ChangeNotifier {
     var request = http.Request(
         'GET',
         Uri.parse(
-            '${UIGuide.baseURL}/mobileapp/staff/markentryexamdetails/$subjectId/$divisionId/$partId'));
+            '${UIGuide.baseURL}/markentry/examdetails/$subjectId/$divisionId/$partId'));
 
     request.headers.addAll(headers);
     print('object');
@@ -382,7 +375,7 @@ class MarkEntryProvider with ChangeNotifier {
       log(data.toString());
 
       List<MarkEntryExamList> templist = List<MarkEntryExamList>.from(
-          data["list"].map((x) => MarkEntryExamList.fromJson(x)));
+          data["examslist"].map((x) => MarkEntryExamList.fromJson(x)));
       markEntryExamList.addAll(templist);
 
       notifyListeners();
@@ -446,7 +439,7 @@ class MarkEntryProvider with ChangeNotifier {
     return true;
   }
 
-   clearStudentMEList() {
+  clearStudentMEList() {
     studentMEList.clear();
     notifyListeners();
   }

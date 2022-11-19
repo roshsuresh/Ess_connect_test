@@ -71,93 +71,96 @@ class StaffNotificationReceived extends StatelessWidget {
     return Consumer<StaffNotificationScreenProvider>(
       builder: (context, value, child) => value.loading
           ? spinkitLoader()
-          : ListView.builder(
-              itemCount: value.notificationStaff?.length == null
-                  ? 0
-                  : value.notificationStaff!.length,
-              itemBuilder: (BuildContext context, index) {
-                return Column(
-                  children: [
-                    kheight,
-                    Container(
-                      width: width - 4,
-                      // height: 150,
-                      decoration: const BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 2,
-                            )
-                          ],
-                          color: Color.fromARGB(255, 245, 246, 248),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              value.notificationStaff![index]['title'] == null
-                                  ? '--'
-                                  : value.notificationStaff![index]['title']
-                                      .toString(),
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                              textAlign: TextAlign.center,
-                            ),
-                            kheight,
-                            TextWrapper(
-                              text: value.notificationStaff![index]['body'] ==
-                                      null
-                                  ? '--'
-                                  : value.notificationStaff![index]['body']
-                                      .toString(),
-                            ),
-                            kheight,
-                            Row(
-                              children: [
-                                Text(
-                                  'Date',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                ),
-                                Text(
-                                  value.notificationStaff![index]
-                                              ['createdDate'] ==
-                                          null
-                                      ? '--'
-                                      : value.notificationStaff![index]
-                                              ['createdDate']
-                                          .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 47, 47),
-                                      fontSize: 12),
-                                ),
-                                Spacer(),
-                                Text(
-                                  'Send by ',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                ),
-                                Text(
-                                  value.notificationStaff![index]
-                                              ['fromStaff'] ==
-                                          null
-                                      ? '--'
-                                      : value.notificationStaff![index]
-                                              ['fromStaff']
-                                          .toString(),
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 49, 47, 47),
-                                      fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ],
+          : Scrollbar(
+              child: ListView.builder(
+                itemCount: value.notificationStaff?.length == null
+                    ? 0
+                    : value.notificationStaff!.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Column(
+                    children: [
+                      kheight,
+                      Container(
+                        width: width - 4,
+                        // height: 150,
+                        decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 2,
+                              )
+                            ],
+                            color: Color.fromARGB(255, 245, 246, 248),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                value.notificationStaff![index]['title'] == null
+                                    ? '--'
+                                    : value.notificationStaff![index]['title']
+                                        .toString(),
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              ),
+                              kheight,
+                              TextWrapper(
+                                text: value.notificationStaff![index]['body'] ==
+                                        null
+                                    ? '--'
+                                    : value.notificationStaff![index]['body']
+                                        .toString(),
+                              ),
+                              kheight,
+                              Row(
+                                children: [
+                                  Text(
+                                    'Date',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                  Text(
+                                    value.notificationStaff![index]
+                                                ['createdDate'] ==
+                                            null
+                                        ? '--'
+                                        : value.notificationStaff![index]
+                                                ['createdDate']
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 49, 47, 47),
+                                        fontSize: 12),
+                                  ),
+                                  Spacer(),
+                                  Text(
+                                    'Send by ',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                  Text(
+                                    value.notificationStaff![index]
+                                                ['fromStaff'] ==
+                                            null
+                                        ? '--'
+                                        : value.notificationStaff![index]
+                                                ['fromStaff']
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 49, 47, 47),
+                                        fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
     );
   }
@@ -180,93 +183,100 @@ class StaffNotificationSendHistory extends StatelessWidget {
     return Consumer<StaffNotificationScreenProvider>(
       builder: (context, value, child) => value.loading
           ? spinkitLoader()
-          : ListView.builder(
-              shrinkWrap: true,
-              itemCount: value.historyList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: LimitedBox(
-                    maxHeight: 100,
-                    child: Container(
-                      width: size.width,
-                      // height: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: UIGuide.light_Purple)),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Title: ',
-                                style: TextStyle(
-                                    fontSize: 15, color: UIGuide.light_Purple),
-                              ),
-                              Flexible(
-                                child: Text(
-                                  value.historyList[index].title ?? '--',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Matter: ',
-                                style: TextStyle(
-                                    fontSize: 15, color: UIGuide.light_Purple),
-                              ),
-                              Flexible(
-                                child: RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  strutStyle: const StrutStyle(fontSize: 13),
-                                  maxLines: 3,
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Color.fromARGB(255, 44, 43, 43)),
-                                    text: value.historyList[index].body ?? '--',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
+          : Scrollbar(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: value.historyList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: LimitedBox(
+                      maxHeight: 100,
+                      child: Container(
+                        width: size.width,
+                        // height: 100,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: UIGuide.light_Purple)),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Created At: ',
+                                  'Title: ',
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: UIGuide.light_Purple),
                                 ),
+                                Flexible(
+                                  child: Text(
+                                    value.historyList[index].title ?? '--',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
                                 Text(
-                                  value.historyList[index].createdDate ?? '--',
+                                  'Matter: ',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: UIGuide.light_Purple),
+                                ),
+                                Flexible(
+                                  child: RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    strutStyle: const StrutStyle(fontSize: 13),
+                                    maxLines: 3,
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color:
+                                              Color.fromARGB(255, 44, 43, 43)),
+                                      text:
+                                          value.historyList[index].body ?? '--',
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                          )
-                        ],
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Created At: ',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: UIGuide.light_Purple),
+                                  ),
+                                  Text(
+                                    value.historyList[index].createdDate ??
+                                        '--',
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
     );
   }

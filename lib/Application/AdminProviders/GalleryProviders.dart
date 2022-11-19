@@ -279,19 +279,28 @@ class GalleryProviderAdmin with ChangeNotifier {
   String? displayEndDate;
   String? entryDate;
   String? url;
-  List<GalleryEditAdmin> galleryEditList = [];
+  bool _loadd = false;
+  bool get loadd => _loading;
+  setLoadd(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  List<PhotoEdit> galleryList = [];
   Future galleryEdit(String eventID) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoad(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/gallery/gallery-event/$eventID"),
+        Uri.parse(
+            "${UIGuide.baseURL}/mobileapp/staffdet/gallery-event/$eventID"),
         headers: headers);
     try {
       if (response.statusCode == 200) {
-        setLoading(true);
+        setLoad(true);
         print("corect..........");
         Map<String, dynamic> data = await json.decode(response.body);
         print(data);
@@ -303,9 +312,9 @@ class GalleryProviderAdmin with ChangeNotifier {
         print(title);
         print(displayEndDate);
         print("corect..........");
-        List<GalleryEditAdmin> templist = List<GalleryEditAdmin>.from(
-            data["galleryView"].map((x) => GalleryEditAdmin.fromJson(x)));
-        galleryEditList.addAll(templist);
+        List<PhotoEdit> templist = List<PhotoEdit>.from(
+            data["photo"].map((x) => PhotoEdit.fromJson(x)));
+        galleryList.addAll(templist);
 
         // galleryAdm = data['photo'];
         // editGallery = galleryAdm['f'];
@@ -313,7 +322,7 @@ class GalleryProviderAdmin with ChangeNotifier {
         // url = as.url;
         //log(url.toString());
         // Map<String, dynamic> gallery =
-        setLoading(false);
+        setLoad(false);
         notifyListeners();
       } else {
         print("Error in Response");
@@ -321,6 +330,11 @@ class GalleryProviderAdmin with ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
+
+  clearPhotoList() {
+    galleryList.clear();
+    notifyListeners();
   }
 
 //gallery Aproove

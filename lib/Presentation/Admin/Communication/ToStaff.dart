@@ -165,7 +165,7 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
                         }
                         section = subjectData.join(',');
 
-                        print("data $subjectData");
+                        print("data $section");
 
                         print(subjectData.join(','));
                       },

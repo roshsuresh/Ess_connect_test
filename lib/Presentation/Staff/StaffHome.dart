@@ -13,7 +13,7 @@ import '../Login_Activation/Login_page.dart';
 import '../Student/PasswordChange.dart';
 import 'GalleryUpload.dart';
 import 'MarkEntry.dart';
-import 'MarkEntryReport.dart';
+import 'MarkEntryReport/MarkEntryReport.dart';
 import 'NoticeBoard.dart';
 import 'StaffProfile.dart';
 import 'StaffTimeTable.dart';

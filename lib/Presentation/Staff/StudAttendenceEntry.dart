@@ -392,9 +392,9 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
             Consumer<AttendenceStaffProvider>(
               builder: (context, value, child) {
                 if (value.isDualAttendance == true) {
-                  return DualAttendenceviewWidget();
+                  return const DualAttendenceviewWidget();
                 } else {
-                  return AttendenceviewWidget();
+                  return const AttendenceviewWidget();
                 }
               },
             )
@@ -410,7 +410,10 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
               kWidth,
               const Spacer(),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<AttendenceStaffProvider>(context, listen: false)
+                      .submitStudent(context);
+                },
                 color: UIGuide.light_Purple,
                 child: const Text(
                   'Save',
@@ -439,136 +442,157 @@ class AttendenceviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(3),
-              2: FlexColumnWidth(1),
-              // 3: FlexColumnWidth(1.5),
-            },
-            children: const [
-              TableRow(
-                  decoration: BoxDecoration(
-                    //  border: Border.all(),
-                    color: Color.fromARGB(255, 228, 224, 224),
-                  ),
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                          child: Text(
-                        'Roll No.',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      )),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                        child: Text(
-                          'Name           ',
-                          //textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                          child: Text(
-                        'Attendence',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      )),
-                    ),
-                  ]),
-            ],
-          ),
-        ),
-        Consumer<AttendenceStaffProvider>(
-          builder: (context, value, child) {
-            return value.loading
-                ? const spinkitLoader()
-                : LimitedBox(
-                    maxHeight: 530,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: value.studentsAttendenceView.length,
-                      itemBuilder: ((context, index) {
-                        return Column(
+    return Consumer<AttendenceStaffProvider>(
+      builder: (context, val, child) => val.loading
+          ? Column(
+              children: [
+                SizedBox(
+                  height: 150,
+                ),
+                spinkitLoader(),
+              ],
+            )
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(1),
+                      1: FlexColumnWidth(3),
+                      2: FlexColumnWidth(1),
+                      // 3: FlexColumnWidth(1.5),
+                    },
+                    children: const [
+                      TableRow(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 228, 224, 224),
+                          ),
                           children: [
-                            Table(
-                              columnWidths: const {
-                                0: FlexColumnWidth(1.0),
-                                1: FlexColumnWidth(3),
-                                2: FlexColumnWidth(1),
-                                //  3: FlexColumnWidth(1.5),
-                              },
-                              children: [
-                                TableRow(
-                                    decoration: const BoxDecoration(),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                  child: Text(
+                                'Roll No.',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                child: Text(
+                                  'Name           ',
+                                  //textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                  child: Text(
+                                'Attendence',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              )),
+                            ),
+                          ]),
+                    ],
+                  ),
+                ),
+                Consumer<AttendenceStaffProvider>(
+                  builder: (context, value, child) {
+                    return value.loading
+                        ? const spinkitLoader()
+                        : LimitedBox(
+                            maxHeight: 530,
+                            child: Scrollbar(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: value.studentsAttendenceView.length,
+                                itemBuilder: ((context, index) {
+                                  return Column(
                                     children: [
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                    .rollNo ==
-                                                null
-                                            ? '0'
-                                            : value
-                                                .studentsAttendenceView[index]
-                                                .rollNo
-                                                .toString(),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(fontSize: 12),
-                                      ),
-                                      Text(
-                                        value.studentsAttendenceView[index]
-                                                .name ??
-                                            '--',
-                                        textAlign: TextAlign.start,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          value.selectItem(value
-                                              .studentsAttendenceView[index]);
+                                      Table(
+                                        columnWidths: const {
+                                          0: FlexColumnWidth(1.0),
+                                          1: FlexColumnWidth(3),
+                                          2: FlexColumnWidth(1),
+                                          //  3: FlexColumnWidth(1.5),
                                         },
-                                        child: SizedBox(
-                                          width: 5,
-                                          height: 22,
-                                          child: value
+                                        children: [
+                                          TableRow(
+                                              decoration: const BoxDecoration(),
+                                              children: [
+                                                Text(
+                                                  value
+                                                              .studentsAttendenceView[
+                                                                  index]
+                                                              .rollNo ==
+                                                          null
+                                                      ? '0'
+                                                      : value
                                                           .studentsAttendenceView[
                                                               index]
-                                                          .select !=
-                                                      null &&
-                                                  value
-                                                      .studentsAttendenceView[
-                                                          index]
-                                                      .select!
-                                              ? SvgPicture.asset(
-                                                  UIGuide.absent,
-                                                )
-                                              : SvgPicture.asset(
-                                                  UIGuide.present,
+                                                          .rollNo
+                                                          .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      fontSize: 12),
                                                 ),
-                                        ),
+                                                Text(
+                                                  value
+                                                          .studentsAttendenceView[
+                                                              index]
+                                                          .name ??
+                                                      '--',
+                                                  textAlign: TextAlign.start,
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    value.selectItem(value
+                                                            .studentsAttendenceView[
+                                                        index]);
+                                                  },
+                                                  child: SizedBox(
+                                                    width: 5,
+                                                    height: 22,
+                                                    child: value
+                                                                    .studentsAttendenceView[
+                                                                        index]
+                                                                    .select !=
+                                                                null &&
+                                                            value
+                                                                .studentsAttendenceView[
+                                                                    index]
+                                                                .select!
+                                                        ? SvgPicture.asset(
+                                                            UIGuide.absent,
+                                                          )
+                                                        : SvgPicture.asset(
+                                                            UIGuide.present,
+                                                          ),
+                                                  ),
+                                                ),
+                                              ]),
+                                        ],
                                       ),
-                                    ]),
-                              ],
+                                      kheight20,
+                                    ],
+                                  );
+                                }),
+                              ),
                             ),
-                            kheight20,
-                          ],
-                        );
-                      }),
-                    ),
-                  );
-          },
-        ),
-      ],
+                          );
+                  },
+                ),
+              ],
+            ),
     );
   }
 }
@@ -578,160 +602,192 @@ class DualAttendenceviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Table(
-            columnWidths: const {
-              0: FlexColumnWidth(1),
-              1: FlexColumnWidth(3),
-              2: FlexColumnWidth(1),
-              3: FlexColumnWidth(1.5),
-            },
-            children: const [
-              TableRow(
-                  decoration: BoxDecoration(
-                    //  border: Border.all(),
-                    color: Color.fromARGB(255, 228, 224, 224),
-                  ),
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                          child: Text(
-                        'Roll No.',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      )),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                        child: Text(
-                          'Name           ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 12),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                          child: Text(
-                        'Forenoon',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      )),
-                    ),
-                    SizedBox(
-                      height: 30,
-                      child: Center(
-                          child: Text(
-                        'Afternoon',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 12),
-                      )),
-                    ),
-                  ]),
-            ],
-          ),
-        ),
-        Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
-          return value.loading
-              ? const spinkitLoader()
-              : LimitedBox(
-                  maxHeight: 530,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: value.studentsAttendenceView.length,
-                    itemBuilder: ((context, index) {
-                      return Column(
-                        children: [
-                          Table(
-                            columnWidths: const {
-                              0: FlexColumnWidth(1.0),
-                              1: FlexColumnWidth(3),
-                              2: FlexColumnWidth(1),
-                              3: FlexColumnWidth(1.5),
-                            },
-                            children: [
-                              TableRow(
-                                decoration: const BoxDecoration(),
-                                children: [
-                                  Text(
-                                    value.studentsAttendenceView[index]
-                                                .rollNo ==
-                                            null
-                                        ? '0'
-                                        : value.studentsAttendenceView[index]
-                                            .rollNo
-                                            .toString(),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                  Text(
-                                    value.studentsAttendenceView[index].name ??
-                                        '--',
-                                    textAlign: TextAlign.start,
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      value.selectItem(
-                                          value.studentsAttendenceView[index]);
-                                    },
-                                    child: SizedBox(
-                                      width: 5,
-                                      height: 22,
-                                      child: value.studentsAttendenceView[index]
-                                                      .select !=
-                                                  null &&
-                                              value
-                                                  .studentsAttendenceView[index]
-                                                  .select!
-                                          ? SvgPicture.asset(
-                                              UIGuide.absent,
-                                            )
-                                          : SvgPicture.asset(
-                                              UIGuide.present,
-                                            ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      value.selectItemm(
-                                          value.studentsAttendenceView[index]);
-                                    },
-                                    child: SizedBox(
-                                      width: 5,
-                                      height: 22,
-                                      child: value.studentsAttendenceView[index]
-                                                      .selectedd !=
-                                                  null &&
-                                              value
-                                                  .studentsAttendenceView[index]
-                                                  .selectedd!
-                                          ? SvgPicture.asset(
-                                              UIGuide.absent,
-                                            )
-                                          : SvgPicture.asset(
-                                              UIGuide.present,
-                                            ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+    return Consumer<AttendenceStaffProvider>(
+      builder: (context, val, child) => val.loading
+          ? Column(
+              children: [
+                SizedBox(
+                  height: 150,
+                ),
+                spinkitLoader(),
+              ],
+            )
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Table(
+                    columnWidths: const {
+                      0: FlexColumnWidth(1),
+                      1: FlexColumnWidth(3),
+                      2: FlexColumnWidth(1),
+                      3: FlexColumnWidth(1.5),
+                    },
+                    children: const [
+                      TableRow(
+                          decoration: BoxDecoration(
+                            //  border: Border.all(),
+                            color: Color.fromARGB(255, 228, 224, 224),
                           ),
-                          kheight20,
-                        ],
-                      );
-                    }),
+                          children: [
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                  child: Text(
+                                'Roll No.',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                child: Text(
+                                  'Name           ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                  child: Text(
+                                'Forenoon',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                              child: Center(
+                                  child: Text(
+                                'Afternoon',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 12),
+                              )),
+                            ),
+                          ]),
+                    ],
                   ),
-                );
-        }),
-      ],
+                ),
+                Consumer<AttendenceStaffProvider>(
+                    builder: (context, value, child) {
+                  return value.loading
+                      ? const spinkitLoader()
+                      : LimitedBox(
+                          maxHeight: 530,
+                          child: Scrollbar(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: value.studentsAttendenceView.length,
+                              itemBuilder: ((context, index) {
+                                return Column(
+                                  children: [
+                                    Table(
+                                      columnWidths: const {
+                                        0: FlexColumnWidth(1.0),
+                                        1: FlexColumnWidth(3),
+                                        2: FlexColumnWidth(1),
+                                        3: FlexColumnWidth(1.5),
+                                      },
+                                      children: [
+                                        TableRow(
+                                          decoration: const BoxDecoration(),
+                                          children: [
+                                            Text(
+                                              value
+                                                          .studentsAttendenceView[
+                                                              index]
+                                                          .rollNo ==
+                                                      null
+                                                  ? '0'
+                                                  : value
+                                                      .studentsAttendenceView[
+                                                          index]
+                                                      .rollNo
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  const TextStyle(fontSize: 12),
+                                            ),
+                                            Text(
+                                              value
+                                                      .studentsAttendenceView[
+                                                          index]
+                                                      .name ??
+                                                  '--',
+                                              textAlign: TextAlign.start,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                value.selectItem(value
+                                                        .studentsAttendenceView[
+                                                    index]);
+                                              },
+                                              child: SizedBox(
+                                                width: 5,
+                                                height: 22,
+                                                child: value
+                                                                .studentsAttendenceView[
+                                                                    index]
+                                                                .select !=
+                                                            null &&
+                                                        value
+                                                            .studentsAttendenceView[
+                                                                index]
+                                                            .select!
+                                                    ? SvgPicture.asset(
+                                                        UIGuide.absent,
+                                                      )
+                                                    : SvgPicture.asset(
+                                                        UIGuide.present,
+                                                      ),
+                                              ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                value.selectItemm(value
+                                                        .studentsAttendenceView[
+                                                    index]);
+                                              },
+                                              child: SizedBox(
+                                                width: 5,
+                                                height: 22,
+                                                child: value
+                                                                .studentsAttendenceView[
+                                                                    index]
+                                                                .selectedd !=
+                                                            null &&
+                                                        value
+                                                            .studentsAttendenceView[
+                                                                index]
+                                                            .selectedd!
+                                                    ? SvgPicture.asset(
+                                                        UIGuide.absent,
+                                                      )
+                                                    : SvgPicture.asset(
+                                                        UIGuide.present,
+                                                      ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    kheight20,
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                        );
+                }),
+              ],
+            ),
     );
   }
 }

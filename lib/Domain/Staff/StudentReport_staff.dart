@@ -82,37 +82,31 @@ class StudReportSectionList {
 // }
 
 class StudReportCourse {
-  StudReportCourse({
-    this.value,
-    required this.text,
-    this.selected,
-    this.active,
-    this.order
-  });
+  StudReportCourse(
+      {this.value, required this.text, this.selected, this.active, this.order});
 
   String? value;
-   String text;
-   Null selected;
-   Null active;
+  String text;
+  Null selected;
+  Null active;
   Null order;
 
-
-
-  factory StudReportCourse.fromJson(Map<String, dynamic> json) => StudReportCourse(
-    value: json["value"],
-    text: json["text"],
-    selected: json["selected"],
-    active: json["active"],
-    order: json["order"],
-  );
+  factory StudReportCourse.fromJson(Map<String, dynamic> json) =>
+      StudReportCourse(
+        value: json["value"],
+        text: json["text"],
+        selected: json["selected"],
+        active: json["active"],
+        order: json["order"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "value": value,
-    "text": text,
-    "selected": selected,
-    "active": active,
-    "order": order,
-  };
+        "value": value,
+        "text": text,
+        "selected": selected,
+        "active": active,
+        "order": order,
+      };
 }
 
 //Division
@@ -194,8 +188,7 @@ class ViewStudentReport {
       this.courseId,
       this.divisionId,
       this.schoolId,
-      this.selected
-      });
+      this.selected});
 
   ViewStudentReport.fromJson(Map<String, dynamic> json) {
     admnNo = json['admnNo'];

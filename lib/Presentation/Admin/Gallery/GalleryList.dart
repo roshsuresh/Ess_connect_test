@@ -1,7 +1,6 @@
 import 'package:Ess_test/Application/AdminProviders/GalleryProviders.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Constants.dart';
-import 'package:Ess_test/Presentation/Admin/Gallery/EditGalleryScreen.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class GalleryListAdmin extends StatelessWidget {
         return provider.loading
             ? spinkitLoader()
             : ListView.builder(
-                itemCount: provider.galleryViewList.length == null
+                itemCount: provider.galleryViewList.isEmpty
                     ? 0
                     : provider.galleryViewList.length,
                 itemBuilder: (context, index) {
@@ -54,223 +53,249 @@ class GalleryListAdmin extends StatelessWidget {
                                 Spacer(),
                                 GestureDetector(
                                   onTap: () async {
+                                    await provider.clearPhotoList();
                                     String eventt = provider
                                         .galleryViewList[index].id
                                         .toString();
                                     await provider.galleryEdit(eventt);
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return Dialog(
-                                            child:
-                                                Consumer<GalleryProviderAdmin>(
+                                    provider.load
+                                        ? spinkitLoader()
+                                        : showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Dialog(
+                                                child: Consumer<
+                                                        GalleryProviderAdmin>(
                                                     builder: (context, provider,
                                                         child) {
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  kheight10,
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
+                                                  return SingleChildScrollView(
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
                                                       children: [
-                                                        Text(
-                                                          'Entry Date: ',
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: UIGuide
-                                                                  .light_Purple),
-                                                        ),
-                                                        Text(
-                                                          provider.entryDate ??
-                                                              '--',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          'Title: ',
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: UIGuide
-                                                                  .light_Purple),
-                                                        ),
-                                                        Flexible(
-                                                          child: RichText(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            strutStyle:
-                                                                const StrutStyle(
-                                                                    fontSize:
-                                                                        13),
-                                                            maxLines: 3,
-                                                            text: TextSpan(
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            44,
-                                                                            43,
-                                                                            43)),
-                                                                text: provider
-                                                                        .title ??
-                                                                    '--'),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  GridView.count(
-                                                      shrinkWrap: true,
-                                                      crossAxisCount: 3,
-                                                      crossAxisSpacing: 4.0,
-                                                      mainAxisSpacing: 8.0,
-                                                      children: List.generate(
-                                                          provider.galleryEditList
-                                                                      .length ==
-                                                                  null
-                                                              ? 0
-                                                              : provider
-                                                                  .galleryEditList
-                                                                  .length,
-                                                          (index) {
-                                                        return Padding(
+                                                        kheight10,
+                                                        Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .all(2.0),
-                                                          child: Card(
-                                                            child: Image(
-                                                                image: NetworkImage(
-                                                                    provider
-                                                                        .galleryEditList[
-                                                                            index]
-                                                                        .photo![
-                                                                            index]
-                                                                        .file!
-                                                                        .url
-                                                                        .toString()
-                                                                        .toString()
-                                                                    //'https://png.pngtree.com/element_our/png/20180928/beautiful-hologram-water-color-frame-png_119551.jpg'
-
-                                                                    )),
-                                                          ),
-                                                        );
-                                                      })),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          'Start Date: ',
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: UIGuide
-                                                                  .light_Purple),
-                                                        ),
-                                                        Text(
-                                                          provider.displayStartDate ??
-                                                              '--',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 16,
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                'Entry Date: ',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: UIGuide
+                                                                        .light_Purple),
+                                                              ),
+                                                              Text(
+                                                                provider.entryDate ??
+                                                                    '--',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Text(
-                                                          'Start Date: ',
-                                                          style: TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: UIGuide
-                                                                  .light_Purple),
-                                                        ),
-                                                        Text(
-                                                          provider.displayEndDate ??
-                                                              '--',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 16,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                'Title: ',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: UIGuide
+                                                                        .light_Purple),
+                                                              ),
+                                                              Flexible(
+                                                                child: RichText(
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  strutStyle:
+                                                                      const StrutStyle(
+                                                                          fontSize:
+                                                                              13),
+                                                                  maxLines: 3,
+                                                                  text: TextSpan(
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          color: Color.fromARGB(
+                                                                              255,
+                                                                              44,
+                                                                              43,
+                                                                              43)),
+                                                                      text: provider
+                                                                              .title ??
+                                                                          '--'),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        MaterialButton(
-                                                          onPressed: () async {
-                                                            await provider
-                                                                .galleryAproove(
-                                                                    context,
-                                                                    eventt);
-                                                            Navigator.pop(
-                                                                context);
-                                                            provider
-                                                                .galleryViewList
-                                                                .clear();
-                                                            await provider
-                                                                .galleryViewListAdmin();
-                                                          },
-                                                          child:
-                                                              Text('Approve'),
-                                                          color: Colors.green,
+                                                        provider.load
+                                                            ? spinkitLoader()
+                                                            : GridView.count(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                crossAxisCount:
+                                                                    3,
+                                                                crossAxisSpacing:
+                                                                    4.0,
+                                                                mainAxisSpacing:
+                                                                    8.0,
+                                                                children: List.generate(
+                                                                    provider.galleryList.length ==
+                                                                            null
+                                                                        ? 0
+                                                                        : provider
+                                                                            .galleryList
+                                                                            .length,
+                                                                    (index) {
+                                                                  return Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            2.0),
+                                                                    child: Card(
+                                                                      child: Image(
+                                                                          image:
+                                                                              NetworkImage(provider.galleryList[index].file ?? 'https://4.bp.blogspot.com/-OCutvC4wPps/XfNnRz5PvhI/AAAAAAAAEfo/qJ8P1sqLWesMdOSiEoUH85s3hs_vn97HACLcBGAsYHQ/s1600/no-image-found-360x260.png')),
+                                                                    ),
+                                                                  );
+                                                                })),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                'Start Date: ',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: UIGuide
+                                                                        .light_Purple),
+                                                              ),
+                                                              Text(
+                                                                provider.displayStartDate ??
+                                                                    '--',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                'Start Date: ',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: UIGuide
+                                                                        .light_Purple),
+                                                              ),
+                                                              Text(
+                                                                provider.displayEndDate ??
+                                                                    '--',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 16,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              MaterialButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                    'Cancel'),
+                                                                color: Colors
+                                                                    .orange,
+                                                              ),
+                                                              kWidth,
+                                                              MaterialButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await provider
+                                                                      .galleryAproove(
+                                                                          context,
+                                                                          eventt);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  provider
+                                                                      .galleryViewList
+                                                                      .clear();
+                                                                  await provider
+                                                                      .galleryViewListAdmin();
+                                                                },
+                                                                child: Text(
+                                                                    'Approve'),
+                                                                color: Colors
+                                                                    .green,
+                                                              )
+                                                            ],
+                                                          ),
                                                         )
                                                       ],
                                                     ),
-                                                  )
-                                                ],
+                                                  );
+                                                }),
                                               );
-                                            }),
-                                          );
-                                        });
+                                            });
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(

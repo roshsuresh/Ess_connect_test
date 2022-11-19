@@ -6,7 +6,6 @@ import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_custom_selector/flutter_custom_selector.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';

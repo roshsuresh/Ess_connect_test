@@ -187,11 +187,14 @@ class _FlashNewsUploadState extends State<FlashNewsUpload> {
               width: 150,
               child: MaterialButton(
                 minWidth: size.width - 150,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
                 child: const Text(
                   'Save',
+                  style: TextStyle(color: UIGuide.WHITE, fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
-                color: Color.fromARGB(179, 145, 143, 143),
+                color: UIGuide.light_Purple,
                 onPressed: (() async {
                   print(titleController);
 

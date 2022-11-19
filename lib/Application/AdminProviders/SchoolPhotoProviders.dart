@@ -94,6 +94,15 @@ class SchoolPhotoProviders with ChangeNotifier {
   }
 
   //course
+  courseListClear() {
+    courselist.clear();
+    notifyListeners();
+  }
+
+  courseDropClear() {
+    courseDrop.clear();
+    notifyListeners();
+  }
 
   List<StudReportCourse> courselist = [];
   List<MultiSelectItem> courseDrop = [];
@@ -181,7 +190,7 @@ class SchoolPhotoProviders with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      log(data.toString());
+      //  log(data.toString());
 
       List<StudReportDivision> templist = List<StudReportDivision>.from(
           data["divisionbyCourse"].map((x) => StudReportDivision.fromJson(x)));

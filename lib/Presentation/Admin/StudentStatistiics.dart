@@ -1,4 +1,5 @@
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/StudstattiticsProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
@@ -19,7 +20,6 @@ class Student_statistics_admin extends StatelessWidget {
       var p = Provider.of<SchoolPhotoProviders>(context, listen: false);
       p.stdReportSectionStaff();
       p.courseDrop.clear();
-
       p.dropDown.clear();
       p.stdReportInitialValues.clear();
       p.courselist.clear();
@@ -103,13 +103,20 @@ class Student_statistics_admin extends StatelessWidget {
                             subjectData.map((e) => data.value);
                             print("${subjectData.map((e) => data.value)}");
                           }
-                          section = subjectData.join('&');
+                          section = subjectData.join(',');
+                          await Provider.of<SchoolPhotoProviders>(context,
+                                  listen: false)
+                              .courseDropClear();
+                          diviData.clear();
+                          // await Provider.of<SchoolPhotoProviders>(context,
+                          //         listen: false)
+                          //     .courseListClear();
                           await Provider.of<SchoolPhotoProviders>(context,
                                   listen: false)
                               .getCourseList(section);
                           print("data $subjectData");
 
-                          print(subjectData.join('&'));
+                          print(subjectData.join(','));
                         },
                       ),
                     ),
@@ -175,12 +182,13 @@ class Student_statistics_admin extends StatelessWidget {
                             diviData.map((e) => data.value);
                             print("${diviData.map((e) => data.value)}");
                           }
-                          course = diviData.join('&');
+                          course = diviData.join(',');
                           await Provider.of<SchoolPhotoProviders>(context,
                                   listen: false)
                               .getDivisionList(course);
 
-                          print(diviData.join('&'));
+                          print(diviData.join(','));
+                          print(course);
                         },
                       ),
                     ),
@@ -194,7 +202,17 @@ class Student_statistics_admin extends StatelessWidget {
                 MaterialButton(
                   minWidth: 100, color: UIGuide.light_Purple,
                   //   style: ButtonStyle(shape:RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                  onPressed: () {},
+                  onPressed: () async {
+                    Provider.of<StudStatiticsProvider>(context, listen: false)
+                        .statiticsList
+                        .clear();
+                    Provider.of<StudStatiticsProvider>(context, listen: false)
+                        .totalList
+                        .clear();
+                    await Provider.of<StudStatiticsProvider>(context,
+                            listen: false)
+                        .getstatitics(section, course);
+                  },
                   child: Text(
                     'View',
                     style: TextStyle(
@@ -210,7 +228,7 @@ class Student_statistics_admin extends StatelessWidget {
               child: Table(
                 columnWidths: const {
                   0: FlexColumnWidth(1),
-                  1: FlexColumnWidth(2.5),
+                  1: FlexColumnWidth(2),
                   2: FlexColumnWidth(1),
                   3: FlexColumnWidth(1),
                   4: FlexColumnWidth(1),
@@ -272,14 +290,14 @@ class Student_statistics_admin extends StatelessWidget {
                 ],
               ),
             ),
-            Consumer<AttendenceStaffProvider>(builder: (context, value, child) {
-              // Provider.of<AttendenceStaffProvider>(context, listen: false)
-              //     .getstudentsAttendenceView(dateFinal, divisionId);
+            Consumer<StudStatiticsProvider>(builder: (context, value, child) {
               return LimitedBox(
                   maxHeight: 440,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 6,
+                      itemCount: value.statiticsList.isEmpty
+                          ? 0
+                          : value.statiticsList.length,
                       itemBuilder: ((context, index) {
                         return Column(
                           children: [
@@ -287,7 +305,7 @@ class Student_statistics_admin extends StatelessWidget {
                               //  border: TableBorder.all(color: Colors.grey),
                               columnWidths: const {
                                 0: FlexColumnWidth(1),
-                                1: FlexColumnWidth(2.5),
+                                1: FlexColumnWidth(2),
                                 2: FlexColumnWidth(1),
                                 3: FlexColumnWidth(1),
                                 4: FlexColumnWidth(1),
@@ -302,21 +320,38 @@ class Student_statistics_admin extends StatelessWidget {
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       Text(
-                                        'VII-A',
+                                        value.statiticsList[index].course ??
+                                            '--',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       Text(
-                                        '12',
+                                        value.statiticsList[index].male
+                                                    .toString() ==
+                                                null
+                                            ? '--'
+                                            : value.statiticsList[index].male
+                                                .toString(),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 14),
                                       ),
                                       Text(
-                                        '20',
+                                        value.statiticsList[index].feMale
+                                                    .toString() ==
+                                                null
+                                            ? '--'
+                                            : value.statiticsList[index].feMale
+                                                .toString(),
                                         textAlign: TextAlign.center,
                                       ),
                                       Text(
-                                        '32',
+                                        value.statiticsList[index].totalCount
+                                                    .toString() ==
+                                                null
+                                            ? '--'
+                                            : value
+                                                .statiticsList[index].totalCount
+                                                .toString(),
                                         textAlign: TextAlign.center,
                                       )
                                     ]),
@@ -327,6 +362,100 @@ class Student_statistics_admin extends StatelessWidget {
                         );
                       })));
             }),
+            Consumer<StudStatiticsProvider>(
+              builder: (context, value, child) => Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ListView.builder(
+                  itemCount:
+                      value.totalList.isEmpty ? 0 : value.totalList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Table(
+                      columnWidths: const {
+                        0: FlexColumnWidth(1),
+                        1: FlexColumnWidth(2),
+                        2: FlexColumnWidth(1),
+                        3: FlexColumnWidth(1),
+                        4: FlexColumnWidth(1),
+                      },
+                      children: [
+                        TableRow(
+                            decoration: const BoxDecoration(
+                              //  border: Border.all(),
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  '    ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12),
+                                )),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  '   Total:     ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: UIGuide.light_Purple,
+                                      fontSize: 12),
+                                )),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                  child: Text(
+                                    value.totalList[index].netMaleCount == null
+                                        ? '--'
+                                        : value.totalList[index].netMaleCount
+                                            .toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        color: UIGuide.light_Purple,
+                                        fontSize: 12),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  value.totalList[index].netFemaleCount == null
+                                      ? '--'
+                                      : value.totalList[index].netFemaleCount
+                                          .toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: UIGuide.light_Purple,
+                                      fontSize: 12),
+                                )),
+                              ),
+                              SizedBox(
+                                height: 30,
+                                child: Center(
+                                    child: Text(
+                                  value.totalList[index].netTotal == null
+                                      ? '--'
+                                      : value.totalList[index].netTotal
+                                          .toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      color: UIGuide.light_Purple,
+                                      fontSize: 12),
+                                )),
+                              ),
+                            ]),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ));
   }

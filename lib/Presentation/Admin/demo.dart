@@ -1,6 +1,19 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_custom_selector/flutter_custom_selector.dart';
+import 'package:getwidget/components/dropdown/gf_dropdown.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/types/gf_checkbox_type.dart';
+import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+
+import '../../Application/AdminProviders/NoticeBoardadmin.dart';
 
 class Demo extends StatefulWidget {
   Demo({Key? key}) : super(key: key);
@@ -10,37 +23,51 @@ class Demo extends StatefulWidget {
 }
 
 class _DemoState extends State<Demo> {
-  bool _isVisible = true;
-
-  void showToast() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
-
-  String _selectedGender = 'Student';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: UIGuide.light_Purple,
-          title: Text(''),
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return RefreshIndicator(
+        child: CustomScrollView(
+          //   controller: _scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              primary: false,
+              expandedHeight: 75,
+              backgroundColor: Color(0xFFf4eedd),
+              floating: true,
+              actions: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('images/banner.png'),
+                          fit: BoxFit.fill)),
+                ),
+              ],
+            ),
+          ],
         ),
-        body: Center(
-          child: ToggleSwitch(
-            labels: ['All', "Students", 'Staff'],
-            onToggle: (index) {
-              print('Swiched index $index');
-            },
-            fontSize: 14,
-            minHeight: 30,
-            minWidth: 150,
-            activeBgColor: [UIGuide.light_Purple],
-          ),
-        ));
+        onRefresh: _refreshLocalGallery);
   }
+
+  Future<Null> _refreshLocalGallery() async {
+    print('refreshing stocks...');
+  }
+
+// @override
+
+  //  StreamBuilder<ConnectivityResult>(
+  //     stream: Connectivity().onConnectivityChanged,
+  //     builder: (context, snapshot) {
+  //       return Scaffold(
+  //         body: snapshot.data == ConnectivityResult.none
+  //             ? const Center(child: Text('No Internet Connection'))
+  //             : const Center(child: Text('Internect Connection')),
+  //       );
+
 }
+
 // @override
 // void initState() {
 //   super.initState();

@@ -1,13 +1,8 @@
 import 'package:Ess_test/Application/AdminProviders/TimeTableProviders.dart';
-import 'package:Ess_test/Application/Staff_Providers/MarkEntryProvider.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 
 class ClassTimeTable extends StatefulWidget {
@@ -63,10 +58,6 @@ class _ClassTimeTableState extends State<ClassTimeTable> {
                                       : snapshot.courselist.length,
                                   itemBuilder: (context, index) {
                                     return ListTile(
-                                      // selectedTileColor: Colors.blue.shade100,
-                                      // selectedColor: UIGuide.PRIMARY2,
-                                      // selected: snapshot.isCourseSelected(
-                                      //     snapshot.courselist[index]),
                                       onTap: () async {
                                         divisionController.text = snapshot
                                                 .courselist[index].courseId ??
@@ -100,7 +91,6 @@ class _ClassTimeTableState extends State<ClassTimeTable> {
                         SizedBox(
                           height: 40,
                           child: TextField(
-                            //  style: TextStyle(fontSize: 20.0, color: Colors.black),
                             textAlign: TextAlign.center,
                             controller: divisionController1,
                             decoration: InputDecoration(

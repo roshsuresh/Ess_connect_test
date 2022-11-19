@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
+import 'package:Ess_test/Application/AdminProviders/FeeDetailsProvider.dart';
 import 'package:Ess_test/Application/AdminProviders/FeeReportProvider.dart';
 import 'package:Ess_test/Application/AdminProviders/FlashNewsProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/GalleryProviders.dart';
@@ -11,6 +12,7 @@ import 'package:Ess_test/Application/AdminProviders/NotificationToGuardian.dart'
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/SearchstaffProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/StaffReportProviders.dart';
+import 'package:Ess_test/Application/AdminProviders/StudstattiticsProvider.dart';
 import 'package:Ess_test/Application/AdminProviders/TimeTableProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/TimeTableStaff.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
@@ -30,21 +32,14 @@ import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Application/Staff_Providers/MarkEntryProvider.dart';
 import 'Application/Staff_Providers/StaffProfile.dart';
 import 'Application/Staff_Providers/StudListProvider.dart';
@@ -74,11 +69,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     notification!.title,
     notification.body,
     NotificationDetails(
-      android: AndroidNotificationDetails(
-        channel.id,
-        channel.name,
-        icon: 'launch_background',
-      ),
+      android: AndroidNotificationDetails(channel.id, channel.name,
+          icon: 'launch_background', channelShowBadge: true),
     ),
   );
 }
@@ -232,25 +224,21 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(
             create: (context) => TimeTableClassProvidersAdmin()),
         ChangeNotifierProvider(create: (context) => TimetableStaffProviders()),
+        ChangeNotifierProvider(create: (context) => FeeDetailsProvider()),
+        ChangeNotifierProvider(create: (context) => StudStatiticsProvider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',
         theme: ThemeData(
-          primaryColor: UIGuide.PRIMARY,
-
+          primaryColor: UIGuide.light_Purple,
           inputDecorationTheme: InputDecorationTheme(
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.black))),
-          // primarySwatch: Colors.deepOrange,
+                  borderSide: const BorderSide(color: Colors.black))),
         ),
-        // home: MyHomePage(title: 'Flutter Demo Home Page'),
         routes: routes,
         home: SplashFuturePage(),
-        // home: LoginPage(),
         debugShowCheckedModeBanner: false,
-        //home : MyHomepage(),
-        //home:LoginSecondPage(),
       ),
     );
   }

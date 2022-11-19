@@ -319,10 +319,10 @@ class MarkEntryReportProvider_stf with ChangeNotifier {
     var request = http.Request(
         'POST', Uri.parse('${UIGuide.baseURL}/markentryReport/exam'));
     request.body = json.encode({
-      "CourseId": "77d9839f-c910-47d6-94ee-9bd119e2dae7",
-      "DivisionId": ["b2ba13d8-9834-4393-ae11-a9714045ec44"],
-      "PartId": "415854e0-9d90-40c3-bc30-9e1ce619ba29",
-      "SubjectId": ["f20e6138-e1f7-4d88-8a60-3c73820f1415"]
+      "CourseId": course,
+      "DivisionId": [division],
+      "PartId": part,
+      "SubjectId": [subject]
     });
     request.headers.addAll(headers);
 
@@ -342,9 +342,20 @@ class MarkEntryReportProvider_stf with ChangeNotifier {
 
   //view
 
-  List<MarkEntryREportViewStaff> markEntryREportViewStaff = [];
-  Future markReportView() async {
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
+  List meList = [];
+  List studList = [];
+  List<MarkReportStudentList> markReportStudList = [];
+  Future markReportView(String course, String division, String part,
+      String exam, String subject, String subText, String divText) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
@@ -353,18 +364,17 @@ class MarkEntryReportProvider_stf with ChangeNotifier {
     var request = http.Request(
         'POST', Uri.parse('${UIGuide.baseURL}/markentryReport/view'));
     request.body = json.encode({
-      "SchoolId": "0cead469-c94b-4538-adc6-47658c616f34",
-      "staffId": "7769c40f-5e1d-4acc-bc4e-df816f33b2b3",
-      "CourseId": "77d9839f-c910-47d6-94ee-9bd119e2dae7",
-      "DivisionId": "b2ba13d8-9834-4393-ae11-a9714045ec44",
-      "PartId": "415854e0-9d90-40c3-bc30-9e1ce619ba29",
-      "ExamId": "Term-1_NBS1",
-      "SubjectId": "f20e6138-e1f7-4d88-8a60-3c73820f1415",
+      "staffId": _pref.getString('StaffId'),
+      "CourseId": course,
+      "DivisionId": division,
+      "PartId": part,
+      "ExamId": exam,
+      "SubjectId": subject,
       "SubjectIdList": [
-        {"text": "English", "value": "f20e6138-e1f7-4d88-8a60-3c73820f1415"}
+        {"text": subText, "value": subject}
       ],
       "DivisionIdList": [
-        {"text": "I-A", "value": "b2ba13d8-9834-4393-ae11-a9714045ec44"}
+        {"text": divText, "value": division}
       ]
     });
     request.headers.addAll(headers);
@@ -372,15 +382,23 @@ class MarkEntryReportProvider_stf with ChangeNotifier {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-      final data = json.decode(request.body);
+      // print(await response.stream.bytesToString());
+      Map<String, dynamic> data =
+          jsonDecode(await response.stream.bytesToString());
 
-      print(data);
-      List<MarkReportCourseList> templist = List<MarkReportCourseList>.from(
-          data["courseList"].map((x) => MarkReportCourseList.fromJson(x)));
-      markReportCourseList.addAll(templist);
+      meList = data['meList'];
+      studList = meList[0]['studentList'];
+      print(studList);
+
+      List<MarkReportStudentList> templist = List<MarkReportStudentList>.from(
+          meList[0]['studentList']
+              .map((x) => MarkReportStudentList.fromJson(x)));
+      markReportStudList.addAll(templist);
+      setLoading(false);
+      notifyListeners();
     } else {
-      print(response.reasonPhrase);
+      setLoading(false);
+      print(" Error in markReportView");
     }
   }
 }

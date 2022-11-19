@@ -106,9 +106,10 @@ class _TeachingStaffState extends State<TeachingStaff> {
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) => StaffInfo(
-                                            index: index,
-                                          )),
+                                    builder: (context) => StaffInfo(
+                                      index: index,
+                                    ),
+                                  ),
                                 );
                               },
                               child: Container(

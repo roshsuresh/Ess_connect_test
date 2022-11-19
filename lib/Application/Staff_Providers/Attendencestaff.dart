@@ -177,13 +177,6 @@ class AttendenceStaffProvider with ChangeNotifier {
     return true;
   }
 
-  bool _loading = false;
-  bool get loading => _loading;
-  setLoading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
-
   // Future<bool> getAttendanceView(String id, String date) async {
   //   setLoading(true);
   //   SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -222,12 +215,18 @@ class AttendenceStaffProvider with ChangeNotifier {
   //   return true;
   // }
 
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
   //view Attendence
 
   List<StudentsAttendenceView_stf> studentsAttendenceView = [];
   Future<bool> getstudentsAttendenceView(String date, String id) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    notifyListeners();
+    setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
@@ -242,6 +241,7 @@ class AttendenceStaffProvider with ChangeNotifier {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
+      setLoading(true);
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
@@ -252,8 +252,10 @@ class AttendenceStaffProvider with ChangeNotifier {
               .map((x) => StudentsAttendenceView_stf.fromJson(x)));
       studentsAttendenceView.addAll(templist);
       print('correct');
+      setLoading(false);
       notifyListeners();
     } else {
+      setLoading(false);
       print('Error in AttendenceView stf');
     }
     return true;
@@ -263,12 +265,13 @@ class AttendenceStaffProvider with ChangeNotifier {
     studentsAttendenceView.clear();
     notifyListeners();
   }
+  //single attendence
 
-  bool isSelected(StudentsAttendenceView_stf model) {
-    StudentsAttendenceView_stf selected = studentsAttendenceView
-        .firstWhere((element) => element.admNo == model.admNo);
-    return selected.select!;
-  }
+  // bool isSelected(StudentsAttendenceView_stf model) {
+  //   StudentsAttendenceView_stf selected = studentsAttendenceView
+  //       .firstWhere((element) => element.admNo == model.admNo);
+  //   return selected.select!;
+  // }
 
   void selectItem(StudentsAttendenceView_stf model) {
     StudentsAttendenceView_stf selected = studentsAttendenceView
@@ -277,6 +280,34 @@ class AttendenceStaffProvider with ChangeNotifier {
     selected.select = !selected.select!;
     print(selected.toJson());
     notifyListeners();
+  }
+
+  //submit
+
+  List<StudentsAttendenceView_stf> selectedList = [];
+  submitStudent(BuildContext context) {
+    selectedList.clear();
+    selectedList = studentsAttendenceView
+        .where((element) => element.select == true)
+        .toList();
+    if (studentsAttendenceView
+        .where((element) => element.select == true)
+        .toList()
+        .isNotEmpty) {
+      print('Attendence');
+      print(studentsAttendenceView.where((element) => element.select == true));
+    }
+    // if (selectedList.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //     content: Text('Select Any Student..'),
+    //     duration: Duration(seconds: 1),
+    //   ));
+    // } else {
+    //   print('selected.....');
+    //   print(studentsAttendenceView
+    //       .where((element) => element.select == true)
+    //       .toList());
+    // }
   }
 
   //dual attendence

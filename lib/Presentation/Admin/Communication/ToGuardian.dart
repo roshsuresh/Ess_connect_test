@@ -91,6 +91,11 @@ class _Notification_AdminToGuardainState
   String section = '';
   int length = 0;
   String division = '';
+
+  divClearr() {
+    diviData.clear();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -190,7 +195,7 @@ class _Notification_AdminToGuardainState
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Consumer<SchoolPhotoProviders>(
                 builder: (context, value, child) => Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -207,6 +212,7 @@ class _Notification_AdminToGuardainState
                       ),
                       // selectedColor: Color.fromARGB(255, 157, 232, 241),
                       selectedItemsTextStyle: TextStyle(
+                          fontSize: 12,
                           fontWeight: FontWeight.w900,
                           color: UIGuide.light_Purple),
                       confirmText: Text(
@@ -241,10 +247,10 @@ class _Notification_AdminToGuardainState
                       chipDisplay: MultiSelectChipDisplay.none(),
                       onConfirm: (results) async {
                         diviData = [];
-                        diviData.clear();
-                        for (var i = 0; i < results.length; i++) {
+
+                        for (var a = 0; a < results.length; a++) {
                           StudReportCourse data =
-                              results[i] as StudReportCourse;
+                              results[a] as StudReportCourse;
                           // print(data.value);
                           // print(data.text);
                           // print(i);
@@ -252,8 +258,10 @@ class _Notification_AdminToGuardainState
                           diviData.map((e) => data.value);
                           print("${diviData.map((e) => data.value)}");
                         }
+                        print('diviData course== $diviData');
                         course = '';
                         course = diviData.join(',');
+
                         // courseDiv = diviData.join(',');
                         // await Provider.of<NotificationToGuardianAdmin>(context,
                         //         listen: false)
@@ -263,7 +271,7 @@ class _Notification_AdminToGuardainState
                         // value.divisionDrop.clear();
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
-                            .divisionListClear();
+                            .clearDivision();
 
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)

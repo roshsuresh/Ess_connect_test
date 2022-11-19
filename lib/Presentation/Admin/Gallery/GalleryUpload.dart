@@ -42,7 +42,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
   String? checkname;
   final titleController = TextEditingController();
 
-  String attachmentid = '';
+  final attachmentid = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -55,9 +55,11 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
       p.divisionList.clear();
       p.divisionDropDown.clear();
       titleController.clear();
+      attachmentid.clear();
     });
   }
 
+  String attach = '';
   String toggleVal = 'All';
   @override
   Widget build(BuildContext context) {
@@ -340,7 +342,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       division = divisionData.join(',');
 
                       print(divisionData.join(','));
-                      attachmentid = value.id.toString();
+                      attach = value.id.toString();
                     },
                   ),
                 ),
@@ -387,6 +389,11 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               ),
               color: UIGuide.light_Purple,
               onPressed: (() async {
+                if (checkname!.isEmpty) {
+                  attachmentid.clear();
+                } else {
+                  attachmentid.text = attach;
+                }
                 if (titleController.text.isNotEmpty &&
                     course.toString().isNotEmpty &&
                     division.toString().isNotEmpty &&
@@ -402,7 +409,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                           courseData,
                           divisionData,
                           toggleVal.toString(),
-                          attachmentid);
+                          attachmentid.text.toString());
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text(
@@ -421,6 +428,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 titleController.clear();
                 courseData.clear();
                 divisionData.clear();
+                attachmentid.clear();
 
                 if (attachmentid.toString().isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

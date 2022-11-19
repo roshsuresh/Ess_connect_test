@@ -1,34 +1,25 @@
 import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
 import 'package:Ess_test/Constants.dart';
+import 'package:Ess_test/Domain/Staff/SearchStudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SearchStudent_stf extends StatefulWidget {
+class SearchStudent_stf extends StatelessWidget {
   SearchStudent_stf({Key? key}) : super(key: key);
 
-  @override
-  State<SearchStudent_stf> createState() => _SearchStudent_stfState();
-}
+  // @override
+  TextEditingController clearValue = TextEditingController();
 
-class _SearchStudent_stfState extends State<SearchStudent_stf> {
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<Screen_Search_Providers>(context, listen: false);
 
       p.clearStudentList();
     });
-  }
 
-  TextEditingController clearValue = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    // Provider.of<Screen_Search_Providers>(context, listen: false)
-    //     .clearStudentList();
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -61,7 +52,7 @@ class _SearchStudent_stfState extends State<SearchStudent_stf> {
                             IconButton(
                               icon: Icon(Icons.search),
                               color: Colors.grey,
-                              onPressed: (() {
+                              onPressed: (() async {
                                 Provider.of<Screen_Search_Providers>(context,
                                         listen: false)
                                     .getSearch_View(clearValue.text.toString());
@@ -163,7 +154,7 @@ class _SearchStudent_stfState extends State<SearchStudent_stf> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       StudProfileViewBySearch_Staff(
-                                        indexx: index,
+                                        stud: provider.searchStudent[index],
                                       )),
                             );
                           },
@@ -387,9 +378,12 @@ class _SearchStudent_stfState extends State<SearchStudent_stf> {
 }
 
 class StudProfileViewBySearch_Staff extends StatelessWidget {
-  StudProfileViewBySearch_Staff({Key? key, required this.indexx})
-      : super(key: key);
-  final int indexx;
+  SearchStudReport stud;
+  StudProfileViewBySearch_Staff({
+    Key? key,
+    required this.stud,
+  }) : super(key: key);
+  //final int indexx;
   String? phn;
   @override
   Widget build(BuildContext context) {
@@ -456,7 +450,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                           kheight20,
                           kheight10,
                           Text(
-                            value.searchStudent[indexx].name ?? '---',
+                            stud.name ?? '---',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 13),
                           ),
@@ -478,10 +472,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey)),
-                                      Text(
-                                          value.searchStudent[indexx]
-                                                  .division ??
-                                              '---',
+                                      Text(stud.division ?? '---',
                                           style:
                                               const TextStyle(fontSize: 16.0)),
                                     ],
@@ -493,12 +484,9 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                                               fontSize: 14.0,
                                               color: Colors.grey)),
                                       Text(
-                                          value.searchStudent[indexx].rollNo ==
-                                                  null
+                                          stud.rollNo == null
                                               ? '---'
-                                              : value
-                                                  .searchStudent[indexx].rollNo
-                                                  .toString(),
+                                              : stud.rollNo.toString(),
                                           style:
                                               const TextStyle(fontSize: 16.0)),
                                     ],
@@ -509,9 +497,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey)),
-                                      Text(
-                                          value.searchStudent[indexx].admnNo ??
-                                              '---',
+                                      Text(stud.admnNo ?? '---',
                                           style:
                                               const TextStyle(fontSize: 16.0)),
                                     ],
@@ -527,7 +513,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                   child: CircleAvatar(
                     foregroundColor: Colors.white,
                     foregroundImage: NetworkImage(
-                      value.searchStudent[indexx].studentPhoto ??
+                      stud.studentPhoto ??
                           'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
                     ),
                     radius: 65,
@@ -579,8 +565,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Color.fromARGB(255, 44, 43, 43)),
-                                text: value.searchStudent[indexx].address ??
-                                    '---',
+                                text: stud.address ?? '---',
                               ),
                             ),
                           ),
@@ -596,7 +581,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                         ),
                         Flexible(
                           child: Text(
-                            value.searchStudent[indexx].bus ?? '---',
+                            stud.bus ?? '---',
                             overflow: TextOverflow.clip,
                             style: TextStyle(fontSize: 12),
                           ),
@@ -613,7 +598,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                         ),
                         Flexible(
                           child: Text(
-                            value.searchStudent[indexx].stop ?? '---',
+                            stud.stop ?? '---',
                             overflow: TextOverflow.clip,
                             style: TextStyle(fontSize: 12),
                           ),
@@ -634,7 +619,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              phn = value.searchStudent[indexx].mobNo ?? '---',
+                              phn = stud.mobNo ?? '---',
                               overflow: TextOverflow.clip,
                               style: TextStyle(fontSize: 12),
                             ),

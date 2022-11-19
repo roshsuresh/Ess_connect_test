@@ -105,7 +105,7 @@ class NoticeBoardAdminProvider with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      log(data.toString());
+      //  log(data.toString());
 
       List<DivisionListModel> templist = List<DivisionListModel>.from(
           data["divisionbyCourse"].map((x) => DivisionListModel.fromJson(x)));

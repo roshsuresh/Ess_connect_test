@@ -1,4 +1,5 @@
 class SearchStudReport {
+  String? studentId;
   String? admnNo;
   String? name;
   String? division;
@@ -22,7 +23,8 @@ class SearchStudReport {
   String? schoolId;
 
   SearchStudReport(
-      {this.admnNo,
+      {this.studentId,
+      this.admnNo,
       this.name,
       this.division,
       this.course,
@@ -45,6 +47,7 @@ class SearchStudReport {
       this.schoolId});
 
   SearchStudReport.fromJson(Map<String, dynamic> json) {
+    studentId = json['studentId'];
     admnNo = json['admnNo'];
     name = json['name'];
     division = json['division'];
@@ -70,6 +73,7 @@ class SearchStudReport {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['studentId'] = this.studentId;
     data['admnNo'] = this.admnNo;
     data['name'] = this.name;
     data['division'] = this.division;
