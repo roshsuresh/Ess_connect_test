@@ -202,43 +202,43 @@ class FeesProvider with ChangeNotifier {
 
   // pdf download
 
-  Future pdfDownload() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    setLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    };
-    // print(headers);
-    var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
-        headers: headers);
+  // Future pdfDownload() async {
+  //   SharedPreferences _pref = await SharedPreferences.getInstance();
+  //   setLoading(true);
+  //   var headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+  //   };
+  //   // print(headers);
+  //   var response = await http.get(
+  //       Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
+  //       headers: headers);
 
-    try {
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        Map<String, dynamic> data = json.decode(response.body);
+  //   try {
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       Map<String, dynamic> data = json.decode(response.body);
 
-        Map<String, dynamic> pdf = data['filePath'];
+  //       Map<String, dynamic> pdf = data['filePath'];
 
-        print(data);
-        attend = attendenceData!['monthwiseAttendence'];
-        // print(attend);
-        AttendenceModel att =
-            AttendenceModel.fromJson(attendenceRespo!['attendence']);
-        workDays = att.workDays;
-        presentDays = att.presentDays;
-        absentDays = att.absentDays;
-        attendancePercentage = att.attendancePercentage;
-        //print('presentDays $presentDays');
-        // print(workDays);
+  //       print(data);
+  //       attend = attendenceData!['monthwiseAttendence'];
+  //       // print(attend);
+  //       FilePathPdfDownload att =
+  //           AttendenceModel.fromJson(attendenceRespo!['attendence']);
+  //       workDays = att.workDays;
+  //       presentDays = att.presentDays;
+  //       absentDays = att.absentDays;
+  //       attendancePercentage = att.attendancePercentage;
+  //       //print('presentDays $presentDays');
+  //       // print(workDays);
 
-        notifyListeners();
-      } else {
-        setLoading(false);
-        print("Error in response");
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  //       notifyListeners();
+  //     } else {
+  //       setLoading(false);
+  //       print("Error in response");
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }
