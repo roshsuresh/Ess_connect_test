@@ -414,7 +414,7 @@ class Student_statistics_admin extends StatelessWidget {
                                         ? '--'
                                         : value.totalList[index].netMaleCount
                                             .toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w900,
                                         color: UIGuide.light_Purple,
                                         fontSize: 12),

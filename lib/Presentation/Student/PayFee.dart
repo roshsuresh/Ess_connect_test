@@ -1,5 +1,6 @@
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../Application/StudentProviders/FeesProvider.dart';
 import '../../Constants.dart';
@@ -257,21 +258,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                           onChanged: (bool? selected) async {
                                             // selected == true;
 
-                                            // for (int i = 0;
-                                            //     i <= feeResponse!.length;
-                                            //     i++) {
-                                            //   enable = true;
-                                            //   value.onFeeSelected(
-                                            //       selected!,
-                                            //       value.feeList[index]
-                                            //           .installmentName,
-                                            //       index,
-                                            //       value.feeList[index]
-                                            //           .installmentNetDue);
-                                            //   print(selected);
-                                            // }
-                                            // if (index == 3) {
-                                            //   enable = true;
+                                            //if (index == 1 && enable == false) {
+                                            //  enable = true;
                                             value.onFeeSelected(
                                                 selected!,
                                                 value.feeList[index]
@@ -397,14 +385,14 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                           onChanged: (bool? selected) {
                                             print(
                                                 '-------------------${value.busFeeList[index]}');
-                                            if (index == 1)
-                                              value.onBusSelected(
-                                                  selected!,
-                                                  value.busFeeList[index]
-                                                      .installmentName,
-                                                  index,
-                                                  value.busFeeList[index]
-                                                      .installmentNetDue);
+                                            // if (index == 1)
+                                            value.onBusSelected(
+                                                selected!,
+                                                value.busFeeList[index]
+                                                    .installmentName,
+                                                index,
+                                                value.busFeeList[index]
+                                                    .installmentNetDue);
                                             print(selected);
                                           },
                                           title: Padding(
@@ -482,18 +470,181 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                       ),
                     ),
                     const SizedBox(
-                      height: 80,
-                    )
+                      height: 40,
+                    ),
+                    GestureDetector(
+                      child: Text(
+                        'Last Transaction Details',
+                        style: TextStyle(
+                          color: UIGuide.light_Purple,
+                          decoration: TextDecoration.underline,
+                          decorationStyle: TextDecorationStyle.dashed,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      onTap: () async {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                child: Consumer<FeesProvider>(
+                                    builder: (context, provider, child) {
+                                  String date =
+                                      provider.lastTransactionStartDate ?? '--';
+                                  var updatedDate =
+                                      DateFormat('yyyy-MM-dd').parse(date);
+                                  String newDate = updatedDate.toString();
+                                  String finalDate =
+                                      newDate.replaceRange(10, 23, '');
+                                  return SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        kheight10,
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Your last transaction  details',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: UIGuide.light_Purple),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Transaction Date: ',
+                                              ),
+                                              Flexible(
+                                                child: RichText(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  strutStyle:
+                                                      const StrutStyle(),
+                                                  maxLines: 3,
+                                                  text: TextSpan(
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: UIGuide
+                                                              .light_Purple),
+                                                      text:
+                                                          // provider.title ??
+                                                          provider.lastTransactionStartDate ??
+                                                              '--'),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Transaction amount: ',
+                                              ),
+                                              Text(
+                                                provider.lastTransactionAmount ==
+                                                        null
+                                                    ? ''
+                                                    : provider
+                                                        .lastTransactionAmount
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        UIGuide.light_Purple),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Transaction Status: ',
+                                              ),
+                                              Text(
+                                                finalDate,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        UIGuide.light_Purple),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                'Download receipt: ',
+                                              ),
+                                              Icon(Icons.download,
+                                                  color: UIGuide.light_Purple)
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              kWidth,
+                                              MaterialButton(
+                                                height: 30,
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: UIGuide.WHITE),
+                                                ),
+                                                color: UIGuide.light_Purple,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              );
+                            });
+
+                        // provider.galleryViewList.clear();
+                        // await provider.galleryViewListAdmin();
+                        //Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    ),
                   ],
                 ),
         ),
         Positioned(
-          bottom: 10,
+          bottom: 2,
           left: 10,
           right: 10,
           child: Padding(
-            padding: const EdgeInsets.only(top: 50, left: 10, right: 10),
+            padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
             child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: UIGuide.THEME_LIGHT),
+              ),
               height: 60,
               onPressed: () {},
               child: const Text(

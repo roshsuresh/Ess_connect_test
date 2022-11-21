@@ -1,30 +1,220 @@
-import 'dart:convert';
+// import 'dart:convert';
 
+// class OnlineFeePayModel {
+//   bool? allowPartialPayment;
+//   String? concessionCaption;
+//   List<FeeFeesInstallments>? feeFeesInstallments;
+//   List<FeeBusInstallments>? feeBusInstallments;
+
+//   OnlineFeePayModel(
+//       {this.allowPartialPayment,
+//       this.concessionCaption,
+//       this.feeFeesInstallments,
+//       this.feeBusInstallments});
+
+//   OnlineFeePayModel.fromJson(Map<String, dynamic> json) {
+//     allowPartialPayment = json['allowPartialPayment'];
+//     concessionCaption = json['concessionCaption'];
+//     if (json['feeFeesInstallments'] != null) {
+//       feeFeesInstallments = [];
+//       json['feeFeesInstallments'].forEach((v) {
+//         feeFeesInstallments!.add(new FeeFeesInstallments.fromJson(v));
+//       });
+//     }
+//     if (json['feeBusInstallments'] != null) {
+//       feeBusInstallments = [];
+//       json['feeBusInstallments'].forEach((v) {
+//         feeBusInstallments!.add(new FeeBusInstallments.fromJson(v));
+//       });
+//     }
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['allowPartialPayment'] = this.allowPartialPayment;
+//     data['concessionCaption'] = this.concessionCaption;
+//     if (this.feeFeesInstallments != null) {
+//       data['feeFeesInstallments'] =
+//           this.feeFeesInstallments!.map((v) => v.toJson()).toList();
+//     }
+//     if (this.feeBusInstallments != null) {
+//       data['feeBusInstallments'] =
+//           this.feeBusInstallments!.map((v) => v.toJson()).toList();
+//     }
+//     return data;
+//   }
+// }
+
+// class FeeFeesInstallments {
+//   String? feesDetailsId;
+//   String? installmentName;
+//   double? installmentNetDue;
+//   double? concessionAmount;
+//   double? netDue;
+//   double? fineAmount;
+//   double? balanceAmount;
+//   bool? checkedInstallment;
+//   bool? enableInstallment;
+//   bool? checkedFees;
+//   double? totalPaidAmount;
+//   int? installmentOrder;
+
+//   FeeFeesInstallments(
+//       {this.feesDetailsId,
+//       this.installmentName,
+//       this.installmentNetDue,
+//       this.concessionAmount,
+//       this.netDue,
+//       this.fineAmount,
+//       this.balanceAmount,
+//       this.checkedInstallment,
+//       this.enableInstallment,
+//       this.checkedFees,
+//       this.totalPaidAmount,
+//       this.installmentOrder});
+
+//   FeeFeesInstallments.fromJson(Map<String, dynamic> json) {
+//     feesDetailsId = json['feesDetailsId'];
+//     installmentName = json['installmentName'];
+//     installmentNetDue = json['installmentNetDue'];
+//     concessionAmount = json['concessionAmount'];
+//     netDue = json['netDue'];
+//     fineAmount = json['fineAmount'];
+//     balanceAmount = json['balanceAmount'];
+//     checkedInstallment = json['checkedInstallment'];
+//     enableInstallment = json['enableInstallment'];
+//     checkedFees = json['checkedFees'];
+//     totalPaidAmount = json['totalPaidAmount'];
+//     installmentOrder = json['installmentOrder'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['feesDetailsId'] = this.feesDetailsId;
+//     data['installmentName'] = this.installmentName;
+//     data['installmentNetDue'] = this.installmentNetDue;
+//     data['concessionAmount'] = this.concessionAmount;
+//     data['netDue'] = this.netDue;
+//     data['fineAmount'] = this.fineAmount;
+//     data['balanceAmount'] = this.balanceAmount;
+//     data['checkedInstallment'] = this.checkedInstallment;
+//     data['enableInstallment'] = this.enableInstallment;
+//     data['checkedFees'] = this.checkedFees;
+//     data['totalPaidAmount'] = this.totalPaidAmount;
+//     data['installmentOrder'] = this.installmentOrder;
+//     return data;
+//   }
+
+//   void addAll(List<FeeFeesInstallments> templist) {}
+// }
+
+// class FeeBusInstallments {
+//   String? feesDetailsId;
+//   String? installmentName;
+//   double? installmentNetDue;
+//   double? netDue;
+//   double? fineAmount;
+//   double? balanceAmount;
+//   bool? checkedInstallment;
+//   bool? enableInstallment;
+//   bool? checkedFees;
+//   double? totalPaidAmount;
+//   int? installmentOrder;
+
+//   FeeBusInstallments(
+//       {this.feesDetailsId,
+//       this.installmentName,
+//       this.installmentNetDue,
+//       this.netDue,
+//       this.fineAmount,
+//       this.balanceAmount,
+//       this.checkedInstallment,
+//       this.enableInstallment,
+//       this.checkedFees,
+//       this.totalPaidAmount,
+//       this.installmentOrder});
+
+//   FeeBusInstallments.fromJson(Map<String, dynamic> json) {
+//     feesDetailsId = json['feesDetailsId'];
+//     installmentName = json['installmentName'];
+//     installmentNetDue = json['installmentNetDue'];
+//     netDue = json['netDue'];
+//     fineAmount = json['fineAmount'];
+//     balanceAmount = json['balanceAmount'];
+//     checkedInstallment = json['checkedInstallment'];
+//     enableInstallment = json['enableInstallment'];
+//     checkedFees = json['checkedFees'];
+//     totalPaidAmount = json['totalPaidAmount'];
+//     installmentOrder = json['installmentOrder'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['feesDetailsId'] = this.feesDetailsId;
+//     data['installmentName'] = this.installmentName;
+//     data['installmentNetDue'] = this.installmentNetDue;
+//     data['netDue'] = this.netDue;
+//     data['fineAmount'] = this.fineAmount;
+//     data['balanceAmount'] = this.balanceAmount;
+//     data['checkedInstallment'] = this.checkedInstallment;
+//     data['enableInstallment'] = this.enableInstallment;
+//     data['checkedFees'] = this.checkedFees;
+//     data['totalPaidAmount'] = this.totalPaidAmount;
+//     data['installmentOrder'] = this.installmentOrder;
+//     return data;
+//   }
+//}
+
+///////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+///
+///
 class OnlineFeePayModel {
   bool? allowPartialPayment;
-  String? concessionCaption;
+  // Null? concessionCaption;
+  StudentDetailsList? studentDetailsList;
   List<FeeFeesInstallments>? feeFeesInstallments;
   List<FeeBusInstallments>? feeBusInstallments;
+  Order? order;
+  FeeOrder? feeOrder;
+  List<Transactiontype>? transactiontype;
 
   OnlineFeePayModel(
       {this.allowPartialPayment,
-      this.concessionCaption,
+      //this.concessionCaption,
+      this.studentDetailsList,
       this.feeFeesInstallments,
-      this.feeBusInstallments});
+      this.feeBusInstallments,
+      this.order,
+      this.feeOrder,
+      this.transactiontype});
 
   OnlineFeePayModel.fromJson(Map<String, dynamic> json) {
     allowPartialPayment = json['allowPartialPayment'];
-    concessionCaption = json['concessionCaption'];
+    // concessionCaption = json['concessionCaption'];
+    studentDetailsList = json['studentDetailsList'] != null
+        ? new StudentDetailsList.fromJson(json['studentDetailsList'])
+        : null;
     if (json['feeFeesInstallments'] != null) {
-      feeFeesInstallments = [];
+      feeFeesInstallments = <FeeFeesInstallments>[];
       json['feeFeesInstallments'].forEach((v) {
         feeFeesInstallments!.add(new FeeFeesInstallments.fromJson(v));
       });
     }
     if (json['feeBusInstallments'] != null) {
-      feeBusInstallments = [];
+      feeBusInstallments = <FeeBusInstallments>[];
       json['feeBusInstallments'].forEach((v) {
         feeBusInstallments!.add(new FeeBusInstallments.fromJson(v));
+      });
+    }
+    order = json['order'] != null ? new Order.fromJson(json['order']) : null;
+    feeOrder = json['feeOrder'] != null
+        ? new FeeOrder.fromJson(json['feeOrder'])
+        : null;
+    if (json['transactiontype'] != null) {
+      transactiontype = <Transactiontype>[];
+      json['transactiontype'].forEach((v) {
+        transactiontype!.add(new Transactiontype.fromJson(v));
       });
     }
   }
@@ -32,7 +222,10 @@ class OnlineFeePayModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['allowPartialPayment'] = this.allowPartialPayment;
-    data['concessionCaption'] = this.concessionCaption;
+    //  data['concessionCaption'] = this.concessionCaption;
+    if (this.studentDetailsList != null) {
+      data['studentDetailsList'] = this.studentDetailsList!.toJson();
+    }
     if (this.feeFeesInstallments != null) {
       data['feeFeesInstallments'] =
           this.feeFeesInstallments!.map((v) => v.toJson()).toList();
@@ -41,6 +234,49 @@ class OnlineFeePayModel {
       data['feeBusInstallments'] =
           this.feeBusInstallments!.map((v) => v.toJson()).toList();
     }
+    if (this.order != null) {
+      data['order'] = this.order!.toJson();
+    }
+    if (this.feeOrder != null) {
+      data['feeOrder'] = this.feeOrder!.toJson();
+    }
+    if (this.transactiontype != null) {
+      data['transactiontype'] =
+          this.transactiontype!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class StudentDetailsList {
+  String? studentId;
+  String? studentName;
+  String? admissionNo;
+  int? classNo;
+  String? division;
+
+  StudentDetailsList(
+      {this.studentId,
+      this.studentName,
+      this.admissionNo,
+      this.classNo,
+      this.division});
+
+  StudentDetailsList.fromJson(Map<String, dynamic> json) {
+    studentId = json['studentId'];
+    studentName = json['studentName'];
+    admissionNo = json['admissionNo'];
+    classNo = json['classNo'];
+    division = json['division'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['studentId'] = this.studentId;
+    data['studentName'] = this.studentName;
+    data['admissionNo'] = this.admissionNo;
+    data['classNo'] = this.classNo;
+    data['division'] = this.division;
     return data;
   }
 }
@@ -57,7 +293,6 @@ class FeeFeesInstallments {
   bool? enableInstallment;
   bool? checkedFees;
   double? totalPaidAmount;
-  int? installmentOrder;
 
   FeeFeesInstallments(
       {this.feesDetailsId,
@@ -70,8 +305,7 @@ class FeeFeesInstallments {
       this.checkedInstallment,
       this.enableInstallment,
       this.checkedFees,
-      this.totalPaidAmount,
-      this.installmentOrder});
+      this.totalPaidAmount});
 
   FeeFeesInstallments.fromJson(Map<String, dynamic> json) {
     feesDetailsId = json['feesDetailsId'];
@@ -85,7 +319,6 @@ class FeeFeesInstallments {
     enableInstallment = json['enableInstallment'];
     checkedFees = json['checkedFees'];
     totalPaidAmount = json['totalPaidAmount'];
-    installmentOrder = json['installmentOrder'];
   }
 
   Map<String, dynamic> toJson() {
@@ -101,11 +334,8 @@ class FeeFeesInstallments {
     data['enableInstallment'] = this.enableInstallment;
     data['checkedFees'] = this.checkedFees;
     data['totalPaidAmount'] = this.totalPaidAmount;
-    data['installmentOrder'] = this.installmentOrder;
     return data;
   }
-
-  void addAll(List<FeeFeesInstallments> templist) {}
 }
 
 class FeeBusInstallments {
@@ -119,7 +349,6 @@ class FeeBusInstallments {
   bool? enableInstallment;
   bool? checkedFees;
   double? totalPaidAmount;
-  int? installmentOrder;
 
   FeeBusInstallments(
       {this.feesDetailsId,
@@ -131,8 +360,7 @@ class FeeBusInstallments {
       this.checkedInstallment,
       this.enableInstallment,
       this.checkedFees,
-      this.totalPaidAmount,
-      this.installmentOrder});
+      this.totalPaidAmount});
 
   FeeBusInstallments.fromJson(Map<String, dynamic> json) {
     feesDetailsId = json['feesDetailsId'];
@@ -145,7 +373,6 @@ class FeeBusInstallments {
     enableInstallment = json['enableInstallment'];
     checkedFees = json['checkedFees'];
     totalPaidAmount = json['totalPaidAmount'];
-    installmentOrder = json['installmentOrder'];
   }
 
   Map<String, dynamic> toJson() {
@@ -160,7 +387,137 @@ class FeeBusInstallments {
     data['enableInstallment'] = this.enableInstallment;
     data['checkedFees'] = this.checkedFees;
     data['totalPaidAmount'] = this.totalPaidAmount;
-    data['installmentOrder'] = this.installmentOrder;
+    return data;
+  }
+}
+
+class Order {
+  String? status;
+  String? tranType;
+
+  Order({this.status, this.tranType});
+
+  Order.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    tranType = json['tranType'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['tranType'] = this.tranType;
+    return data;
+  }
+}
+
+class FeeOrder {
+  String? lastOrderStatus;
+  String? lastTransactionTypeId;
+  String? lastTransactionTypeName;
+  String? transactionId;
+  String? lastTransactionDate;
+  String? lastTransactionStartDate;
+  double? lastTransactionAmount;
+  int? lastOrderId;
+  String? paymentGatewayId;
+  String? readableOrderId;
+
+  FeeOrder(
+      {this.lastOrderStatus,
+      this.lastTransactionTypeId,
+      this.lastTransactionTypeName,
+      this.transactionId,
+      this.lastTransactionDate,
+      this.lastTransactionStartDate,
+      this.lastTransactionAmount,
+      this.lastOrderId,
+      this.paymentGatewayId,
+      this.readableOrderId});
+
+  FeeOrder.fromJson(Map<String, dynamic> json) {
+    lastOrderStatus = json['lastOrderStatus'];
+    lastTransactionTypeId = json['lastTransactionTypeId'];
+    lastTransactionTypeName = json['lastTransactionTypeName'];
+    transactionId = json['transactionId'];
+    lastTransactionDate = json['lastTransactionDate'];
+    lastTransactionStartDate = json['lastTransactionStartDate'];
+    lastTransactionAmount = json['lastTransactionAmount'];
+    lastOrderId = json['lastOrderId'];
+    paymentGatewayId = json['paymentGatewayId'];
+    readableOrderId = json['readableOrderId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lastOrderStatus'] = this.lastOrderStatus;
+    data['lastTransactionTypeId'] = this.lastTransactionTypeId;
+    data['lastTransactionTypeName'] = this.lastTransactionTypeName;
+    data['transactionId'] = this.transactionId;
+    data['lastTransactionDate'] = this.lastTransactionDate;
+    data['lastTransactionStartDate'] = this.lastTransactionStartDate;
+    data['lastTransactionAmount'] = this.lastTransactionAmount;
+    data['lastOrderId'] = this.lastOrderId;
+    data['paymentGatewayId'] = this.paymentGatewayId;
+    data['readableOrderId'] = this.readableOrderId;
+    return data;
+  }
+}
+
+class Transactiontype {
+  String? name;
+  String? id;
+
+  Transactiontype({this.name, this.id});
+
+  Transactiontype.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['id'] = this.id;
+    return data;
+  }
+}
+
+//fee order pdf download
+
+class FilePathPdfDownload {
+  String? extension;
+  String? id;
+  bool? isDeleted;
+  bool? isTemporary;
+  String? name;
+  String? url;
+
+  FilePathPdfDownload(
+      {this.extension,
+      this.id,
+      this.isDeleted,
+      this.isTemporary,
+      this.name,
+      this.url});
+
+  FilePathPdfDownload.fromJson(Map<String, dynamic> json) {
+    extension = json['extension'];
+    id = json['id'];
+    isDeleted = json['isDeleted'];
+    isTemporary = json['isTemporary'];
+    name = json['name'];
+    url = json['url'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['extension'] = this.extension;
+    data['id'] = this.id;
+    data['isDeleted'] = this.isDeleted;
+    data['isTemporary'] = this.isTemporary;
+    data['name'] = this.name;
+    data['url'] = this.url;
     return data;
   }
 }

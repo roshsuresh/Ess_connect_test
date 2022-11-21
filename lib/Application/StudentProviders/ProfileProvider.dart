@@ -95,7 +95,7 @@ class ProfileProvider with ChangeNotifier {
         dataResponse = await mapResponse!['studentDetails'];
 
         print("corect..........");
-        print(dataResponse);
+        //  print(dataResponse);
         setLoading(true);
         StudentProfileModel std =
             StudentProfileModel.fromJson(mapResponse!['studentDetails']);

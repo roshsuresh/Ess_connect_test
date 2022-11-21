@@ -18,9 +18,9 @@ class GalleryListStaff extends StatelessWidget {
     return Consumer<GallerySendProvider_Stf>(
       builder: (context, provider, child) {
         return provider.loading
-            ? spinkitLoader()
+            ? const spinkitLoader()
             : ListView.builder(
-                itemCount: provider.galleryViewList.length == null
+                itemCount: provider.galleryViewList.isEmpty
                     ? 0
                     : provider.galleryViewList.length,
                 itemBuilder: (context, index) {

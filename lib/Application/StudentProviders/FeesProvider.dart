@@ -10,11 +10,11 @@ Map? mapResponses;
 Map? dataResponss;
 List? feeResponse;
 List? busfeeResponse;
+
 List<FeeFeesInstallments> feesList = [];
 //List? listResponses;
 
 class FeesProvider with ChangeNotifier {
-  bool isLoading = false;
   late String installmentTerm;
   late int installamount;
   bool? allowPartialPayment;
@@ -28,6 +28,11 @@ class FeesProvider with ChangeNotifier {
 
   List<FeeFeesInstallments> feeList = [];
   List<FeeBusInstallments> busFeeList = [];
+
+  String? lastOrderStatus;
+  String? lastTransactionStartDate;
+  double? lastTransactionAmount;
+
   Future<bool> feesData() async {
     // isLoading = true;
     // notifyListeners();
@@ -40,21 +45,26 @@ class FeesProvider with ChangeNotifier {
     };
     setLoading(true);
     var response = await http.get(
-        Uri.parse("${UIGuide.baseURL}/mobileapp/parents/feevalues"),
+        Uri.parse("${UIGuide.baseURL}/onlinepayment/initialvalues"),
         headers: headers);
 
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-        var jsonData = json.decode(response.body);
+        //  var jsonData = json.decode(response.body);
 
         print("Fee Response..........");
 
         Map<String, dynamic> data = json.decode(response.body);
         Map<String, dynamic> feeinitial =
             data['onlineFeePaymentStudentDetails'];
-        // feeResponse = dataResponss!['feeFeesInstallments'];
-        // busfeeResponse = dataResponss!['feeBusInstallments'];
+        Map<String, dynamic> feedata = feeinitial['feeOrder'];
+        print(feedata);
+        FeeOrder fee = FeeOrder.fromJson(feedata);
+        lastOrderStatus = fee.lastOrderStatus;
+        lastTransactionStartDate = fee.lastTransactionStartDate;
+        lastTransactionAmount = fee.lastTransactionAmount;
+
         setLoading(true);
         List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
             feeinitial['feeFeesInstallments']
@@ -65,6 +75,12 @@ class FeesProvider with ChangeNotifier {
             feeinitial['feeBusInstallments']
                 .map((x) => FeeBusInstallments.fromJson(x)));
         busFeeList.addAll(templistt);
+
+        // FeeOrder fee = FeeOrder.fromJson(feeOrder);
+        // lastOrderStatus = fee.lastOrderStatus;
+        // lastTransactionStartDate = fee.lastTransactionStartDate;
+        // lastTransactionAmount = fee.lastTransactionAmount;
+
         // print(dataResponss);
         // print('Bus Response     $busfeeResponse');
 
@@ -182,5 +198,47 @@ class FeesProvider with ChangeNotifier {
     total = totalFees + totalBusFee;
     print(total);
     notifyListeners();
+  }
+
+  // pdf download
+
+  Future pdfDownload() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
+        headers: headers);
+
+    try {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        Map<String, dynamic> pdf = data['filePath'];
+
+        print(data);
+        attend = attendenceData!['monthwiseAttendence'];
+        // print(attend);
+        AttendenceModel att =
+            AttendenceModel.fromJson(attendenceRespo!['attendence']);
+        workDays = att.workDays;
+        presentDays = att.presentDays;
+        absentDays = att.absentDays;
+        attendancePercentage = att.attendancePercentage;
+        //print('presentDays $presentDays');
+        // print(workDays);
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in response");
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
