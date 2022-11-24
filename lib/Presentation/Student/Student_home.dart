@@ -1,7 +1,9 @@
+import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_selector/utils/utils.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
@@ -31,7 +33,7 @@ class StudentHome extends StatelessWidget {
     // Provider.of<ProfileProvider>(context, listen: false).profileData();
     // Provider.of<ProfileProvider>(context, listen: false)
     //     .flashNewsProvider(context);
-    Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
+    //  Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
     //Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
     // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
 
@@ -902,7 +904,7 @@ class StudentHome extends StatelessWidget {
 
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
+                                      builder: (context) => LoginPage()),
                                   (Route<dynamic> route) => false);
                             },
                           ).show();
@@ -1398,49 +1400,111 @@ class ProfileHome extends StatelessWidget {
         context: context,
         builder: (context) {
           var size = MediaQuery.of(context).size;
-          return AlertDialog(
-              content: Container(
-            decoration:
-                BoxDecoration(border: Border.all(color: UIGuide.light_Purple)),
-            height: 70,
-            width: size.width,
-            child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-                itemCount:
-                    siblinggResponse == null ? 0 : siblinggResponse!.length,
-                itemBuilder: ((context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: GestureDetector(
-                              onTap: () async {
-                                var idd = siblinggResponse![index]['id'] == null
-                                    ? '--'
-                                    : siblinggResponse![index]['id'].toString();
+          return Dialog(
+              child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: UIGuide.light_Purple, width: 2),
+                borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount:
+                        siblinggResponse == null ? 0 : siblinggResponse!.length,
+                    itemBuilder: (context, index) {
+                      // print(snapshot
 
-                                // await Future.delayed(
-                                //     const Duration(seconds: 3));
+                      //     .attendenceInitialValues.length);
 
-                                await Provider.of<SibingsProvider>(context,
-                                        listen: false)
-                                    .getSibling(context, idd);
-                              },
-                              child: Text(
-                                  siblinggResponse![index]['name'] == null
-                                      ? '--'
-                                      : siblinggResponse![index]['name']
-                                          .toString()))),
-                      const Divider(
-                        height: 1,
-                        color: Colors.black45,
-                      )
-                    ],
-                  );
-                })),
+                      // value.removeCourseAll();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          kheight20,
+                          Center(
+                              child: GestureDetector(
+                                  onTap: () async {
+                                    var idd =
+                                        siblinggResponse![index]['id'] == null
+                                            ? '--'
+                                            : siblinggResponse![index]['id']
+                                                .toString();
+
+                                    // await Future.delayed(
+                                    //     const Duration(seconds: 3));
+
+                                    await Provider.of<SibingsProvider>(context,
+                                            listen: false)
+                                        .getSibling(context, idd);
+                                  },
+                                  child: Text(
+                                    siblinggResponse![index]['name'] == null
+                                        ? '--'
+                                        : siblinggResponse![index]['name']
+                                            .toString(),
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        color: UIGuide.light_Purple,
+                                        fontSize: 16),
+                                  ))),
+                          // const Divider(
+                          //   height: 1,
+                          //   color: Colors.black45,
+                          // ),
+                          kheight20,
+                        ],
+                      );
+                    }),
+              ],
+            ),
           ));
+          //  AlertDialog(
+          //     content: Container(
+          //   decoration:
+          //       BoxDecoration(border: Border.all(color: UIGuide.light_Purple)),
+          //   height: 70,
+          //   width: size.width,
+          //   child: ListView.separated(
+          //       separatorBuilder: (BuildContext context, int index) =>
+          //           const Divider(),
+          //       itemCount:
+          //           siblinggResponse == null ? 0 : siblinggResponse!.length,
+          //       itemBuilder: ((context, index) {
+          // return Column(
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Center(
+          //         child: GestureDetector(
+          //             onTap: () async {
+          //               var idd = siblinggResponse![index]['id'] == null
+          //                   ? '--'
+          //                   : siblinggResponse![index]['id'].toString();
+
+          //               // await Future.delayed(
+          //               //     const Duration(seconds: 3));
+
+          //               await Provider.of<SibingsProvider>(context,
+          //                       listen: false)
+          //                   .getSibling(context, idd);
+          //             },
+          //             child: Text(
+          //                 siblinggResponse![index]['name'] == null
+          //                     ? '--'
+          //                     : siblinggResponse![index]['name']
+          //                         .toString()))),
+          //     // const Divider(
+          //     //   height: 1,
+          //     //   color: Colors.black45,
+          //     // )
+          //   ],
+          // );
+          //       })),
+          // ));
         });
   }
 }

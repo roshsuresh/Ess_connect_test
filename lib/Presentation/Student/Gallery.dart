@@ -14,8 +14,11 @@ class Gallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    Provider.of<GalleryProvider>(context, listen: false)
-        .getGalleyList(); //provider
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<GalleryProvider>(context, listen: false)
+          .getGalleyList(); //provider
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gallery'),

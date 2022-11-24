@@ -521,3 +521,39 @@ class FilePathPdfDownload {
     return data;
   }
 }
+
+//status Payment
+
+class StatusPayment {
+  String? status;
+
+  StatusPayment({this.status});
+
+  StatusPayment.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    return data;
+  }
+}
+
+//gateway Name Check
+
+class GateWayName {
+  String? gateway;
+
+  GateWayName({this.gateway});
+
+  GateWayName.fromJson(Map<String, dynamic> json) {
+    gateway = json['gateway'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['gateway'] = this.gateway;
+    return data;
+  }
+}

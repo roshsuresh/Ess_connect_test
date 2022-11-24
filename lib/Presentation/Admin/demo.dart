@@ -1,19 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
-
-import 'package:Ess_test/Constants.dart';
+import 'dart:convert';
+import 'dart:ui';
 import 'package:Ess_test/utils/constants.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_custom_selector/flutter_custom_selector.dart';
-import 'package:getwidget/components/dropdown/gf_dropdown.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:getwidget/types/gf_checkbox_type.dart';
-import 'package:provider/provider.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-
-import '../../Application/AdminProviders/NoticeBoardadmin.dart';
 
 class Demo extends StatefulWidget {
   Demo({Key? key}) : super(key: key);
@@ -22,54 +13,815 @@ class Demo extends StatefulWidget {
   State<Demo> createState() => _DemoState();
 }
 
-class _DemoState extends State<Demo> {
+class _DemoState extends State<Demo> with TickerProviderStateMixin {
+  double _fontSize = 2;
+  double _containerSize = 1.5;
+  double _textOpacity = 0.0;
+  double _containerOpacity = 0.0;
+
+  late AnimationController _controller;
+  Animation<double>? animation1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
+
+    animation1 = Tween<double>(begin: 40, end: 20).animate(CurvedAnimation(
+        parent: _controller, curve: Curves.fastLinearToSlowEaseIn))
+      ..addListener(() {
+        setState(() {
+          _textOpacity = 1.0;
+        });
+      });
+
+    _controller.forward();
+
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        _fontSize = 1.06;
+      });
+    });
+
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        _containerSize = 2;
+        _containerOpacity = 1;
+      });
+    });
+
+    Timer(Duration(seconds: 4), () async {
+      setState(() {
+        Navigator.pushReplacement(context, PageTransition(SecondPage()));
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return RefreshIndicator(
-        child: CustomScrollView(
-          //   controller: _scrollController,
-          slivers: <Widget>[
-            SliverAppBar(
-              primary: false,
-              expandedHeight: 75,
-              backgroundColor: Color(0xFFf4eedd),
-              floating: true,
-              actions: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('images/banner.png'),
-                          fit: BoxFit.fill)),
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      backgroundColor: UIGuide.THEME_LIGHT,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              AnimatedContainer(
+                  duration: Duration(milliseconds: 2000),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  height: _height / _fontSize),
+              AnimatedOpacity(
+                duration: Duration(milliseconds: 1000),
+                opacity: _textOpacity,
+                child: Text(
+                  'YOUR APP\'S NAME',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: animation1?.value,
+                  ),
                 ),
-              ],
+              ),
+            ],
+          ),
+          Center(
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 2000),
+              curve: Curves.fastLinearToSlowEaseIn,
+              opacity: _containerOpacity,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 2000),
+                curve: Curves.fastLinearToSlowEaseIn,
+                height: _width / _containerSize,
+                width: _width / _containerSize,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                // child: Image.asset('assets/images/file_name.png')
+                child: Text(
+                  'YOUR APP\'S LOGO',
+                ),
+              ),
             ),
-          ],
-        ),
-        onRefresh: _refreshLocalGallery);
+          ),
+        ],
+      ),
+    );
   }
-
-  Future<Null> _refreshLocalGallery() async {
-    print('refreshing stocks...');
-  }
-
-// @override
-
-  //  StreamBuilder<ConnectivityResult>(
-  //     stream: Connectivity().onConnectivityChanged,
-  //     builder: (context, snapshot) {
-  //       return Scaffold(
-  //         body: snapshot.data == ConnectivityResult.none
-  //             ? const Center(child: Text('No Internet Connection'))
-  //             : const Center(child: Text('Internect Connection')),
-  //       );
-
 }
 
-// @override
-// void initState() {
+class PageTransition extends PageRouteBuilder {
+  final Widget page;
+
+  PageTransition(this.page)
+      : super(
+          pageBuilder: (context, animation, anotherAnimation) => page,
+          transitionDuration: Duration(milliseconds: 2000),
+          transitionsBuilder: (context, animation, anotherAnimation, child) {
+            animation = CurvedAnimation(
+              curve: Curves.fastLinearToSlowEaseIn,
+              parent: animation,
+            );
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: SizeTransition(
+                sizeFactor: animation,
+                child: page,
+                axisAlignment: 0,
+              ),
+            );
+          },
+        );
+}
+
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        brightness: Brightness.dark,
+        backgroundColor: Colors.deepPurple,
+        centerTitle: true,
+        title: Text(
+          'YOUR APP\'S NAME',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+// class _DemoState extends State<Demo> with TickerProviderStateMixin {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             Text(
+//               'Suppose this is an app in your Phone\'s Screen page.',
+//               textAlign: TextAlign.center,
+//               style: TextStyle(
+//                 fontSize: 17,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//           OpenContainer(
+//               closedBuilder: (_, openContainer) {
+//                 return Container(
+//                   height: 80,
+//                   width: 80,
+//                   child: Center(
+//                     child: Text(
+//                       'App Logo',
+//                       style: TextStyle(
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   ),
+//                 );
+//               },
+//               openColor: Colors.white,
+//               closedElevation: 20,
+//               closedShape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(20)),
+//               transitionDuration: Duration(milliseconds: 700),
+//               openBuilder: (_, closeContainer) {
+//                 return SecondPage();
+//               },
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class SecondPage extends StatefulWidget {
+//   @override
+//   _SecondPageState createState() => _SecondPageState();
+// }
+
+// class _SecondPageState extends State<SecondPage> {
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     Timer(Duration(milliseconds: 400), () {
+//       setState(() {
+//         _a = true;
+//       });
+//     });
+//     Timer(Duration(milliseconds: 400), () {
+//       setState(() {
+//         _b = true;
+//       });
+//     });
+//     Timer(Duration(milliseconds: 1300), () {
+//       setState(() {
+//         _c = true;
+//       });
+//     });
+//     Timer(Duration(milliseconds: 1700), () {
+//       setState(() {
+//         _e = true;
+//       });
+//     });
+//     Timer(Duration(milliseconds: 3400), () {
+//       setState(() {
+//         _d = true;
+//       });
+//     });
+//     Timer(Duration(milliseconds: 3850), () {
+//       setState(() {
+//         Navigator.of(context).pushReplacement(
+//           ThisIsFadeRoute(
+//             route: ThirdPage(), page: ,
+//           ),
+//         );
+//       });
+//     });
+//   }
+
+//   bool _a = false;
+//   bool _b = false;
+//   bool _c = false;
+//   bool _d = false;
+//   bool _e = false;
+
+//   @override
+//   void dispose() {
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     double _h = MediaQuery.of(context).size.height;
+//     double _w = MediaQuery.of(context).size.width;
+//     return Scaffold(
+//       backgroundColor: Colors.black,
+//       body: Center(
+//         child: Column(
+//           children: [
+//             AnimatedContainer(
+//               duration: Duration(milliseconds: _d ? 900 : 2500),
+//               curve: _d ? Curves.fastLinearToSlowEaseIn : Curves.elasticOut,
+//               height: _d
+//                   ? 0
+//                   : _a
+//                       ? _h / 2
+//                       : 20,
+//               width: 20,
+//               // color: Colors.deepPurpleAccent,
+//             ),
+//             AnimatedContainer(
+//               duration: Duration(
+//                   seconds: _d
+//                       ? 1
+//                       : _c
+//                           ? 2
+//                           : 0),
+//               curve: Curves.fastLinearToSlowEaseIn,
+//               height: _d
+//                   ? _h
+//                   : _c
+//                       ? 80
+//                       : 20,
+//               width: _d
+//                   ? _w
+//                   : _c
+//                       ? 200
+//                       : 20,
+//               decoration: BoxDecoration(
+//                   color: _b ? Colors.white : Colors.transparent,
+//                   // shape: _c? BoxShape.rectangle : BoxShape.circle,
+//                   borderRadius:
+//                       _d ? BorderRadius.only() : BorderRadius.circular(30)),
+//               child: Center(
+//                 child: _e
+//                     ? AnimatedTextKit(
+//                         totalRepeatCount: 1,
+//                         animatedTexts: [
+//                           FadeAnimatedText(
+//                             'APP NAME',
+//                             duration: Duration(milliseconds: 1700),
+//                             textStyle: TextStyle(
+//                               fontSize: 30,
+//                               fontWeight: FontWeight.w700,
+//                             ),
+//                           ),
+//                         ],
+//                       )
+//                     : SizedBox(),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class ThisIsFadeRoute extends PageRouteBuilder {
+//  late  Widget page;
+//   late Widget route;
+
+//   ThisIsFadeRoute({ this.page,  this.route})
+//       : super(
+//           pageBuilder: (
+//             BuildContext context,
+//             Animation<double> animation,
+//             Animation<double> secondaryAnimation,
+//           ) =>
+//               page,
+//           transitionsBuilder: (
+//             BuildContext context,
+//             Animation<double> animation,
+//             Animation<double> secondaryAnimation,
+//             Widget child,
+//           ) =>
+//               FadeTransition(
+//             opacity: animation,
+//             child: route,
+//           ),
+//         );
+// }
+
+// class ThirdPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Go Back'),
+//         centerTitle: true,
+//         brightness: Brightness.dark,
+//         backgroundColor: Colors.black,
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     double _w = MediaQuery.of(context).size.width;
+//     return Scaffold(
+//       appBar: AppBar(
+//           title: Text("Go Back"),
+//           centerTitle: true,
+//           brightness: Brightness.dark),
+//       body: AnimationLimiter(
+//         child: ListView.builder(
+//           padding: EdgeInsets.all(_w / 30),
+//           physics:
+//               BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+//           itemCount: 20,
+//           itemBuilder: (BuildContext context, int index) {
+//             return AnimationConfiguration.staggeredList(
+//               position: index,
+//               delay: Duration(milliseconds: 100),
+//               child: SlideAnimation(
+//                 duration: Duration(milliseconds: 2500),
+//                 curve: Curves.fastLinearToSlowEaseIn,
+//                 horizontalOffset: -300,
+//                 verticalOffset: -850,
+//                 child: Container(
+//                   margin: EdgeInsets.only(bottom: _w / 20),
+//                   height: _w / 4,
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                     borderRadius: BorderRadius.all(Radius.circular(20)),
+//                     boxShadow: [
+//                       BoxShadow(
+//                         color: Colors.black.withOpacity(0.1),
+//                         blurRadius: 40,
+//                         spreadRadius: 10,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+//   late AnimationController controller1;
+//   late AnimationController controller2;
+//   late Animation<double> animation1;
+//   late Animation<double> animation2;
+//   late Animation<double> animation3;
+//   late Animation<double> animation4;
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     controller1 = AnimationController(
+//       vsync: this,
+//       duration: Duration(
+//         seconds: 5,
+//       ),
+//     );
+//     animation1 = Tween<double>(begin: .1, end: .15).animate(
+//       CurvedAnimation(
+//         parent: controller1,
+//         curve: Curves.easeInOut,
+//       ),
+//     )
+//       ..addListener(() {
+//         setState(() {});
+//       })
+//       ..addStatusListener((status) {
+//         if (status == AnimationStatus.completed) {
+//           controller1.reverse();
+//         } else if (status == AnimationStatus.dismissed) {
+//           controller1.forward();
+//         }
+//       });
+//     animation2 = Tween<double>(begin: .02, end: .04).animate(
+//       CurvedAnimation(
+//         parent: controller1,
+//         curve: Curves.easeInOut,
+//       ),
+//     )..addListener(() {
+//         setState(() {});
+//       });
+
+//     controller2 = AnimationController(
+//       vsync: this,
+//       duration: Duration(
+//         seconds: 5,
+//       ),
+//     );
+//     animation3 = Tween<double>(begin: .41, end: .38).animate(CurvedAnimation(
+//       parent: controller2,
+//       curve: Curves.easeInOut,
+//     ))
+//       ..addListener(() {
+//         setState(() {});
+//       })
+//       ..addStatusListener((status) {
+//         if (status == AnimationStatus.completed) {
+//           controller2.reverse();
+//         } else if (status == AnimationStatus.dismissed) {
+//           controller2.forward();
+//         }
+//       });
+//     animation4 = Tween<double>(begin: 170, end: 190).animate(
+//       CurvedAnimation(
+//         parent: controller2,
+//         curve: Curves.easeInOut,
+//       ),
+//     )..addListener(() {
+//         setState(() {});
+//       });
+
+//     Timer(Duration(milliseconds: 2500), () {
+//       controller1.forward();
+//     });
+
+//     controller2.forward();
+//   }
+
+//   @override
+//   void dispose() {
+//     controller1.dispose();
+//     controller2.dispose();
+//     super.dispose();
+//   }
+
+//   bool _isObscure = false;
+//   bool isLoading = false;
+//   final _formKey = GlobalKey<FormState>();
+//   final _username = TextEditingController();
+//   final _password = TextEditingController();
+//   @override
+//   Widget build(BuildContext context) {
+//     Size size = MediaQuery.of(context).size;
+//     return Scaffold(
+//       backgroundColor: Color.fromARGB(255, 211, 228, 245),
+//       body: ScrollConfiguration(
+//         behavior: MyBehavior(),
+//         child: SingleChildScrollView(
+//           child: SizedBox(
+//             height: size.height,
+//             child: Stack(
+//               children: [
+//                 Positioned(
+//                   top: size.height * (animation2.value + .29),
+//                   left: size.width * .75,
+//                   child: CustomPaint(
+//                     painter: MyPainter(38),
+//                   ),
+//                 ),
+//                 Positioned(
+//                   top: size.height * .98,
+//                   left: size.width * .1,
+//                   child: CustomPaint(
+//                     painter: MyPainter(animation4.value - 30),
+//                   ),
+//                 ),
+//                 // Positioned(
+//                 //   top: size.height * .5,
+//                 //   left: size.width * (animation2.value + .8),
+//                 //   child: CustomPaint(
+//                 //     painter: MyPainter(30),
+//                 //   ),
+//                 // ),
+//                 // Positioned(
+//                 //   top: size.height * animation3.value,
+//                 //   left: size.width * (animation1.value + .1),
+//                 //   child: CustomPaint(
+//                 //     painter: MyPainter(60),
+//                 //   ),
+//                 // ),
+//                 Positioned(
+//                   top: size.height * .16,
+//                   left: size.width * .9,
+//                   child: CustomPaint(
+//                     painter: MyPainter(animation4.value - 80),
+//                   ),
+//                 ),
+//                 Form(
+//                   key: _formKey,
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 30.0, right: 30),
+//                         child: TextFormField(
+//                           keyboardType: TextInputType.emailAddress,
+//                           controller: _username,
+//                           decoration: InputDecoration(
+//                             focusColor: Color.fromARGB(255, 23, 92, 196),
+//                             prefixIcon: const Icon(
+//                               Icons.person_outline_rounded,
+//                               color: UIGuide.light_Purple,
+//                             ),
+//                             border: OutlineInputBorder(
+//                               borderSide: const BorderSide(
+//                                   color: UIGuide.light_Purple, width: 2.0),
+//                               borderRadius: BorderRadius.circular(20.0),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: const BorderSide(
+//                                   color: UIGuide.light_Purple, width: 2.0),
+//                               borderRadius: BorderRadius.circular(20.0),
+//                             ),
+//                             fillColor: Color.fromARGB(255, 158, 158, 158),
+//                             hintText: "Enter Your registered Email",
+//                             hintStyle: const TextStyle(
+//                               color: Colors.grey,
+//                               fontSize: 16,
+//                               fontFamily: "verdana_regular",
+//                               fontWeight: FontWeight.w400,
+//                             ),
+//                             labelText: 'Email',
+//                             labelStyle:
+//                                 const TextStyle(color: UIGuide.light_Purple),
+//                             enabledBorder: OutlineInputBorder(
+//                               borderRadius: BorderRadius.circular(20.0),
+//                               borderSide: BorderSide(
+//                                 color: UIGuide.light_Purple,
+//                                 width: 2.0,
+//                               ),
+//                             ),
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Please enter Email';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                       ),
+//                       kheight20,
+//                       Padding(
+//                         padding: const EdgeInsets.only(left: 30.0, right: 30),
+//                         child: TextFormField(
+//                           obscureText: !_isObscure,
+//                           controller: _password,
+//                           decoration: InputDecoration(
+//                             focusColor:
+//                                 const Color.fromARGB(255, 213, 215, 218),
+//                             prefixIcon: const Icon(
+//                               Icons.password_sharp,
+//                               color: UIGuide.light_Purple,
+//                             ),
+//                             // errorText: "Please enter valid username",
+//                             border: OutlineInputBorder(
+//                               borderRadius: BorderRadius.circular(10.0),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: const BorderSide(
+//                                   color: UIGuide.light_Purple, width: 1.0),
+//                               borderRadius: BorderRadius.circular(10.0),
+//                             ),
+//                             fillColor: Colors.grey,
+//                             hintText: "Enter Your Password",
+//                             hintStyle: const TextStyle(
+//                               color: Colors.grey,
+//                               fontSize: 16,
+//                               fontFamily: "verdana_regular",
+//                               fontWeight: FontWeight.w400,
+//                             ),
+//                             labelText: 'Password',
+//                             labelStyle:
+//                                 const TextStyle(color: UIGuide.light_Purple),
+//                             suffixIcon: IconButton(
+//                               icon: Icon(
+//                                 _isObscure
+//                                     ? Icons.visibility
+//                                     : Icons.visibility_off,
+//                                 color: UIGuide.light_Purple,
+//                               ),
+//                               onPressed: () {
+//                                 setState(() {
+//                                   _isObscure = !_isObscure;
+//                                 });
+//                               },
+//                             ),
+//                             enabledBorder: OutlineInputBorder(
+//                               borderRadius: BorderRadius.circular(20.0),
+//                               borderSide: BorderSide(
+//                                 color: UIGuide.light_Purple,
+//                                 width: 2.0,
+//                               ),
+//                             ),
+//                           ),
+//                           validator: (value) {
+//                             if (value == null || value.isEmpty) {
+//                               return 'Please enter some text';
+//                             }
+//                             return null;
+//                           },
+//                         ),
+//                       ),
+
+//                       kheight20,
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           SizedBox(
+//                             height: 40,
+//                             width: size.width / 2.5,
+//                             child: MaterialButton(
+//                                 shape: RoundedRectangleBorder(
+//                                     borderRadius: BorderRadius.all(
+//                                         Radius.circular(15.0))),
+//                                 color: UIGuide.light_Purple,
+//                                 onPressed: () async {
+//                                   if (_formKey.currentState!.validate()) {
+//                                     checkLogin(_username.text, _password.text);
+
+//                                     print(_username);
+//                                     print(_password);
+//                                   } else {
+//                                     print("Enter some value");
+//                                   }
+//                                 },
+//                                 child: Text(
+//                                   'LOGIN',
+//                                   style: TextStyle(color: Colors.white),
+//                                 )),
+//                           ),
+//                         ],
+//                       ),
+//                       //   ],
+//                       // ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   void checkLogin(String username, String password) async {
+//     SharedPreferences _pref = await SharedPreferences.getInstance();
+//     var headers = {'Content-Type': 'application/json'};
+//     var request = http.Request(
+//         'POST',
+//         Uri.parse(
+//             '${UIGuide.baseURL}/login?id=${_pref.getString('schoolId')}'));
+//     // print(request);
+//     request.body = json.encode({"email": username, "password": password});
+//     print(request.body);
+//     request.headers.addAll(headers);
+
+//     http.StreamedResponse response = await request.send();
+
+//     if (response.statusCode == 200 || response.statusCode == 201) {
+//       var data = jsonDecode(await response.stream.bytesToString());
+//       LoginModel res = LoginModel.fromJson(data);
+//       SharedPreferences prefs = await SharedPreferences.getInstance();
+//       prefs.setString('accesstoken', res.accessToken);
+//       //  print(res.accessToken);
+//       // await  Provider.of<ProfileProvider>(context).profileData();
+//       Provider.of<LoginProvider>(context, listen: false).getToken(context);
+//       var parsedResponse = await parseJWT();
+//       if (parsedResponse['role'] == "Guardian") {
+//         if (isLoading) return;
+//         setState(() {
+//           isLoading = true;
+//         });
+//         await Future.delayed(const Duration(seconds: 3));
+//         Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(
+//                 builder: (BuildContext context) => StudentHome()));
+//       } else if (parsedResponse['role'] == "SystemAdmin") {
+//         if (isLoading) return;
+//         setState(() {
+//           isLoading = true;
+//         });
+//         await Future.delayed(const Duration(seconds: 3));
+//         Navigator.pushReplacement(context,
+//             MaterialPageRoute(builder: (BuildContext context) => AdminHome()));
+//       } else if (parsedResponse['role'] == "Teacher") {
+//         if (isLoading) return;
+//         setState(() {
+//           isLoading = true;
+//         });
+//         await Future.delayed(const Duration(seconds: 3));
+//         Navigator.pushReplacement(context,
+//             MaterialPageRoute(builder: (BuildContext context) => StaffHome()));
+//       } else {
+//         Navigator.pushReplacement(
+//             context,
+//             MaterialPageRoute(
+//                 builder: (BuildContext context) => StudentHome()));
+//         // Navigator.push(
+//         //     context, MaterialPageRoute(builder: (context) => StudentHome()));
+//       }
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(content: Text("Invalid Username or Password")));
+//     }
+//   }
+// }
+
+// class MyPainter extends CustomPainter {
+//   final double radius;
+
+//   MyPainter(this.radius);
+
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final paint = Paint()
+//       ..shader = LinearGradient(
+//               colors: [UIGuide.light_Purple, UIGuide.light_Purple],
+//               begin: Alignment.topLeft,
+//               end: Alignment.bottomRight)
+//           .createShader(Rect.fromCircle(
+//         center: Offset(0, 0),
+//         radius: radius,
+//       ));
+
+//     canvas.drawCircle(Offset.zero, radius, paint);
+//   }
+
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+//     return true;
+//   }
+// }
+
+// class MyBehavior extends ScrollBehavior {
+//   @override
+//   Widget buildViewportChrome(
+//       BuildContext context, Widget child, AxisDirection axisDirection) {
+//     return child;
+//   }
+// }
 //   super.initState();
 //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 //     var p = Provider.of<SchoolPhotoProviders>(context, listen: false);

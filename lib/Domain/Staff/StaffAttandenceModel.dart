@@ -147,19 +147,20 @@ class StudentsAttendenceView_stf {
   String? name;
   bool? select;
   bool? selectedd;
+  String? absent;
 
-  StudentsAttendenceView_stf({
-    this.studAttId,
-    this.divisionId,
-    this.id,
-    this.forenoon,
-    this.afternoon,
-    this.admNo,
-    this.rollNo,
-    this.name,
-    this.select,
-    this.selectedd,
-  });
+  StudentsAttendenceView_stf(
+      {this.studAttId,
+      this.divisionId,
+      this.id,
+      this.forenoon,
+      this.afternoon,
+      this.admNo,
+      this.rollNo,
+      this.name,
+      this.select,
+      this.selectedd,
+      this.absent});
 
   StudentsAttendenceView_stf.fromJson(Map<String, dynamic> json) {
     studAttId = json['studAttId'];
@@ -182,6 +183,7 @@ class StudentsAttendenceView_stf {
     data['admNo'] = admNo;
     data['rollNo'] = rollNo;
     data['name'] = name;
+    data['id'] = id;
     data['id'] = id;
     data['id'] = id;
     return data;

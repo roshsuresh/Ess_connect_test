@@ -436,12 +436,14 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
 
                     onConfirm: (result) async {
                       //  result.clear();
+                      int length = result.length;
+                      // result.removeRange(0, length);
                       print(result.length);
-                      await result.remove(result.length);
-                      result.remove(result);
-                      // result.length = 0;
-                      print(result.length);
-                      divisionData.clear();
+                      // await result.remove(result.length);
+                      // result.remove(result);
+                      // // result.length = 0;
+                      // print(result.length);
+                      // divisionData.clear();
 
                       for (var a = 0; a < result.length; a++) {
                         DivisionListModel data = result[a] as DivisionListModel;

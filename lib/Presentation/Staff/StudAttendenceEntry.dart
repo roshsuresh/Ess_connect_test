@@ -394,7 +394,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                 if (value.isDualAttendance == true) {
                   return const DualAttendenceviewWidget();
                 } else {
-                  return const AttendenceviewWidget();
+                  return AttendenceviewWidget();
                 }
               },
             )
@@ -438,8 +438,8 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
 }
 
 class AttendenceviewWidget extends StatelessWidget {
-  const AttendenceviewWidget({Key? key}) : super(key: key);
-
+  AttendenceviewWidget({Key? key}) : super(key: key);
+  String att = '';
   @override
   Widget build(BuildContext context) {
     return Consumer<AttendenceStaffProvider>(
@@ -514,6 +514,10 @@ class AttendenceviewWidget extends StatelessWidget {
                                 shrinkWrap: true,
                                 itemCount: value.studentsAttendenceView.length,
                                 itemBuilder: ((context, index) {
+                                  String att = value
+                                          .studentsAttendenceView[index]
+                                          .absent ??
+                                      '--';
                                   return Column(
                                     children: [
                                       Table(
@@ -558,6 +562,26 @@ class AttendenceviewWidget extends StatelessWidget {
                                                     value.selectItem(value
                                                             .studentsAttendenceView[
                                                         index]);
+                                                    if (value
+                                                                .studentsAttendenceView[
+                                                                    index]
+                                                                .select !=
+                                                            null &&
+                                                        value
+                                                            .studentsAttendenceView[
+                                                                index]
+                                                            .select!) {
+                                                      att = value
+                                                              .studentsAttendenceView[
+                                                                  index]
+                                                              .absent ??
+                                                          '--';
+                                                      print('Absent');
+                                                      print(att);
+                                                    } else {
+                                                      att = "P";
+                                                      print('Present');
+                                                    }
                                                   },
                                                   child: SizedBox(
                                                     width: 5,

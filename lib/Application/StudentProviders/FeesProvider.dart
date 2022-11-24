@@ -28,14 +28,16 @@ class FeesProvider with ChangeNotifier {
 
   List<FeeFeesInstallments> feeList = [];
   List<FeeBusInstallments> busFeeList = [];
+  List<Transactiontype> transactionList = [];
 
   String? lastOrderStatus;
   String? lastTransactionStartDate;
   double? lastTransactionAmount;
+  String? paymentGatewayId;
+  String? readableOrderId;
+  int? orderId;
 
-  Future<bool> feesData() async {
-    // isLoading = true;
-    // notifyListeners();
+  Future<Object> feesData() async {
     setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
@@ -51,7 +53,6 @@ class FeesProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-        //  var jsonData = json.decode(response.body);
 
         print("Fee Response..........");
 
@@ -59,12 +60,14 @@ class FeesProvider with ChangeNotifier {
         Map<String, dynamic> feeinitial =
             data['onlineFeePaymentStudentDetails'];
         Map<String, dynamic> feedata = feeinitial['feeOrder'];
-        print(feedata);
+        //(feedata);
         FeeOrder fee = FeeOrder.fromJson(feedata);
         lastOrderStatus = fee.lastOrderStatus;
         lastTransactionStartDate = fee.lastTransactionStartDate;
         lastTransactionAmount = fee.lastTransactionAmount;
-
+        readableOrderId = fee.readableOrderId;
+        paymentGatewayId = fee.paymentGatewayId;
+        orderId = fee.lastOrderId;
         setLoading(true);
         List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
             feeinitial['feeFeesInstallments']
@@ -75,6 +78,11 @@ class FeesProvider with ChangeNotifier {
             feeinitial['feeBusInstallments']
                 .map((x) => FeeBusInstallments.fromJson(x)));
         busFeeList.addAll(templistt);
+        List<Transactiontype> templis = List<Transactiontype>.from(
+            feeinitial['transactiontype']
+                .map((x) => Transactiontype.fromJson(x)));
+        transactionList.addAll(templis);
+        print(transactionList.length);
 
         // FeeOrder fee = FeeOrder.fromJson(feeOrder);
         // lastOrderStatus = fee.lastOrderStatus;
@@ -202,43 +210,233 @@ class FeesProvider with ChangeNotifier {
 
   // pdf download
 
-  // Future pdfDownload() async {
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   setLoading(true);
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-  //   // print(headers);
-  //   var response = await http.get(
-  //       Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
-  //       headers: headers);
+  String? extension;
+  String? name;
+  String? url;
 
-  //   try {
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       Map<String, dynamic> data = json.decode(response.body);
+  Future pdfDownload(String readableId, String paymentGatewayID) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/payment-gateway-selector/check-status?readableOrderId=$readableId&paymentGatewayId=$paymentGatewayID"),
+        headers: headers);
 
-  //       Map<String, dynamic> pdf = data['filePath'];
+    try {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map<String, dynamic> data = json.decode(response.body);
 
-  //       print(data);
-  //       attend = attendenceData!['monthwiseAttendence'];
-  //       // print(attend);
-  //       FilePathPdfDownload att =
-  //           AttendenceModel.fromJson(attendenceRespo!['attendence']);
-  //       workDays = att.workDays;
-  //       presentDays = att.presentDays;
-  //       absentDays = att.absentDays;
-  //       attendancePercentage = att.attendancePercentage;
-  //       //print('presentDays $presentDays');
-  //       // print(workDays);
+        Map<String, dynamic> pdf = data['filePath'];
 
-  //       notifyListeners();
-  //     } else {
-  //       setLoading(false);
-  //       print("Error in response");
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+        FilePathPdfDownload att = FilePathPdfDownload.fromJson(pdf);
+        extension = att.extension;
+        name = att.name;
+        url = att.url;
+        print(url);
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in   pdf download  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //status Payment
+
+  String? status;
+
+  Future payStatus(String orderId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/onlinepayment/get-order-details/$orderId"),
+        headers: headers);
+
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        StatusPayment att = StatusPayment.fromJson(data);
+
+        status = att.status;
+        print(status);
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  status  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////    get data  1 index   //////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+  Future getDataOne(String fees, String idFee, String feeAmount, String amount,
+      String gateName) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var request = http.Request(
+        'POST', Uri.parse('${UIGuide.baseURL}/online-payment/paytm/get-data'));
+    request.body = json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    });
+    request.headers.addAll(headers);
+
+    print(json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    }));
+
+    http.StreamedResponse response = await request.send();
+    try {
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        Map<String, dynamic> data =
+            jsonDecode(await response.stream.bytesToString());
+
+        StatusPayment att = StatusPayment.fromJson(data);
+
+        status = att.status;
+        print(status);
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  status  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////////////    get data  2 index   //////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+  Future getDataTwo(String fees, String idFee, String feeAmount, String buss,
+      String idBus, String busAmount, String amount, String gateName) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var request = http.Request(
+        'POST', Uri.parse('${UIGuide.baseURL}/online-payment/paytm/get-data'));
+
+    request.body = json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount},
+        {"name": buss, "id": idBus, "amount": busAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
+    print(json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount},
+        {"name": buss, "id": idBus, "amount": busAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    }));
+
+    try {
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+        Map<String, dynamic> data =
+            jsonDecode(await response.stream.bytesToString());
+
+        StatusPayment att = StatusPayment.fromJson(data);
+
+        status = att.status;
+        print(status);
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  status  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////        gateway NAME          /////////////////////////
+  ////////////////////////////////////////////////////////////////////////////
+  String? gateway;
+  Future gatewayName() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    // print(headers);
+    var response = await http.get(
+        Uri.parse(
+            "${UIGuide.baseURL}/payment-gateway-selector/check-default-paymentgateway"),
+        headers: headers);
+
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        GateWayName att = GateWayName.fromJson(data);
+
+        gateway = att.gateway;
+        print('gateway  $gateway');
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  status  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

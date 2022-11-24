@@ -1,7 +1,15 @@
+import 'dart:math';
+
+import 'package:Ess_test/Presentation/Student/Student_home.dart';
+import 'package:Ess_test/Presentation/Student/TimeTable.dart';
 import 'package:Ess_test/utils/spinkit.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
+import 'package:pdfdownload/pdfdownload.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../Application/StudentProviders/FeesProvider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
@@ -89,6 +97,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
       var p = Provider.of<FeesProvider>(context, listen: false);
       // _selecteCategorys.clear();
       // _selectedBusFee.clear();
+      p.gatewayName();
       p.selecteCategorys.clear();
       p.selectedBusFee.clear();
       p.feesData();
@@ -97,8 +106,18 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
       p.totalFees = 0;
       p.total = 0;
       p.totalBusFee = 0;
+      p.transactionList.clear();
+      p.gatewayName();
     });
   }
+
+  // @override
+  // void dispose() {
+  //   Provider.of<FeesProvider>(context, listen: false);
+  //   _controller.dispose();
+  //   _controller2.dispose();
+  //   super.dispose();
+  // }
 
   // void _selectAll(int index) {
   //   _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
@@ -180,485 +199,887 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
   Widget build(BuildContext context) {
     // final _provider = Provider.of<FeesProvider>(context, listen: false);
     // _provider.feesData();
-    //Provider.of<FeesProvider>(context, listen: false).feesData();
-    return Stack(
-      children: [
-        Consumer<FeesProvider>(
-          builder: (context, value, child) => value.loading
-              ? spinkitLoader()
-              : ListView(
-                  children: [
-                    kheight20,
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Installment',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: UIGuide.light_Purple),
-                          ),
-                          Consumer<FeesProvider>(
-                              builder: (context, snap, child) {
-                            //   child:
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: Checkbox(
-                                value: snap.isselectAll,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    value = snap.isselectAll;
-                                  });
-                                },
-                                //       },
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                    Scrollbar(
-                      controller: _controller,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 8),
-                        child: LimitedBox(
-                            maxHeight: 160,
-                            child:
-                                //  Consumer<FeesProvider>(
-                                //   builder: (context, value, child) {
-                                //     return
-                                Consumer<FeesProvider>(
-                              builder: (context, value, child) =>
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      controller: _controller,
-                                      itemCount: value.feeList.length == null
-                                          ? 0
-                                          : value.feeList.length,
-
-                                      // feeResponse == null ? 0 : feeResponse!.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        print(value.feeList.length);
-                                        return CheckboxListTile(
-                                          activeColor: const Color.fromARGB(
-                                              255, 238, 236, 236),
-                                          checkColor: UIGuide.light_Purple,
-                                          selectedTileColor:
-                                              UIGuide.light_Purple,
-                                          value: value.selecteCategorys.contains(
-                                              value.feeList[index]
-                                                      .installmentName ??
-                                                  '--'
-                                              // feeResponse![index]['installmentName']
-                                              ),
-                                          onChanged: (bool? selected) async {
-                                            // selected == true;
-
-                                            //if (index == 1 && enable == false) {
-                                            //  enable = true;
-                                            value.onFeeSelected(
-                                                selected!,
-                                                value.feeList[index]
-                                                    .installmentName,
-                                                index,
-                                                value.feeList[index]
-                                                    .installmentNetDue);
-                                            print(selected);
-                                            // } else {
-                                            //   return null;
-                                            // }
-
-                                            // await index == 0 && selected == true;
-                                            // else if (index == 1 && enable == false) {
-                                            //   _onFeeSelected(
-                                            //       selected!,
-                                            //       feeResponse![index]['installmentName'],
-                                            //       index,
-                                            //       feeResponse![index]
-                                            //           ['installmentNetDue']);
-                                            //   print(selected);
-                                            // }
-                                          },
-                                          title: Text(
-                                            value.feeList[index]
-                                                        .installmentNetDue ==
-                                                    null
-                                                ? '--'
-                                                : value.feeList[index]
-                                                    .installmentNetDue
-                                                    .toString(),
-                                            textAlign: TextAlign.end,
-                                          ),
-                                          secondary: Text(
-                                            value.feeList[index]
-                                                    .installmentName ??
-                                                '--',
-                                          ),
-                                        );
-                                      }),
-                            )
-
-                            // return ListView.builder(
-                            //   shrinkWrap: true,
-                            //   controller: _controller,
-                            //   itemCount: feeResponse == null
-                            //       ? 0
-                            //       : feeResponse!.length,
-                            //   itemBuilder: ((context, index) {
-                            //     return Table(
-                            //       //  border: TableBorder.all(),
-                            //       children: [
-                            //         TableRow(
-                            //             decoration: const BoxDecoration(
-                            //                 // color: Color.fromARGB(
-                            //                 //     255, 230, 227, 227),
-                            //                 ),
-                            //             children: [
-                            //               Text(
-                            //                   "\n${feeResponse![index]['installmentName']}"),
-                            //               Center(
-                            //                   child: Text(
-                            //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
-                            //               Center(child: CheckBoxButton()),
-                            //             ]),
-                            //       ],
-                            //     );
-                            //   }),
-                            // );
-                            //   },
-                            // ),
+    // Provider.of<FeesProvider>(context, listen: false).gatewayName();
+    return Scaffold(
+      body: Stack(
+        children: [
+          Consumer<FeesProvider>(
+            builder: (context, value, child) => value.loading
+                ? spinkitLoader()
+                : ListView(
+                    children: [
+                      kheight20,
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Installment',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
+                                  color: UIGuide.light_Purple),
                             ),
-                      ),
-                      thumbVisibility: true,
-                      thickness: 6,
-                      radius: Radius.circular(20),
-                    ),
-                    Consumer<FeesProvider>(
-                      builder: (context, value, child) => Center(
-                        child: Text(
-                          'TotalFee:  ${value.totalFees}',
-                          style: TextStyle(fontSize: 12),
+                            Consumer<FeesProvider>(
+                                builder: (context, snap, child) {
+                              //   child:
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: Checkbox(
+                                  value: snap.isselectAll,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      value = snap.isselectAll;
+                                    });
+                                  },
+                                  //       },
+                                ),
+                              );
+                            }),
+                          ],
                         ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-                      child: Text(
-                        'Bus Fee',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            color: UIGuide.light_Purple),
-                      ),
-                    ),
-                    Scrollbar(
-                      controller: _controller2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 8),
-                        child: LimitedBox(
-                            maxHeight: 280,
-                            child: Consumer<FeesProvider>(
-                              builder: (context, value, child) =>
-                                  ListView.builder(
-                                      shrinkWrap: true,
-                                      controller: _controller2,
-                                      itemCount: value.busFeeList.length == null
-                                          ? 0
-                                          : value.busFeeList.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        print(
-                                            '-----=====--------${value.busFeeList[index]}');
-                                        return CheckboxListTile(
-                                          activeColor: const Color.fromARGB(
-                                              255, 238, 236, 236),
-                                          checkColor: UIGuide.light_Purple,
-                                          selectedTileColor:
-                                              UIGuide.light_Purple,
-                                          value: value.selectedBusFee.contains(
-                                              value.busFeeList[index]
-                                                  .installmentName),
-                                          onChanged: (bool? selected) {
-                                            print(
-                                                '-------------------${value.busFeeList[index]}');
-                                            // if (index == 1)
-                                            value.onBusSelected(
-                                                selected!,
-                                                value.busFeeList[index]
-                                                    .installmentName,
-                                                index,
-                                                value.busFeeList[index]
-                                                    .installmentNetDue);
-                                            print(selected);
-                                          },
-                                          title: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 75),
-                                            child: Text(
-                                              value.busFeeList[index]
-                                                  .installmentNetDue
-                                                  .toString(),
+                      Scrollbar(
+                        controller: _controller,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0, right: 8),
+                          child: LimitedBox(
+                              maxHeight: 160,
+                              child:
+                                  //  Consumer<FeesProvider>(
+                                  //   builder: (context, value, child) {
+                                  //     return
+                                  Consumer<FeesProvider>(
+                                builder: (context, value, child) =>
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        controller: _controller,
+                                        itemCount: value.feeList.length == null
+                                            ? 0
+                                            : value.feeList.length,
+
+                                        // feeResponse == null ? 0 : feeResponse!.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          print(value.feeList.length);
+                                          return CheckboxListTile(
+                                            activeColor: const Color.fromARGB(
+                                                255, 238, 236, 236),
+                                            checkColor: UIGuide.light_Purple,
+                                            selectedTileColor:
+                                                UIGuide.light_Purple,
+                                            value: value.selecteCategorys.contains(
+                                                value.feeList[index]
+                                                        .installmentName ??
+                                                    '--'
+                                                // feeResponse![index]['installmentName']
+                                                ),
+                                            onChanged: (bool? selected) async {
+                                              // selected == true;
+
+                                              //if (index == 1 && enable == false) {
+                                              //  enable = true;
+                                              value.onFeeSelected(
+                                                  selected!,
+                                                  value.feeList[index]
+                                                      .installmentName,
+                                                  index,
+                                                  value.feeList[index]
+                                                      .installmentNetDue);
+                                              print(selected);
+                                              // } else {
+                                              //   return null;
+                                              // }
+
+                                              // await index == 0 && selected == true;
+                                              // else if (index == 1 && enable == false) {
+                                              //   _onFeeSelected(
+                                              //       selected!,
+                                              //       feeResponse![index]['installmentName'],
+                                              //       index,
+                                              //       feeResponse![index]
+                                              //           ['installmentNetDue']);
+                                              //   print(selected);
+                                              // }
+                                            },
+                                            title: Text(
+                                              value.feeList[index]
+                                                          .installmentNetDue ==
+                                                      null
+                                                  ? '--'
+                                                  : value.feeList[index]
+                                                      .installmentNetDue
+                                                      .toString(),
                                               textAlign: TextAlign.end,
                                             ),
-                                          ),
-                                          secondary: Text(value
-                                                  .busFeeList[index]
-                                                  .installmentName ??
-                                              '--'),
-                                        );
-                                      }),
-                            )
-                            // return ListView.builder(
-                            //     shrinkWrap: true,
-                            //     controller: _controller2,
-                            //     itemCount: busfeeResponse == null
-                            //         ? 0
-                            //         : busfeeResponse!.length,
-                            //     itemBuilder: ((context, index) {
-                            //       return Table(
-                            //         //  border: TableBorder.all(),
-                            //         children: [
-                            //           TableRow(children: [
-                            //             Text(
-                            //                 '\n${busfeeResponse![index]['installmentName']}'),
-                            //             Center(
-                            //                 child: Text(
-                            //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
-                            //             const Center(
-                            //                 child: CheckBoxButton()),
-                            //           ]),
-                            //         ],
-                            //       );
-                            //     }));
-                            //   },
-                            // )
-                            ),
-                      ),
-                      thumbVisibility: true,
-                      thickness: 6,
-                      radius: const Radius.circular(20),
-                    ),
-                    Consumer<FeesProvider>(
-                      builder: (context, value, child) => Center(
-                        child: Text(
-                          'TotalBus fee :  ${value.totalBusFee}',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                    kheight20,
-                    kheight20,
-                    Center(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Total : ',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w700),
-                          ),
-                          // totalFee()
-                          Consumer<FeesProvider>(
-                              builder: (context, value, child) =>
-                                  Text(value.total.toString()))
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Last Transaction Details',
-                        style: TextStyle(
-                          color: UIGuide.light_Purple,
-                          decoration: TextDecoration.underline,
-                          decorationStyle: TextDecorationStyle.dashed,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      onTap: () async {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                child: Consumer<FeesProvider>(
-                                    builder: (context, provider, child) {
-                                  String date =
-                                      provider.lastTransactionStartDate ?? '--';
-                                  var updatedDate =
-                                      DateFormat('yyyy-MM-dd').parse(date);
-                                  String newDate = updatedDate.toString();
-                                  String finalDate =
-                                      newDate.replaceRange(10, 23, '');
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        kheight10,
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            'Your last transaction  details',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: UIGuide.light_Purple),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Transaction Date: ',
-                                              ),
-                                              Flexible(
-                                                child: RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  strutStyle:
-                                                      const StrutStyle(),
-                                                  maxLines: 3,
-                                                  text: TextSpan(
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: UIGuide
-                                                              .light_Purple),
-                                                      text:
-                                                          // provider.title ??
-                                                          provider.lastTransactionStartDate ??
-                                                              '--'),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Transaction amount: ',
-                                              ),
-                                              Text(
-                                                provider.lastTransactionAmount ==
-                                                        null
-                                                    ? ''
-                                                    : provider
-                                                        .lastTransactionAmount
-                                                        .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color:
-                                                        UIGuide.light_Purple),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Transaction Status: ',
-                                              ),
-                                              Text(
-                                                finalDate,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color:
-                                                        UIGuide.light_Purple),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                'Download receipt: ',
-                                              ),
-                                              Icon(Icons.download,
-                                                  color: UIGuide.light_Purple)
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              kWidth,
-                                              MaterialButton(
-                                                height: 30,
-                                                onPressed: () async {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text(
-                                                  'OK',
-                                                  style: TextStyle(
-                                                      color: UIGuide.WHITE),
-                                                ),
-                                                color: UIGuide.light_Purple,
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              );
-                            });
+                                            secondary: Text(
+                                              value.feeList[index]
+                                                      .installmentName ??
+                                                  '--',
+                                            ),
+                                          );
+                                        }),
+                              )
 
-                        // provider.galleryViewList.clear();
-                        // await provider.galleryViewListAdmin();
-                        //Navigator.pop(context);
-                      },
+                              // return ListView.builder(
+                              //   shrinkWrap: true,
+                              //   controller: _controller,
+                              //   itemCount: feeResponse == null
+                              //       ? 0
+                              //       : feeResponse!.length,
+                              //   itemBuilder: ((context, index) {
+                              //     return Table(
+                              //       //  border: TableBorder.all(),
+                              //       children: [
+                              //         TableRow(
+                              //             decoration: const BoxDecoration(
+                              //                 // color: Color.fromARGB(
+                              //                 //     255, 230, 227, 227),
+                              //                 ),
+                              //             children: [
+                              //               Text(
+                              //                   "\n${feeResponse![index]['installmentName']}"),
+                              //               Center(
+                              //                   child: Text(
+                              //                       '\n${feeResponse![index]['installmentNetDue'].toString()}')),
+                              //               Center(child: CheckBoxButton()),
+                              //             ]),
+                              //       ],
+                              //     );
+                              //   }),
+                              // );
+                              //   },
+                              // ),
+                              ),
+                        ),
+                        thumbVisibility: true,
+                        thickness: 6,
+                        radius: Radius.circular(20),
+                      ),
+                      Consumer<FeesProvider>(
+                        builder: (context, value, child) => Center(
+                          child: Text(
+                            'TotalFee:  ${value.totalFees}',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      ),
+                      Consumer<FeesProvider>(
+                        builder: (context, bus, child) {
+                          if (value.busFeeList.isNotEmpty) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, bottom: 10, top: 10),
+                                  child: Text(
+                                    'Bus Fee',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w900,
+                                        color: UIGuide.light_Purple),
+                                  ),
+                                ),
+                                Scrollbar(
+                                  controller: _controller2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 8),
+                                    child: LimitedBox(
+                                        maxHeight: 280,
+                                        child: Consumer<FeesProvider>(
+                                          builder: (context, value, child) =>
+                                              ListView.builder(
+                                                  shrinkWrap: true,
+                                                  controller: _controller2,
+                                                  itemCount: value.busFeeList
+                                                              .length ==
+                                                          null
+                                                      ? 0
+                                                      : value.busFeeList.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    print(
+                                                        '-----=====--------${value.busFeeList[index]}');
+
+                                                    return CheckboxListTile(
+                                                      activeColor:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              238,
+                                                              236,
+                                                              236),
+                                                      checkColor:
+                                                          UIGuide.light_Purple,
+                                                      selectedTileColor:
+                                                          UIGuide.light_Purple,
+                                                      value: value
+                                                          .selectedBusFee
+                                                          .contains(value
+                                                              .busFeeList[index]
+                                                              .installmentName),
+                                                      onChanged:
+                                                          (bool? selected) {
+                                                        print(
+                                                            '-------------------${value.busFeeList[index]}');
+
+                                                        // if (index == 1)
+
+                                                        value.onBusSelected(
+                                                            selected!,
+                                                            value
+                                                                .busFeeList[
+                                                                    index]
+                                                                .installmentName,
+                                                            index,
+                                                            value
+                                                                .busFeeList[
+                                                                    index]
+                                                                .installmentNetDue);
+
+                                                        print(selected);
+                                                      },
+                                                      title: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 75),
+                                                        child: Text(
+                                                          value
+                                                              .busFeeList[index]
+                                                              .installmentNetDue
+                                                              .toString(),
+                                                          textAlign:
+                                                              TextAlign.end,
+                                                        ),
+                                                      ),
+                                                      secondary: Text(value
+                                                              .busFeeList[index]
+                                                              .installmentName ??
+                                                          '--'),
+                                                    );
+                                                  }),
+                                        )
+
+                                        // return ListView.builder(
+
+                                        //     shrinkWrap: true,
+
+                                        //     controller: _controller2,
+
+                                        //     itemCount: busfeeResponse == null
+
+                                        //         ? 0
+
+                                        //         : busfeeResponse!.length,
+
+                                        //     itemBuilder: ((context, index) {
+
+                                        //       return Table(
+
+                                        //         //  border: TableBorder.all(),
+
+                                        //         children: [
+
+                                        //           TableRow(children: [
+
+                                        //             Text(
+
+                                        //                 '\n${busfeeResponse![index]['installmentName']}'),
+
+                                        //             Center(
+
+                                        //                 child: Text(
+
+                                        //                     '\n${busfeeResponse![index]['installmentNetDue'].toString()}')),
+
+                                        //             const Center(
+
+                                        //                 child: CheckBoxButton()),
+
+                                        //           ]),
+
+                                        //         ],
+
+                                        //       );
+
+                                        //     }));
+
+                                        //   },
+
+                                        // )
+
+                                        ),
+                                  ),
+                                  thumbVisibility: true,
+                                  thickness: 6,
+                                  radius: const Radius.circular(20),
+                                ),
+                                Consumer<FeesProvider>(
+                                  builder: (context, value, child) => Center(
+                                    child: Text(
+                                      'TotalBus fee :  ${value.totalBusFee}',
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Container(
+                              height: 0,
+                              width: 0,
+                            );
+                          }
+                        },
+                      ),
+                      kheight20,
+                      kheight20,
+                      Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Total : ',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            ),
+                            // totalFee()
+                            Consumer<FeesProvider>(
+                                builder: (context, value, child) =>
+                                    Text(value.total.toString()))
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          'Last Transaction Details',
+                          style: TextStyle(
+                            color: UIGuide.light_Purple,
+                            decoration: TextDecoration.underline,
+                            decorationStyle: TextDecorationStyle.dashed,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        onTap: () async {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: Consumer<FeesProvider>(
+                                      builder: (context, provider, child) {
+                                    String date =
+                                        provider.lastTransactionStartDate ??
+                                            '--';
+                                    var updatedDate =
+                                        DateFormat('yyyy-MM-dd').parse(date);
+                                    String newDate = updatedDate.toString();
+                                    String finalDate =
+                                        newDate.replaceRange(10, 23, '');
+                                    return SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          kheight10,
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Your last transaction  details',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: UIGuide.light_Purple),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'Transaction Date: ',
+                                                ),
+                                                Flexible(
+                                                  child: RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    strutStyle:
+                                                        const StrutStyle(),
+                                                    maxLines: 3,
+                                                    text: TextSpan(
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: UIGuide
+                                                                .light_Purple),
+                                                        text:
+                                                            // provider.title ??
+                                                            finalDate),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'Transaction amount: ',
+                                                ),
+                                                Text(
+                                                  provider.lastTransactionAmount ==
+                                                          null
+                                                      ? ''
+                                                      : provider
+                                                          .lastTransactionAmount
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color:
+                                                          UIGuide.light_Purple),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'Transaction Status: ',
+                                                ),
+                                                Consumer<FeesProvider>(
+                                                  builder:
+                                                      (context, value, child) {
+                                                    String stats =
+                                                        provider.lastOrderStatus ==
+                                                                null
+                                                            ? ''
+                                                            : provider
+                                                                .lastOrderStatus
+                                                                .toString();
+                                                    if (stats == "Success") {
+                                                      return Text(
+                                                        "Success",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.green),
+                                                      );
+                                                    } else if (stats ==
+                                                        "Failed") {
+                                                      return Text(
+                                                        "Failed",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.red),
+                                                      );
+                                                    } else if (stats ==
+                                                        "Cancelled") {
+                                                      return Text(
+                                                        "Cancelled",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    192,
+                                                                    56,
+                                                                    7)),
+                                                      );
+                                                    } else if (stats ==
+                                                        "Processing") {
+                                                      return Text(
+                                                        "Processing",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.orange),
+                                                      );
+                                                    } else {
+                                                      return Text(
+                                                        "--",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: UIGuide
+                                                                .light_Purple),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Text(
+                                                    provider.lastOrderStatus ==
+                                                            null
+                                                        ? ''
+                                                        : provider
+                                                            .lastOrderStatus
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: UIGuide
+                                                            .light_Purple),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Consumer<FeesProvider>(
+                                            builder: (context, value, child) {
+                                              String status =
+                                                  provider.lastOrderStatus ==
+                                                          null
+                                                      ? ''
+                                                      : provider.lastOrderStatus
+                                                          .toString();
+                                              if (status == 'Success' ||
+                                                  status == 'Failed') {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        'Download receipt: ',
+                                                      ),
+                                                      GestureDetector(
+                                                        onTap: () async {
+                                                          String orderID =
+                                                              await provider
+                                                                          .orderId ==
+                                                                      null
+                                                                  ? ''
+                                                                  : provider
+                                                                      .orderId
+                                                                      .toString();
+                                                          await Provider.of<
+                                                                      FeesProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .payStatus(
+                                                                  orderID);
+                                                          String readable = await provider
+                                                                      .readableOrderId ==
+                                                                  null
+                                                              ? ''
+                                                              : provider
+                                                                  .readableOrderId
+                                                                  .toString();
+                                                          String paymentID =
+                                                              await provider
+                                                                          .paymentGatewayId ==
+                                                                      null
+                                                                  ? ''
+                                                                  : provider
+                                                                      .paymentGatewayId
+                                                                      .toString();
+                                                          await Provider.of<
+                                                                      FeesProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .pdfDownload(
+                                                                  readable,
+                                                                  paymentID);
+                                                          String extenstion =
+                                                              await provider
+                                                                      .extension ??
+                                                                  '--';
+                                                          // if (value.extension ==
+                                                          //     '.pdf') {
+
+                                                          SchedulerBinding
+                                                              .instance
+                                                              .addPostFrameCallback(
+                                                                  (_) {
+                                                            Navigator
+                                                                .pushReplacement(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          PdfDownload()),
+                                                            );
+                                                          });
+                                                          // await Navigator.push(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder: (context) =>
+                                                          //           PdfDownload()),
+                                                          // );
+                                                          // } else {
+                                                          //   return null;
+                                                          // }
+                                                        },
+                                                        child: Icon(
+                                                            Icons.download,
+                                                            color: UIGuide
+                                                                .light_Purple),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              } else {
+                                                return Container(
+                                                  height: 0,
+                                                  width: 0,
+                                                );
+                                              }
+                                            },
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                kWidth,
+                                                MaterialButton(
+                                                  height: 30,
+                                                  onPressed: () async {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    'OK',
+                                                    style: TextStyle(
+                                                        color: UIGuide.WHITE),
+                                                  ),
+                                                  color: UIGuide.light_Purple,
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                );
+                              });
+                        },
+                      ),
+                      // Consumer<FeesProvider>(
+                      //   builder: (context, trans, child) {
+                      //     if (trans.transactionList.length == 1) {
+                      //       return ListView.builder(
+                      //         shrinkWrap: true,
+                      //         itemCount: trans.transactionList.length,
+                      //         itemBuilder: ((context, index) {
+                      //           String transType =
+                      //               trans.transactionList[index].name ?? '--';
+                      //           print(transType);
+                      //           print('---------------');
+                      //           return Container(
+                      //             height: 0,
+                      //             width: 0,
+                      //           );
+                      //         }),
+                      //       );
+                      //     } else if (trans.transactionList.length == 2) {
+                      //       return ListView.builder(
+                      //         shrinkWrap: true,
+                      //         itemCount: trans.transactionList.length,
+                      //         itemBuilder: ((context, index) {
+                      //           String transType1 =
+                      //               trans.transactionList[0].name ?? '--';
+                      //           String transType2 =
+                      //               trans.transactionList[1].name ?? '--';
+                      //           String transID1 =
+                      //               trans.transactionList[0].name ?? '--';
+                      //           String transID2 =
+                      //               trans.transactionList[1].name ?? '--';
+                      //           print(transType1);
+                      //           print(transType2);
+                      //           Provider.of<FeesProvider>(context,
+                      //                   listen: false)
+                      //               .getDataTwo(
+                      //                   transType1,
+                      //                   transID1,
+                      //                   trans.totalFees.toString(),
+                      //                   transType2,
+                      //                   transID2,
+                      //                   trans.totalBusFee.toString(),
+                      //                   trans.total.toString(),
+                      //                   trans.gateway.toString());
+                      //           return Container(
+                      //             height: 0,
+                      //             width: 0,
+                      //           );
+                      //         }),
+                      //       );
+                      //     } else {
+                      //       print(
+                      //         trans.transactionList.length,
+                      //       );
+                      //       print('Something Went wrong');
+                      //       return Text('');
+                      //     }
+                      //   },
+                      //   // child: ListView.builder(
+                      //   //   itemCount: value.transactionList.length,
+                      //   //   itemBuilder: ((context, index) {
+                      //   //   return Text(value.)
+                      //   // }),),
+                      // ),
+                      const SizedBox(
+                        height: 100,
+                      ),
+                    ],
+                  ),
+          ),
+          Positioned(
+            bottom: 2,
+            left: 10,
+            right: 10,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
+              child: Consumer<FeesProvider>(
+                builder: (context, trans, child) {
+                  return MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: UIGuide.THEME_LIGHT),
                     ),
-                    const SizedBox(
-                      height: 100,
+                    height: 60,
+                    onPressed: () async {
+                      AwesomeDialog(
+                        context: context,
+                        animType: AnimType.scale,
+                        dialogType: DialogType.info,
+                        title: 'Do you want to continue the payment',
+                        desc:
+                            "Please don't go 'Back' or 'Close' once the payment has been initialized!",
+                        btnOkOnPress: () {},
+                        btnCancelOnPress: () {},
+                      ).show();
+                      // if (trans.transactionList.length == 1) {
+                      //   print('1111111111111111');
+                      //   String transType =
+                      //       trans.transactionList[0].name ?? '--';
+                      // } else if (trans.transactionList.length == 2) {
+                      //   print('22222222222');
+
+                      //   String transType1 =
+                      //       trans.transactionList[0].name ?? '--';
+                      //   String transType2 =
+                      //       trans.transactionList[1].name ?? '--';
+                      //   String transID1 = trans.transactionList[0].id ?? '--';
+                      //   String transID2 = trans.transactionList[1].id ?? '--';
+                      //   String gateway = trans.gateway ?? '--';
+                      //   print(transType1);
+                      //   print(transType2);
+                      //   await Provider.of<FeesProvider>(context, listen: false)
+                      //       .getDataTwo(
+                      //           transType1,
+                      //           transID1,
+                      //           trans.totalFees.toString(),
+                      //           transType2,
+                      //           transID2,
+                      //           trans.totalBusFee.toString(),
+                      //           trans.total.toString(),
+                      //           gateway.toString());
+                      // } else {
+                      //   print(
+                      //     trans.transactionList.length,
+                      //   );
+                      //   print('Something Went wrong');
+                      // }
+                    },
+                    child: const Text(
+                      'Proceed to Pay',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16),
                     ),
-                  ],
-                ),
-        ),
-        Positioned(
-          bottom: 2,
-          left: 10,
-          right: 10,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                side: BorderSide(color: UIGuide.THEME_LIGHT),
+                    color: UIGuide.light_Purple,
+                  );
+                },
               ),
-              height: 60,
-              onPressed: () {},
-              child: const Text(
-                'Proceed to Pay',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16),
-              ),
-              color: UIGuide.light_Purple,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+  }
+}
+
+//pdf download
+
+class PdfDownload extends StatelessWidget {
+  PdfDownload({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<FeesProvider>(
+      builder: (context, value, child) => WillPopScope(
+        onWillPop: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StudentHome()),
+          );
+          throw (e);
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Row(
+                children: [
+                  kWidth,
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => StudentHome()),
+                            (Route<dynamic> route) => false);
+                      },
+                      child: Icon(Icons.arrow_back_ios)),
+                  kWidth,
+                  kWidth,
+                  kWidth,
+                  const Text('Payment'),
+                ],
+              ),
+              titleSpacing: 00.0,
+              centerTitle: true,
+              toolbarHeight: 50.2,
+              toolbarOpacity: 0.8,
+              backgroundColor: UIGuide.light_Purple,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: DownloandPdf(
+                    isUseIcon: true,
+                    pdfUrl: value.url.toString() == null
+                        ? '--'
+                        : value.url.toString(),
+                    fileNames: value.name.toString() == null
+                        ? '---'
+                        : value.name.toString(),
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            body: SfPdfViewer.network(
+              value.url.toString() == null ? '--' : value.url.toString(),
+            )),
+      ),
     );
   }
 }
