@@ -1,15 +1,8 @@
-import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/Staff_Providers/StaffNotificationScreen.dart';
-import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
-import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_custom_selector/flutter_custom_selector.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
-
 import '../../utils/TextWrap(moreOption).dart';
 import '../../utils/constants.dart';
 
@@ -47,7 +40,7 @@ class StaffNotificationScreen extends StatelessWidget {
             ),
             body: TabBarView(children: [
               StaffNotificationReceived(),
-              StaffNotificationSendHistory(),
+              const StaffNotificationSendHistory(),
             ])));
   }
 }
@@ -71,12 +64,12 @@ class StaffNotificationReceived extends StatelessWidget {
     width = size.width;
     return Consumer<StaffNotificationScreenProvider>(
       builder: (context, value, child) => value.loading
-          ? spinkitLoader()
+          ? const spinkitLoader()
           : Scrollbar(
               child: AnimationLimiter(
                 child: ListView.builder(
                   padding: EdgeInsets.all(size.width / 70),
-                  physics: BouncingScrollPhysics(
+                  physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   itemCount: value.notificationStaff?.length == null
                       ? 0
@@ -118,7 +111,7 @@ class StaffNotificationReceived extends StatelessWidget {
                                           : value.notificationStaff![index]
                                                   ['title']
                                               .toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w700),
                                       textAlign: TextAlign.center,
                                     ),
@@ -135,7 +128,7 @@ class StaffNotificationReceived extends StatelessWidget {
                                     kheight,
                                     Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Date',
                                           style: TextStyle(
                                               color: Colors.grey, fontSize: 12),
@@ -148,13 +141,13 @@ class StaffNotificationReceived extends StatelessWidget {
                                               : value.notificationStaff![index]
                                                       ['createdDate']
                                                   .toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 49, 47, 47),
                                               fontSize: 12),
                                         ),
-                                        Spacer(),
-                                        Text(
+                                        const Spacer(),
+                                        const Text(
                                           'Send by ',
                                           style: TextStyle(
                                               color: Colors.grey, fontSize: 12),
@@ -167,7 +160,7 @@ class StaffNotificationReceived extends StatelessWidget {
                                               : value.notificationStaff![index]
                                                       ['fromStaff']
                                                   .toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Color.fromARGB(
                                                   255, 49, 47, 47),
                                               fontSize: 12),
@@ -301,7 +294,7 @@ class StaffNotificationSendHistory extends StatelessWidget {
               child: AnimationLimiter(
                 child: ListView.builder(
                   // padding: EdgeInsets.all(size.width / 30),
-                  physics: BouncingScrollPhysics(
+                  physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   itemCount: value.historyList.length == null
                       ? 0

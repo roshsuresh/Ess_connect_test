@@ -395,9 +395,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                               ListView.builder(
                                                   shrinkWrap: true,
                                                   controller: _controller2,
-                                                  itemCount: value.busFeeList
-                                                              .length ==
-                                                          null
+                                                  itemCount: value
+                                                          .busFeeList.isEmpty
                                                       ? 0
                                                       : value.busFeeList.length,
                                                   itemBuilder:
@@ -405,7 +404,11 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                           int index) {
                                                     print(
                                                         '-----=====--------${value.busFeeList[index]}');
-
+                                                    var list = [];
+                                                    list.addAll([
+                                                      value.busFeeList[index]
+                                                    ]);
+                                                    print(list);
                                                     return CheckboxListTile(
                                                       activeColor:
                                                           const Color.fromARGB(

@@ -43,11 +43,11 @@ class GalleryListStaff extends StatelessWidget {
                                 Text(
                                   provider.galleryViewList[index].createdAt ??
                                       '--',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 GestureDetector(
                                   onTap: () async {
                                     String event = provider
@@ -84,7 +84,7 @@ class GalleryListStaff extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text('Created By: '),
+                                const Text('Created By: '),
                                 Flexible(
                                   child: Text(
                                     provider.galleryViewList[index]

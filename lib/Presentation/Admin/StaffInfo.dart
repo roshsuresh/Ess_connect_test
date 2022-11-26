@@ -1,8 +1,5 @@
 import 'package:Ess_test/Application/AdminProviders/StaffReportProviders.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import '../../Constants.dart';
 import '../../utils/constants.dart';
@@ -49,7 +46,7 @@ class StaffInfo extends StatelessWidget {
                                     : value.staffReportList[index].staffPhoto
                                         .toString())),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                const BorderRadius.all(Radius.circular(10))),
                       ),
                     ),
                   ),
@@ -76,7 +73,7 @@ class StaffInfo extends StatelessWidget {
                           strutStyle: const StrutStyle(fontSize: 13),
                           maxLines: 2,
                           text: TextSpan(
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 15,
                                   color: Color.fromARGB(255, 44, 43, 43)),
@@ -88,123 +85,123 @@ class StaffInfo extends StatelessWidget {
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star_border_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Designation : '),
+                      const Text('Designation : '),
                       Text(
                         value.staffReportList[index].designation ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.mobile_friendly,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Mobile Number : '),
+                      const Text('Mobile Number : '),
                       Text(
                         value.staffReportList[index].mobileNo ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.email_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Email : '),
+                      const Text('Email : '),
                       Text(
                         value.staffReportList[index].emailId ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.list_alt_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Section : '),
+                      const Text('Section : '),
                       Text(
                         value.staffReportList[index].section ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.redeem_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Birthday : '),
+                      const Text('Birthday : '),
                       Text(
                         value.staffReportList[index].dateOfBirth ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.man_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Gender : '),
+                      const Text('Gender : '),
                       Text(
                         value.staffReportList[index].gender ?? '--',
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style: const TextStyle(fontWeight: FontWeight.w500),
                       )
                     ],
                   ),
                   kheight10,
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.home_outlined,
                         color: Colors.grey,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
-                      Text('Address : '),
+                      const Text('Address : '),
                       Flexible(
                         child: RichText(
                           overflow: TextOverflow.ellipsis,
                           strutStyle: const StrutStyle(fontSize: 13),
                           maxLines: 3,
                           text: TextSpan(
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15,
                                 color: Color.fromARGB(255, 44, 43, 43)),

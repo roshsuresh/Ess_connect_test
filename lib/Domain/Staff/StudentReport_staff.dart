@@ -52,35 +52,6 @@ class StudReportSectionList {
 
 //course
 
-// class StudReportCourse {
-//   String? value;
-//   String? text;
-//   Null selected;
-//   Null active;
-//   Null order;
-//
-//   StudReportCourse(
-//       {this.value, this.text, this.selected, this.active, this.order});
-//
-//   StudReportCourse.fromJson(Map<String, dynamic> json) {
-//     value = json['value'];
-//     text = json['text'];
-//     selected = json['selected'];
-//     active = json['active'];
-//     order = json['order'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['value'] = this.value;
-//     data['text'] = this.text;
-//     data['selected'] = this.selected;
-//     data['active'] = this.active;
-//     data['order'] = this.order;
-//     return data;
-//   }
-// }
-
 class StudReportCourse {
   StudReportCourse(
       {this.value, required this.text, this.selected, this.active, this.order});

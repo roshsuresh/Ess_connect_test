@@ -77,10 +77,7 @@ class Timetable extends StatelessWidget {
                           columnWidths: const {
                             0: FlexColumnWidth(4),
                             1: FlexColumnWidth(2),
-
-                            // 3: FlexColumnWidth(2)
                           },
-                          //  border: TableBorder.all(),
                           children: [
                             TableRow(
                                 decoration: const BoxDecoration(
@@ -133,11 +130,10 @@ class PdfDownloader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
     return Consumer<Timetableprovider>(
       builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: Text('Time Table'),
+            title: const Text('Time Table'),
             titleSpacing: 00.0,
             centerTitle: true,
             toolbarHeight: 50.2,
@@ -148,10 +144,10 @@ class PdfDownloader extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: DownloandPdf(
                   isUseIcon: true,
-                  pdfUrl: value.url.toString() == null
+                  pdfUrl: value.url.toString().isEmpty
                       ? '--'
                       : value.url.toString(),
-                  fileNames: value.name.toString() == null
+                  fileNames: value.name.toString().isEmpty
                       ? '---'
                       : value.name.toString(),
                   color: Colors.white,
@@ -160,7 +156,7 @@ class PdfDownloader extends StatelessWidget {
             ],
           ),
           body: SfPdfViewer.network(
-            value.url.toString() == null ? '--' : value.url.toString(),
+            value.url.toString().isEmpty ? '--' : value.url.toString(),
           )),
     );
   }
@@ -174,19 +170,18 @@ class PdfViewPages extends StatelessWidget {
   imageview(String result) {
     return Scaffold(
       body: isLoading
-          ? LoadingIcon()
+          ? const spinkitLoader()
           : Center(
-              child: Container(
-                  child: PhotoView(
+              child: PhotoView(
                 loadingBuilder: (context, event) {
-                  return LoadingIcon();
+                  return const spinkitLoader();
                 },
                 imageProvider: NetworkImage(
-                  result == null
+                  result.isEmpty
                       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlmeGlXoJwwpbCE9jGgHgZ2XaE5nnPUSomkZz_vZT7&s'
                       : result,
                 ),
-              )),
+              ),
             ),
     );
   }

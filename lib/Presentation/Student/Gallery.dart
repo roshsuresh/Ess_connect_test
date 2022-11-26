@@ -15,8 +15,7 @@ class Gallery extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<GalleryProvider>(context, listen: false)
-          .getGalleyList(); //provider
+      Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
     });
 
     return Scaffold(
@@ -102,7 +101,6 @@ class Gallery extends StatelessWidget {
                                         kWidth,
                                         Expanded(
                                           child: Container(
-                                              // color: Colors.black26,
                                               height: 110,
                                               child: Column(
                                                 crossAxisAlignment:
@@ -122,37 +120,11 @@ class Gallery extends StatelessWidget {
                                                   Text(
                                                     galleryResponse![index]
                                                             ['caption'] ??
-                                                        '---',
+                                                        '',
                                                     maxLines: 3,
                                                     style: TextStyle(),
                                                   ),
                                                   kheight10,
-                                                  Expanded(
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: const [
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomRight,
-                                                          child: Text(
-                                                            'Date: 12/12/31',
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
-                                                                fontSize: 10),
-                                                          ),
-                                                        ),
-                                                        kWidth,
-                                                        kWidth,
-                                                        kWidth
-                                                      ],
-                                                    ),
-                                                  ),
                                                 ],
                                               )),
                                         )
@@ -188,7 +160,6 @@ class GalleryonTap extends StatelessWidget {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    // final postModel = Provider.of<GalleryProvider>(context, listen: false).galleyAttachment(id);
     return SafeArea(
       child: Scaffold(
         body: Consumer<GalleryProvider>(
@@ -198,9 +169,7 @@ class GalleryonTap extends StatelessWidget {
               crossAxisCount: 3,
               mainAxisSpacing: 8,
               crossAxisSpacing: 4,
-              children: List.generate(value.galleryList.length,
-                  // galleryResponse == null ? 0 : galleryAttachResponse!.length,
-                  (index) {
+              children: List.generate(value.galleryList.length, (index) {
                 return GestureDetector(
                   child: isLoading
                       ? const Center(
@@ -214,10 +183,11 @@ class GalleryonTap extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(value.galleryList[index]
-                                          ['url']
-                                      .toString()))),
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  value.galleryList[index]['url'].toString(),
+                                ),
+                              )),
                         ),
                   onTap: () async {
                     Navigator.push(

@@ -1,12 +1,10 @@
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:pdfdownload/pdfdownload.dart';
-
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../Application/StudentProviders/ReportCardProvider.dart';
 import '../../Constants.dart';
-import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
 
 class ReportCard extends StatelessWidget {
@@ -20,7 +18,7 @@ class ReportCard extends StatelessWidget {
     var height = size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report card'),
+        title: const Text('Report card'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -36,12 +34,12 @@ class ReportCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ReportCardProvider>(
           builder: (context, value, child) => value.loading
-              ? spinkitLoader()
+              ? const spinkitLoader()
               : ListView(
                   children: [
                     kheight20,
                     Table(
-                      columnWidths: {
+                      columnWidths: const {
                         0: FlexColumnWidth(3),
                         1: FlexColumnWidth(5),
                         2: FlexColumnWidth(2),

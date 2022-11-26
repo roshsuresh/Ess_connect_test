@@ -93,10 +93,10 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
   String divisionId = '';
   final studReportInitialValuesController = TextEditingController();
   final studReportInitialValuesController1 = TextEditingController();
-  final StudReportcourseController = TextEditingController();
-  final StudReportcourseController1 = TextEditingController();
-  final StudReportDivisionController = TextEditingController();
-  final StudReportDivisionController1 = TextEditingController();
+  final studReportcourseController = TextEditingController();
+  final studReportcourseController1 = TextEditingController();
+  final studReportDivisionController = TextEditingController();
+  final studReportDivisionController1 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -246,11 +246,11 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                             snapshot.courselist[index]),
                                         onTap: () async {
                                           print(snapshot.courselist.length);
-                                          StudReportcourseController.text =
+                                          studReportcourseController.text =
                                               snapshot.courselist[index]
                                                       .value ??
                                                   '---';
-                                          StudReportcourseController1.text =
+                                          studReportcourseController1.text =
                                               snapshot.courselist[index].text ==
                                                       null
                                                   ? '---'
@@ -258,11 +258,11 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                       .courselist[index].text;
                                           snapshot.addSelectedCourse(
                                               snapshot.courselist[index]);
-                                          courseId = StudReportcourseController
+                                          courseId = studReportcourseController
                                               .text
                                               .toString();
                                           print(
-                                              StudReportcourseController.text);
+                                              studReportcourseController.text);
                                           sectionId =
                                               studReportInitialValuesController
                                                   .text
@@ -302,7 +302,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
-                              controller: StudReportcourseController1,
+                              controller: studReportcourseController1,
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
@@ -316,7 +316,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                           SizedBox(
                             height: 0,
                             child: TextField(
-                              controller: StudReportcourseController,
+                              controller: studReportcourseController,
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
@@ -370,12 +370,12 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                             onTap: () async {
                                               print(
                                                   snapshot.divisionlist.length);
-                                              StudReportDivisionController
+                                              studReportDivisionController
                                                   .text = snapshot
                                                       .divisionlist[index]
                                                       .value ??
                                                   '---';
-                                              StudReportDivisionController1
+                                              studReportDivisionController1
                                                   .text = snapshot
                                                       .divisionlist[index]
                                                       .text ??
@@ -383,10 +383,10 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                               snapshot.addSelectedDivision(
                                                   snapshot.divisionlist[index]);
 
-                                              print(StudReportDivisionController
+                                              print(studReportDivisionController
                                                   .text);
                                               divisionId =
-                                                  StudReportDivisionController
+                                                  studReportDivisionController
                                                       .text
                                                       .toString();
                                               Navigator.of(context).pop();
@@ -413,7 +413,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
-                              controller: StudReportDivisionController1,
+                              controller: studReportDivisionController1,
                               decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
@@ -427,7 +427,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                           SizedBox(
                             height: 0,
                             child: TextField(
-                              controller: StudReportDivisionController,
+                              controller: studReportDivisionController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: UIGuide.light_black,
@@ -449,9 +449,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                 child: const Text('View'),
                 color: UIGuide.THEME_LIGHT,
                 onPressed: (() async {
-                  if (StudReportDivisionController.text.isEmpty &&
+                  if (studReportDivisionController.text.isEmpty &&
                       studReportInitialValuesController.text.isEmpty &&
-                      StudReportDivisionController.text.isEmpty) {
+                      studReportDivisionController.text.isEmpty) {
                     return AwesomeDialog(
                             context: context,
                             dialogType: DialogType.warning,
@@ -466,9 +466,9 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                             btnOkColor: Colors.red)
                         .show();
                   }
-                  courseId = StudReportcourseController.text.toString();
+                  courseId = studReportcourseController.text.toString();
                   print(courseId);
-                  divisionId = StudReportDivisionController.text.toString();
+                  divisionId = studReportDivisionController.text.toString();
                   print(divisionId);
                   print(sectionId);
                   sectionId = studReportInitialValuesController.text.toString();
@@ -551,7 +551,7 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                           width: 70,
                                           height: 70,
                                           decoration: BoxDecoration(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 236, 233, 233),
                                               image: DecorationImage(
                                                   image: NetworkImage(provider
@@ -716,8 +716,6 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                                                     phn.toString());
                                               },
                                               child: Row(
-                                                //mainAxisAlignment: MainAxisAlignment.center,
-                                                //crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   const Text(
                                                     'Phone : ',
@@ -1009,7 +1007,7 @@ class StudProfileView_Staff extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Name : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -1018,7 +1016,7 @@ class StudProfileView_Staff extends StatelessWidget {
                           child: Text(
                             value.viewStudReportListt[indexx].bus ?? '---',
                             overflow: TextOverflow.clip,
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                           ),
                         )
                       ],
@@ -1026,7 +1024,7 @@ class StudProfileView_Staff extends StatelessWidget {
                     kheight10,
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Stop : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -1035,7 +1033,7 @@ class StudProfileView_Staff extends StatelessWidget {
                           child: Text(
                             value.viewStudReportListt[indexx].stop ?? '---',
                             overflow: TextOverflow.clip,
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                           ),
                         )
                       ],
@@ -1047,7 +1045,7 @@ class StudProfileView_Staff extends StatelessWidget {
                       },
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Phone No : ',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 13),
@@ -1057,7 +1055,7 @@ class StudProfileView_Staff extends StatelessWidget {
                               phn = value.viewStudReportListt[indexx].mobNo ??
                                   '---',
                               overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           )
                         ],
@@ -1445,7 +1443,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportDivisionController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -1459,7 +1457,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                             height: 0,
                             child: TextField(
                               controller: StudReportDivisionController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -1576,7 +1574,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                           width: 70,
                                           height: 70,
                                           decoration: BoxDecoration(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 236, 233, 233),
                                               image: DecorationImage(
                                                   image: NetworkImage(provider
@@ -1584,8 +1582,9 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                               index]
                                                           .studentPhoto ??
                                                       'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10))),
                                         ),
                                       ),
                                       Padding(
@@ -1639,7 +1638,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                   strutStyle: const StrutStyle(
                                                       fontSize: 8.0),
                                                   text: TextSpan(
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.black,
                                                     ),
@@ -1660,7 +1659,7 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                                                 kWidth,
                                                 Row(
                                                   children: [
-                                                    Text(
+                                                    const Text(
                                                       'Division : ',
                                                       textAlign:
                                                           TextAlign.start,
@@ -1941,7 +1940,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -1956,7 +1955,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -1995,7 +1994,6 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                         itemCount: snapshot.courselist.length,
                                         itemBuilder: (context, index) {
                                           print(snapshot.courselist.length);
-                                          // value.removeDivisionAll();
                                           return ListTile(
                                             // selectedTileColor:
                                             //     Colors.blue.shade100,
@@ -2010,8 +2008,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                       '---';
                                               StudReportcourseController1.text =
                                                   snapshot.courselist[index]
-                                                              .text ==
-                                                          null
+                                                          .text.isEmpty
                                                       ? '---'
                                                       : snapshot
                                                           .courselist[index]
@@ -2173,7 +2170,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportDivisionController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -2187,7 +2184,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                             height: 0,
                             child: TextField(
                               controller: StudReportDivisionController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -2298,7 +2295,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                         width: 70,
                                         height: 70,
                                         decoration: BoxDecoration(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 236, 233, 233),
                                             image: DecorationImage(
                                                 image: NetworkImage(provider
@@ -2306,8 +2303,9 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                             index]
                                                         .studentPhoto ??
                                                     'https://c8.alamy.com/zooms/9/52c3ea49892f4e5789b31cadac8aa969/2gefnr1.jpg')),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10))),
                                       ),
                                     ),
                                     Padding(
@@ -2357,7 +2355,7 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                                 strutStyle: const StrutStyle(
                                                     fontSize: 8.0),
                                                 text: TextSpan(
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.black,
                                                   ),
@@ -2454,8 +2452,6 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                                               _makingPhoneCall(phn.toString());
                                             },
                                             child: Row(
-                                              //mainAxisAlignment: MainAxisAlignment.center,
-                                              //crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 const Text(
                                                   'Phone : ',

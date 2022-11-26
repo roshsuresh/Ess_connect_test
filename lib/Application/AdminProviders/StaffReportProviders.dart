@@ -130,13 +130,6 @@ class StaffReportProviders with ChangeNotifier {
       if (response.statusCode == 200) {
         print("corect");
         Map<String, dynamic> data = json.decode(response.body);
-
-        //print(data);
-        // staffStudReportRespo = data['studentReportInitialValues'];
-        // studReportinitvalues_stf = staffStudReportRespo!['sectionList'];
-        // print(studReportinitvalues_stf);
-        // print(staffStudReportRespo);
-
         notifyListeners();
       } else {
         print("Error in StdReportSection response");

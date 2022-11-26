@@ -1,4 +1,3 @@
-import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProvider.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/ToGuardian_TextSMS.dart';
@@ -18,15 +17,10 @@ class TextSMS_staff extends StatefulWidget {
 
 class _TextSMS_staffState extends State<TextSMS_staff> {
   String courseId = '';
-
   String divisionId = '';
-
   final notificationCourseController = TextEditingController();
-
   final notificationCourseController1 = TextEditingController();
-
   final notificationDivisionListController = TextEditingController();
-
   final notificationDivisionListController1 = TextEditingController();
   final smsFormats = TextEditingController();
   final smsFormats1 = TextEditingController();
@@ -80,10 +74,6 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                                         itemCount:
                                             snapshot.smscourseList.length,
                                         itemBuilder: (context, index) {
-                                          // print(snapshot
-
-                                          //     .attendenceInitialValues.length);
-
                                           // value.removeCourseAll();
                                           return ListTile(
                                             selectedTileColor:
@@ -94,8 +84,6 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                                             //     attendecourse![index]),
 
                                             onTap: () async {
-                                              print(
-                                                  'guh.....${snapshot.smscourseList[index]}');
                                               notificationCourseController
                                                   .text = snapshot
                                                       .smscourseList[index]
@@ -359,7 +347,7 @@ class _TextSMS_staffState extends State<TextSMS_staff> {
                               child: TextField(
                                 textAlign: TextAlign.center,
                                 controller: smsFormats,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   filled: true,
                                   fillColor: Color.fromARGB(255, 238, 237, 237),
                                   border: OutlineInputBorder(),

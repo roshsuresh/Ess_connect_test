@@ -24,16 +24,14 @@ class PaymentHistoryProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
 
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/paymenthistory"),
         headers: headers);
     try {
       if (response.statusCode == 200) {
-        // print("corect");
         final data = json.decode(response.body);
-        // historyResponse = data['onlineFeePaymentHistoryDetails'];
+
         print(data);
 
         List<OnlineFeePaymentHistoryDetails> templist =
@@ -77,8 +75,6 @@ class PaymentHistoryProvider with ChangeNotifier {
         name = reattach.name;
         url = reattach.url;
         extension = reattach.extension;
-        //log('.................$url');
-        //  print(data);
         notifyListeners();
       } else {
         print("Error in fee history response");

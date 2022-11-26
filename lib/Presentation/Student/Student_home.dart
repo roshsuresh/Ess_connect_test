@@ -1,7 +1,12 @@
+import 'dart:async';
+
+import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Constants.dart';
+import 'package:Ess_test/Presentation/Student/NoInternetScreen.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_selector/utils/utils.dart';
 import 'package:marquee/marquee.dart';
@@ -24,18 +29,29 @@ import 'Reportcard.dart';
 import 'Stud_Notification.dart';
 import 'TimeTable.dart';
 
-class StudentHome extends StatelessWidget {
+class StudentHome extends StatefulWidget {
   StudentHome({Key? key}) : super(key: key);
+
+  @override
+  State<StudentHome> createState() => _StudentHomeState();
+}
+
+class _StudentHomeState extends State<StudentHome> {
   var size, height, width, kheight, kheight20;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ConnectivityProvider>(context, listen: false);
+      Provider.of<SibingsProvider>(context, listen: false).siblingList.clear();
+      Provider.of<SibingsProvider>(context, listen: false).getSiblingName();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Provider.of<ProfileProvider>(context, listen: false).profileData();
-    // Provider.of<ProfileProvider>(context, listen: false)
-    //     .flashNewsProvider(context);
     //  Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
-    //Provider.of<ProfileProvider>(context, listen: false).siblingsAPI();
-    // Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
 
     size = MediaQuery.of(context).size;
     height = size.height;
@@ -47,890 +63,924 @@ class StudentHome extends StatelessWidget {
       height: 20,
     );
     return Scaffold(
-      body: ListView(
-        children: [
-          ProfileHome(kheight20: kheight20, kheight: kheight),
-          const Flashnews(),
-          Container(
-            width: width,
-            height: size.height - 180,
-            decoration: const BoxDecoration(
-                boxShadow: [BoxShadow(blurRadius: 5, offset: Offset(1, 3))],
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30))),
-            child: ListView(
-              children: [
-                kheight20,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
-                  ),
-                  const Text(
-                    'Personal info',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: UIGuide.light_Purple,
-                        fontWeight: FontWeight.w900),
-                  ),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                kheight20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Profile_Info()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
+      body: Consumer<ConnectivityProvider>(
+        builder: (context, connection, child) => connection.isOnline == false
+            ? NoInternetConnection()
+            : ListView(
+                children: [
+                  ProfileHome(kheight20: kheight20, kheight: kheight),
+                  const Flashnews(),
+                  Container(
+                    width: width,
+                    height: size.height - 180,
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(blurRadius: 5, offset: Offset(1, 3))
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    child: ListView(
+                      children: [
+                        kheight20,
+                        Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 10.0, right: 20.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
+                          ),
+                          const Text(
+                            'Personal info',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 20.0, right: 10.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
+                          ),
+                        ]),
+                        kheight20,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Profilee.png',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Profile',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Stud_Notification()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/notificationnew.png',
-                                  ),
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Notification',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Attendence()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Attendance.png',
-                                  ),
-                                ),
-                                // borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Attendence',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                kheight,
-                kheight20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NoticeBoard()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Profile.png',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Notice Board',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Gallery()),
-                          );
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Gallery.png',
-                                  ),
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            kheight,
-                            const Text(
-                              'Gallery',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                kheight,
-                kheight20,
-                Container(
-                  color: Color.fromARGB(255, 236, 237, 245),
-                  height: 150,
-                  width: width,
-                  child: Column(
-                    children: [
-                      kheight,
-                      Row(children: const <Widget>[
-                        Expanded(child: Text("")),
-                        Text(
-                          " * Urgent & Important * ",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: UIGuide.light_Purple,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Expanded(child: Text("")),
-                      ]),
-                      kheight,
-                      kheight,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
+                            GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PayFee()),
+                                      builder: (context) => Profile_Info()),
                                 );
                               },
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/payNew.png',
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 40,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          opacity: 20,
+                                          image: AssetImage(
+                                            'assets/Profilee.png',
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Pay Fee',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
+                                    kheight,
+                                    const Text(
+                                      'Profile',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black38),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const ReportCard()),
-                                );
-                              },
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/Reportcard.png',
-                                        ),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  kheight,
-                                  const Text(
-                                    'Report Card',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: GestureDetector(
+                            GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const PaymentHistory()),
+                                          Stud_Notification()),
                                 );
                               },
-                              child: Column(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        image: const DecorationImage(
+                                          opacity: 20,
+                                          image: AssetImage(
+                                            'assets/notificationnew.png',
+                                          ),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    kheight,
+                                    const Text(
+                                      'Notification',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black38),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NoticeBoard()),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 40,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          opacity: 20,
+                                          image: AssetImage(
+                                            'assets/Profile.png',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    kheight,
+                                    const Text(
+                                      'Notice Board',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black38),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // kheight,
+                        // kheight20,
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => NoticeBoard()),
+                        //         );
+                        //       },
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.only(left: 10, right: 10),
+                        //         child: Column(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //           children: [
+                        //             Container(
+                        //               height: 50,
+                        //               width: 40,
+                        //               decoration: const BoxDecoration(
+                        //                 image: DecorationImage(
+                        //                   opacity: 20,
+                        //                   image: AssetImage(
+                        //                     'assets/Profile.png',
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             kheight,
+                        //             const Text(
+                        //               'Notice Board',
+                        //               style: TextStyle(
+                        //                   fontSize: 11, color: Colors.black38),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        kheight20,
+                        kheight20,
+                        Container(
+                          color: Color.fromARGB(255, 236, 237, 245),
+                          height: 150,
+                          width: width,
+                          child: Column(
+                            children: [
+                              kheight,
+                              Row(children: const <Widget>[
+                                Expanded(child: Text("")),
+                                Text(
+                                  " * Urgent & Important * ",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      color: UIGuide.light_Purple,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                Expanded(child: Text("")),
+                              ]),
+                              kheight,
+                              kheight,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Container(
-                                    height: 50,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        opacity: 20,
-                                        image: AssetImage(
-                                          'assets/payNew.png',
-                                        ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => PayFee()),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            width: 40,
+                                            decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                opacity: 20,
+                                                image: AssetImage(
+                                                  'assets/payNew.png',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          kheight,
+                                          const Text(
+                                            'Pay Fee',
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.black38),
+                                          )
+                                        ],
                                       ),
-                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  kheight,
-                                  const Text(
-                                    'Payment \n History',
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.black38),
-                                  )
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ReportCard()),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              image: const DecorationImage(
+                                                opacity: 20,
+                                                image: AssetImage(
+                                                  'assets/Reportcard.png',
+                                                ),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          kheight,
+                                          const Text(
+                                            'Report Card',
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.black38),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PaymentHistory()),
+                                        );
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Container(
+                                            height: 50,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              image: const DecorationImage(
+                                                opacity: 20,
+                                                image: AssetImage(
+                                                  'assets/payNew.png',
+                                                ),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          kheight,
+                                          const Text(
+                                            'Payment \n History',
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.black38),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                // Row(children: <Widget>[
-                //   Expanded(
-                //     child: Container(
-                //         margin: const EdgeInsets.only(
-                //             left: 10.0, right: 20.0),
-                //         child: const Divider(
-                //           color: Colors.black,
-                //           height: 36,
-                //         )),
-                //   ),
-                //   const Text(
-                //     "Fees",
-                //     textAlign: TextAlign.left,
-                //     style: TextStyle(
-                //         color: Colors.purple,
-                //         fontWeight: FontWeight.w900),
-                //   ),
-                //   Expanded(
-                //     child: Container(
-                //         margin: const EdgeInsets.only(
-                //             left: 20.0, right: 10.0),
-                //         child: const Divider(
-                //           color: Colors.black,
-                //           height: 36,
-                //         )),
-                //   ),
-                // ]),
-                // kheight,
-                // kheight20,
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 10, right: 10),
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //         children: [
-                //           Container(
-                //             height: 50,
-                //             width: 40,
-                //             decoration: const BoxDecoration(
-                //               image: DecorationImage(
-                //                 opacity: 20,
-                //                 image: AssetImage(
-                //                   'assets/pay.png',
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           kheight,
-                //           const Text(
-                //             'Pay Fee',
-                //             style: TextStyle(
-                //                 fontSize: 11, color: Colors.black38),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //     Padding(
-                //       padding: const EdgeInsets.only(left: 10, right: 10),
-                //       child: GestureDetector(
-                //         onTap: () {
-                //           Navigator.push(
-                //             context,
-                //             MaterialPageRoute(
-                //                 builder: (context) => PaymentRough()),
-                //           );
-                //         },
-                //         child: Column(
-                //           mainAxisAlignment:
-                //               MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             Container(
-                //               height: 50,
-                //               width: 40,
-                //               decoration: BoxDecoration(
-                //                 image: const DecorationImage(
-                //                   opacity: 20,
-                //                   image: AssetImage(
-                //                     'assets/pay.png',
-                //                   ),
-                //                 ),
-                //                 borderRadius: BorderRadius.circular(10),
-                //               ),
-                //             ),
-                //             kheight,
-                //             const Text(
-                //               'Fee Structure',
-                //               style: TextStyle(
-                //                   fontSize: 11, color: Colors.black38),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () {
-                //         Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) => const AdvancePay()),
-                //         );
-                //       },
-                //       child: Padding(
-                //         padding:
-                //             const EdgeInsets.only(left: 10, right: 10),
-                //         child: Column(
-                //           mainAxisAlignment:
-                //               MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             Container(
-                //               height: 50,
-                //               width: 40,
-                //               decoration: const BoxDecoration(
-                //                 image: DecorationImage(
-                //                   opacity: 20,
-                //                   image: AssetImage(
-                //                     'assets/Profile.png',
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //             kheight,
-                //             const Text(
-                //               'Advance Pay ',
-                //               style: TextStyle(
-                //                   fontSize: 11, color: Colors.black38),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () {
-                //         Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) =>
-                //                   const PaymentHistory()),
-                //         );
-                //       },
-                //       child: Padding(
-                //         padding:
-                //             const EdgeInsets.only(left: 10, right: 10),
-                //         child: Column(
-                //           mainAxisAlignment:
-                //               MainAxisAlignment.spaceEvenly,
-                //           children: [
-                //             Container(
-                //               height: 50,
-                //               width: 40,
-                //               decoration: const BoxDecoration(
-                //                 image: DecorationImage(
-                //                   opacity: 20,
-                //                   image: AssetImage(
-                //                     'assets/Profile.png',
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //             kheight,
-                //             const Text(
-                //               'Payment \n History',
-                //               style: TextStyle(
-                //                   fontSize: 11, color: Colors.black38),
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                kheight,
-                kheight20,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
-                  ),
-                  const Text(
-                    "Tabulation",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: UIGuide.light_Purple,
-                        fontWeight: FontWeight.w900),
-                  ),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                kheight,
-                kheight20,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/Reportcard.png',
+                        ),
+                        // Row(children: <Widget>[
+                        //   Expanded(
+                        //     child: Container(
+                        //         margin: const EdgeInsets.only(
+                        //             left: 10.0, right: 20.0),
+                        //         child: const Divider(
+                        //           color: Colors.black,
+                        //           height: 36,
+                        //         )),
+                        //   ),
+                        //   const Text(
+                        //     "Fees",
+                        //     textAlign: TextAlign.left,
+                        //     style: TextStyle(
+                        //         color: Colors.purple,
+                        //         fontWeight: FontWeight.w900),
+                        //   ),
+                        //   Expanded(
+                        //     child: Container(
+                        //         margin: const EdgeInsets.only(
+                        //             left: 20.0, right: 10.0),
+                        //         child: const Divider(
+                        //           color: Colors.black,
+                        //           height: 36,
+                        //         )),
+                        //   ),
+                        // ]),
+                        // kheight,
+                        // kheight20,
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.only(left: 10, right: 10),
+                        //       child: Column(
+                        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //         children: [
+                        //           Container(
+                        //             height: 50,
+                        //             width: 40,
+                        //             decoration: const BoxDecoration(
+                        //               image: DecorationImage(
+                        //                 opacity: 20,
+                        //                 image: AssetImage(
+                        //                   'assets/pay.png',
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           kheight,
+                        //           const Text(
+                        //             'Pay Fee',
+                        //             style: TextStyle(
+                        //                 fontSize: 11, color: Colors.black38),
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     Padding(
+                        //       padding: const EdgeInsets.only(left: 10, right: 10),
+                        //       child: GestureDetector(
+                        //         onTap: () {
+                        //           Navigator.push(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //                 builder: (context) => PaymentRough()),
+                        //           );
+                        //         },
+                        //         child: Column(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceEvenly,
+                        //           children: [
+                        //             Container(
+                        //               height: 50,
+                        //               width: 40,
+                        //               decoration: BoxDecoration(
+                        //                 image: const DecorationImage(
+                        //                   opacity: 20,
+                        //                   image: AssetImage(
+                        //                     'assets/pay.png',
+                        //                   ),
+                        //                 ),
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //               ),
+                        //             ),
+                        //             kheight,
+                        //             const Text(
+                        //               'Fee Structure',
+                        //               style: TextStyle(
+                        //                   fontSize: 11, color: Colors.black38),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => const AdvancePay()),
+                        //         );
+                        //       },
+                        //       child: Padding(
+                        //         padding:
+                        //             const EdgeInsets.only(left: 10, right: 10),
+                        //         child: Column(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceEvenly,
+                        //           children: [
+                        //             Container(
+                        //               height: 50,
+                        //               width: 40,
+                        //               decoration: const BoxDecoration(
+                        //                 image: DecorationImage(
+                        //                   opacity: 20,
+                        //                   image: AssetImage(
+                        //                     'assets/Profile.png',
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             kheight,
+                        //             const Text(
+                        //               'Advance Pay ',
+                        //               style: TextStyle(
+                        //                   fontSize: 11, color: Colors.black38),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) =>
+                        //                   const PaymentHistory()),
+                        //         );
+                        //       },
+                        //       child: Padding(
+                        //         padding:
+                        //             const EdgeInsets.only(left: 10, right: 10),
+                        //         child: Column(
+                        //           mainAxisAlignment:
+                        //               MainAxisAlignment.spaceEvenly,
+                        //           children: [
+                        //             Container(
+                        //               height: 50,
+                        //               width: 40,
+                        //               decoration: const BoxDecoration(
+                        //                 image: DecorationImage(
+                        //                   opacity: 20,
+                        //                   image: AssetImage(
+                        //                     'assets/Profile.png',
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             kheight,
+                        //             const Text(
+                        //               'Payment \n History',
+                        //               style: TextStyle(
+                        //                   fontSize: 11, color: Colors.black38),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        kheight,
+                        kheight20,
+                        Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 10.0, right: 20.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
+                          ),
+                          const Text(
+                            "Tabulation",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 20.0, right: 10.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
+                          ),
+                        ]),
+                        kheight,
+                        kheight20,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Attendence()),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 40,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          opacity: 20,
+                                          image: AssetImage(
+                                            'assets/Attendance.png',
+                                          ),
+                                        ),
+                                        // borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    kheight,
+                                    const Text(
+                                      'Attendence',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black38),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                          ),
-                          kheight,
-                          const Text(
-                            'Mark Sheet',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
-                      ),
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => const ReportCard()),
-                    //       );
-                    //     },
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //       children: [
-                    //         Container(
-                    //           height: 50,
-                    //           width: 40,
-                    //           decoration: BoxDecoration(
-                    //             image: const DecorationImage(
-                    //               opacity: 20,
-                    //               image: AssetImage(
-                    //                 'assets/Reportcard.png',
-                    //               ),
-                    //             ),
-                    //             borderRadius: BorderRadius.circular(10),
-                    //           ),
-                    //         ),
-                    //         kheight,
-                    //         const Text(
-                    //           'Report Card',
-                    //           style: TextStyle(
-                    //               fontSize: 11, color: Colors.black38),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    Consumer<ProfileProvider>(
-                      builder: (context, value, child) {
-                        return GestureDetector(
-                          onTap: () async {
-                            var divId = value.divisionId == null
-                                ? 'divId is null'
-                                : value.divisionId.toString();
-                            await Provider.of<Timetableprovider>(context,
-                                    listen: false)
-                                .getTimeTable(divId);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Timetable(divid: divId)),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 50,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      opacity: 20,
-                                      image: AssetImage(
-                                        'assets/Profile.png',
-                                      ),
+
+                            Consumer<ProfileProvider>(
+                              builder: (context, value, child) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    var divId = value.divisionId == null
+                                        ? 'divId is null'
+                                        : value.divisionId.toString();
+                                    await Provider.of<Timetableprovider>(
+                                            context,
+                                            listen: false)
+                                        .getTimeTable(divId);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Timetable(divid: divId)),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Profile.png',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        kheight,
+                                        const Text(
+                                          'Timetable',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black38),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                kheight,
-                                const Text(
-                                  'Timetable',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black38),
-                                )
-                              ],
+                                );
+                              },
                             ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Gallery()),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        image: const DecorationImage(
+                                          opacity: 20,
+                                          image: AssetImage(
+                                            'assets/Gallery.png',
+                                          ),
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    kheight,
+                                    const Text(
+                                      'Gallery',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.black38),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 10, right: 10),
+                            //   child: GestureDetector(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 const Stud_Calender()),
+                            //       );
+                            //     },
+                            //     child: Column(
+                            //       mainAxisAlignment:
+                            //           MainAxisAlignment.spaceEvenly,
+                            //       children: [
+                            //         Container(
+                            //           height: 50,
+                            //           width: 40,
+                            //           decoration: const BoxDecoration(
+                            //             image: DecorationImage(
+                            //               opacity: 20,
+                            //               image: AssetImage(
+                            //                 'assets/Profile.png',
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         kheight,
+                            //         const Text(
+                            //           'Calender',
+                            //           style: TextStyle(
+                            //               fontSize: 11, color: Colors.black38),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 10, right: 10),
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //     children: [
+                            //       Container(
+                            //         height: 50,
+                            //         width: 40,
+                            //         decoration: const BoxDecoration(
+                            //           image: DecorationImage(
+                            //             opacity: 20,
+                            //             image: AssetImage(
+                            //               'assets/Profile.png',
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       kheight,
+                            //       const Text(
+                            //         'Home Works',
+                            //         style: TextStyle(
+                            //             fontSize: 11, color: Colors.black38),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 10, right: 10),
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //     children: [
+                            //       Container(
+                            //         height: 50,
+                            //         width: 40,
+                            //         decoration: const BoxDecoration(
+                            //           image: DecorationImage(
+                            //             opacity: 20,
+                            //             image: AssetImage(
+                            //               'assets/Profile.png',
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       kheight,
+                            //       const Text(
+                            //         'Statistics',
+                            //         style: TextStyle(
+                            //             fontSize: 11, color: Colors.black38),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        kheight,
+                        kheight20,
+                        Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 10.0, right: 20.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
                           ),
-                        );
-                      },
+                          const Text(
+                            "Password Change / SignOut",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: UIGuide.light_Purple,
+                                fontWeight: FontWeight.w900),
+                          ),
+                          Expanded(
+                            child: Container(
+                                margin: const EdgeInsets.only(
+                                    left: 20.0, right: 10.0),
+                                child: const Divider(
+                                  color: Colors.black45,
+                                  height: 36,
+                                )),
+                          ),
+                        ]),
+                        kheight,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            MaterialButton(
+                                minWidth: 50,
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                onPressed: () async {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => PasswordChange()),
+                                  );
+                                },
+                                child: const Icon(
+                                  Icons.key_sharp,
+                                  color: UIGuide.light_Purple,
+                                )),
+                            MaterialButton(
+                                minWidth: 50,
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                onPressed: () async {
+                                  AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.info,
+                                    borderSide: const BorderSide(
+                                        color: UIGuide.light_Purple, width: 2),
+                                    buttonsBorderRadius: const BorderRadius.all(
+                                        Radius.circular(2)),
+                                    headerAnimationLoop: false,
+                                    animType: AnimType.bottomSlide,
+                                    title: 'SignOut',
+                                    desc: 'Are you sure want to sign out',
+                                    showCloseIcon: true,
+                                    btnCancelOnPress: () {
+                                      return;
+                                    },
+                                    btnOkOnPress: () async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      print("accesstoken  $prefs");
+                                      prefs.remove("accesstoken");
+
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                          (Route<dynamic> route) => false);
+                                    },
+                                  ).show();
+                                  // SharedPreferences prefs =
+                                  //     await SharedPreferences.getInstance();
+                                  // print("accesstoken  $prefs");
+                                  // prefs.remove("accesstoken");
+
+                                  // Navigator.of(context).pushAndRemoveUntil(
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => LoginPage()),
+                                  //     (Route<dynamic> route) => false);
+                                },
+                                child: const Icon(
+                                  Icons.logout_outlined,
+                                  color: UIGuide.light_Purple,
+                                )),
+                          ],
+                        ),
+                        kheight20,
+                        kheight20,
+                        kheight20,
+                        Consumer<SibingsProvider>(
+                          builder: (context, value, child) {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: value.siblingList.isEmpty
+                                    ? 0
+                                    : value.siblingList.length,
+                                itemBuilder: (context, index) {
+                                  var idd = value.siblingList[index].id ?? '--';
+
+                                  print(idd);
+                                  Provider.of<SibingsProvider>(context,
+                                          listen: false)
+                                      .getToken(idd);
+                                  return Container(
+                                    height: 0,
+                                    width: 0,
+                                  );
+                                });
+                          },
+                        )
+                      ],
                     ),
-
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) =>
-                    //                 const Stud_Calender()),
-                    //       );
-                    //     },
-                    //     child: Column(
-                    //       mainAxisAlignment:
-                    //           MainAxisAlignment.spaceEvenly,
-                    //       children: [
-                    //         Container(
-                    //           height: 50,
-                    //           width: 40,
-                    //           decoration: const BoxDecoration(
-                    //             image: DecorationImage(
-                    //               opacity: 20,
-                    //               image: AssetImage(
-                    //                 'assets/Profile.png',
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         kheight,
-                    //         const Text(
-                    //           'Calender',
-                    //           style: TextStyle(
-                    //               fontSize: 11, color: Colors.black38),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //     children: [
-                    //       Container(
-                    //         height: 50,
-                    //         width: 40,
-                    //         decoration: const BoxDecoration(
-                    //           image: DecorationImage(
-                    //             opacity: 20,
-                    //             image: AssetImage(
-                    //               'assets/Profile.png',
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       kheight,
-                    //       const Text(
-                    //         'Home Works',
-                    //         style: TextStyle(
-                    //             fontSize: 11, color: Colors.black38),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 10, right: 10),
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //     children: [
-                    //       Container(
-                    //         height: 50,
-                    //         width: 40,
-                    //         decoration: const BoxDecoration(
-                    //           image: DecorationImage(
-                    //             opacity: 20,
-                    //             image: AssetImage(
-                    //               'assets/Profile.png',
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       kheight,
-                    //       const Text(
-                    //         'Statistics',
-                    //         style: TextStyle(
-                    //             fontSize: 11, color: Colors.black38),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-                kheight,
-                kheight20,
-                Row(children: <Widget>[
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
                   ),
-                  const Text(
-                    "Password Change / SignOut",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: UIGuide.light_Purple,
-                        fontWeight: FontWeight.w900),
-                  ),
-                  Expanded(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                        child: const Divider(
-                          color: Colors.black45,
-                          height: 36,
-                        )),
-                  ),
-                ]),
-                kheight,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MaterialButton(
-                        minWidth: 50,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        onPressed: () async {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => PasswordChange()),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.key_sharp,
-                          color: UIGuide.light_Purple,
-                        )),
-                    MaterialButton(
-                        minWidth: 50,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        onPressed: () async {
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.info,
-                            borderSide: const BorderSide(
-                                color: UIGuide.light_Purple, width: 2),
-                            buttonsBorderRadius:
-                                const BorderRadius.all(Radius.circular(2)),
-                            headerAnimationLoop: false,
-                            animType: AnimType.bottomSlide,
-                            title: 'SignOut',
-                            desc: 'Are you sure want to sign out',
-                            showCloseIcon: true,
-                            btnCancelOnPress: () {
-                              return;
-                            },
-                            btnOkOnPress: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              print("accesstoken  $prefs");
-                              prefs.remove("accesstoken");
-
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                  (Route<dynamic> route) => false);
-                            },
-                          ).show();
-                          // SharedPreferences prefs =
-                          //     await SharedPreferences.getInstance();
-                          // print("accesstoken  $prefs");
-                          // prefs.remove("accesstoken");
-
-                          // Navigator.of(context).pushAndRemoveUntil(
-                          //     MaterialPageRoute(
-                          //         builder: (context) => LoginPage()),
-                          //     (Route<dynamic> route) => false);
-                        },
-                        child: const Icon(
-                          Icons.logout_outlined,
-                          color: UIGuide.light_Purple,
-                        )),
-                  ],
-                ),
-                kheight20,
-                kheight20,
-                kheight20,
-              ],
-            ),
-          ),
-        ],
+                ],
+              ),
       ),
     );
   }
@@ -1415,11 +1465,6 @@ class ProfileHome extends StatelessWidget {
                     itemCount:
                         siblinggResponse == null ? 0 : siblinggResponse!.length,
                     itemBuilder: (context, index) {
-                      // print(snapshot
-
-                      //     .attendenceInitialValues.length);
-
-                      // value.removeCourseAll();
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1435,7 +1480,7 @@ class ProfileHome extends StatelessWidget {
                                                 .toString();
 
                                     // await Future.delayed(
-                                    //     const Duration(seconds: 3));
+                                    // ////    const Duration(seconds: 3));
 
                                     await Provider.of<SibingsProvider>(context,
                                             listen: false)
@@ -1447,7 +1492,7 @@ class ProfileHome extends StatelessWidget {
                                         : siblinggResponse![index]['name']
                                             .toString(),
                                     textAlign: TextAlign.start,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: UIGuide.light_Purple,
                                         fontSize: 16),
                                   ))),
@@ -1462,49 +1507,6 @@ class ProfileHome extends StatelessWidget {
               ],
             ),
           ));
-          //  AlertDialog(
-          //     content: Container(
-          //   decoration:
-          //       BoxDecoration(border: Border.all(color: UIGuide.light_Purple)),
-          //   height: 70,
-          //   width: size.width,
-          //   child: ListView.separated(
-          //       separatorBuilder: (BuildContext context, int index) =>
-          //           const Divider(),
-          //       itemCount:
-          //           siblinggResponse == null ? 0 : siblinggResponse!.length,
-          //       itemBuilder: ((context, index) {
-          // return Column(
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Center(
-          //         child: GestureDetector(
-          //             onTap: () async {
-          //               var idd = siblinggResponse![index]['id'] == null
-          //                   ? '--'
-          //                   : siblinggResponse![index]['id'].toString();
-
-          //               // await Future.delayed(
-          //               //     const Duration(seconds: 3));
-
-          //               await Provider.of<SibingsProvider>(context,
-          //                       listen: false)
-          //                   .getSibling(context, idd);
-          //             },
-          //             child: Text(
-          //                 siblinggResponse![index]['name'] == null
-          //                     ? '--'
-          //                     : siblinggResponse![index]['name']
-          //                         .toString()))),
-          //     // const Divider(
-          //     //   height: 1,
-          //     //   color: Colors.black45,
-          //     // )
-          //   ],
-          // );
-          //       })),
-          // ));
         });
   }
 }
@@ -1528,29 +1530,18 @@ class _FlashnewsState extends State<Flashnews> {
       p.flashNewsProvider(context);
       p.flashnew.clear();
     });
-
-    // scrollcontroller.addListener(() {
-    //   if (scrollcontroller.position.pixels ==
-    //       scrollcontroller.position.maxScrollExtent) {
-    //     var p = Provider.of<ProfileProvider>(context, listen: false);
-    //     p.flashNewsProvider(context);
-    //     p.flashnew.clear();
-    //   }
-    // });
   }
 
-  // ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    // _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-    //     duration: Duration(milliseconds: 200), curve: Curves.easeOut);
     var size = MediaQuery.of(context).size;
     return Consumer<ProfileProvider>(
       builder: (context, value, child) {
+        // String val = value.flashnew[1].news.toString();
+        // print(val);
         if (value.flashnew.isEmpty) {
           return Container(
             height: 25,
-            // width: 30,
           );
         } else {
           return LimitedBox(
@@ -1567,11 +1558,17 @@ class _FlashnewsState extends State<Flashnews> {
                         ? 0
                         : value.flashnew.length,
                     itemBuilder: (context, index) {
+                      // String ind = (index + 1).toString();
+                      // List arr = [];
+                      // // arr.addAll([ind]);
+                      // // Iterable<int>.generate(arr.length);
+                      // for (var i = 0; i <= value.flashnew.length; i++) {
+                      //   arr.add(i);
+                      // }
+                      // print(arr);
                       return LimitedBox(
                         maxHeight: 30,
-                        // width: 30,
                         child: Marquee(
-                          //scrolling  text
                           text: value.flashnew[index].news ?? '-----',
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
@@ -1596,47 +1593,6 @@ class _FlashnewsState extends State<Flashnews> {
                       );
                     }),
           );
-          // return value.loading
-          //     ? Container(
-          //         height: 30,
-          //         width: 30,
-          //       )
-          //     : ListView.builder(
-          //         // scrollDirection: Axis.horizontal,
-          //         //physics: NeverScrollableScrollPhysics(),
-          //         shrinkWrap: true,
-          //         itemCount:
-          //             value.flashnew.length == null ? 0 : value.flashnew.length,
-          //         itemBuilder: (context, index) {
-          //           return LimitedBox(
-          //             maxHeight: 30,
-          //             // maxWidth: 20,
-          //             child: Marquee(
-          //               //scrolling  text
-          //               text: value.flashnew[index].news ?? '--------',
-          //               // ? '------------'
-          //               // : dataRsponse![index]['flashNews'].toString(),
-          //               style: const TextStyle(
-          //                   fontWeight: FontWeight.bold,
-          //                   color: Colors.grey,
-          //                   fontSize: 12),
-          //               scrollAxis: Axis.horizontal,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               blankSpace: 20.0,
-          //               velocity: 40.0,
-          //               pauseAfterRound: const Duration(seconds: 1),
-          //               showFadingOnlyWhenScrolling: true,
-          //               fadingEdgeStartFraction: 0.3,
-          //               fadingEdgeEndFraction: 0.3,
-          //               numberOfRounds: 3000,
-          //               startPadding: 10.0,
-          //               accelerationDuration: const Duration(seconds: 1),
-          //               accelerationCurve: Curves.linear,
-          //               decelerationDuration: const Duration(milliseconds: 500),
-          //               decelerationCurve: Curves.easeOut,
-          //             ),
-          //           );
-          //         });
         }
       },
     );

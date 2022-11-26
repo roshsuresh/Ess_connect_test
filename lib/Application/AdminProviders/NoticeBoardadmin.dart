@@ -104,9 +104,6 @@ class NoticeBoardAdminProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
-
-      //  log(data.toString());
-
       List<DivisionListModel> templist = List<DivisionListModel>.from(
           data["divisionbyCourse"].map((x) => DivisionListModel.fromJson(x)));
       divisionList.addAll(templist);

@@ -112,11 +112,6 @@ class FeeReportProvider with ChangeNotifier {
 
         notifyListeners();
       }
-
-      // List<AllFeeCollect>.from(
-      // AllFeeCollect.fromJson(x)));
-      // collectionList.addAll(templst);
-
       notifyListeners();
     } else {
       print('Error in fee collection report');

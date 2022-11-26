@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 class SearchStudent_stf extends StatelessWidget {
   SearchStudent_stf({Key? key}) : super(key: key);
 
-  // @override
   TextEditingController clearValue = TextEditingController();
 
   @override
@@ -34,7 +33,7 @@ class SearchStudent_stf extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_back_ios_new,
                         color: Colors.grey,
                       )),
@@ -50,7 +49,7 @@ class SearchStudent_stf extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.search),
+                              icon: const Icon(Icons.search),
                               color: Colors.grey,
                               onPressed: (() async {
                                 Provider.of<Screen_Search_Providers>(context,
@@ -62,7 +61,7 @@ class SearchStudent_stf extends StatelessWidget {
                               }),
                             ),
                             IconButton(
-                              icon: Icon(Icons.close),
+                              icon: const Icon(Icons.close),
                               color: Colors.grey,
                               onPressed: (() {
                                 clearValue.clear();
@@ -71,23 +70,23 @@ class SearchStudent_stf extends StatelessWidget {
                           ],
                         ),
                         hintText: 'Search',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Colors.grey,
                           fontSize: 20,
                         ),
                         fillColor: UIGuide.light_black,
                         filled: true,
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                               color: UIGuide.light_Purple, width: .5),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: const BorderSide(color: Colors.grey),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      style: TextStyle(color: UIGuide.light_Purple),
+                      style: const TextStyle(color: UIGuide.light_Purple),
                       // onChanged: (value) {
                       //   print(value);
                       //   search = value;
@@ -140,7 +139,7 @@ class SearchStudent_stf extends StatelessWidget {
                 }
                 return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: provider.searchStudent.length == null
+                  itemCount: provider.searchStudent.isEmpty
                       ? 0
                       : provider.searchStudent.length,
                   itemBuilder: (context, index) {
@@ -180,7 +179,7 @@ class SearchStudent_stf extends StatelessWidget {
                                                     .searchStudent[index]
                                                     .studentPhoto ??
                                                 'https://img.myloview.com/canvas-prints/default-avatar-profile-icon-social-media-user-symbol-image-400-251200038.jpg')),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(10))),
                                   ),
                                 ),
@@ -230,7 +229,7 @@ class SearchStudent_stf extends StatelessWidget {
                                             strutStyle:
                                                 const StrutStyle(fontSize: 8.0),
                                             text: TextSpan(
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black,
                                               ),
@@ -390,8 +389,8 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 79, 97, 197);
-    final Color fill2 = Color.fromARGB(255, 180, 103, 216);
+    const Color fill1 = Color.fromARGB(255, 79, 97, 197);
+    const Color fill2 = Color.fromARGB(255, 180, 103, 216);
     final List<Color> gradient = [
       fill1,
       fill2,
@@ -535,12 +534,12 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                 height: 170,
                 width: size.width,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 238, 234, 234),
+                    color: const Color.fromARGB(255, 238, 234, 234),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 238, 234, 234),
                       ),
                       width: size.width,
@@ -562,7 +561,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                               strutStyle: const StrutStyle(fontSize: 13),
                               maxLines: 3,
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     color: Color.fromARGB(255, 44, 43, 43)),
                                 text: stud.address ?? '---',
@@ -574,7 +573,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Name : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -583,7 +582,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                           child: Text(
                             stud.bus ?? '---',
                             overflow: TextOverflow.clip,
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                           ),
                         )
                       ],
@@ -591,7 +590,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                     kheight10,
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Bus Stop : ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500, fontSize: 13),
@@ -600,7 +599,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                           child: Text(
                             stud.stop ?? '---',
                             overflow: TextOverflow.clip,
-                            style: TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: 12),
                           ),
                         )
                       ],
@@ -612,7 +611,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                       },
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Phone No : ',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 13),
@@ -621,7 +620,7 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                             child: Text(
                               phn = stud.mobNo ?? '---',
                               overflow: TextOverflow.clip,
-                              style: TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 12),
                             ),
                           )
                         ],

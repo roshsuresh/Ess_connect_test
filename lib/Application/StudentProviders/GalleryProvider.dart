@@ -11,9 +11,8 @@ List? galleryResponse;
 List? galleryAttachResponse;
 
 class GalleryProvider with ChangeNotifier {
-  //late GalleryphotosModel photosModel;
   late GalleryphotosModel galleryphotosModel;
-  // GalleryModel gallery;
+
   bool _loading = false;
   bool get loading => _loading;
   setLoading(bool value) {
@@ -23,25 +22,21 @@ class GalleryProvider with ChangeNotifier {
 
   Future<GalleryModel?> getGalleyList() async {
     GalleryModel gallery;
-
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print('Headres   $headers');
     setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parents/gallery"),
         headers: headers);
-    //print(response);
+
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-        // print("corect");
         final data = json.decode(response.body);
-        // print(data);
         galleryResponse = data["gallerydetails"];
         gallery = GalleryModel.fromJson(data);
         setLoading(false);
@@ -72,7 +67,7 @@ class GalleryProvider with ChangeNotifier {
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     String galleryid = galleryId.toString();
-    // print('Headres   $headers');
+
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/parent-home/gallery-photos/$galleryid"),
         headers: headers);
@@ -80,12 +75,9 @@ class GalleryProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoadingg(true);
-        // print("corect");
         final data = json.decode(response.body);
         print(data);
         galleryList = data;
-        // galleryphotosModel = GalleryphotosModel.fromJson(data);
-        // print(galleryAttachResponse);
         print(galleryList);
         setLoadingg(false);
         notifyListeners();

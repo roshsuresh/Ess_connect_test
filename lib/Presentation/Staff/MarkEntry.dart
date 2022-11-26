@@ -165,7 +165,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryInitialValuesController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -181,7 +181,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryInitialValuesController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -294,7 +294,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryDivisionListController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -309,7 +309,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 height: 0,
                                 child: TextField(
                                   controller: markEntryDivisionListController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -428,7 +428,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryPartListController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -444,7 +444,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 height: 0,
                                 child: TextField(
                                   controller: markEntryPartListController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -568,12 +568,12 @@ class _MarkEntryState extends State<MarkEntry> {
                               LimitedBox(
                                 maxHeight: 40,
                                 child: TextField(
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       overflow: TextOverflow.clip),
                                   textAlign: TextAlign.center,
                                   controller: markEntrySubjectListController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -589,7 +589,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntrySubjectListController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -696,7 +696,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: markEntryExamListController1,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     filled: true,
                                     fillColor:
                                         Color.fromARGB(255, 238, 237, 237),
@@ -890,7 +890,7 @@ class _MarkEntryState extends State<MarkEntry> {
                                                                 .toString(),
                                                         textAlign:
                                                             TextAlign.center,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 12),
                                                       ),
                                                       Text(
@@ -907,13 +907,9 @@ class _MarkEntryState extends State<MarkEntry> {
                                                                 .toString(),
                                                         textAlign:
                                                             TextAlign.center,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 14),
                                                       ),
-                                                      // Text(
-                                                      //   'A',
-                                                      //   textAlign: TextAlign.center,
-                                                      // ),
                                                       GestureDetector(
                                                           onTap: () {
                                                             setState(() {

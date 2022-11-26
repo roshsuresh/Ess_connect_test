@@ -26,6 +26,7 @@ import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
 import 'package:Ess_test/Application/Staff_Providers/StaffNotificationScreen.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
+import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
 import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
 import 'package:Ess_test/routes.dart';
@@ -226,6 +227,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => TimetableStaffProviders()),
         ChangeNotifierProvider(create: (context) => FeeDetailsProvider()),
         ChangeNotifierProvider(create: (context) => StudStatiticsProvider()),
+        ChangeNotifierProvider(create: (context) => ConnectivityProvider())
       ],
       child: MaterialApp(
         title: 'Ess Connect',
@@ -316,33 +318,33 @@ class _SplashFuturePageState extends State<SplashFuturePage>
       if (prefs.getString('accesstoken') != null) {
         var data = await parseJWT();
         if (data['role'] == "SystemAdmin") {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => AdminHome()),
           );
           // return Future.value(AdminHome());
         } else if (data['role'] == "Teacher") {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => StaffHome()),
           );
           // return Future.value(StaffHome());
         } else {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => StudentHome()),
           );
           //  return Future.value(StudentHome());
         }
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
         //return Future.value(LoginPage());
       }
     } else {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ActivatePage()),
       );
@@ -382,16 +384,6 @@ class _SplashFuturePageState extends State<SplashFuturePage>
 
     Timer(Duration(seconds: 4), () async {
       await _checkSession();
-
-      //   setState(() {
-      //  Navigator.push(
-      //                       context,
-      //                       MaterialPageRoute(
-      //                           builder: (context) =>
-      //                               _checkSession()),
-      //                     );
-      // Navigator.pushReplacement(context,_checkSession());
-      //  });
     });
   }
 

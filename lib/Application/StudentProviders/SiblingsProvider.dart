@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +13,8 @@ import '../../utils/constants.dart';
 
 class SibingsProvider with ChangeNotifier {
   bool isLoading = false;
-  Future<List<SiblingsNameModel>> getSiblingName() async {
+  List<SiblingsNameModel> siblingList = [];
+  Future getSiblingName() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -26,17 +29,48 @@ class SibingsProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       var jsonrespo = json.decode(response.body);
-      List<SiblingsNameModel> siblings = [];
-      for (var u in jsonrespo) {
-        SiblingsNameModel sibling =
-            SiblingsNameModel(name: u['name'], id: u['id']);
-        siblings.add(sibling);
-      }
+
+      List<SiblingsNameModel> templist = List<SiblingsNameModel>.from(
+          data.map((x) => SiblingsNameModel.fromJson(x)));
+      siblingList.addAll(templist);
+
       notifyListeners();
-      return siblings;
     } else {
       print('Error');
       throw ('Error');
+    }
+  }
+
+  Future getToken(String childId) async {
+    Map<String, dynamic> data = await parseJWT();
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("firebase token");
+    print(token);
+    var request = await http.Request(
+        'POST', Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusertoken'));
+    request.body = json.encode({
+      "MobileToken": token,
+      "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
+      "GuardianId": data['GuardianId'],
+      "StudentId": childId,
+      "Type": data['role'] == "Guardian" ? "Student" : "Staff"
+    });
+    print('Responde body  ${request.body}');
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      log("student Token added");
+    } else {
+      log("student not added");
+      debugPrint(response.reasonPhrase);
     }
   }
 
@@ -47,49 +81,25 @@ class SibingsProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-
     var request = http.Request('POST',
         Uri.parse('${UIGuide.baseURL}/user/load-new-token-guardian/$childId'));
-
     request.headers.addAll(headers);
     print(request);
-
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = jsonDecode(await response.stream.bytesToString());
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
       SiblingTokenModel respo = SiblingTokenModel.fromJson(data);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('accesstoken', respo.accessToken);
       print('accessToken ${respo.accessToken}');
-      // notifyListeners();
-      // await Provider.of<ProfileProvider>(context).profileData();
-
-      // await Provider.of<LoginProvider>(context, listen: false)
-      //     .getToken(context);
-      // await Future.delayed(const Duration(seconds: 1));
-
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => StudentHome()),
         (Route<dynamic> route) => false,
       );
-      // await Navigator.of(context).pushAndRemoveUntil(
-      //     MaterialPageRoute(builder: (context) => StudentHome()),
-      //     (Route<dynamic> route) => false);
       isLoading = false;
       notifyListeners();
-      // await  Provider.of<ProfileProvider>(context).profileData();
-      //  Provider.of<LoginProvider>(context, listen: false).getToken(context);
-      // var parsedResponse = await parseJWT();
-
-      //await Future.delayed(const Duration(seconds: 3));
-      //   Navigator.push(
-      //       context, MaterialPageRoute(builder: (context) => StudentHome()));
-      // } else {
-      //   Navigator.push(
-      //       context, MaterialPageRoute(builder: (context) => StudentHome()));
     }
   }
 }

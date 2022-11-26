@@ -58,9 +58,7 @@ class PasswordChangeprovider with ChangeNotifier {
                 headerAnimationLoop: false,
                 title: 'Success',
                 desc: 'Password Changed Successfully',
-                btnOkOnPress: () {
-                  //  Navigator.pop(context);
-                },
+                btnOkOnPress: () {},
                 btnOkColor: Colors.green)
             .show();
         ScaffoldMessenger.of(context)

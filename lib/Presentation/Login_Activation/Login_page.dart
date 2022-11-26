@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:Ess_test/Application/StudentProviders/ProfileProvider.dart';
+import 'package:Ess_test/Application/StudentProviders/SiblingsProvider.dart';
 import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:http/http.dart' as http;
 import 'package:Ess_test/Constants.dart';
@@ -360,7 +362,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           isLoading = true;
         });
         await Future.delayed(const Duration(seconds: 3));
-        Navigator.pushReplacement(
+
+        await Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => StudentHome()));

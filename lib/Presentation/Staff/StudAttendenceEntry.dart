@@ -629,7 +629,7 @@ class DualAttendenceviewWidget extends StatelessWidget {
     return Consumer<AttendenceStaffProvider>(
       builder: (context, val, child) => val.loading
           ? Column(
-              children: [
+              children: const [
                 SizedBox(
                   height: 150,
                 ),

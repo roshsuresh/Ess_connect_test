@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:Ess_test/Domain/Student/ReceivedNotification.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,13 +28,13 @@ class NotificationReceivedProviderStudent with ChangeNotifier {
       //"SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['ChildId'],
-      "Type": "student"
+      "Type": "Student"
     });
     print(json.encode({
       //  "SchoolId": _pref.getString('schoolId'),
       "CreatedDate": null,
       "StaffGuardianStudId": parse['ChildId'],
-      "Type": "student"
+      "Type": "Student"
     }));
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();

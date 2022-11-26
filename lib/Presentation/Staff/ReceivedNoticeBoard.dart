@@ -1,6 +1,5 @@
 import 'package:Ess_test/Application/Staff_Providers/NoticeboardSend.dart';
 import 'package:Ess_test/Constants.dart';
-
 import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:Ess_test/utils/TextWrap(moreOption).dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -21,7 +20,7 @@ class StaffNoticeBoardReceived extends StatelessWidget {
 
     var width = size.width;
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 79, 97, 197);
+    const Color fill1 = Color.fromARGB(255, 79, 97, 197);
     final Color fill2 = Color.fromARGB(255, 180, 103, 216);
     final List<Color> gradient = [
       fill1,

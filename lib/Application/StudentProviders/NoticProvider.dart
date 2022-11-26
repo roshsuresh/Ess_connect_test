@@ -34,7 +34,6 @@ class NoticeProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
 
     setLoading(true);
     var response = await http.get(
@@ -43,9 +42,9 @@ class NoticeProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-        // print("corect");
+
         final data = json.decode(response.body);
-        //  print(data);
+
         noticeresponse = data["noticeBoardDetails"];
         setLoading(false);
         notifyListeners();
@@ -65,8 +64,7 @@ class NoticeProvider with ChangeNotifier {
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
     final id = noticeId.toString();
-    // print(id);
-    // print(headers);
+
     var response = await http.get(
         Uri.parse(
             "${UIGuide.baseURL}/mobileapp/parent/noticeboard-attachment/$id"),
@@ -75,7 +73,7 @@ class NoticeProvider with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
         attachResponse = json.decode(response.body);
-        // log(data.toString());
+
         AttachmentModel attach = AttachmentModel.fromJson(data);
         extension = attach.extension;
         url = attach.url;

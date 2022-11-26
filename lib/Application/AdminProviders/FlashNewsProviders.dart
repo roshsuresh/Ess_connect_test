@@ -10,37 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class FlashNewsProviderAdmin with ChangeNotifier {
-  // DateTime? _mydatetimeFrom;
-
-  // DateTime? _mydatetimeTo;
-
-  // String timefrom = '--';
-
-  // String timeTo = '--';
-  // //from time
-  // getTimeFrom(BuildContext context) async {
-  //   _mydatetimeFrom = await showDatePicker(
-  //       context: context,
-  //       initialDate: _mydatetimeFrom ?? DateTime.now(),
-  //       firstDate: DateTime.now().subtract(const Duration(days: 0)),
-  //       lastDate: DateTime(2030));
-  //   timefrom = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
-  //   print(timefrom);
-  //   notifyListeners();
-  // }
-
-  // //to time
-  // getTimeTo(BuildContext context) async {
-  //   _mydatetimeTo = await showDatePicker(
-  //       context: context,
-  //       initialDate: _mydatetimeTo ?? DateTime.now(),
-  //       firstDate: DateTime.now().subtract(const Duration(days: 0)),
-  //       lastDate: DateTime(2030));
-  //   timeTo = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
-  //   print(timeTo);
-  //   notifyListeners();
-  // }
-
   //upload Gallery
 
   Future flashNewsUpload(

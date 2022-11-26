@@ -11,6 +11,7 @@ import 'package:Ess_test/Presentation/Admin/StudentStatistiics.dart';
 import 'package:Ess_test/Presentation/Admin/TimeTable/TimeTableScreen.dart';
 import 'package:Ess_test/Presentation/Admin/demo.dart';
 import 'package:Ess_test/Presentation/Staff/StudReport.dart';
+import 'package:Ess_test/Presentation/Student/NoInternetScreen.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -18,6 +19,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Application/StudentProviders/InternetConnection.dart';
 import '../../Constants.dart';
 import '../Login_Activation/Login_page.dart';
 import '../Student/PasswordChange.dart';
@@ -31,28 +33,36 @@ class AdminHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ConnectivityProvider>(context, listen: false);
+    });
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: ListView(
-        children: [
-          const AdminProfileTop(),
-          Container(
-            width: size.width,
-            height: size.height - 170,
-            decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      // color: UIGuide.light_Purple,
-                      blurRadius: 5,
-                      offset: Offset(1, 3))
+      body: Consumer<ConnectivityProvider>(
+        builder: (context, connection, child) => connection.isOnline == false
+            ? NoInternetConnection()
+            : ListView(
+                children: [
+                  const AdminProfileTop(),
+                  Container(
+                    width: size.width,
+                    height: size.height - 170,
+                    decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              // color: UIGuide.light_Purple,
+                              blurRadius: 5,
+                              offset: Offset(1, 3))
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    child: const AdminHomeContent(),
+                  )
                 ],
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30))),
-            child: const AdminHomeContent(),
-          )
-        ],
+              ),
       ),
     );
   }
@@ -949,15 +959,6 @@ class AdminHomeContent extends StatelessWidget {
                                 (Route<dynamic> route) => false);
                           },
                         ).show();
-                        // SharedPreferences prefs =
-                        //     await SharedPreferences.getInstance();
-                        // print("accesstoken  $prefs");
-                        // prefs.remove("accesstoken");
-
-                        // Navigator.of(context).pushAndRemoveUntil(
-                        //     MaterialPageRoute(
-                        //         builder: (context) => LoginPage()),
-                        //     (Route<dynamic> route) => false);
                       },
                       child: const Icon(
                         Icons.logout_outlined,

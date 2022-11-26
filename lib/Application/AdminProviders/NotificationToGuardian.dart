@@ -42,9 +42,6 @@ class NotificationToGuardianAdmin with ChangeNotifier {
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
-
-      // log(data.toString());
-
       List<StudentViewbyCourseDivision_notification_Stf> templist =
           List<StudentViewbyCourseDivision_notification_Stf>.from(
               data["studentViewbyCourseDivision"].map((x) =>

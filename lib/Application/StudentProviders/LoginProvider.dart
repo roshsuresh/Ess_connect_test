@@ -32,18 +32,17 @@ class LoginProvider with ChangeNotifier {
       var jsonData = json.decode(response.body);
       print(jsonData);
       ActivationModel ac = ActivationModel.fromJson(jsonData);
-      //imageUrl = ac.logoUrl;
+
       schoolName = ac.schoolName!;
       subDomain = ac.subDomain!;
       print(schoolName);
       SharedPreferences _pref = await SharedPreferences.getInstance();
       _pref.setString("schoolId", ac.schoolId!);
       notifyListeners();
-      //  print(response.body);
     } else {
       print("Error in API calling");
     }
-    // print(response.statusCode);
+
     return response.statusCode;
   }
 
@@ -60,7 +59,6 @@ class LoginProvider with ChangeNotifier {
     var request = http.Request(
         'POST', Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusertoken'));
     request.body = json.encode({
-      // "SchoolId": data["SchoolId"],
       "MobileToken": token,
       "StaffId": data.containsKey('StaffId') ? data['StaffId'] : null,
       "GuardianId": data['GuardianId'],
@@ -74,7 +72,6 @@ class LoginProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       log("student Token added");
-      // debugPrint(await response.stream.bytesToString());
     } else {
       log("student not added");
       debugPrint(response.reasonPhrase);

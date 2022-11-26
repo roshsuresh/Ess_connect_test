@@ -177,44 +177,6 @@ class AttendenceStaffProvider with ChangeNotifier {
     return true;
   }
 
-  // Future<bool> getAttendanceView(String id, String date) async {
-  //   setLoading(true);
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   setLoading(true);
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-  //   var request = http.Request(
-  //       'GET',
-  //       Uri.parse(
-  //           '${UIGuide.baseURL}/mobileapp/staff/AttendenceView?=&divisionId=$id&attendanceDate=$date'));
-
-  //   request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
-
-  //   request.headers.addAll(headers);
-  //   setLoading(true);
-  //   http.StreamedResponse response = await request.send();
-  //   setLoading(true);
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> data =
-  //         jsonDecode(await response.stream.bytesToString());
-
-  //     log(data.toString());
-
-  //     List<AttendenceDivisions> templist = List<AttendenceDivisions>.from(
-  //         data["divisions"].map((x) => AttendenceDivisions.fromJson(x)));
-  //     attendenceDivisionList.addAll(templist);
-  //     print('correct');
-  //     setLoading(false);
-  //     notifyListeners();
-  //   } else {
-  //     setLoading(false);
-  //     print('Error in AttendenceDivisionList stf');
-  //   }
-  //   return true;
-  // }
-
   bool _loading = false;
   bool get loading => _loading;
   setLoading(bool value) {
@@ -276,6 +238,7 @@ class AttendenceStaffProvider with ChangeNotifier {
   void selectItem(StudentsAttendenceView_stf model) {
     StudentsAttendenceView_stf selected = studentsAttendenceView
         .firstWhere((element) => element.admNo == model.admNo);
+    selected.select ??= true;
     selected.select ??= false;
     selected.select = !selected.select!;
     print(selected.toJson());

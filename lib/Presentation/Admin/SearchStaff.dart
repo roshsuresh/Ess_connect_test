@@ -107,228 +107,166 @@ class _SearchStaffState extends State<SearchStaff> {
             Expanded(
               flex: 1,
               child: Consumer<SearchStaffProviders>(
-                  builder: (context, value, child) {
-                if (clearValue.text.isEmpty) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.emoji_emotions_sharp,
-                        size: 100,
-                        color: UIGuide.light_black,
-                      ),
-                      Text(
-                        "Please enter the name to search",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 122, 121, 121)),
-                      )
-                    ],
-                  );
-                }
-                if (value.staffReportList.isEmpty) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.sentiment_dissatisfied_outlined,
-                        size: 120,
-                        color: Colors.grey,
-                      ),
-                      Text("Sorry, We couldn't find the text you have entered")
-                    ],
-                  );
-                }
-                return value.loading
-                    ? const Center(child: spinkitLoader())
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: value.staffReportList.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              kheight10,
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => StaffInfo(
-                                              index: index,
-                                            )),
-                                  );
-                                },
-                                child: Container(
-                                  width: size.width - 10,
-                                  height: 100,
-                                  decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 236, 233, 233),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      kWidth,
-                                      Center(
-                                        child: Container(
-                                          width: 70,
-                                          height: 70,
-                                          decoration: BoxDecoration(
-                                              color: Color.fromARGB(
-                                                  255, 236, 233, 233),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(value
-                                                              .staffReportList[
-                                                                  index]
-                                                              .staffPhoto ==
-                                                          null
-                                                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwaLDKaK49tsHmdMGOrmTdns5qiw080F2Yw&usqp=CAU'
-                                                      : value
-                                                          .staffReportList[
-                                                              index]
-                                                          .staffPhoto
-                                                          .toString())),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
+                builder: (context, value, child) {
+                  if (clearValue.text.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.emoji_emotions_sharp,
+                          size: 100,
+                          color: UIGuide.light_black,
+                        ),
+                        Text(
+                          "Please enter the name to search",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 122, 121, 121)),
+                        )
+                      ],
+                    );
+                  }
+                  if (value.staffReportList.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.sentiment_dissatisfied_outlined,
+                          size: 120,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                            "Sorry, We couldn't find the text you have entered")
+                      ],
+                    );
+                  }
+                  return value.loading
+                      ? const Center(child: spinkitLoader())
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: value.staffReportList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                kheight10,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => StaffInfo(
+                                                index: index,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: size.width - 10,
+                                    height: 100,
+                                    decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 236, 233, 233),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10))),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        kWidth,
+                                        Center(
+                                          child: Container(
+                                            width: 70,
+                                            height: 70,
+                                            decoration: BoxDecoration(
+                                                color: Color.fromARGB(
+                                                    255, 236, 233, 233),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(value
+                                                                .staffReportList[
+                                                                    index]
+                                                                .staffPhoto ==
+                                                            null
+                                                        ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwaLDKaK49tsHmdMGOrmTdns5qiw080F2Yw&usqp=CAU'
+                                                        : value
+                                                            .staffReportList[
+                                                                index]
+                                                            .staffPhoto
+                                                            .toString())),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Name : ',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 13),
-                                                ),
-                                                RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  strutStyle: const StrutStyle(
-                                                      fontSize: 8.0),
-                                                  text: TextSpan(
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          color: UIGuide
-                                                              .light_Purple,
-                                                          fontWeight:
-                                                              FontWeight.w600),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Text(
+                                                    'Name : ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13),
+                                                  ),
+                                                  RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    strutStyle:
+                                                        const StrutStyle(
+                                                            fontSize: 8.0),
+                                                    text: TextSpan(
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            color: UIGuide
+                                                                .light_Purple,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                        text: value
+                                                                .staffReportList[
+                                                                    index]
+                                                                .name ??
+                                                            '--'),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Text(
+                                                    'Section : ',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13),
+                                                  ),
+                                                  RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    strutStyle:
+                                                        const StrutStyle(
+                                                            fontSize: 8.0),
+                                                    text: TextSpan(
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                      ),
                                                       text: value
                                                               .staffReportList[
                                                                   index]
-                                                              .name ??
-                                                          '--'),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Section : ',
-                                                  textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 13),
-                                                ),
-                                                RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  strutStyle: const StrutStyle(
-                                                      fontSize: 8.0),
-                                                  text: TextSpan(
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black,
+                                                              .section ??
+                                                          '--',
                                                     ),
-                                                    text: value
-                                                            .staffReportList[
-                                                                index]
-                                                            .section ??
-                                                        '--',
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Designation : ',
-                                                  textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 13),
-                                                ),
-                                                RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  strutStyle: const StrutStyle(
-                                                      fontSize: 8.0),
-                                                  text: TextSpan(
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black,
-                                                    ),
-                                                    text: value
-                                                            .staffReportList[
-                                                                index]
-                                                            .designation ??
-                                                        '--',
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text(
-                                                  'Staff Role : ',
-                                                  textAlign: TextAlign.start,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 13),
-                                                ),
-                                                RichText(
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  strutStyle: const StrutStyle(
-                                                      fontSize: 8.0),
-                                                  text: TextSpan(
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black,
-                                                    ),
-                                                    text: value
-                                                            .staffReportList[
-                                                                index]
-                                                            .staffRole ??
-                                                        '---',
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _makingPhoneCall(value
-                                                        .staffReportList[index]
-                                                        .mobileNo ??
-                                                    '---');
-                                              },
-                                              child: Row(
+                                                ],
+                                              ),
+                                              Row(
                                                 children: [
-                                                  const Text(
-                                                    'Phone : ',
+                                                  Text(
+                                                    'Designation : ',
                                                     textAlign: TextAlign.start,
                                                     style: TextStyle(
                                                         fontWeight:
@@ -344,35 +282,107 @@ class _SearchStaffState extends State<SearchStaff> {
                                                             fontSize: 8.0),
                                                     text: TextSpan(
                                                       style: const TextStyle(
-                                                        fontSize: 13,
+                                                        fontSize: 12,
                                                         color: Colors.black,
                                                       ),
                                                       text: value
                                                               .staffReportList[
                                                                   index]
-                                                              .mobileNo ??
+                                                              .designation ??
+                                                          '--',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Text(
+                                                    'Staff Role : ',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13),
+                                                  ),
+                                                  RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    strutStyle:
+                                                        const StrutStyle(
+                                                            fontSize: 8.0),
+                                                    text: TextSpan(
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                      ),
+                                                      text: value
+                                                              .staffReportList[
+                                                                  index]
+                                                              .staffRole ??
                                                           '---',
                                                     ),
                                                   ),
-                                                  const Icon(
-                                                    Icons.phone,
-                                                    size: 17,
-                                                  )
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                              GestureDetector(
+                                                onTap: () {
+                                                  _makingPhoneCall(value
+                                                          .staffReportList[
+                                                              index]
+                                                          .mobileNo ??
+                                                      '---');
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Phone : ',
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 13),
+                                                    ),
+                                                    RichText(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      strutStyle:
+                                                          const StrutStyle(
+                                                              fontSize: 8.0),
+                                                      text: TextSpan(
+                                                        style: const TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
+                                                        text: value
+                                                                .staffReportList[
+                                                                    index]
+                                                                .mobileNo ??
+                                                            '---',
+                                                      ),
+                                                    ),
+                                                    const Icon(
+                                                      Icons.phone,
+                                                      size: 17,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-              }),
+                              ],
+                            );
+                          },
+                        );
+                },
+              ),
             ),
           ],
         ),
@@ -536,13 +546,6 @@ class StudProfileViewBySearch_Staff extends StatelessWidget {
                     ),
                     radius: 65,
                     backgroundColor: UIGuide.WHITE,
-                    // child: Image(
-                    //   image: NetworkImage(
-                    //     value.viewStudReportListt[indexx].studentPhoto ??
-                    //         'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
-                    //   ),
-                    //   // fit: BoxFit.fill,
-                    // ),
                   ),
                 )
               ],

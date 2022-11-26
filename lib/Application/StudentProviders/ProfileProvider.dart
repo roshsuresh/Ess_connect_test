@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:Ess_test/utils/LoadingIndication.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Domain/Student/Flashnews.dart';
@@ -42,28 +39,6 @@ class ProfileProvider with ChangeNotifier {
   String? studPhoto;
   String? fatherPhoto;
   String? motherPhoto;
-  bool isLoading = false;
-  // Future<StudentProfileModel> getProfile() async {
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-  //   // print(headers);
-  //   var response = await http.get(
-  //       Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
-  //       headers: headers);
-  //   var data = jsonDecode(response.body.toString());
-
-  //   if (response.statusCode == 200) {
-  //     print(data);
-  //     print(StudentProfileModel.fromJson(data));
-  //     return StudentProfileModel.fromJson(data);
-  //   } else {
-  //     print('Error in profile');
-  //     return StudProModel.fromJson(data);
-  //   }
-  // }
 
   bool _loading = false;
   bool get loading => _loading;
@@ -80,7 +55,7 @@ class ProfileProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
+
     setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/studentprofile"),
@@ -88,7 +63,7 @@ class ProfileProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-        // print("corect");
+
         var jsonData = await json.decode(response.body);
 
         mapResponse = await json.decode(response.body);
@@ -126,17 +101,10 @@ class ProfileProvider with ChangeNotifier {
         bloodGroup = std.bloodGroup;
         houseGroup = std.houseGroup;
         classTeacher = std.classTeacher;
-
-        // print(address);
-
-        // print(studName);
-        // print("corect2..........");
         setLoading(false);
         notifyListeners();
-
-        // print(response.body);
       } else {
-        print("Error in Response");
+        print("Error in profile Response");
       }
     } catch (e) {
       print(e);
@@ -145,7 +113,6 @@ class ProfileProvider with ChangeNotifier {
 
   List<FlashNewsModelStud> flashnew = [];
   Future flashNewsProvider(context) async {
-    // flashNewsModel = await flashNewsData(context);
     late FlashNewsModel flashNewsModel;
     Map<String, dynamic> data = await parseJWT();
     setLoading(true);
@@ -165,8 +132,6 @@ class ProfileProvider with ChangeNotifier {
         setLoading(true);
         final data = json.decode(response.body.toString());
         dataRsponse = data['flashNews'];
-        // print(data);
-        // print(dataRsponse);
         List<FlashNewsModelStud> templist = List<FlashNewsModelStud>.from(
             data["flashNews"].map((x) => FlashNewsModelStud.fromJson(x)));
         flashnew.addAll(templist);
@@ -179,13 +144,9 @@ class ProfileProvider with ChangeNotifier {
     } catch (e) {
       print(e.toString());
     }
-
-    //return flash;
   }
 
   Future siblingsAPI() async {
-    //SiblingsNameModel siblingsNameModel;
-
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
@@ -201,7 +162,7 @@ class ProfileProvider with ChangeNotifier {
       print(siblinggResponse);
       notifyListeners();
     } else {
-      throw ("Something went wrong in Response");
+      throw ("Something went wrong in siblings Response");
     }
   }
 }

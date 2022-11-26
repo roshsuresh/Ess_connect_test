@@ -1,6 +1,5 @@
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/StudstattiticsProvider.dart';
-import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/utils/constants.dart';

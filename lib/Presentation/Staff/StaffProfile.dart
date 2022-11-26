@@ -14,8 +14,8 @@ class StaffProfileView extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 79, 97, 197);
-    final Color fill2 = Color.fromARGB(255, 180, 103, 216);
+    const Color fill1 = Color.fromARGB(255, 79, 97, 197);
+    const Color fill2 = Color.fromARGB(255, 180, 103, 216);
     final List<Color> gradient = [
       fill1,
       fill2,
@@ -91,11 +91,6 @@ class StaffProfileView extends StatelessWidget {
                                             : value.name.toString()),
                                   ),
                                 ),
-                                // Text(
-                                //   'Anita Paul  ',
-                                //   style: const TextStyle(
-                                //       fontWeight: FontWeight.w500, fontSize: 15),
-                                // ),
                                 Text(
                                   value.designation == null
                                       ? '---'
@@ -110,7 +105,6 @@ class StaffProfileView extends StatelessWidget {
                       ),
                       Center(
                         child: CircleAvatar(
-                          // foregroundColor: Colors.white,
                           backgroundImage: NetworkImage(value.photo == null
                               ? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-default-avatar-profile-icon-vector-social-media-user-image-vector-illustration-227787227.jpg'
                               : value.photo.toString()),
@@ -126,7 +120,7 @@ class StaffProfileView extends StatelessWidget {
                       width: size.width - 20,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color.fromARGB(255, 223, 222, 222),
+                        color: const Color.fromARGB(255, 223, 222, 222),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -135,7 +129,7 @@ class StaffProfileView extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(255, 223, 222, 222),
+                                color: const Color.fromARGB(255, 223, 222, 222),
                               ),
                               width: size.width,
                               height: 90,
@@ -143,7 +137,7 @@ class StaffProfileView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    children: [
+                                    children: const [
                                       Icon(Icons.home_outlined),
                                       Text(
                                         'Permenent Address',
@@ -160,7 +154,7 @@ class StaffProfileView extends StatelessWidget {
                                           const StrutStyle(fontSize: 13),
                                       maxLines: 3,
                                       text: TextSpan(
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               color: Color.fromARGB(
                                                   255, 44, 43, 43)),
@@ -175,7 +169,7 @@ class StaffProfileView extends StatelessWidget {
                             Row(
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.person_outlined),
                                     Text(
                                       ' Gender : ',
@@ -191,7 +185,7 @@ class StaffProfileView extends StatelessWidget {
                                         ? '--'
                                         : value.gender.toString(),
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 )
                               ],
@@ -200,7 +194,7 @@ class StaffProfileView extends StatelessWidget {
                             Row(
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.cake_outlined),
                                     Text(
                                       ' DOB : ',
@@ -216,7 +210,7 @@ class StaffProfileView extends StatelessWidget {
                                         ? '--'
                                         : value.dateOfBirth.toString(),
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 )
                               ],
@@ -229,7 +223,7 @@ class StaffProfileView extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Row(
-                                    children: [
+                                    children: const [
                                       Icon(Icons.phone),
                                       Text(
                                         ' Phone No : ',
@@ -245,7 +239,7 @@ class StaffProfileView extends StatelessWidget {
                                           ? '--'
                                           : value.mobileNo.toString(),
                                       overflow: TextOverflow.clip,
-                                      style: TextStyle(fontSize: 12),
+                                      style: const TextStyle(fontSize: 12),
                                     ),
                                   )
                                 ],
@@ -255,7 +249,7 @@ class StaffProfileView extends StatelessWidget {
                             Row(
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.cake_outlined),
                                     Text(
                                       ' Short Name : ',
@@ -271,7 +265,7 @@ class StaffProfileView extends StatelessWidget {
                                         ? '--'
                                         : value.shortname.toString(),
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 )
                               ],
@@ -280,7 +274,7 @@ class StaffProfileView extends StatelessWidget {
                             Row(
                               children: [
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(Icons.email_outlined),
                                     Text(
                                       ' Email : ',
@@ -296,7 +290,7 @@ class StaffProfileView extends StatelessWidget {
                                         ? '--'
                                         : value.emailid.toString(),
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(fontSize: 12),
                                   ),
                                 )
                               ],

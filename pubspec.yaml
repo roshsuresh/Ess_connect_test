@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   anim_search_bar: ^2.0.2
+  animate_gradient: ^0.0.2
   avatar_glow: ^2.0.2
   awesome_dialog: ^3.0.2
   awesome_notifications: any
@@ -55,7 +56,6 @@ dependencies:
   get: ^4.6.5
   getwidget: ^3.0.1
   http: ^0.13.4
-  internet_connection_checker: ^1.0.0+1
   intl: ^0.17.0
   jwt_decoder: ^2.0.1
   marquee: ^2.2.3

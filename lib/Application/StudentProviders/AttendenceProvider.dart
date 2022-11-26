@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 import '../../Domain/Student/AttendenceModel.dart';
 import '../../utils/constants.dart';
 
@@ -30,7 +28,6 @@ class AttendenceProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/parent/getattendance"),
         headers: headers);
@@ -43,15 +40,14 @@ class AttendenceProvider with ChangeNotifier {
         setLoading(true);
         print(data);
         attend = attendenceData!['monthwiseAttendence'];
-        // print(attend);
+
         AttendenceModel att =
             AttendenceModel.fromJson(attendenceRespo!['attendence']);
         workDays = att.workDays;
         presentDays = att.presentDays;
         absentDays = att.absentDays;
         attendancePercentage = att.attendancePercentage;
-        //print('presentDays $presentDays');
-        // print(workDays);
+
         setLoading(false);
         notifyListeners();
       } else {

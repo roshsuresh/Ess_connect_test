@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  animate_gradient:
+    dependency: "direct main"
+    description:
+      name: animate_gradient
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   args:
     dependency: transitive
     description:
@@ -471,13 +478,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
-  internet_connection_checker:
-    dependency: "direct main"
-    description:
-      name: internet_connection_checker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0+1"
   intl:
     dependency: "direct main"
     description:
@@ -1044,5 +1044,5 @@ packages:
     source: hosted
     version: "6.1.0"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.17.0 <3.0.0"
   flutter: ">=3.0.0"

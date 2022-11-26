@@ -2,14 +2,11 @@ import 'package:Ess_test/Application/Staff_Providers/Notification_ToGuardianProv
 import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
 import 'package:Ess_test/Presentation/Staff/ToGuard_textSMS.dart';
 import 'package:Ess_test/utils/spinkit.dart';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../Constants.dart';
 import '../../utils/constants.dart';
 
@@ -262,7 +259,7 @@ class _Notification_StaffToGuardainState
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: notificationCourseController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -277,7 +274,7 @@ class _Notification_StaffToGuardainState
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: notificationCourseController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -384,7 +381,7 @@ class _Notification_StaffToGuardainState
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: notificationDivisionListController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -398,7 +395,7 @@ class _Notification_StaffToGuardainState
                             height: 0,
                             child: TextField(
                               controller: notificationDivisionListController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -420,8 +417,8 @@ class _Notification_StaffToGuardainState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
-                  color: Color.fromARGB(255, 172, 170, 170),
-                  child: Text('View'),
+                  color: const Color.fromARGB(255, 172, 170, 170),
+                  child: const Text('View'),
                   onPressed: () async {
                     if (notificationCourseController.text.isEmpty &&
                         notificationDivisionListController.text.isEmpty) {
@@ -472,12 +469,12 @@ class _Notification_StaffToGuardainState
             },
             children: [
               TableRow(children: [
-                Text(
+                const Text(
                   '   NO.',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   //   textAlign: TextAlign.center,
                 ),
-                Text(
+                const Text(
                   'Name',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
@@ -496,7 +493,7 @@ class _Notification_StaffToGuardainState
                                 color: UIGuide.light_Purple,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               'Select All',
                               style: TextStyle(
                                   fontSize: 15,
