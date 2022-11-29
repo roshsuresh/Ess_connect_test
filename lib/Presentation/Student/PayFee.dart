@@ -1,12 +1,13 @@
 import 'dart:math';
-
 import 'package:Ess_test/Presentation/Student/Student_home.dart';
-import 'package:Ess_test/Presentation/Student/TimeTable.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
+
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -87,16 +88,12 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
 
   final ScrollController _controller2 = ScrollController();
 
-  // final List _selecteCategorys = [];
-
-  // double totalFees = 0;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<FeesProvider>(context, listen: false);
-      // _selecteCategorys.clear();
-      // _selectedBusFee.clear();
+
       p.gatewayName();
       p.selecteCategorys.clear();
       p.selectedBusFee.clear();
@@ -111,13 +108,15 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   Provider.of<FeesProvider>(context, listen: false);
-  //   _controller.dispose();
-  //   _controller2.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _controller.dispose();
+    _controller2.dispose();
+    Provider.of<FeesProvider>(context, listen: false).dispose();
+    //Provider.of<FeesProvider>(context, listen: false);
+
+    super.dispose();
+  }
 
   // void _selectAll(int index) {
   //   _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
@@ -193,7 +192,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
   //   print(total);
   //   //  });
   // }
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool enable = true;
   @override
   Widget build(BuildContext context) {
@@ -201,6 +200,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     // _provider.feesData();
     // Provider.of<FeesProvider>(context, listen: false).gatewayName();
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: [
           Consumer<FeesProvider>(
@@ -246,11 +246,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                           padding: const EdgeInsets.only(left: 20.0, right: 8),
                           child: LimitedBox(
                               maxHeight: 160,
-                              child:
-                                  //  Consumer<FeesProvider>(
-                                  //   builder: (context, value, child) {
-                                  //     return
-                                  Consumer<FeesProvider>(
+                              child: Consumer<FeesProvider>(
                                 builder: (context, value, child) =>
                                     ListView.builder(
                                         shrinkWrap: true,
@@ -287,7 +283,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                   index,
                                                   value.feeList[index]
                                                       .installmentNetDue);
-                                              print(selected);
+                                              //   print(selected);
                                               // } else {
                                               //   return null;
                                               // }
@@ -402,13 +398,13 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                   itemBuilder:
                                                       (BuildContext context,
                                                           int index) {
-                                                    print(
-                                                        '-----=====--------${value.busFeeList[index]}');
+                                                    // print(
+                                                    //     '-----=====--------${value.busFeeList[index]}');
                                                     var list = [];
                                                     list.addAll([
                                                       value.busFeeList[index]
                                                     ]);
-                                                    print(list);
+                                                    //  print(list);
                                                     return CheckboxListTile(
                                                       activeColor:
                                                           const Color.fromARGB(
@@ -427,8 +423,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                               .installmentName),
                                                       onChanged:
                                                           (bool? selected) {
-                                                        print(
-                                                            '-------------------${value.busFeeList[index]}');
+                                                        // print(
+                                                        //     '-------------------${value.busFeeList[index]}');
 
                                                         // if (index == 1)
 
@@ -592,8 +588,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           kheight10,
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
                                             child: Text(
                                               'Your last transaction  details',
                                               textAlign: TextAlign.center,
@@ -606,7 +602,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Transaction Date: ',
                                                 ),
                                                 Flexible(
@@ -617,7 +613,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                         const StrutStyle(),
                                                     maxLines: 3,
                                                     text: TextSpan(
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: UIGuide
@@ -634,7 +630,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               children: [
-                                                Text(
+                                                const Text(
                                                   'Transaction amount: ',
                                                 ),
                                                 Text(
@@ -644,7 +640,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                       : provider
                                                           .lastTransactionAmount
                                                           .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color:
@@ -671,7 +667,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                                 .lastOrderStatus
                                                                 .toString();
                                                     if (stats == "Success") {
-                                                      return Text(
+                                                      return const Text(
                                                         "Success",
                                                         style: TextStyle(
                                                             fontWeight:
@@ -681,7 +677,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                       );
                                                     } else if (stats ==
                                                         "Failed") {
-                                                      return Text(
+                                                      return const Text(
                                                         "Failed",
                                                         style: TextStyle(
                                                             fontWeight:
@@ -690,7 +686,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                       );
                                                     } else if (stats ==
                                                         "Cancelled") {
-                                                      return Text(
+                                                      return const Text(
                                                         "Cancelled",
                                                         style: TextStyle(
                                                             fontWeight:
@@ -704,7 +700,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                       );
                                                     } else if (stats ==
                                                         "Processing") {
-                                                      return Text(
+                                                      return const Text(
                                                         "Processing",
                                                         style: TextStyle(
                                                             fontWeight:
@@ -713,7 +709,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                                 Colors.orange),
                                                       );
                                                     } else {
-                                                      return Text(
+                                                      return const Text(
                                                         "--",
                                                         style: TextStyle(
                                                             fontWeight:
@@ -730,7 +726,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                         : provider
                                                             .lastOrderStatus
                                                             .toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: UIGuide
@@ -755,7 +751,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                       const EdgeInsets.all(8.0),
                                                   child: Row(
                                                     children: [
-                                                      Text(
+                                                      const Text(
                                                         'Download receipt: ',
                                                       ),
                                                       GestureDetector(
@@ -816,17 +812,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                                           PdfDownload()),
                                                             );
                                                           });
-                                                          // await Navigator.push(
-                                                          //   context,
-                                                          //   MaterialPageRoute(
-                                                          //       builder: (context) =>
-                                                          //           PdfDownload()),
-                                                          // );
-                                                          // } else {
-                                                          //   return null;
-                                                          // }
                                                         },
-                                                        child: Icon(
+                                                        child: const Icon(
                                                             Icons.download,
                                                             color: UIGuide
                                                                 .light_Purple),
@@ -856,7 +843,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                   onPressed: () async {
                                                     Navigator.pop(context);
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     'OK',
                                                     style: TextStyle(
                                                         color: UIGuide.WHITE),
@@ -874,69 +861,6 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                               });
                         },
                       ),
-                      // Consumer<FeesProvider>(
-                      //   builder: (context, trans, child) {
-                      //     if (trans.transactionList.length == 1) {
-                      //       return ListView.builder(
-                      //         shrinkWrap: true,
-                      //         itemCount: trans.transactionList.length,
-                      //         itemBuilder: ((context, index) {
-                      //           String transType =
-                      //               trans.transactionList[index].name ?? '--';
-                      //           print(transType);
-                      //           print('---------------');
-                      //           return Container(
-                      //             height: 0,
-                      //             width: 0,
-                      //           );
-                      //         }),
-                      //       );
-                      //     } else if (trans.transactionList.length == 2) {
-                      //       return ListView.builder(
-                      //         shrinkWrap: true,
-                      //         itemCount: trans.transactionList.length,
-                      //         itemBuilder: ((context, index) {
-                      //           String transType1 =
-                      //               trans.transactionList[0].name ?? '--';
-                      //           String transType2 =
-                      //               trans.transactionList[1].name ?? '--';
-                      //           String transID1 =
-                      //               trans.transactionList[0].name ?? '--';
-                      //           String transID2 =
-                      //               trans.transactionList[1].name ?? '--';
-                      //           print(transType1);
-                      //           print(transType2);
-                      //           Provider.of<FeesProvider>(context,
-                      //                   listen: false)
-                      //               .getDataTwo(
-                      //                   transType1,
-                      //                   transID1,
-                      //                   trans.totalFees.toString(),
-                      //                   transType2,
-                      //                   transID2,
-                      //                   trans.totalBusFee.toString(),
-                      //                   trans.total.toString(),
-                      //                   trans.gateway.toString());
-                      //           return Container(
-                      //             height: 0,
-                      //             width: 0,
-                      //           );
-                      //         }),
-                      //       );
-                      //     } else {
-                      //       print(
-                      //         trans.transactionList.length,
-                      //       );
-                      //       print('Something Went wrong');
-                      //       return Text('');
-                      //     }
-                      //   },
-                      //   // child: ListView.builder(
-                      //   //   itemCount: value.transactionList.length,
-                      //   //   itemBuilder: ((context, index) {
-                      //   //   return Text(value.)
-                      //   // }),),
-                      // ),
                       const SizedBox(
                         height: 100,
                       ),
@@ -958,48 +882,139 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                     ),
                     height: 60,
                     onPressed: () async {
-                      AwesomeDialog(
-                        context: context,
-                        animType: AnimType.scale,
-                        dialogType: DialogType.info,
-                        title: 'Do you want to continue the payment',
-                        desc:
-                            "Please don't go 'Back' or 'Close' once the payment has been initialized!",
-                        btnOkOnPress: () {},
-                        btnCancelOnPress: () {},
-                      ).show();
-                      // if (trans.transactionList.length == 1) {
-                      //   print('1111111111111111');
-                      //   String transType =
-                      //       trans.transactionList[0].name ?? '--';
-                      // } else if (trans.transactionList.length == 2) {
-                      //   print('22222222222');
+                      if (trans.total != 0) {
+                        if (trans.transactionList.length == 1) {
+                          print('1111111111111111');
+                          String transType =
+                              trans.transactionList[0].name ?? '--';
+                          String transId1 = trans.transactionList[0].id ?? '--';
+                          String gateWay = trans.gateway ?? '--';
+                          print(transType);
+                          print(transId1);
 
-                      //   String transType1 =
-                      //       trans.transactionList[0].name ?? '--';
-                      //   String transType2 =
-                      //       trans.transactionList[1].name ?? '--';
-                      //   String transID1 = trans.transactionList[0].id ?? '--';
-                      //   String transID2 = trans.transactionList[1].id ?? '--';
-                      //   String gateway = trans.gateway ?? '--';
-                      //   print(transType1);
-                      //   print(transType2);
-                      //   await Provider.of<FeesProvider>(context, listen: false)
-                      //       .getDataTwo(
-                      //           transType1,
-                      //           transID1,
-                      //           trans.totalFees.toString(),
-                      //           transType2,
-                      //           transID2,
-                      //           trans.totalBusFee.toString(),
-                      //           trans.total.toString(),
-                      //           gateway.toString());
-                      // } else {
-                      //   print(
-                      //     trans.transactionList.length,
-                      //   );
-                      //   print('Something Went wrong');
-                      // }
+                          await Provider.of<FeesProvider>(context,
+                                  listen: false)
+                              .getDataOne(
+                                  transType,
+                                  transId1,
+                                  trans.totalFees.toString(),
+                                  trans.total.toString(),
+                                  gateWay);
+
+                          await AwesomeDialog(
+                            context: context,
+                            animType: AnimType.scale,
+                            dialogType: DialogType.info,
+                            title: 'Do you want to continue the payment',
+                            desc:
+                                "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
+                            btnOkOnPress: () {
+                              //  _startTransaction();
+                            },
+                            btnCancelOnPress: () {},
+                          ).show();
+                        } else if (trans.transactionList.length == 2) {
+                          print('22222222222');
+
+                          String transType1 =
+                              trans.transactionList[0].name ?? '--';
+                          String transType2 =
+                              trans.transactionList[1].name ?? '--';
+                          String transID1 = trans.transactionList[0].id ?? '--';
+                          String transID2 = trans.transactionList[1].id ?? '--';
+                          String gateway = trans.gateway ?? '--';
+                          print(transType1);
+                          print(transType2);
+                          await Provider.of<FeesProvider>(context,
+                                  listen: false)
+                              .getDataTwo(
+                                  transType1,
+                                  transID1,
+                                  trans.totalFees.toString(),
+                                  transType2,
+                                  transID2,
+                                  trans.totalBusFee.toString(),
+                                  trans.total.toString(),
+                                  gateway.toString());
+
+                          await AwesomeDialog(
+                            context: context,
+                            animType: AnimType.scale,
+                            dialogType: DialogType.info,
+                            title: 'Do you want to continue the payment',
+                            desc:
+                                "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
+                            btnOkOnPress: () async {
+                              String mid2 = trans.mid2 ?? '--';
+                              String orderId2 = trans.txnorderId2 ?? '--';
+                              String amount2 = trans.txnAmount2 ?? '--';
+                              String txntoken = trans.txnToken2 ?? '';
+                              print(txntoken);
+                              String callbackURL2 = trans.callbackUrl2 ?? '--';
+                              bool staging2 = trans.isStaging2 ?? true;
+                              // await _startTransaction();
+                              if (txntoken.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                    margin: EdgeInsets.only(
+                                        bottom: 80, left: 30, right: 30),
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                      'Something went wrong...',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                await _startTransaction(txntoken, mid2,
+                                    orderId2, amount2, callbackURL2, staging2);
+                              }
+                            },
+                            btnCancelOnPress: () {
+                              Navigator.of(_scaffoldKey.currentContext!).pop();
+                              //      Navigator.pop(context);
+                            },
+                          ).show();
+                        } else if (trans.transactionList.length == 0) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Something Went Wrong.....!',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        } else {
+                          print(
+                            trans.transactionList.length,
+                          );
+                          print('Something Went wrong');
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            duration: Duration(seconds: 1),
+                            margin: EdgeInsets.only(
+                                bottom: 80, left: 30, right: 30),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              'Select Fees.....!',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: const Text(
                       'Proceed to Pay',
@@ -1017,6 +1032,65 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
         ],
       ),
     );
+  }
+
+  String result = "";
+  bool restrictAppInvoke = true;
+
+  Future<void> _startTransaction(
+    String txnToken,
+    String mid,
+    String orderId,
+    String amount,
+    String callbackUrl,
+    bool isStaging,
+  ) async {
+    if (txnToken.isEmpty) {
+      return;
+    }
+    // var sendMap = <String, dynamic>{
+    //   "mid": mid,
+    //   "orderId": orderId,
+    //   "amount": amount,
+    //   "txnToken": txnToken,
+    //   "callbackUrl": callbackUrl,
+    //   "isStaging": isStaging,
+    //   "restrictAppInvoke": restrictAppInvoke,
+    // };
+    // print(sendMap);
+    print('sendMap');
+
+    try {
+      var response = AllInOneSdk.startTransaction(
+        mid,
+        orderId,
+        amount,
+        txnToken,
+        "",
+        isStaging,
+        restrictAppInvoke,
+      );
+      response.then((value) {
+        print(value);
+        setState(() {
+          result = value.toString();
+        });
+      }).catchError((onError) {
+        if (onError is PlatformException) {
+          setState(() {
+            result = onError.message.toString() +
+                " \n  " +
+                onError.details.toString();
+          });
+        } else {
+          setState(() {
+            result = onError.toString();
+          });
+        }
+      });
+    } catch (err) {
+      result = err.toString();
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Ess_test/Domain/Student/TransactionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +54,6 @@ class FeesProvider with ChangeNotifier {
     try {
       if (response.statusCode == 200) {
         setLoading(true);
-
         print("Fee Response..........");
 
         Map<String, dynamic> data = json.decode(response.body);
@@ -89,14 +89,9 @@ class FeesProvider with ChangeNotifier {
         // lastTransactionStartDate = fee.lastTransactionStartDate;
         // lastTransactionAmount = fee.lastTransactionAmount;
 
-        // print(dataResponss);
-        // print('Bus Response     $busfeeResponse');
-
-        // print('fee Response      $feeResponse');
         // OnlineFeePayModel fee = OnlineFeePayModel.fromJson(
         //     mapResponses!['onlineFeePaymentStudentDetails']);
         // allowPartialPayment = fee.allowPartialPayment;
-        //  print(allowPartialPayment);
 
         // FeeFeesInstallments feesdata =
         //     FeeFeesInstallments.fromJson(dataResponss!['feeFeesInstallments']);
@@ -104,14 +99,12 @@ class FeesProvider with ChangeNotifier {
         // Map<String, dynamic> data =
         //     jsonDecode(await response.bodyBytes.toString());
         // //print(await response.stream.bytesToString());
-        // print(data);
+
         // List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
         //     data["feeFeesInstallments"]
         //         .map((x) => FeeFeesInstallments.fromJson(x)));
         // feeList.addAll(templist);
 
-        // print(installmentTerm);
-        // isLoading = false;
         setLoading(false);
         notifyListeners();
       } else {
@@ -289,6 +282,16 @@ class FeesProvider with ChangeNotifier {
 //////////////////////////    get data  1 index   //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+  String? mid1;
+  String? txnorderId1;
+  String? callbackUrl1;
+  String? txnAmount1;
+  String? customerID1;
+  String? mobile1;
+  String? emailID1;
+  bool? isStaging1;
+  String? txnToken1;
+
   Future getDataOne(String fees, String idFee, String feeAmount, String amount,
       String gateName) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -299,7 +302,9 @@ class FeesProvider with ChangeNotifier {
     };
     // print(headers);
     var request = http.Request(
-        'POST', Uri.parse('${UIGuide.baseURL}/online-payment/paytm/get-data'));
+        'POST',
+        Uri.parse(
+            '${UIGuide.baseURL}/online-payment/paytm/get-data?ismobileapp=true'));
     request.body = json.encode({
       "Description": "Online Fees Payment",
       "TransactionType": [
@@ -347,30 +352,43 @@ class FeesProvider with ChangeNotifier {
 //////////////////////////    get data  2 index   //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+  String? mid2;
+  String? txnorderId2;
+  String? callbackUrl2;
+  String? txnAmount2;
+  String? customerID2;
+  String? mobile2;
+  String? emailID2;
+  bool? isStaging2;
+  String? txnToken2;
+
   Future getDataTwo(String fees, String idFee, String feeAmount, String buss,
       String idBus, String busAmount, String amount, String gateName) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    };
-    // print(headers);
-    var request = http.Request(
-        'POST', Uri.parse('${UIGuide.baseURL}/online-payment/paytm/get-data'));
+    // var headers = {
+    //   'Content-Type': 'application/json',
+    //   'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    // };
 
-    request.body = json.encode({
-      "Description": "Online Fees Payment",
-      "TransactionType": [
-        {"name": fees, "id": idFee, "amount": feeAmount},
-        {"name": buss, "id": idBus, "amount": busAmount}
-      ],
-      "ReturnUrl": "",
-      "Amount": amount,
-      "PaymentGateWay": gateName
-    });
-    request.headers.addAll(headers);
-    http.StreamedResponse response = await request.send();
+    final http.Response response = await http.post(
+      Uri.parse(
+          '${UIGuide.baseURL}/online-payment/paytm/get-data?ismobileapp=true'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+      },
+      body: jsonEncode({
+        "Description": "Online Fees Payment",
+        "TransactionType": [
+          {"name": fees, "id": idFee, "amount": feeAmount},
+          {"name": buss, "id": idBus, "amount": busAmount}
+        ],
+        "ReturnUrl": "",
+        "Amount": amount,
+        "PaymentGateWay": gateName
+      }),
+    );
 
     print(json.encode({
       "Description": "Online Fees Payment",
@@ -383,24 +401,34 @@ class FeesProvider with ChangeNotifier {
       "PaymentGateWay": gateName
     }));
 
-    try {
-      if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-        Map<String, dynamic> data =
-            jsonDecode(await response.stream.bytesToString());
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = await json.decode(response.body);
+      //  jsonDecode(await response.stream.bytesToString());
+      // print(jsonDecode(await response.stream.bytesToString()));
+      // print(await response.stream.bytesToString());
+      print(data);
+      TransactionModel txn = TransactionModel.fromJson(data);
+      mid2 = txn.mid;
+      txnorderId2 = txn.orderId;
+      callbackUrl2 = txn.callbackUrl;
+      isStaging2 = txn.isStaging;
+      txnToken2 = txn.txnToken;
+      print(mid2);
 
-        StatusPayment att = StatusPayment.fromJson(data);
+      Map<String, dynamic> txnAmnt = data['txnAmount'];
+      TxnAmount amnt = TxnAmount.fromJson(txnAmnt);
+      txnAmount2 = amnt.value;
 
-        status = att.status;
-        print(status);
+      Map<String, dynamic> userInf = data['userInfo'];
+      UserInfo user = UserInfo.fromJson(userInf);
+      customerID2 = user.custId;
+      emailID2 = user.email;
+      mobile2 = user.mobile;
 
-        notifyListeners();
-      } else {
-        setLoading(false);
-        print("Error in  status  response");
-      }
-    } catch (e) {
-      print(e);
+      notifyListeners();
+    } else {
+      setLoading(false);
+      print("Error in  status  response");
     }
   }
 
@@ -415,7 +443,6 @@ class FeesProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
     var response = await http.get(
         Uri.parse(
             "${UIGuide.baseURL}/payment-gateway-selector/check-default-paymentgateway"),

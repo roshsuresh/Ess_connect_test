@@ -62,6 +62,7 @@ dependencies:
   multi_select_flutter: ^4.1.2
   open_file: ^3.2.1
   path_provider: any
+  paytm_allinonesdk: ^1.2.0
   pdfdownload: ^0.0.2
   photo_view: ^0.14.0
   provider: any

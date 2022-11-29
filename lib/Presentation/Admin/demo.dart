@@ -2,171 +2,203 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter/material.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 
+// class Demo extends StatefulWidget {
+//   Demo({Key? key}) : super(key: key);
+
+//   @override
+//   State<Demo> createState() => _DemoState();
+// }
+
+// class _DemoState extends State<Demo> with TickerProviderStateMixin {
 class Demo extends StatefulWidget {
-  Demo({Key? key}) : super(key: key);
-
   @override
-  State<Demo> createState() => _DemoState();
+  State<StatefulWidget> createState() {
+    return _DemoState();
+  }
 }
 
-class _DemoState extends State<Demo> with TickerProviderStateMixin {
-  double _fontSize = 2;
-  double _containerSize = 1.5;
-  double _textOpacity = 0.0;
-  double _containerOpacity = 0.0;
-
-  late AnimationController _controller;
-  Animation<double>? animation1;
-
+class _DemoState extends State<Demo> {
+  String mid = "", orderId = "", amount = "", txnToken = "";
+  String result = "";
+  bool isStaging = true;
+  bool isApiCallInprogress = false;
+  String callbackUrl = "";
+  bool restrictAppInvoke = false;
+  bool enableAssist = true;
   @override
   void initState() {
+    print("initState");
     super.initState();
-
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 3));
-
-    animation1 = Tween<double>(begin: 40, end: 20).animate(CurvedAnimation(
-        parent: _controller, curve: Curves.fastLinearToSlowEaseIn))
-      ..addListener(() {
-        setState(() {
-          _textOpacity = 1.0;
-        });
-      });
-
-    _controller.forward();
-
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        _fontSize = 1.06;
-      });
-    });
-
-    Timer(Duration(seconds: 2), () {
-      setState(() {
-        _containerSize = 2;
-        _containerOpacity = 1;
-      });
-    });
-
-    Timer(Duration(seconds: 4), () async {
-      setState(() {
-        Navigator.pushReplacement(context, PageTransition(SecondPage()));
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      backgroundColor: UIGuide.THEME_LIGHT,
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              AnimatedContainer(
-                  duration: Duration(milliseconds: 2000),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  height: _height / _fontSize),
-              AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
-                opacity: _textOpacity,
-                child: Text(
-                  'YOUR APP\'S NAME',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: animation1?.value,
-                  ),
-                ),
-              ),
-            ],
+    return
+        // Card(
+        //   child: SingleChildScrollView(
+        //     child: Container(
+        //       margin: EdgeInsets.all(8),
+        //       child:
+        Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // EditText('Merchant ID', mid, onChange: (val) => mid = val),
+          // EditText('Order ID', orderId, onChange: (val) => orderId = val),
+          // EditText('Amount', amount, onChange: (val) => amount = val),
+          // EditText('Transaction Token', txnToken,
+          //     onChange: (val) => txnToken = val),
+          // Row(
+          //   children: <Widget>[
+          //     Checkbox(
+          //         activeColor: Theme.of(context).buttonColor,
+          //         value: isStaging,
+          //         onChanged: (bool? val) {
+          //           setState(() {
+          //             isStaging = val!;
+          //           });
+          //         }),
+          //     Text("Staging")
+          //   ],
+          // ),
+          // Row(
+          //   children: <Widget>[
+          //     Checkbox(
+          //         activeColor: Theme.of(context).buttonColor,
+          //         value: restrictAppInvoke,
+          //         onChanged: (bool? val) {
+          //           setState(() {
+          //             restrictAppInvoke = val!;
+          //           });
+          //         }),
+          //     Text("Restrict AppInvoke")
+          //   ],
+          // // ),
+          // Container(
+          //   margin: EdgeInsets.all(16),
+          //   child:
+          ElevatedButton(
+            onPressed: () {
+              _startTransaction();
+            },
+            child: Text('Start Transcation'),
           ),
-          Center(
-            child: AnimatedOpacity(
-              duration: Duration(milliseconds: 2000),
-              curve: Curves.fastLinearToSlowEaseIn,
-              opacity: _containerOpacity,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 2000),
-                curve: Curves.fastLinearToSlowEaseIn,
-                height: _width / _containerSize,
-                width: _width / _containerSize,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                // child: Image.asset('assets/images/file_name.png')
-                child: Text(
-                  'YOUR APP\'S LOGO',
-                ),
-              ),
-            ),
+          // ),
+          Container(
+            alignment: Alignment.bottomLeft,
+            child: Text("Message : "),
+          ),
+          Container(
+            child: Text(result),
           ),
         ],
       ),
     );
+    //     ),
+    //   ),
+    // );
+  }
+
+  Future<void> _startTransaction() async {
+    // if (txnToken.isEmpty) {
+    //   return;
+    // }
+    var sendMap = <String, dynamic>{
+      "mid": mid,
+      "orderId": orderId,
+      "amount": amount,
+      "txnToken": txnToken,
+      "callbackUrl": callbackUrl,
+      "isStaging": isStaging,
+      "restrictAppInvoke": restrictAppInvoke,
+      // "enableAssist": enableAssist
+    };
+    print(sendMap);
+    try {
+      var response = AllInOneSdk.startTransaction(
+        "GJInfo77223701868546",
+        "281120220701_506_T",
+        "1",
+        "06587b2eb0484a60a5b7138d77a119e81669618892482",
+        "",
+        isStaging,
+        restrictAppInvoke,
+      );
+      response.then((value) {
+        print(value);
+        setState(() {
+          result = value.toString();
+        });
+      }).catchError((onError) {
+        if (onError is PlatformException) {
+          setState(() {
+            result = onError.message.toString() +
+                " \n  " +
+                onError.details.toString();
+          });
+        } else {
+          setState(() {
+            result = onError.toString();
+          });
+        }
+      });
+    } catch (err) {
+      result = err.toString();
+    }
   }
 }
 
-class PageTransition extends PageRouteBuilder {
-  final Widget page;
+// class PageTransition extends PageRouteBuilder {
+//   final Widget page;
 
-  PageTransition(this.page)
-      : super(
-          pageBuilder: (context, animation, anotherAnimation) => page,
-          transitionDuration: Duration(milliseconds: 2000),
-          transitionsBuilder: (context, animation, anotherAnimation, child) {
-            animation = CurvedAnimation(
-              curve: Curves.fastLinearToSlowEaseIn,
-              parent: animation,
-            );
-            return Align(
-              alignment: Alignment.bottomCenter,
-              child: SizeTransition(
-                sizeFactor: animation,
-                child: page,
-                axisAlignment: 0,
-              ),
-            );
-          },
-        );
-}
+//   PageTransition(this.page)
+//       : super(
+//           pageBuilder: (context, animation, anotherAnimation) => page,
+//           transitionDuration: Duration(milliseconds: 2000),
+//           transitionsBuilder: (context, animation, anotherAnimation, child) {
+//             animation = CurvedAnimation(
+//               curve: Curves.fastLinearToSlowEaseIn,
+//               parent: animation,
+//             );
+//             return Align(
+//               alignment: Alignment.bottomCenter,
+//               child: SizeTransition(
+//                 sizeFactor: animation,
+//                 child: page,
+//                 axisAlignment: 0,
+//               ),
+//             );
+//           },
+//         );
+// }
 
-class SecondPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        brightness: Brightness.dark,
-        backgroundColor: Colors.deepPurple,
-        centerTitle: true,
-        title: Text(
-          'YOUR APP\'S NAME',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class SecondPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       appBar: AppBar(
+//         brightness: Brightness.dark,
+//         backgroundColor: Colors.deepPurple,
+//         centerTitle: true,
+//         title: Text(
+//           'YOUR APP\'S NAME',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontWeight: FontWeight.bold,
+//             fontSize: 20,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 
