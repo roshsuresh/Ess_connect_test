@@ -1,6 +1,7 @@
 import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -96,7 +97,13 @@ class PaymentHistory extends StatelessWidget {
                       itemBuilder: (context, index) {
                         String newtime =
                             value.historyList[index].billDate.toString();
-                        String timee = newtime.replaceRange(9, 18, '');
+
+                        var updatedDate =
+                            DateFormat('yyyy-MM-dd').parse(newtime);
+                        String newDate = updatedDate.toString();
+                        String finalCreatedDate =
+                            newDate.replaceRange(10, 23, '');
+
                         return Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: Table(
@@ -121,7 +128,7 @@ class PaymentHistory extends StatelessWidget {
                                     ),
                                     Center(
                                         child: Text(
-                                      '\n${timee.toString()}',
+                                      '\n${finalCreatedDate.toString()}',
                                       style: TextStyle(fontSize: 13),
                                     )),
                                     Center(

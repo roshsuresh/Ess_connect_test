@@ -1,3 +1,4 @@
+import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class NoInternetConnection extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
+      color: UIGuide.WHITE,
       height: size.height,
       width: size.width,
       child: Column(

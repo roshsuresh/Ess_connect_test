@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:Ess_test/Domain/Student/TransactionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,13 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../Domain/Student/FeesModel.dart';
 import '../../utils/constants.dart';
 
-Map? mapResponses;
-Map? dataResponss;
-List? feeResponse;
-List? busfeeResponse;
-
 List<FeeFeesInstallments> feesList = [];
-//List? listResponses;
 
 class FeesProvider with ChangeNotifier {
   late String installmentTerm;
@@ -60,7 +54,6 @@ class FeesProvider with ChangeNotifier {
         Map<String, dynamic> feeinitial =
             data['onlineFeePaymentStudentDetails'];
         Map<String, dynamic> feedata = feeinitial['feeOrder'];
-        //(feedata);
         FeeOrder fee = FeeOrder.fromJson(feedata);
         lastOrderStatus = fee.lastOrderStatus;
         lastTransactionStartDate = fee.lastTransactionStartDate;
@@ -83,27 +76,6 @@ class FeesProvider with ChangeNotifier {
                 .map((x) => Transactiontype.fromJson(x)));
         transactionList.addAll(templis);
         print(transactionList.length);
-
-        // FeeOrder fee = FeeOrder.fromJson(feeOrder);
-        // lastOrderStatus = fee.lastOrderStatus;
-        // lastTransactionStartDate = fee.lastTransactionStartDate;
-        // lastTransactionAmount = fee.lastTransactionAmount;
-
-        // OnlineFeePayModel fee = OnlineFeePayModel.fromJson(
-        //     mapResponses!['onlineFeePaymentStudentDetails']);
-        // allowPartialPayment = fee.allowPartialPayment;
-
-        // FeeFeesInstallments feesdata =
-        //     FeeFeesInstallments.fromJson(dataResponss!['feeFeesInstallments']);
-        // installmentTerm = feesdata.installmentName.toString();
-        // Map<String, dynamic> data =
-        //     jsonDecode(await response.bodyBytes.toString());
-        // //print(await response.stream.bytesToString());
-
-        // List<FeeFeesInstallments> templist = List<FeeFeesInstallments>.from(
-        //     data["feeFeesInstallments"]
-        //         .map((x) => FeeFeesInstallments.fromJson(x)));
-        // feeList.addAll(templist);
 
         setLoading(false);
         notifyListeners();
@@ -207,7 +179,7 @@ class FeesProvider with ChangeNotifier {
   String? name;
   String? url;
 
-  Future pdfDownload(String readableId, String paymentGatewayID) async {
+  Future pdfDownload(String orderID) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
     var headers = {
@@ -217,16 +189,14 @@ class FeesProvider with ChangeNotifier {
     // print(headers);
     var response = await http.get(
         Uri.parse(
-            "${UIGuide.baseURL}/payment-gateway-selector/check-status?readableOrderId=$readableId&paymentGatewayId=$paymentGatewayID"),
+            "${UIGuide.baseURL}/paymenthistory/printfeespayment/$orderID"),
         headers: headers);
 
     try {
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
 
-        Map<String, dynamic> pdf = data['filePath'];
-
-        FilePathPdfDownload att = FilePathPdfDownload.fromJson(pdf);
+        FilePathPdfDownload att = FilePathPdfDownload.fromJson(data);
         extension = att.extension;
         name = att.name;
         url = att.url;
@@ -244,9 +214,9 @@ class FeesProvider with ChangeNotifier {
 
   //status Payment
 
-  String? status;
+  String? statusss;
 
-  Future payStatus(String orderId) async {
+  Future payStatusButton(String orderId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
     var headers = {
@@ -264,9 +234,10 @@ class FeesProvider with ChangeNotifier {
         Map<String, dynamic> data = json.decode(response.body);
 
         StatusPayment att = StatusPayment.fromJson(data);
+        log(data.toString());
 
-        status = att.status;
-        print(status);
+        statusss = att.status;
+        print(statusss);
 
         notifyListeners();
       } else {
@@ -296,25 +267,24 @@ class FeesProvider with ChangeNotifier {
       String gateName) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    };
-    // print(headers);
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            '${UIGuide.baseURL}/online-payment/paytm/get-data?ismobileapp=true'));
-    request.body = json.encode({
-      "Description": "Online Fees Payment",
-      "TransactionType": [
-        {"name": fees, "id": idFee, "amount": feeAmount}
-      ],
-      "ReturnUrl": "",
-      "Amount": amount,
-      "PaymentGateWay": gateName
-    });
-    request.headers.addAll(headers);
+
+    final http.Response response = await http.post(
+      Uri.parse(
+          '${UIGuide.baseURL}/online-payment/paytm/get-data?ismobileapp=true'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+      },
+      body: jsonEncode({
+        "Description": "Online Fees Payment",
+        "TransactionType": [
+          {"name": fees, "id": idFee, "amount": feeAmount}
+        ],
+        "ReturnUrl": "",
+        "Amount": amount,
+        "PaymentGateWay": gateName
+      }),
+    );
 
     print(json.encode({
       "Description": "Online Fees Payment",
@@ -326,22 +296,33 @@ class FeesProvider with ChangeNotifier {
       "PaymentGateWay": gateName
     }));
 
-    http.StreamedResponse response = await request.send();
     try {
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
-        Map<String, dynamic> data =
-            jsonDecode(await response.stream.bytesToString());
+        Map<String, dynamic> data = await json.decode(response.body);
 
-        StatusPayment att = StatusPayment.fromJson(data);
+        print(data);
+        TransactionModel txn = TransactionModel.fromJson(data);
+        mid1 = txn.mid;
+        txnorderId1 = txn.orderId;
+        callbackUrl1 = txn.callbackUrl;
+        isStaging1 = txn.isStaging;
+        txnToken1 = txn.txnToken;
+        print(mid1);
 
-        status = att.status;
-        print(status);
+        Map<String, dynamic> txnAmnt = data['txnAmount'];
+        TxnAmount amnt = TxnAmount.fromJson(txnAmnt);
+        txnAmount1 = amnt.value;
+
+        Map<String, dynamic> userInf = data['userInfo'];
+        UserInfo user = UserInfo.fromJson(userInf);
+        customerID1 = user.custId;
+        emailID1 = user.email;
+        mobile1 = user.mobile;
 
         notifyListeners();
       } else {
         setLoading(false);
-        print("Error in  status  response");
+        print("Error in  transaction index one  response");
       }
     } catch (e) {
       print(e);
@@ -428,7 +409,7 @@ class FeesProvider with ChangeNotifier {
       notifyListeners();
     } else {
       setLoading(false);
-      print("Error in  status  response");
+      print("Error in  transaction index TWO  response");
     }
   }
 

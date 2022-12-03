@@ -24,6 +24,9 @@ class UIGuide {
   static const String baseURL = "https://api.esstestonline.in";
   static const String absent = "assets/aa.svg";
   static const String present = "assets/ppp.svg";
+  static const String success = "assets/success.svg";
+  static const String failed = "assets/failed.svg";
+  static const String pending = "assets/pending.svg";
 
   static const Color WHITE = Colors.white;
   static const Color BLACK = Colors.black;

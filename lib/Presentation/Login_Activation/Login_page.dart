@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:Ess_test/Application/StudentProviders/ProfileProvider.dart';
 import 'package:Ess_test/Application/StudentProviders/SiblingsProvider.dart';
 import 'package:Ess_test/utils/LoadingIndication.dart';
+import 'package:animate_gradient/animate_gradient.dart';
 import 'package:http/http.dart' as http;
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Presentation/Admin/AdminHome.dart';
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
           controller1.forward();
         }
       });
-    animation2 = Tween<double>(begin: .02, end: .04).animate(
+    animation2 = Tween<double>(begin: .02, end: .06).animate(
       CurvedAnimation(
         parent: controller1,
         curve: Curves.easeInOut,
@@ -130,202 +131,217 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
               child: SingleChildScrollView(
                 child: SizedBox(
                   height: size.height,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: size.height * (animation2.value + .29),
-                        left: size.width * .75,
-                        child: CustomPaint(
-                          painter: MyPainter(38),
-                        ),
-                      ),
-                      Positioned(
-                        top: size.height * .98,
-                        left: size.width * .1,
-                        child: CustomPaint(
-                          painter: MyPainter(animation4.value - 30),
-                        ),
-                      ),
-                      // Positioned(
-                      //   top: size.height * .5,
-                      //   left: size.width * (animation2.value + .8),
-                      //   child: CustomPaint(
-                      //     painter: MyPainter(30),
-                      //   ),
-                      // ),
-                      // Positioned(
-                      //   top: size.height * animation3.value,
-                      //   left: size.width * (animation1.value + .1),
-                      //   child: CustomPaint(
-                      //     painter: MyPainter(60),
-                      //   ),
-                      // ),
-                      Positioned(
-                        top: size.height * .16,
-                        left: size.width * .9,
-                        child: CustomPaint(
-                          painter: MyPainter(animation4.value - 90),
-                        ),
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30.0, right: 30),
-                              child: TextFormField(
-                                cursorColor: UIGuide.light_Purple,
-                                //  keyboardType: TextInputType.emailAddress,
-                                controller: _username,
-                                decoration: InputDecoration(
-                                  focusColor: Color.fromARGB(255, 23, 92, 196),
-                                  prefixIcon: const Icon(
-                                    Icons.person_outline_outlined,
-                                    color: UIGuide.light_Purple,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: UIGuide.light_Purple,
-                                        width: 2.0),
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: UIGuide.light_Purple,
-                                        width: 2.0),
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  fillColor: Color.fromARGB(255, 158, 158, 158),
-                                  hintText: "Enter Your Username",
-                                  hintStyle: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontFamily: "verdana_regular",
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  labelText: 'Username',
-                                  labelStyle: const TextStyle(
-                                      color: UIGuide.light_Purple),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(
-                                      color: UIGuide.light_Purple,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Username';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            kheight20,
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 30.0, right: 30),
-                              child: TextFormField(
-                                cursorColor: UIGuide.light_Purple,
-                                obscureText: !_isObscure,
-                                controller: _password,
-                                decoration: InputDecoration(
-                                  focusColor:
-                                      const Color.fromARGB(255, 213, 215, 218),
-                                  prefixIcon: const Icon(
-                                    Icons.password_sharp,
-                                    color: UIGuide.light_Purple,
-                                  ),
-                                  // errorText: "Please enter valid username",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: UIGuide.light_Purple,
-                                        width: 2.0),
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  fillColor: Colors.grey,
-                                  hintText: "Enter Your Password",
-                                  hintStyle: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontFamily: "verdana_regular",
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  labelText: 'Password',
-                                  labelStyle: const TextStyle(
-                                      color: UIGuide.light_Purple),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _isObscure
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: UIGuide.light_Purple,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure = !_isObscure;
-                                      });
-                                    },
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    borderSide: BorderSide(
-                                      color: UIGuide.light_Purple,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter some text';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-
-                            kheight20,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 40,
-                                  width: size.width / 2.5,
-                                  child: MaterialButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15.0))),
-                                      color: UIGuide.light_Purple,
-                                      onPressed: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          checkLogin(
-                                              _username.text, _password.text);
-
-                                          print(_username);
-                                          print(_password);
-                                        } else {
-                                          print("Enter some value");
-                                        }
-                                      },
-                                      child: Text(
-                                        'LOGIN',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                ),
-                              ],
-                            ),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ),
+                  child: AnimateGradient(
+                    primaryColors: const [
+                      Color.fromARGB(255, 109, 173, 233),
+                      Color.fromARGB(255, 240, 241, 250),
+                      Color.fromARGB(255, 220, 220, 245),
                     ],
+                    secondaryColors: const [
+                      Color.fromARGB(255, 217, 217, 240),
+                      Color.fromARGB(255, 201, 205, 243),
+                      Color.fromARGB(255, 109, 173, 233),
+                    ],
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: size.height * (animation2.value + .25),
+                          left: size.width * .75,
+                          child: CustomPaint(
+                            painter: MyPainter(35),
+                          ),
+                        ),
+                        Positioned(
+                          top: size.height * .98,
+                          left: size.width * .06,
+                          child: CustomPaint(
+                            painter: MyPainter(animation4.value - 25),
+                          ),
+                        ),
+                        // Positioned(
+                        //   top: size.height * .5,
+                        //   left: size.width * (animation2.value + .8),
+                        //   child: CustomPaint(
+                        //     painter: MyPainter(30),
+                        //   ),
+                        // ),
+                        // Positioned(
+                        //   top: size.height * animation3.value,
+                        //   left: size.width * (animation1.value + .1),
+                        //   child: CustomPaint(
+                        //     painter: MyPainter(60),
+                        //   ),
+                        // ),
+                        Positioned(
+                          top: size.height * .12,
+                          left: size.width * .95,
+                          child: CustomPaint(
+                            painter: MyPainter(animation4.value - 90),
+                          ),
+                        ),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30.0, right: 30),
+                                child: TextFormField(
+                                  cursorColor: UIGuide.light_Purple,
+                                  //  keyboardType: TextInputType.emailAddress,
+                                  controller: _username,
+                                  decoration: InputDecoration(
+                                    focusColor:
+                                        Color.fromARGB(255, 23, 92, 196),
+                                    prefixIcon: const Icon(
+                                      Icons.person_outline_outlined,
+                                      color: UIGuide.light_Purple,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: UIGuide.light_Purple,
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: UIGuide.light_Purple,
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    fillColor:
+                                        Color.fromARGB(255, 158, 158, 158),
+                                    hintText: "Enter Your Username",
+                                    hintStyle: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontFamily: "verdana_regular",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    labelText: 'Username',
+                                    labelStyle: const TextStyle(
+                                        color: UIGuide.light_Purple),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: BorderSide(
+                                        color: UIGuide.light_Purple,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter Username';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              kheight20,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30.0, right: 30),
+                                child: TextFormField(
+                                  cursorColor: UIGuide.light_Purple,
+                                  obscureText: !_isObscure,
+                                  controller: _password,
+                                  decoration: InputDecoration(
+                                    focusColor: const Color.fromARGB(
+                                        255, 213, 215, 218),
+                                    prefixIcon: const Icon(
+                                      Icons.password_sharp,
+                                      color: UIGuide.light_Purple,
+                                    ),
+                                    // errorText: "Please enter valid username",
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: UIGuide.light_Purple,
+                                          width: 2.0),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    fillColor: Colors.grey,
+                                    hintText: "Enter Your Password",
+                                    hintStyle: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontFamily: "verdana_regular",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    labelText: 'Password',
+                                    labelStyle: const TextStyle(
+                                        color: UIGuide.light_Purple),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _isObscure
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: UIGuide.light_Purple,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _isObscure = !_isObscure;
+                                        });
+                                      },
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: BorderSide(
+                                        color: UIGuide.light_Purple,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+
+                              kheight20,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 40,
+                                    width: size.width / 2.5,
+                                    child: MaterialButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        color: UIGuide.light_Purple,
+                                        onPressed: () async {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            checkLogin(
+                                                _username.text, _password.text);
+
+                                            print(_username);
+                                            print(_password);
+                                          } else {
+                                            print("Enter some value");
+                                          }
+                                        },
+                                        child: Text(
+                                          'LOGIN',
+                                          style: TextStyle(color: Colors.white),
+                                        )),
+                                  ),
+                                ],
+                              ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -17,26 +17,22 @@ class Profile_Info extends StatelessWidget {
     var height = size.height;
     var width = size.width;
     const Color background = Colors.white;
-    final Color fill1 = Color.fromARGB(255, 109, 128, 236);
-    final Color fill2 = UIGuide.light_Purple;
+    const Color fill1 = Color.fromARGB(255, 109, 128, 236);
+    const Color fill2 = UIGuide.light_Purple;
     final List<Color> gradient = [
       fill1,
       fill2,
       background,
       background,
     ];
-    final double fillPercent = 35;
-    final double fillStop = (100 - fillPercent) / 100;
+    const double fillPercent = 35;
+    const double fillStop = (100 - fillPercent) / 100;
     final List<double> stops = [0.0, fillStop, fillStop, 1.0];
     return Scaffold(
       body: Consumer<ProfileProvider>(
         builder: (_, provider, child) {
-          // String dateofb = provider.dob.toString();
-          // String result = dateofb.replaceRange(10, 11, '');
-          // print('dob $result');
-          //Provider.of<ProfileProvider>(context, listen: false).profileData();
           return provider.loading
-              ? spinkitLoader()
+              ? const spinkitLoader()
               : ListView(
                   children: [
                     Stack(
@@ -44,7 +40,6 @@ class Profile_Info extends StatelessWidget {
                         Container(
                           height: 260,
                           width: width,
-                          // color: UIGuide.WHITE,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: gradient,
@@ -94,7 +89,6 @@ class Profile_Info extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Table(
-                                      // defaultColumnWidth: FixedColumnWidth(120.0),
                                       border: TableBorder.all(
                                           color: UIGuide.light_Purple,
                                           style: BorderStyle.solid,
@@ -155,7 +149,6 @@ class Profile_Info extends StatelessWidget {
                         ),
                         Center(
                           child: CircleAvatar(
-                            // foregroundColor: Colors.white,
                             backgroundImage: NetworkImage(
                               provider.studPhoto == null
                                   ? 'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg'
@@ -192,7 +185,6 @@ class Profile_Info extends StatelessWidget {
                                     left: 10.0, right: 20.0),
                                 child: const Divider(
                                   color: Colors.black,
-                                  //  height: 36,
                                 )),
                             Table(
                               defaultColumnWidth: const FixedColumnWidth(200.0),

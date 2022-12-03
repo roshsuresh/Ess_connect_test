@@ -314,38 +314,27 @@ class Transactiontype {
 //fee order pdf download
 
 class FilePathPdfDownload {
-  String? extension;
-  String? id;
-  bool? isDeleted;
-  bool? isTemporary;
   String? name;
+  String? extension;
   String? url;
 
-  FilePathPdfDownload(
-      {this.extension,
-      this.id,
-      this.isDeleted,
-      this.isTemporary,
-      this.name,
-      this.url});
+  FilePathPdfDownload({
+    this.name,
+    this.extension,
+    this.url,
+  });
 
   FilePathPdfDownload.fromJson(Map<String, dynamic> json) {
-    extension = json['extension'];
-    id = json['id'];
-    isDeleted = json['isDeleted'];
-    isTemporary = json['isTemporary'];
     name = json['name'];
+    extension = json['extension'];
+
     url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    data['extension'] = this.extension;
-    data['id'] = this.id;
-    data['isDeleted'] = this.isDeleted;
-    data['isTemporary'] = this.isTemporary;
     data['name'] = this.name;
+    data['extension'] = this.extension;
     data['url'] = this.url;
     return data;
   }

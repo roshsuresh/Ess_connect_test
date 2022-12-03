@@ -28,7 +28,9 @@ import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
+import 'package:Ess_test/Application/StudentProviders/PAYTM_provider.dart';
 import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
+import 'package:Ess_test/Domain/Student/TransactionModel.dart';
 import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -227,7 +229,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => TimetableStaffProviders()),
         ChangeNotifierProvider(create: (context) => FeeDetailsProvider()),
         ChangeNotifierProvider(create: (context) => StudStatiticsProvider()),
-        ChangeNotifierProvider(create: (context) => ConnectivityProvider())
+        ChangeNotifierProvider(create: (context) => ConnectivityProvider()),
+        ChangeNotifierProvider(create: (context) => PaytmFinalStatusProvider())
       ],
       child: MaterialApp(
         title: 'Ess Connect',
