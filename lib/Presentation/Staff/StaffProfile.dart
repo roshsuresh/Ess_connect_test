@@ -14,8 +14,8 @@ class StaffProfileView extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     const Color background = Colors.white;
-    const Color fill1 = Color.fromARGB(255, 79, 97, 197);
-    const Color fill2 = Color.fromARGB(255, 180, 103, 216);
+    const Color fill1 = UIGuide.light_Purple;
+    const Color fill2 = Color.fromARGB(255, 57, 149, 235);
     final List<Color> gradient = [
       fill1,
       fill2,

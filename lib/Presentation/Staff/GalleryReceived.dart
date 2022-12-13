@@ -84,7 +84,6 @@ class StaffGalleryView extends StatelessWidget {
                                       kWidth,
                                       Expanded(
                                         child: Container(
-                                            // color: Colors.black26,
                                             height: 110,
                                             child: Column(
                                               crossAxisAlignment:
@@ -148,7 +147,7 @@ class GalleryonTapStaff extends StatelessWidget {
       child: Scaffold(
         body: Consumer<GallerySendProvider_Stf>(
           builder: (context, value, child) => value.load
-              ? spinkitLoader()
+              ? const spinkitLoader()
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.count(

@@ -41,603 +41,608 @@ class _StaffHomeState extends State<StaffHome> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Consumer<ConnectivityProvider>(
-        builder: (context, connection, child) => connection.isOnline == false
-            ? NoInternetConnection()
-            : ListView(
-                children: [
-                  StaffProfile(), //  <--<---  StaffProfile....
-                  StaffFlashNews(),
-                  Container(
-                    width: size.width,
-                    height: size.height - 200,
-                    decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(blurRadius: 5, offset: Offset(1, 3))
-                        ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30))),
-                    child: ListView(
-                      children: [
-                        kheight20,
-                        kheight10,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StaffProfileView()),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Profilee.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Profile',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StudReport()),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            'assets/Attendance.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Student \n Report',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Staff_Timetable()),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            'assets/Attendance.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Timetable',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
+    return SafeArea(
+      child: Scaffold(
+        body: Consumer<ConnectivityProvider>(
+          builder: (context, connection, child) => connection.isOnline == false
+              ? NoInternetConnection()
+              : ListView(
+                  children: [
+                    StaffProfile(), //  <--<---  StaffProfile....
+                    StaffFlashNews(),
+                    Container(
+                      width: size.width,
+                      height: size.height - 200,
+                      decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(blurRadius: 5, offset: Offset(1, 3))
                           ],
-                        ),
-                        kheight10,
-                        kheight20,
-                        Container(
-                          color: Color.fromARGB(255, 236, 237, 245),
-                          height: 170,
-                          width: size.width,
-                          child: Column(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30))),
+                      child: ListView(
+                        children: [
+                          kheight20,
+                          kheight10,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              kheight10,
-                              Row(children: <Widget>[
-                                Expanded(
-                                  child: Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 10.0, right: 20.0),
-                                      child: const Divider(
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            StaffProfileView()),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/Profilee.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight10,
+                                      const Text(
+                                        'Profile',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => StudReport()),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                              'assets/Attendance.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight10,
+                                      const Text(
+                                        'Student \n Report',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Staff_Timetable()),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                              'assets/Timetable.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight10,
+                                      const Text(
+                                        'Timetable',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          kheight10,
+                          kheight20,
+                          Container(
+                            color: Color.fromARGB(255, 236, 237, 245),
+                            height: 170,
+                            width: size.width,
+                            child: Column(
+                              children: [
+                                kheight10,
+                                Row(children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 10.0, right: 20.0),
+                                        child: const Divider(
+                                          color: UIGuide.light_Purple,
+                                          height: 36,
+                                        )),
+                                  ),
+                                  Text(
+                                    " * Entries * ",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
                                         color: UIGuide.light_Purple,
-                                        height: 36,
-                                      )),
-                                ),
-                                Text(
-                                  " * Entries * ",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: UIGuide.light_Purple,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 10.0, right: 20.0),
-                                      child: const Divider(
-                                        color: UIGuide.light_Purple,
-                                        height: 36,
-                                      )),
-                                ),
-                              ]),
-                              kheight10,
-                              kheight10,
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: GestureDetector(
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 10.0, right: 20.0),
+                                        child: const Divider(
+                                          color: UIGuide.light_Purple,
+                                          height: 36,
+                                        )),
+                                  ),
+                                ]),
+                                kheight10,
+                                kheight10,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AttendenceEntry()),
+                                          );
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 40,
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                  opacity: 20,
+                                                  image: AssetImage(
+                                                    'assets/Attendance.png',
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            kheight10,
+                                            const Text(
+                                              'Attendance',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.black),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
                                       onTap: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  AttendenceEntry()),
+                                                  const MarkEntry()),
                                         );
                                       },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Container(
-                                            height: 50,
-                                            width: 40,
-                                            decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                opacity: 20,
-                                                image: AssetImage(
-                                                  'assets/Attendance.png',
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 40,
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                    'assets/Marksheet.png',
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          kheight10,
-                                          const Text(
-                                            'Attendence',
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.black),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const MarkEntry()),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 10),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Container(
-                                            height: 50,
-                                            width: 40,
-                                            decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                  'assets/Marksheet.png',
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          kheight10,
-                                          const Text(
-                                            'Mark Entry',
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.black),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MarkEntryReport()),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 10),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Container(
-                                            height: 50,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                  'assets/Reportcard.png',
-                                                ),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                          kheight10,
-                                          const Text(
-                                            'Mark Entry \n   Report',
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.black),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        //kheight10,
-                        kheight20,
-                        Row(children: <Widget>[
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 20.0),
-                                child: const Divider(
-                                  color: UIGuide.light_Purple,
-                                  height: 36,
-                                )),
-                          ),
-                          const Text(
-                            "Communication",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.w900),
-                          ),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 20.0, right: 10.0),
-                                child: const Divider(
-                                  color: UIGuide.light_Purple,
-                                  height: 36,
-                                )),
-                          ),
-                        ]),
-                        kheight10,
-                        kheight20,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Staff_ToGuardian()),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/pay.png',
-                                          ),
+                                            kheight10,
+                                            const Text(
+                                              'Mark Entry',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.black),
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),
-                                    kheight10,
-                                    const Text(
-                                      'To Guardian',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MarkEntryReport()),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Container(
+                                              height: 50,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                image: const DecorationImage(
+                                                  image: AssetImage(
+                                                    'assets/Reportcard.png',
+                                                  ),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            kheight10,
+                                            const Text(
+                                              'Mark Entry \n   Report',
+                                              style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.black),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: GestureDetector(
+                          ),
+                          //kheight10,
+                          kheight20,
+                          Row(children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10.0, right: 20.0),
+                                  child: const Divider(
+                                    color: UIGuide.light_Purple,
+                                    height: 36,
+                                  )),
+                            ),
+                            const Text(
+                              "Communication",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: UIGuide.light_Purple,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                            Expanded(
+                              child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 20.0, right: 10.0),
+                                  child: const Divider(
+                                    color: UIGuide.light_Purple,
+                                    height: 36,
+                                  )),
+                            ),
+                          ]),
+                          kheight10,
+                          kheight20,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            StaffNoticeBoard()),
+                                            Staff_ToGuardian()),
                                   );
                                 },
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/pay.png',
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/pay.png',
+                                            ),
                                           ),
                                         ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Notice Board',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
+                                      kheight10,
+                                      const Text(
+                                        'To Guardian',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const StaffGallery()),
-                                );
-                              },
-                              child: Padding(
+                              Padding(
                                 padding:
                                     const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Gallery.png',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              StaffNoticeBoard()),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          image: const DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/Noticeboard.png',
+                                            ),
                                           ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                       ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Gallery ',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
+                                      kheight10,
+                                      const Text(
+                                        'Notice Board',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          StaffNotificationScreen()),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            'assets/notificationnew.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    kheight10,
-                                    const Text(
-                                      'Notifications',
-                                      style: TextStyle(
-                                          fontSize: 11, color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        kheight10,
-                        kheight20,
-                        Row(children: <Widget>[
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 20.0),
-                                child: const Divider(
-                                  color: Colors.black,
-                                  height: 36,
-                                )),
-                          ),
-                          const Text(
-                            "Password Change / SignOut",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: UIGuide.light_Purple,
-                                fontWeight: FontWeight.w900),
-                          ),
-                          Expanded(
-                            child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 20.0, right: 10.0),
-                                child: const Divider(
-                                  color: Colors.black,
-                                  height: 36,
-                                )),
-                          ),
-                        ]),
-                        kheight10,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            MaterialButton(
-                                minWidth: 50,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
-                                onPressed: () async {
-                                  Navigator.of(context).push(
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
                                     MaterialPageRoute(
-                                        builder: (context) => PasswordChange()),
+                                        builder: (context) =>
+                                            const StaffGallery()),
                                   );
                                 },
-                                child: const Icon(
-                                  Icons.key_sharp,
-                                  color: UIGuide.light_Purple,
-                                )),
-                            MaterialButton(
-                                minWidth: 50,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0)),
-                                onPressed: () async {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.info,
-                                    borderSide: const BorderSide(
-                                        color: UIGuide.light_Purple, width: 2),
-                                    buttonsBorderRadius: const BorderRadius.all(
-                                        Radius.circular(2)),
-                                    headerAnimationLoop: false,
-                                    animType: AnimType.bottomSlide,
-                                    title: 'SignOut',
-                                    desc: 'Are you sure want to sign out',
-                                    showCloseIcon: true,
-                                    btnCancelOnPress: () {
-                                      return;
-                                    },
-                                    btnOkOnPress: () async {
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      print("accesstoken  $prefs");
-                                      prefs.remove("accesstoken");
-
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LoginPage()),
-                                          (Route<dynamic> route) => false);
-                                    },
-                                  ).show();
-                                  // SharedPreferences prefs =
-                                  //     await SharedPreferences.getInstance();
-                                  // print("accesstoken  $prefs");
-                                  // prefs.remove("accesstoken");
-
-                                  // Navigator.of(context).pushAndRemoveUntil(
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => const LoginPage()),
-                                  //     (Route<dynamic> route) => false);
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            opacity: 20,
+                                            image: AssetImage(
+                                              'assets/Galleryy.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight10,
+                                      const Text(
+                                        'Gallery ',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            StaffNotificationScreen()),
+                                  );
                                 },
-                                child: const Icon(
-                                  Icons.logout_outlined,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                              'assets/notificationnew.png',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight10,
+                                      const Text(
+                                        'Notifications',
+                                        style: TextStyle(
+                                            fontSize: 11, color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          kheight10,
+                          kheight20,
+                          Row(children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10.0, right: 20.0),
+                                  child: const Divider(
+                                    color: Colors.black,
+                                    height: 36,
+                                  )),
+                            ),
+                            const Text(
+                              "Change Password/ SignOut",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
                                   color: UIGuide.light_Purple,
-                                )),
-                          ],
-                        ),
-                        kheight20,
-                        kheight20,
-                      ],
+                                  fontWeight: FontWeight.w900),
+                            ),
+                            Expanded(
+                              child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 20.0, right: 10.0),
+                                  child: const Divider(
+                                    color: Colors.black,
+                                    height: 36,
+                                  )),
+                            ),
+                          ]),
+                          kheight10,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              MaterialButton(
+                                  minWidth: 50,
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  onPressed: () async {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PasswordChange()),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.key_sharp,
+                                    color: UIGuide.light_Purple,
+                                  )),
+                              MaterialButton(
+                                  minWidth: 50,
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                  onPressed: () async {
+                                    AwesomeDialog(
+                                      context: context,
+                                      dialogType: DialogType.info,
+                                      borderSide: const BorderSide(
+                                          color: UIGuide.light_Purple,
+                                          width: 2),
+                                      buttonsBorderRadius:
+                                          const BorderRadius.all(
+                                              Radius.circular(2)),
+                                      headerAnimationLoop: false,
+                                      animType: AnimType.bottomSlide,
+                                      title: 'SignOut',
+                                      desc: 'Are you sure want to sign out',
+                                      showCloseIcon: true,
+                                      btnCancelOnPress: () {
+                                        return;
+                                      },
+                                      btnOkOnPress: () async {
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        print("accesstoken  $prefs");
+                                        prefs.remove("accesstoken");
+
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginPage()),
+                                                (Route<dynamic> route) =>
+                                                    false);
+                                      },
+                                    ).show();
+                                  },
+                                  child: const Icon(
+                                    Icons.logout_outlined,
+                                    color: UIGuide.light_Purple,
+                                  )),
+                            ],
+                          ),
+                          kheight20,
+                          kheight20, kheight10,
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -667,104 +672,89 @@ class StaffProfile extends StatelessWidget {
       0.0,
       fillStop,
     ];
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 2,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: Container(
-                height: 140,
-                width: size.width,
-                // decoration: BoxDecoration(
-                //     boxShadow: const [
-                //       BoxShadow(
-                //         blurRadius: 0.5,
-                //       )
-                //     ],
-                //     gradient: LinearGradient(
-                //       colors: gradient,
-                //       stops: stops,
-                //       end: Alignment.bottomCenter,
-                //       begin: Alignment.topCenter,
-                //     ),
-                //     borderRadius: BorderRadius.all(
-                //       Radius.circular(10),
-                //     )),
-                child: AnimateGradient(
-                  // primaryBegin: Alignment.topLeft,
-                  // primaryEnd: Alignment.bottomLeft,
-                  // secondaryBegin: Alignment.bottomLeft,
-                  // secondaryEnd: Alignment.topRight,
-                  primaryColors: const [
-                    Color.fromARGB(255, 143, 193, 240),
-                    Color.fromARGB(255, 131, 142, 238),
-                    Color.fromARGB(255, 99, 101, 235),
-                  ],
-                  secondaryColors: const [
-                    Color.fromARGB(255, 60, 78, 240),
-                    Color.fromARGB(255, 111, 125, 248),
-                    UIGuide.light_Purple,
-                  ],
-                  child: Consumer<StaffProfileProvider>(
-                    builder: (context, value, child) => value.loading
-                        ? spinkitLoader()
-                        : Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      // opacity: 20,
-                                      image: NetworkImage(value.photo == null
-                                          ? 'https://www.seekpng.com/png/detail/966-9665493_my-profile-icon-blank-profile-image-circle.png'
-                                          : value.photo.toString()),
-                                    ),
-                                    shape: BoxShape.circle,
-                                    boxShadow: const [
-                                      BoxShadow(blurRadius: 1)
-                                    ]),
-                                width: 70,
-                                height: 100,
-                              ),
-                              RichText(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                strutStyle: const StrutStyle(fontSize: 8.0),
-                                text: TextSpan(
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        color: UIGuide.BLACK,
-                                        fontWeight: FontWeight.w900),
-                                    text: value.name == null
-                                        ? '----'
-                                        : value.name.toString()),
-                              ),
-                              RichText(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                strutStyle: const StrutStyle(fontSize: 8.0),
-                                text: TextSpan(
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: UIGuide.BLACK,
-                                        fontWeight: FontWeight.w900),
-                                    text: value.designation == null
-                                        ? '---'
-                                        : value.designation.toString()),
-                              ),
-                            ],
-                          ),
-                  ),
-                )),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(
+          height: 2,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0, right: 10),
+          child: Container(
+              height: 140,
+              width: size.width,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                Radius.circular(50),
+              )),
+              child: AnimateGradient(
+                // primaryBegin: Alignment.topLeft,
+                // primaryEnd: Alignment.bottomLeft,
+                // secondaryBegin: Alignment.bottomLeft,
+                // secondaryEnd: Alignment.topRight,
+                primaryColors: const [
+                  Color.fromARGB(255, 143, 193, 240),
+                  Color.fromARGB(255, 131, 142, 238),
+                  Color.fromARGB(255, 99, 101, 235),
+                ],
+                secondaryColors: const [
+                  Color.fromARGB(255, 60, 78, 240),
+                  Color.fromARGB(255, 111, 125, 248),
+                  UIGuide.light_Purple,
+                ],
+                child: Consumer<StaffProfileProvider>(
+                  builder: (context, value, child) => value.loading
+                      ? spinkitLoader()
+                      : Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                    // opacity: 20,
+                                    image: NetworkImage(value.photo == null
+                                        ? 'https://plantbiology.ucr.edu/sites/default/files/styles/form_preview/public/blank-profile-pic.png?itok=rhVwP3MG'
+                                        : value.photo.toString()),
+                                  ),
+                                  shape: BoxShape.circle,
+                                  boxShadow: const [BoxShadow(blurRadius: 1)]),
+                              width: 70,
+                              height: 100,
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              strutStyle: const StrutStyle(fontSize: 8.0),
+                              text: TextSpan(
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: UIGuide.BLACK,
+                                      fontWeight: FontWeight.w900),
+                                  text: value.name == null
+                                      ? '----'
+                                      : value.name.toString()),
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              strutStyle: const StrutStyle(fontSize: 8.0),
+                              text: TextSpan(
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      color: UIGuide.BLACK,
+                                      fontWeight: FontWeight.w900),
+                                  text: value.designation == null
+                                      ? '---'
+                                      : value.designation.toString()),
+                            ),
+                          ],
+                        ),
+                ),
+              )),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 }
@@ -779,57 +769,9 @@ class StaffFlashNews extends StatelessWidget {
       p.flashNewsProvider();
       p.flashnew.clear();
     });
-    var list = [];
-    var concatenate = StringBuffer();
 
-    list.forEach((item) {
-      concatenate.write(item);
-    });
-
-    print(concatenate);
     var size = MediaQuery.of(context).size;
     return Consumer<FlashnewsProvider>(builder: (context, value, child) {
-      // return value.loading
-      //     ? Container(
-      //         height: 30,
-      //         width: 30,
-      //       )
-      //     : ListView.builder(
-      //         // scrollDirection: Axis.horizontal,
-      //         //physics: NeverScrollableScrollPhysics(),
-      //         shrinkWrap: true,
-      //         itemCount:
-      //             value.flashnew.length == null ? 0 : value.flashnew.length,
-      //         itemBuilder: (context, index) {
-      //           return LimitedBox(
-      //             maxHeight: 30,
-      //             // maxWidth: 20,
-      //             child: Marquee(
-      //               //scrolling  text
-      //               text: value.flashnew[index].news ?? '--------',
-      //               // ? '------------'
-      //               // : dataRsponse![index]['flashNews'].toString(),
-      //               style: const TextStyle(
-      //                   fontWeight: FontWeight.bold,
-      //                   color: Colors.grey,
-      //                   fontSize: 12),
-      //               scrollAxis: Axis.horizontal,
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               blankSpace: 20.0,
-      //               velocity: 40.0,
-      //               pauseAfterRound: const Duration(seconds: 1),
-      //               showFadingOnlyWhenScrolling: true,
-      //               fadingEdgeStartFraction: 0.3,
-      //               fadingEdgeEndFraction: 0.3,
-      //               numberOfRounds: 3000,
-      //               startPadding: 10.0,
-      //               accelerationDuration: const Duration(seconds: 1),
-      //               accelerationCurve: Curves.linear,
-      //               decelerationDuration: const Duration(milliseconds: 500),
-      //               decelerationCurve: Curves.easeOut,
-      //             ),
-      //           );
-      //         });
       if (value.flashnew.isEmpty) {
         return Container(
           height: 25,
@@ -843,26 +785,13 @@ class StaffFlashNews extends StatelessWidget {
                   width: 30,
                 )
               : ListView.builder(
-
-                  //reverse: true,
-                  //scrollDirection: AxisDirection.left,
                   shrinkWrap: true,
                   itemCount:
                       value.flashnew.length == null ? 0 : value.flashnew.length,
                   itemBuilder: (context, index) {
-                    list.addAll([
-                      value.flashnew[index].news == null
-                          ? ''
-                          : value.flashnew[index].news.toString()
-                    ]);
-
-                    print(list.toString());
                     return LimitedBox(
                       maxHeight: 30,
-                      // width: 30,
                       child: Marquee(
-                        //scrolling  text
-                        // text: list.toString(),
                         text: value.flashnew[index].news ?? '-----',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,

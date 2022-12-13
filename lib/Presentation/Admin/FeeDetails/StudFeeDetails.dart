@@ -82,368 +82,365 @@ class _StudFeeDetailsState extends State<StudFeeDetails> {
                                   fit: BoxFit.fill,
                                 ))),
                           ))
-                        : ListView(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 228, 224, 224),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  width: size.width,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Name : ',
-                                            ),
-                                            Text(
-                                              widget.name == null
-                                                  ? '--'
-                                                  : widget.name.toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Division : ',
-                                            ),
-                                            Text(
-                                              widget.division == null
-                                                  ? '--'
-                                                  : widget.division.toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Roll No : ',
-                                                ),
-                                                Text(
-                                                  widget.roll == null
-                                                      ? '--'
-                                                      : widget.roll.toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
+                        : Scrollbar(
+                            thickness: 5,
+                            child: ListView(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 228, 224, 224),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    width: size.width,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Name : ',
+                                              ),
+                                              Text(
+                                                widget.name == null
+                                                    ? '--'
+                                                    : widget.name.toString(),
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Division : ',
+                                              ),
+                                              Text(
+                                                widget.division == null
+                                                    ? '--'
+                                                    : widget.division
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Spacer(),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Roll No : ',
+                                                  ),
+                                                  Text(
+                                                    widget.roll == null
+                                                        ? '--'
+                                                        : widget.roll
+                                                            .toString(),
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              kheight10,
-                              Consumer<FeeDetailsProvider>(
-                                builder: (context, due, child) {
-                                  return due.generalFeeDueList.isEmpty &&
-                                          due.busFeeDueList.isEmpty
-                                      ? Container(
-                                          height: 0,
-                                          width: 0,
-                                        )
-                                      : SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child: Text(
-                                                  'FeeDue List',
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700),
+                                kheight10,
+                                Consumer<FeeDetailsProvider>(
+                                  builder: (context, due, child) {
+                                    return due.generalFeeDueList.isEmpty &&
+                                            due.busFeeDueList.isEmpty
+                                        ? Container(
+                                            height: 0,
+                                            width: 0,
+                                          )
+                                        : SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Center(
+                                                  child: Text(
+                                                    'FeeDue List',
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
                                                 ),
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black,
-                                                        style:
-                                                            BorderStyle.solid)),
-                                                width: size.width,
-                                                child: Column(
-                                                  children: [
-                                                    Consumer<
-                                                        FeeDetailsProvider>(
-                                                      builder: (context, school,
-                                                          child) {
-                                                        return school
-                                                                .generalFeeDueList
-                                                                .isEmpty
-                                                            ? Container(
-                                                                height: 0,
-                                                                width: 0,
-                                                              )
-                                                            : Column(
-                                                                children: [
-                                                                  Container(
-                                                                    width: size
-                                                                        .width,
-                                                                    color: UIGuide
-                                                                        .THEME_LIGHT,
-                                                                    child:
-                                                                        const Text(
-                                                                      'School Fees',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w700),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.black,
+                                                          style: BorderStyle
+                                                              .solid)),
+                                                  width: size.width,
+                                                  child: Column(
+                                                    children: [
+                                                      Consumer<
+                                                          FeeDetailsProvider>(
+                                                        builder: (context,
+                                                            school, child) {
+                                                          return school
+                                                                  .generalFeeDueList
+                                                                  .isEmpty
+                                                              ? Container(
+                                                                  height: 0,
+                                                                  width: 0,
+                                                                )
+                                                              : Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      width: size
+                                                                          .width,
+                                                                      color: UIGuide
+                                                                          .THEME_LIGHT,
+                                                                      child:
+                                                                          const Text(
+                                                                        'School Fees',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w700),
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                  Table(
-                                                                    columnWidths: const {
-                                                                      0: FlexColumnWidth(
-                                                                          3),
-                                                                      1: FlexColumnWidth(
-                                                                          4),
-                                                                      2: FlexColumnWidth(
-                                                                          4),
-                                                                      3: FlexColumnWidth(
-                                                                          4),
-                                                                    },
-                                                                    children: const [
-                                                                      TableRow(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: Color.fromARGB(
-                                                                                255,
-                                                                                228,
-                                                                                224,
-                                                                                224),
-                                                                          ),
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Installment',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
+                                                                    Table(
+                                                                      columnWidths: const {
+                                                                        0: FlexColumnWidth(
+                                                                            3),
+                                                                        1: FlexColumnWidth(
+                                                                            4),
+                                                                        2: FlexColumnWidth(
+                                                                            4),
+                                                                        3: FlexColumnWidth(
+                                                                            4),
+                                                                      },
+                                                                      children: const [
+                                                                        TableRow(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Color.fromARGB(255, 228, 224, 224),
                                                                             ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Fine',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'NetDue',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Paid Amount',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                          ]),
-                                                                    ],
-                                                                  ),
-                                                                  Consumer<
-                                                                      FeeDetailsProvider>(
-                                                                    builder: (context,
-                                                                            general,
-                                                                            child) =>
-                                                                        ListView.builder(
-                                                                            shrinkWrap: true,
-                                                                            itemCount: general.generalFeeDueList.isEmpty ? 0 : general.generalFeeDueList.length,
-                                                                            itemBuilder: ((context, index) {
-                                                                              return Table(
-                                                                                columnWidths: {
-                                                                                  0: FlexColumnWidth(3),
-                                                                                  1: FlexColumnWidth(4),
-                                                                                  2: FlexColumnWidth(4),
-                                                                                  3: FlexColumnWidth(4),
-                                                                                },
-                                                                                children: [
-                                                                                  TableRow(
-                                                                                      decoration: BoxDecoration(
-                                                                                        //  border: Border.all(),
-                                                                                        color: Colors.white,
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Installment',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Fine',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'NetDue',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Paid Amount',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                            ]),
+                                                                      ],
+                                                                    ),
+                                                                    Consumer<
+                                                                        FeeDetailsProvider>(
+                                                                      builder: (context, general, child) => ListView.builder(
+                                                                          shrinkWrap: true,
+                                                                          itemCount: general.generalFeeDueList.isEmpty ? 0 : general.generalFeeDueList.length,
+                                                                          itemBuilder: ((context, index) {
+                                                                            return Table(
+                                                                              columnWidths: const {
+                                                                                0: FlexColumnWidth(3),
+                                                                                1: FlexColumnWidth(4),
+                                                                                2: FlexColumnWidth(4),
+                                                                                3: FlexColumnWidth(4),
+                                                                              },
+                                                                              children: [
+                                                                                TableRow(
+                                                                                    decoration: BoxDecoration(
+                                                                                      //  border: Border.all(),
+                                                                                      color: Colors.white,
+                                                                                    ),
+                                                                                    children: [
+                                                                                      SizedBox(
+                                                                                        height: 30,
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          general.generalFeeDueList[index].installmentName ?? '--',
+                                                                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                        )),
                                                                                       ),
-                                                                                      children: [
-                                                                                        SizedBox(
-                                                                                          height: 30,
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            general.generalFeeDueList[index].installmentName ?? '--',
-                                                                                            style: TextStyle(fontWeight: FontWeight.w500),
-                                                                                          )),
-                                                                                        ),
-                                                                                        SizedBox(
-                                                                                          height: 30,
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            general.generalFeeDueList[index].fineAmount == null ? '--' : general.generalFeeDueList[index].fineAmount.toString(),
-                                                                                            style: TextStyle(fontWeight: FontWeight.w500),
-                                                                                          )),
-                                                                                        ),
-                                                                                        SizedBox(
-                                                                                          height: 30,
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            general.generalFeeDueList[index].netDue == null ? '--' : general.generalFeeDueList[index].netDue.toString(),
-                                                                                            style: TextStyle(fontWeight: FontWeight.w500),
-                                                                                          )),
-                                                                                        ),
-                                                                                        SizedBox(
-                                                                                          height: 30,
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            general.generalFeeDueList[index].paidAmount == null ? '--' : general.generalFeeDueList[index].paidAmount.toString(),
-                                                                                            style: TextStyle(fontWeight: FontWeight.w500),
-                                                                                          )),
-                                                                                        ),
-                                                                                      ]),
-                                                                                ],
-                                                                              );
-                                                                            })),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                      },
-                                                    ),
-                                                    kheight10,
-                                                    // Container(
-                                                    //   width: size.width,
-                                                    //   color: Color.fromARGB(255, 228, 227, 228),
-                                                    //   child: Center(
-                                                    //     child: Row(
-                                                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                                                    //       mainAxisAlignment: MainAxisAlignment.center,
-                                                    //       children: [
-                                                    //         Text(
-                                                    //           'Total NetDue : ',
-                                                    //           style: TextStyle(
-                                                    //               fontSize: 14, fontWeight: FontWeight.w500),
-                                                    //         ),
-                                                    //         Text(
-                                                    //           value.generalFeeDueList[0].totalNetDueAmount ==
-                                                    //                   null
-                                                    //               ? '--'
-                                                    //               : value.generalFeeDueList[0].totalNetDueAmount
-                                                    //                   .toString(),
-                                                    //           style: TextStyle(
-                                                    //               fontSize: 14, fontWeight: FontWeight.w500),
-                                                    //         ),
-                                                    //       ],
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                    Consumer<
-                                                        FeeDetailsProvider>(
-                                                      builder: (context, bus,
-                                                          child) {
-                                                        return bus.busFeeDueList
-                                                                .isEmpty
-                                                            ? Container(
-                                                                height: 0,
-                                                                width: 0,
-                                                              )
-                                                            : Column(
-                                                                children: [
-                                                                  Container(
-                                                                    width: size
-                                                                        .width,
-                                                                    color: UIGuide
-                                                                        .THEME_LIGHT,
-                                                                    child:
-                                                                        const Text(
-                                                                      'Bus Fees',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w700),
+                                                                                      SizedBox(
+                                                                                        height: 30,
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          general.generalFeeDueList[index].fineAmount == null ? '--' : general.generalFeeDueList[index].fineAmount.toString(),
+                                                                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                        )),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        height: 30,
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          general.generalFeeDueList[index].netDue == null ? '--' : general.generalFeeDueList[index].netDue.toString(),
+                                                                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                        )),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        height: 30,
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          general.generalFeeDueList[index].paidAmount == null ? '--' : general.generalFeeDueList[index].paidAmount.toString(),
+                                                                                          style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                        )),
+                                                                                      ),
+                                                                                    ]),
+                                                                              ],
+                                                                            );
+                                                                          })),
                                                                     ),
-                                                                  ),
-                                                                  Table(
-                                                                    columnWidths: const {
-                                                                      0: FlexColumnWidth(
-                                                                          3),
-                                                                      1: FlexColumnWidth(
-                                                                          4),
-                                                                      2: FlexColumnWidth(
-                                                                          4),
-                                                                      3: FlexColumnWidth(
-                                                                          4),
-                                                                    },
-                                                                    children: const [
-                                                                      TableRow(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color: Color.fromARGB(
-                                                                                255,
-                                                                                228,
-                                                                                224,
-                                                                                224),
-                                                                          ),
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Installment',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
+                                                                  ],
+                                                                );
+                                                        },
+                                                      ),
+                                                      kheight10,
+                                                      // Container(
+                                                      //   width: size.width,
+                                                      //   color: Color.fromARGB(255, 228, 227, 228),
+                                                      //   child: Center(
+                                                      //     child: Row(
+                                                      //       crossAxisAlignment: CrossAxisAlignment.center,
+                                                      //       mainAxisAlignment: MainAxisAlignment.center,
+                                                      //       children: [
+                                                      //         Text(
+                                                      //           'Total NetDue : ',
+                                                      //           style: TextStyle(
+                                                      //               fontSize: 14, fontWeight: FontWeight.w500),
+                                                      //         ),
+                                                      //         Text(
+                                                      //           value.generalFeeDueList[0].totalNetDueAmount ==
+                                                      //                   null
+                                                      //               ? '--'
+                                                      //               : value.generalFeeDueList[0].totalNetDueAmount
+                                                      //                   .toString(),
+                                                      //           style: TextStyle(
+                                                      //               fontSize: 14, fontWeight: FontWeight.w500),
+                                                      //         ),
+                                                      //       ],
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                      Consumer<
+                                                          FeeDetailsProvider>(
+                                                        builder: (context, bus,
+                                                            child) {
+                                                          return bus
+                                                                  .busFeeDueList
+                                                                  .isEmpty
+                                                              ? Container(
+                                                                  height: 0,
+                                                                  width: 0,
+                                                                )
+                                                              : Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      width: size
+                                                                          .width,
+                                                                      color: UIGuide
+                                                                          .THEME_LIGHT,
+                                                                      child:
+                                                                          const Text(
+                                                                        'Bus Fees',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            fontWeight:
+                                                                                FontWeight.w700),
+                                                                      ),
+                                                                    ),
+                                                                    Table(
+                                                                      columnWidths: const {
+                                                                        0: FlexColumnWidth(
+                                                                            3),
+                                                                        1: FlexColumnWidth(
+                                                                            4),
+                                                                        2: FlexColumnWidth(
+                                                                            4),
+                                                                        3: FlexColumnWidth(
+                                                                            4),
+                                                                      },
+                                                                      children: const [
+                                                                        TableRow(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: Color.fromARGB(255, 228, 224, 224),
                                                                             ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Fine',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'NetDue',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Paid Amount',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                          ]),
-                                                                    ],
-                                                                  ),
-                                                                  Consumer<
-                                                                      FeeDetailsProvider>(
-                                                                    builder: (context,
-                                                                            busfee,
-                                                                            child) =>
-                                                                        ListView.builder(
-                                                                            shrinkWrap: true,
-                                                                            itemCount: busfee.busFeeDueList.isEmpty ? 0 : busfee.busFeeDueList.length,
-                                                                            itemBuilder: ((context, index) {
-                                                                              return Table(
+                                                                            children: [
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Installment',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Fine',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'NetDue',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 30,
+                                                                                child: Center(
+                                                                                    child: Text(
+                                                                                  'Paid Amount',
+                                                                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                                                                )),
+                                                                              ),
+                                                                            ]),
+                                                                      ],
+                                                                    ),
+                                                                    Consumer<
+                                                                        FeeDetailsProvider>(
+                                                                      builder: (context, busfee, child) => ListView.builder(
+                                                                          shrinkWrap: true,
+                                                                          itemCount: busfee.busFeeDueList.isEmpty ? 0 : busfee.busFeeDueList.length,
+                                                                          itemBuilder: ((context, index) {
+                                                                            return LimitedBox(
+                                                                              maxHeight: 30,
+                                                                              child: Table(
                                                                                 columnWidths: const {
                                                                                   0: FlexColumnWidth(3),
                                                                                   1: FlexColumnWidth(4),
@@ -491,578 +488,970 @@ class _StudFeeDetailsState extends State<StudFeeDetails> {
                                                                                         ),
                                                                                       ]),
                                                                                 ],
-                                                                              );
-                                                                            })),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                      },
-                                                    ),
-                                                    Consumer<
-                                                        FeeDetailsProvider>(
-                                                      builder:
-                                                          (context, value,
+                                                                              ),
+                                                                            );
+                                                                          })),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                        },
+                                                      ),
+                                                      Consumer<
+                                                          FeeDetailsProvider>(
+                                                        builder: (context,
+                                                                value, child) =>
+                                                            Container(
+                                                                width:
+                                                                    size.width,
+                                                                height: 20,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        228,
+                                                                        224,
+                                                                        224),
+                                                                child: Table(
+                                                                  columnWidths: const {
+                                                                    0: FlexColumnWidth(
+                                                                        3),
+                                                                    1: FlexColumnWidth(
+                                                                        4),
+                                                                    2: FlexColumnWidth(
+                                                                        4),
+                                                                    3: FlexColumnWidth(
+                                                                        4),
+                                                                  },
+                                                                  children: [
+                                                                    TableRow(
+                                                                        children: [
+                                                                          Text(
+                                                                            'Net Total',
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w700),
+                                                                          ),
+                                                                          Text(
+                                                                            value.allTotalDueFineAmount == null
+                                                                                ? '--'
+                                                                                : value.allTotalDueFineAmount.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w700),
+                                                                          ),
+                                                                          Text(
+                                                                            value.allTotalDueNetDueAmount == null
+                                                                                ? '--'
+                                                                                : value.allTotalDueNetDueAmount.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w700),
+                                                                          ),
+                                                                          Text(
+                                                                            value.allTotalDuePaidAmount == null
+                                                                                ? '--'
+                                                                                : value.allTotalDuePaidAmount.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.w700),
+                                                                          )
+                                                                        ])
+                                                                  ],
+                                                                )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                  },
+                                ),
+                                kheight20,
+                                Consumer<FeeDetailsProvider>(
+                                  builder: (context, paid, child) {
+                                    return paid.generalFeePaidList.isEmpty &&
+                                            paid.busFeePaidList.isEmpty
+                                        ? Container(
+                                            height: 0,
+                                            width: 0,
+                                          )
+                                        : SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                const Center(
+                                                  child: Text(
+                                                    'Fee Paid Details',
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: size.width,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.black,
+                                                          style: BorderStyle
+                                                              .solid)),
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        width: size.width,
+                                                        height: 28,
+                                                        color:
+                                                            UIGuide.THEME_LIGHT,
+                                                        child: Center(
+                                                          child: const Text(
+                                                            'School Fees',
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      LimitedBox(
+                                                        maxHeight: 250,
+                                                        child: Consumer<
+                                                            FeeDetailsProvider>(
+                                                          builder: (context,
+                                                                  generalPaid,
                                                                   child) =>
-                                                              Container(
-                                                                  width: size
-                                                                      .width,
-                                                                  height: 20,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          228,
-                                                                          224,
-                                                                          224),
-                                                                  child: Table(
-                                                                    columnWidths: const {
-                                                                      0: FlexColumnWidth(
-                                                                          3),
-                                                                      1: FlexColumnWidth(
-                                                                          4),
-                                                                      2: FlexColumnWidth(
-                                                                          4),
-                                                                      3: FlexColumnWidth(
-                                                                          4),
-                                                                    },
-                                                                    children: [
-                                                                      TableRow(
+                                                              ListView.builder(
+                                                            shrinkWrap: true,
+                                                            itemCount: generalPaid
+                                                                    .generalFeePaidList
+                                                                    .isEmpty
+                                                                ? 0
+                                                                : generalPaid
+                                                                    .generalFeePaidList
+                                                                    .length,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    indexx) {
+                                                              String date = generalPaid
+                                                                      .generalFeePaidList[
+                                                                          indexx]
+                                                                      .billDate ??
+                                                                  '--';
+                                                              var updatedDate =
+                                                                  DateFormat(
+                                                                          'yyyy-MM-dd')
+                                                                      .parse(
+                                                                          date);
+                                                              String newDate =
+                                                                  updatedDate
+                                                                      .toString();
+                                                              String finalDate =
+                                                                  newDate
+                                                                      .replaceRange(
+                                                                          10,
+                                                                          23,
+                                                                          '');
+                                                              print(
+                                                                  updatedDate);
+                                                              print(finalDate);
+
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        4.0),
+                                                                child:
+                                                                    Container(
+                                                                  decoration: BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: UIGuide
+                                                                              .light_Purple),
+                                                                      borderRadius:
+                                                                          BorderRadius.all(Radius.circular(
+                                                                              10)),
+                                                                      color: UIGuide
+                                                                          .WHITE),
+                                                                  height: 55,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            8.0),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Row(
                                                                           children: [
                                                                             Text(
-                                                                              'Net Total',
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(fontWeight: FontWeight.w700),
+                                                                              'Date: ',
+                                                                              style: TextStyle(color: UIGuide.light_Purple),
                                                                             ),
                                                                             Text(
-                                                                              value.allTotalDueFineAmount == null ? '--' : value.allTotalDueFineAmount.toString(),
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(fontWeight: FontWeight.w700),
+                                                                              'Date: ${finalDate.isEmpty ? '--' : finalDate}',
+                                                                            ),
+                                                                            Spacer(),
+                                                                            GestureDetector(
+                                                                              onTap: () {
+                                                                                showDialog(
+                                                                                    context: context,
+                                                                                    builder: (context) {
+                                                                                      return Dialog(
+                                                                                          child: Container(
+                                                                                        child: SingleChildScrollView(
+                                                                                          scrollDirection: Axis.vertical,
+                                                                                          child: Column(
+                                                                                            mainAxisSize: MainAxisSize.min,
+                                                                                            children: [
+                                                                                              ListView.builder(
+                                                                                                  shrinkWrap: true,
+                                                                                                  itemCount: generalPaid.generalFeePaidList[indexx].schoolFees!.isEmpty ? 0 : generalPaid.generalFeePaidList[indexx].schoolFees!.length,
+                                                                                                  itemBuilder: (context, index) {
+                                                                                                    return Padding(
+                                                                                                      padding: const EdgeInsets.all(3.0),
+                                                                                                      child: Container(
+                                                                                                        decoration: BoxDecoration(border: Border.all(color: UIGuide.light_Purple), borderRadius: BorderRadius.all(Radius.circular(10)), color: UIGuide.WHITE),
+                                                                                                        height: 90,
+                                                                                                        child: Padding(
+                                                                                                          padding: const EdgeInsets.only(left: 4.0),
+                                                                                                          child: Column(
+                                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                            children: [
+                                                                                                              Row(
+                                                                                                                children: [
+                                                                                                                  Text('Installment Name: '),
+                                                                                                                  Flexible(
+                                                                                                                    child: RichText(
+                                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                                      strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                      text: TextSpan(
+                                                                                                                        style: TextStyle(color: Colors.black),
+                                                                                                                        text: generalPaid.generalFeePaidList[indexx].schoolFees![index].installmentname ?? '--',
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              ),
+                                                                                                              Row(
+                                                                                                                children: [
+                                                                                                                  Text('Due Amount: '),
+                                                                                                                  Flexible(
+                                                                                                                    child: RichText(
+                                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                                      strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                      text: TextSpan(
+                                                                                                                        style: TextStyle(color: Colors.black),
+                                                                                                                        text: generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount == null ? '0.00' : generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount.toString(),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              ),
+                                                                                                              Row(
+                                                                                                                children: [
+                                                                                                                  Text('Concession Amount: '),
+                                                                                                                  Flexible(
+                                                                                                                    child: RichText(
+                                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                                      strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                      text: TextSpan(
+                                                                                                                        style: TextStyle(color: Colors.black),
+                                                                                                                        text: generalPaid.generalFeePaidList[indexx].schoolFees![index].concessionAmount == null ? '0.00' : generalPaid.generalFeePaidList[indexx].schoolFees![index].concessionAmount.toString(),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              ),
+                                                                                                              Row(
+                                                                                                                children: [
+                                                                                                                  Text('Fine Amount: '),
+                                                                                                                  Flexible(
+                                                                                                                    child: RichText(
+                                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                                      strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                      text: TextSpan(
+                                                                                                                        style: TextStyle(color: Colors.black),
+                                                                                                                        text: generalPaid.generalFeePaidList[indexx].schoolFees![index].fineAmount == null ? '0.00' : generalPaid.generalFeePaidList[indexx].schoolFees![index].fineAmount.toString(),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              ),
+                                                                                                              Row(
+                                                                                                                children: [
+                                                                                                                  Text('Total Paid: '),
+                                                                                                                  Flexible(
+                                                                                                                    child: RichText(
+                                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                                      strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                      text: TextSpan(
+                                                                                                                        style: TextStyle(color: Colors.black),
+                                                                                                                        text: generalPaid.generalFeePaidList[indexx].schoolFees![index].totalPaidAmount == null ? '0.00' : generalPaid.generalFeePaidList[indexx].schoolFees![index].totalPaidAmount.toString(),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  ),
+                                                                                                                ],
+                                                                                                              )
+                                                                                                            ],
+                                                                                                          ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  }),
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      ));
+                                                                                    });
+                                                                              },
+                                                                              child: Icon(
+                                                                                Icons.info_outline_rounded,
+                                                                                size: 13,
+                                                                              ),
+                                                                            ),
+                                                                            kWidth,
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              'Txn ID: ',
+                                                                              style: TextStyle(color: UIGuide.light_Purple),
+                                                                            ),
+                                                                            Flexible(
+                                                                              child: RichText(
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                text: TextSpan(style: TextStyle(color: Colors.black), text: generalPaid.generalFeePaidList[indexx].transactionId ?? '--'),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              'Paid Amount: ',
+                                                                              style: TextStyle(color: UIGuide.light_Purple),
                                                                             ),
                                                                             Text(
-                                                                              value.allTotalDueNetDueAmount == null ? '--' : value.allTotalDueNetDueAmount.toString(),
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(fontWeight: FontWeight.w700),
+                                                                              generalPaid.generalFeePaidList[indexx].totalPaidAmount == null ? "0.00" : generalPaid.generalFeePaidList[indexx].totalPaidAmount.toString(),
                                                                             ),
-                                                                            Text(
-                                                                              value.allTotalDuePaidAmount == null ? '--' : value.allTotalDuePaidAmount.toString(),
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(fontWeight: FontWeight.w700),
-                                                                            )
-                                                                          ])
-                                                                    ],
-                                                                  )),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                },
-                              ),
-                              kheight20,
-                              Consumer<FeeDetailsProvider>(
-                                builder: (context, paid, child) {
-                                  return paid.generalFeePaidList.isEmpty &&
-                                          paid.busFeePaidList.isEmpty
-                                      ? Container(
-                                          height: 0,
-                                          width: 0,
-                                        )
-                                      : SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child: Text(
-                                                  'Fee Paid Details',
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                              ),
-                                              Container(
-                                                width: size.width,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.black,
-                                                        style:
-                                                            BorderStyle.solid)),
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      width: size.width,
-                                                      color:
-                                                          UIGuide.THEME_LIGHT,
-                                                      child: Text(
-                                                        'School Fees',
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
+                                                                          ],
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                              // },
+                                                              //  );
+                                                            },
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Table(
-                                                      columnWidths: {
-                                                        0: FlexColumnWidth(3),
-                                                        1: FlexColumnWidth(4),
-                                                        2: FlexColumnWidth(4),
-                                                      },
-                                                      children: const [
-                                                        TableRow(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              //  border: Border.all(),
-                                                              color: Color
-                                                                  .fromARGB(
-                                                                      255,
-                                                                      228,
-                                                                      224,
-                                                                      224),
-                                                            ),
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  'Installment',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                )),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  'Due Amount',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                )),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 30,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  'Paid Amount',
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500),
-                                                                )),
-                                                              ),
-                                                            ]),
-                                                      ],
-                                                    ),
-                                                    Consumer<
-                                                        FeeDetailsProvider>(
-                                                      builder: (context,
-                                                              generalPaid,
-                                                              child) =>
-                                                          ListView.builder(
-                                                              shrinkWrap: true,
-                                                              itemCount: generalPaid
-                                                                      .generalFeePaidList
-                                                                      .isEmpty
-                                                                  ? 0
-                                                                  : generalPaid
-                                                                      .generalFeePaidList
-                                                                      .length,
-                                                              itemBuilder:
-                                                                  ((context,
-                                                                      indexx) {
-                                                                String date = generalPaid
-                                                                        .generalFeePaidList[
-                                                                            indexx]
-                                                                        .billDate ??
-                                                                    '--';
-                                                                var updatedDate =
-                                                                    DateFormat(
-                                                                            'yyyy-MM-dd')
-                                                                        .parse(
-                                                                            date);
-                                                                String newDate =
-                                                                    updatedDate
-                                                                        .toString();
-                                                                String
-                                                                    finalDate =
-                                                                    newDate
-                                                                        .replaceRange(
-                                                                            10,
-                                                                            23,
-                                                                            '');
-                                                                print(
-                                                                    updatedDate);
-                                                                print(
-                                                                    finalDate);
-                                                                return ListView
-                                                                    .builder(
-                                                                  shrinkWrap:
-                                                                      true,
-                                                                  itemCount: generalPaid
-                                                                          .generalFeePaidList[
-                                                                              indexx]
-                                                                          .schoolFees!
-                                                                          .isEmpty
-                                                                      ? 0
-                                                                      : generalPaid
-                                                                          .generalFeePaidList[
-                                                                              indexx]
-                                                                          .schoolFees!
-                                                                          .length,
-                                                                  itemBuilder:
-                                                                      (context,
-                                                                          index) {
-                                                                    return Table(
-                                                                      columnWidths: const {
-                                                                        0: FlexColumnWidth(
-                                                                            3),
-                                                                        1: FlexColumnWidth(
-                                                                            4),
-                                                                        2: FlexColumnWidth(
-                                                                            4),
-                                                                      },
-                                                                      children: [
-                                                                        TableRow(
-                                                                            decoration:
-                                                                                const BoxDecoration(
-                                                                              //  border: Border.all(),
-                                                                              color: Colors.white54,
-                                                                            ),
-                                                                            children: [
-                                                                              SizedBox(
-                                                                                height: 30,
-                                                                                child: Center(
-                                                                                    child: Text(
-                                                                                  generalPaid.generalFeePaidList[indexx].schoolFees![index].installmentname ?? '--',
-                                                                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                )),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 30,
-                                                                                child: Center(
-                                                                                    child: Text(
-                                                                                  generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount == null ? '--' : generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount.toString(),
-                                                                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                )),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 30,
-                                                                                child: Center(
-                                                                                    child: Text(
-                                                                                  generalPaid.generalFeePaidList[indexx].schoolFees![index].paidAmount == null ? '--' : generalPaid.generalFeePaidList[indexx].schoolFees![index].paidAmount.toString(),
-                                                                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                )),
-                                                                              ),
-                                                                            ]),
-                                                                        TableRow(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              //  border: Border.all(),
-                                                                              color: Colors.white,
-                                                                            ),
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: SizedBox(
-                                                                                  // height: 30,
-                                                                                  child: Center(
-                                                                                    child: Text(
-                                                                                      'Date: ${finalDate.isEmpty ? '--' : finalDate}',
-                                                                                      textAlign: TextAlign.center,
-                                                                                      // style: TextStyle(
-                                                                                      //     fontWeight:
-                                                                                      //         FontWeight.w500),
-                                                                                    ),
+                                                      ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                                      // Consumer<
+                                                      //     FeeDetailsProvider>(
+                                                      //   builder: (context,
+                                                      //           generalPaid,
+                                                      //           child) =>
+                                                      //       ListView.builder(
+                                                      //           shrinkWrap: true,
+                                                      //           itemCount: generalPaid
+                                                      //                   .generalFeePaidList
+                                                      //                   .isEmpty
+                                                      //               ? 0
+                                                      //               : generalPaid
+                                                      //                   .generalFeePaidList
+                                                      //                   .length,
+                                                      //           itemBuilder:
+                                                      //               ((context,
+                                                      //                   indexx) {
+                                                      //             String date = generalPaid
+                                                      //                     .generalFeePaidList[
+                                                      //                         indexx]
+                                                      //                     .billDate ??
+                                                      //                 '--';
+                                                      //             var updatedDate =
+                                                      //                 DateFormat(
+                                                      //                         'yyyy-MM-dd')
+                                                      //                     .parse(
+                                                      //                         date);
+                                                      //             String newDate =
+                                                      //                 updatedDate
+                                                      //                     .toString();
+                                                      //             String
+                                                      //                 finalDate =
+                                                      //                 newDate
+                                                      //                     .replaceRange(
+                                                      //                         10,
+                                                      //                         23,
+                                                      //                         '');
+                                                      //             print(
+                                                      //                 updatedDate);
+                                                      //             print(
+                                                      //                 finalDate);
+                                                      //             return ListView
+                                                      //                 .builder(
+                                                      //               shrinkWrap:
+                                                      //                   true,
+                                                      //               itemCount: generalPaid
+                                                      //                       .generalFeePaidList[
+                                                      //                           indexx]
+                                                      //                       .schoolFees!
+                                                      //                       .isEmpty
+                                                      //                   ? 0
+                                                      //                   : generalPaid
+                                                      //                       .generalFeePaidList[
+                                                      //                           indexx]
+                                                      //                       .schoolFees!
+                                                      //                       .length,
+                                                      //               itemBuilder:
+                                                      //                   (context,
+                                                      //                       index) {
+                                                      //                 return Table(
+                                                      //                   columnWidths: const {
+                                                      //                     0: FlexColumnWidth(
+                                                      //                         3),
+                                                      //                     1: FlexColumnWidth(
+                                                      //                         4),
+                                                      //                     2: FlexColumnWidth(
+                                                      //                         4),
+                                                      //                   },
+                                                      //                   children: [
+                                                      //                     TableRow(
+                                                      //                         decoration:
+                                                      //                             const BoxDecoration(
+                                                      //                           //  border: Border.all(),
+                                                      //                           color: Colors.white54,
+                                                      //                         ),
+                                                      //                         children: [
+                                                      //                           SizedBox(
+                                                      //                             height: 30,
+                                                      //                             child: Center(
+                                                      //                                 child: Text(
+                                                      //                               generalPaid.generalFeePaidList[indexx].schoolFees![index].installmentname ?? '--',
+                                                      //                               style: TextStyle(fontWeight: FontWeight.w700),
+                                                      //                             )),
+                                                      //                           ),
+                                                      //                           SizedBox(
+                                                      //                             height: 30,
+                                                      //                             child: Center(
+                                                      //                                 child: Text(
+                                                      //                               generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount == null ? '--' : generalPaid.generalFeePaidList[indexx].schoolFees![index].dueAmount.toString(),
+                                                      //                               style: TextStyle(fontWeight: FontWeight.w700),
+                                                      //                             )),
+                                                      //                           ),
+                                                      //                           SizedBox(
+                                                      //                             height: 30,
+                                                      //                             child: Center(
+                                                      //                                 child: Text(
+                                                      //                               generalPaid.generalFeePaidList[indexx].schoolFees![index].paidAmount == null ? '--' : generalPaid.generalFeePaidList[indexx].schoolFees![index].paidAmount.toString(),
+                                                      //                               style: TextStyle(fontWeight: FontWeight.w700),
+                                                      //                             )),
+                                                      //                           ),
+                                                      //                         ]),
+                                                      //                     TableRow(
+                                                      //                         decoration:
+                                                      //                             BoxDecoration(
+                                                      //                           //  border: Border.all(),
+                                                      //                           color: Colors.white,
+                                                      //                         ),
+                                                      //                         children: [
+                                                      //                           Padding(
+                                                      //                             padding: const EdgeInsets.all(8.0),
+                                                      //                             child: SizedBox(
+                                                      //                               // height: 30,
+                                                      //                               child: Center(
+                                                      //                                 child: Text(
+                                                      //                                   'Date: ${finalDate.isEmpty ? '--' : finalDate}',
+                                                      //                                   textAlign: TextAlign.center,
+                                                      //                                   // style: TextStyle(
+                                                      //                                   //     fontWeight:
+                                                      //                                   //         FontWeight.w500),
+                                                      //                                 ),
+                                                      //                               ),
+                                                      //                             ),
+                                                      //                           ),
+                                                      //                           Padding(
+                                                      //                             padding: const EdgeInsets.all(8.0),
+                                                      //                             child: SizedBox(
+                                                      //                               //  height: 50,
+                                                      //                               child: Center(
+                                                      //                                   child: Text(
+                                                      //                                 'Transaction ID: ${generalPaid.generalFeePaidList[indexx].billDate ?? '--'}',
+                                                      //                                 // style: TextStyle(
+                                                      //                                 //     fontWeight: FontWeight.w500),
+                                                      //                               )),
+                                                      //                             ),
+                                                      //                           ),
+                                                      //                           SizedBox(
+                                                      //                             height: 30,
+                                                      //                             child: Center(
+                                                      //                                 child: Text(
+                                                      //                               '',
+                                                      //                               // style: TextStyle(
+                                                      //                               //     fontWeight: FontWeight.w500),
+                                                      //                             )),
+                                                      //                           ),
+                                                      //                         ]),
+                                                      //                   ],
+                                                      //                 );
+                                                      //               },
+                                                      //             );
+                                                      //           })),
+                                                      // ),
+
+                                                      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                                                      ///Bus fee
+                                                      kheight10,
+                                                      Consumer<
+                                                          FeeDetailsProvider>(
+                                                        builder: (context,
+                                                            busPaid, child) {
+                                                          return busPaid
+                                                                  .busFeePaidList
+                                                                  .isEmpty
+                                                              ? Container(
+                                                                  height: 0,
+                                                                  width: 0,
+                                                                )
+                                                              : Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      width: size
+                                                                          .width,
+                                                                      height:
+                                                                          28,
+                                                                      color: UIGuide
+                                                                          .THEME_LIGHT,
+                                                                      child:
+                                                                          Center(
+                                                                        child:
+                                                                            const Text(
+                                                                          'Bus Fees',
+                                                                          style: TextStyle(
+                                                                              fontSize: 15,
+                                                                              fontWeight: FontWeight.w700),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    LimitedBox(
+                                                                      maxHeight:
+                                                                          250,
+                                                                      child: Consumer<
+                                                                          FeeDetailsProvider>(
+                                                                        builder: (context,
+                                                                                busFeePaidList,
+                                                                                child) =>
+                                                                            ListView.builder(
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          itemCount: busPaid.busFeePaidList.isEmpty
+                                                                              ? 0
+                                                                              : busPaid.busFeePaidList.length,
+                                                                          itemBuilder:
+                                                                              (context, indexx) {
+                                                                            String
+                                                                                date =
+                                                                                busPaid.busFeePaidList[indexx].billDate ?? '--';
+                                                                            var updatedDate =
+                                                                                DateFormat('yyyy-MM-dd').parse(date);
+                                                                            String
+                                                                                newDate =
+                                                                                updatedDate.toString();
+                                                                            String
+                                                                                finalDate =
+                                                                                newDate.replaceRange(10, 23, '');
+                                                                            print(updatedDate);
+                                                                            print(finalDate);
+
+                                                                            return Padding(
+                                                                              padding: const EdgeInsets.all(4.0),
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(border: Border.all(color: UIGuide.light_Purple), borderRadius: BorderRadius.all(Radius.circular(10)), color: UIGuide.WHITE),
+                                                                                height: 55,
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.only(left: 8.0),
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Text(
+                                                                                            'Date: ',
+                                                                                            style: TextStyle(color: UIGuide.light_Purple),
+                                                                                          ),
+                                                                                          Text(
+                                                                                            'Date: ${finalDate.isEmpty ? '--' : finalDate}',
+                                                                                          ),
+                                                                                          Spacer(),
+                                                                                          GestureDetector(
+                                                                                            onTap: () {
+                                                                                              showDialog(
+                                                                                                  context: context,
+                                                                                                  builder: (context) {
+                                                                                                    return Dialog(
+                                                                                                        child: Container(
+                                                                                                      child: SingleChildScrollView(
+                                                                                                        scrollDirection: Axis.vertical,
+                                                                                                        child: Column(
+                                                                                                          mainAxisSize: MainAxisSize.min,
+                                                                                                          children: [
+                                                                                                            ListView.builder(
+                                                                                                                shrinkWrap: true,
+                                                                                                                itemCount: busPaid.busFeePaidList[indexx].busFees!.isEmpty ? 0 : busPaid.busFeePaidList[indexx].busFees!.length,
+                                                                                                                itemBuilder: (context, index) {
+                                                                                                                  return Padding(
+                                                                                                                    padding: const EdgeInsets.all(3.0),
+                                                                                                                    child: Container(
+                                                                                                                      decoration: BoxDecoration(border: Border.all(color: UIGuide.light_Purple), borderRadius: BorderRadius.all(Radius.circular(10)), color: UIGuide.WHITE),
+                                                                                                                      height: 70,
+                                                                                                                      child: Padding(
+                                                                                                                        padding: const EdgeInsets.only(left: 4.0),
+                                                                                                                        child: Column(
+                                                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                                                                                          children: [
+                                                                                                                            Row(
+                                                                                                                              children: [
+                                                                                                                                Text('Installment Name: '),
+                                                                                                                                Flexible(
+                                                                                                                                  child: RichText(
+                                                                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                                                                    strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                                    text: TextSpan(
+                                                                                                                                      style: TextStyle(color: Colors.black),
+                                                                                                                                      text: busPaid.busFeePaidList[indexx].busFees![index].installmentname ?? '--',
+                                                                                                                                    ),
+                                                                                                                                  ),
+                                                                                                                                ),
+                                                                                                                              ],
+                                                                                                                            ),
+                                                                                                                            Row(
+                                                                                                                              children: [
+                                                                                                                                Text('Due Amount: '),
+                                                                                                                                Flexible(
+                                                                                                                                  child: RichText(
+                                                                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                                                                    strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                                    text: TextSpan(
+                                                                                                                                      style: TextStyle(color: Colors.black),
+                                                                                                                                      text: busPaid.busFeePaidList[indexx].busFees![index].dueAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].dueAmount.toString(),
+                                                                                                                                    ),
+                                                                                                                                  ),
+                                                                                                                                ),
+                                                                                                                              ],
+                                                                                                                            ),
+                                                                                                                            Row(
+                                                                                                                              children: [
+                                                                                                                                Text('Fine Amount: '),
+                                                                                                                                Flexible(
+                                                                                                                                  child: RichText(
+                                                                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                                                                    strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                                    text: TextSpan(
+                                                                                                                                      style: TextStyle(color: Colors.black),
+                                                                                                                                      text: busPaid.busFeePaidList[indexx].busFees![index].fineAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].fineAmount.toString(),
+                                                                                                                                    ),
+                                                                                                                                  ),
+                                                                                                                                ),
+                                                                                                                              ],
+                                                                                                                            ),
+                                                                                                                            Row(
+                                                                                                                              children: [
+                                                                                                                                Text('Total Paid: '),
+                                                                                                                                Flexible(
+                                                                                                                                  child: RichText(
+                                                                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                                                                    strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                                                                    text: TextSpan(
+                                                                                                                                      style: TextStyle(color: Colors.black),
+                                                                                                                                      text: busPaid.busFeePaidList[indexx].busFees![index].totalPaidAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].totalPaidAmount.toString(),
+                                                                                                                                    ),
+                                                                                                                                  ),
+                                                                                                                                ),
+                                                                                                                              ],
+                                                                                                                            )
+                                                                                                                          ],
+                                                                                                                        ),
+                                                                                                                      ),
+                                                                                                                    ),
+                                                                                                                  );
+                                                                                                                }),
+                                                                                                          ],
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ));
+                                                                                                  });
+                                                                                            },
+                                                                                            child: Icon(
+                                                                                              Icons.info_outline_rounded,
+                                                                                              size: 13,
+                                                                                            ),
+                                                                                          ),
+                                                                                          kWidth,
+                                                                                        ],
+                                                                                      ),
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Text(
+                                                                                            'Txn ID: ',
+                                                                                            style: TextStyle(color: UIGuide.light_Purple),
+                                                                                          ),
+                                                                                          Flexible(
+                                                                                            child: RichText(
+                                                                                              overflow: TextOverflow.ellipsis,
+                                                                                              strutStyle: StrutStyle(fontSize: 12.0),
+                                                                                              text: TextSpan(style: TextStyle(color: Colors.black), text: busPaid.busFeePaidList[indexx].billDate ?? '--'),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                      Row(
+                                                                                        children: [
+                                                                                          Text(
+                                                                                            'Paid Amount: ',
+                                                                                            style: TextStyle(color: UIGuide.light_Purple),
+                                                                                          ),
+                                                                                          Text(
+                                                                                            busPaid.busFeePaidList[indexx].totalPaidAmount == null ? "0.00" : busPaid.busFeePaidList[indexx].totalPaidAmount.toString(),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ],
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.all(8.0),
-                                                                                child: SizedBox(
-                                                                                  //  height: 50,
-                                                                                  child: Center(
-                                                                                      child: Text(
-                                                                                    'Transaction ID: ${generalPaid.generalFeePaidList[indexx].billDate ?? '--'}',
-                                                                                    // style: TextStyle(
-                                                                                    //     fontWeight: FontWeight.w500),
-                                                                                  )),
-                                                                                ),
-                                                                              ),
-                                                                              SizedBox(
-                                                                                height: 30,
-                                                                                child: Center(
-                                                                                    child: Text(
-                                                                                  '',
-                                                                                  // style: TextStyle(
-                                                                                  //     fontWeight: FontWeight.w500),
-                                                                                )),
-                                                                              ),
-                                                                            ]),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                );
-                                                              })),
-                                                    ),
-                                                    // Container(
-                                                    //   width: size.width,
-                                                    //   color: Color.fromARGB(255, 241, 246, 248),
-                                                    //   child: const Center(
-                                                    //     child: Text(
-                                                    //       'Total PaidAmount : 12000',
-                                                    //       style: TextStyle(
-                                                    //           fontSize: 14,
-                                                    //           fontWeight: FontWeight.w500),
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-
-                                                    ///Bus fee
-                                                    Consumer<
-                                                        FeeDetailsProvider>(
-                                                      builder: (context,
-                                                          busPaid, child) {
-                                                        return busPaid
-                                                                .busFeePaidList
-                                                                .isEmpty
-                                                            ? Container(
-                                                                height: 0,
-                                                                width: 0,
-                                                              )
-                                                            : Column(
-                                                                children: [
-                                                                  Container(
-                                                                    width: size
-                                                                        .width,
-                                                                    color: UIGuide
-                                                                        .THEME_LIGHT,
-                                                                    child:
-                                                                        const Text(
-                                                                      'Bus Fees',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15,
-                                                                          fontWeight:
-                                                                              FontWeight.w700),
+                                                                            );
+                                                                            // },
+                                                                            //  );
+                                                                          },
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                  Table(
-                                                                    columnWidths: {
-                                                                      0: FlexColumnWidth(
-                                                                          3),
-                                                                      1: FlexColumnWidth(
-                                                                          4),
-                                                                      2: FlexColumnWidth(
-                                                                          4),
-                                                                    },
-                                                                    children: const [
-                                                                      TableRow(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            //  border: Border.all(),
-                                                                            color: Color.fromARGB(
-                                                                                255,
-                                                                                228,
-                                                                                224,
-                                                                                224),
-                                                                          ),
-                                                                          children: [
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Installment',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Due Amount',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              child: Center(
-                                                                                  child: Text(
-                                                                                'Paid Amount',
-                                                                                style: TextStyle(fontWeight: FontWeight.w500),
-                                                                              )),
-                                                                            ),
-                                                                          ]),
-                                                                    ],
-                                                                  ),
-                                                                  Consumer<
-                                                                      FeeDetailsProvider>(
-                                                                    builder: (context,
-                                                                            busPaid,
-                                                                            child) =>
-                                                                        ListView.builder(
-                                                                            shrinkWrap: true,
-                                                                            itemCount: busPaid.busFeePaidList.isEmpty ? 0 : busPaid.busFeePaidList.length,
-                                                                            itemBuilder: ((context, indexx) {
-                                                                              String date = busPaid.busFeePaidList[indexx].billDate ?? '--';
-                                                                              var updatedDate = DateFormat('yyyy-MM-dd').parse(date);
-                                                                              String newDate = updatedDate.toString();
-                                                                              String finalDate = newDate.replaceRange(10, 23, '');
-                                                                              print(updatedDate);
-                                                                              print(finalDate);
-                                                                              return ListView.builder(
-                                                                                shrinkWrap: true,
-                                                                                itemCount: busPaid.busFeePaidList[indexx].busFees!.isEmpty ? 0 : busPaid.busFeePaidList[indexx].busFees!.length,
-                                                                                itemBuilder: (context, index) {
-                                                                                  return Table(
-                                                                                    columnWidths: const {
-                                                                                      0: FlexColumnWidth(3),
-                                                                                      1: FlexColumnWidth(4),
-                                                                                      2: FlexColumnWidth(4),
-                                                                                    },
-                                                                                    children: [
-                                                                                      TableRow(
-                                                                                          decoration: BoxDecoration(
-                                                                                            //  border: Border.all(),
-                                                                                            color: Colors.white54,
-                                                                                          ),
-                                                                                          children: [
-                                                                                            SizedBox(
-                                                                                              height: 30,
-                                                                                              child: Center(
-                                                                                                  child: Text(
-                                                                                                busPaid.busFeePaidList[indexx].busFees![index].installmentname ?? '--',
-                                                                                                style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                              )),
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                              height: 30,
-                                                                                              child: Center(
-                                                                                                  child: Text(
-                                                                                                busPaid.busFeePaidList[indexx].busFees![index].dueAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].dueAmount.toString(),
-                                                                                                style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                              )),
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                              height: 30,
-                                                                                              child: Center(
-                                                                                                  child: Text(
-                                                                                                busPaid.busFeePaidList[indexx].busFees![index].paidAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].paidAmount.toString(),
-                                                                                                style: TextStyle(fontWeight: FontWeight.w700),
-                                                                                              )),
-                                                                                            ),
-                                                                                          ]),
-                                                                                      TableRow(
-                                                                                          decoration: BoxDecoration(
-                                                                                            //  border: Border.all(),
-                                                                                            color: Colors.white,
-                                                                                          ),
-                                                                                          children: [
-                                                                                            Padding(
-                                                                                              padding: const EdgeInsets.all(8.0),
-                                                                                              child: SizedBox(
-                                                                                                // height: 30,
-                                                                                                child: Center(
-                                                                                                  child: Text(
-                                                                                                    'Date: ${finalDate.isEmpty ? '--' : finalDate}',
-                                                                                                    textAlign: TextAlign.center,
-                                                                                                    // style: TextStyle(
-                                                                                                    //     fontWeight:
-                                                                                                    //         FontWeight.w500),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            ),
-                                                                                            Padding(
-                                                                                              padding: const EdgeInsets.all(8.0),
-                                                                                              child: SizedBox(
-                                                                                                //  height: 50,
-                                                                                                child: Center(
-                                                                                                    child: Text(
-                                                                                                  'Transaction ID: ${busPaid.busFeePaidList[indexx].billDate ?? '--'}',
-                                                                                                  // style: TextStyle(
-                                                                                                  //     fontWeight: FontWeight.w500),
-                                                                                                )),
-                                                                                              ),
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                              height: 30,
-                                                                                              child: Center(
-                                                                                                  child: Text(
-                                                                                                '',
-                                                                                                // style: TextStyle(
-                                                                                                //     fontWeight: FontWeight.w500),
-                                                                                              )),
-                                                                                            ),
-                                                                                          ]),
-                                                                                    ],
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                            })),
-                                                                  ),
-                                                                ],
-                                                              );
-                                                      },
-                                                    ),
-                                                    Container(
-                                                      width: size.width,
-                                                      height: 20,
-                                                      color: Color.fromARGB(
-                                                          255, 228, 227, 228),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Text(
-                                                            'Total PaidAmount :',
-                                                            style: TextStyle(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                          ),
-                                                          kWidth,
-                                                          kWidth,
-                                                          Consumer<
-                                                              FeeDetailsProvider>(
-                                                            builder: (context,
-                                                                    value,
-                                                                    child) =>
-                                                                Text(
-                                                              value.allPaidAmount ==
-                                                                      null
-                                                                  ? '--'
-                                                                  : value
-                                                                      .allPaidAmount
-                                                                      .toString(),
+                                                                    /////////////////////////////////////////////
+                                                                    // Table(
+                                                                    //   columnWidths: {
+                                                                    //     0: FlexColumnWidth(
+                                                                    //         3),
+                                                                    //     1: FlexColumnWidth(
+                                                                    //         4),
+                                                                    //     2: FlexColumnWidth(
+                                                                    //         4),
+                                                                    //   },
+                                                                    //   children: const [
+                                                                    //     TableRow(
+                                                                    //         decoration:
+                                                                    //             BoxDecoration(
+                                                                    //           //  border: Border.all(),
+                                                                    //           color: Color.fromARGB(255, 228, 224, 224),
+                                                                    //         ),
+                                                                    //         children: [
+                                                                    //           SizedBox(
+                                                                    //             height: 30,
+                                                                    //             child: Center(
+                                                                    //                 child: Text(
+                                                                    //               'Installment',
+                                                                    //               style: TextStyle(fontWeight: FontWeight.w500),
+                                                                    //             )),
+                                                                    //           ),
+                                                                    //           SizedBox(
+                                                                    //             height: 30,
+                                                                    //             child: Center(
+                                                                    //                 child: Text(
+                                                                    //               'Due Amount',
+                                                                    //               style: TextStyle(fontWeight: FontWeight.w500),
+                                                                    //             )),
+                                                                    //           ),
+                                                                    //           SizedBox(
+                                                                    //             height: 30,
+                                                                    //             child: Center(
+                                                                    //                 child: Text(
+                                                                    //               'Paid Amount',
+                                                                    //               style: TextStyle(fontWeight: FontWeight.w500),
+                                                                    //             )),
+                                                                    //           ),
+                                                                    //         ]),
+                                                                    //   ],
+                                                                    // ),
+                                                                    /////////////////////////////////////////////////////
+                                                                    // Consumer<
+                                                                    //     FeeDetailsProvider>(
+                                                                    //   builder: (context, busPaid, child) => ListView.builder(
+                                                                    //       shrinkWrap: true,
+                                                                    //       itemCount: busPaid.busFeePaidList.isEmpty ? 0 : busPaid.busFeePaidList.length,
+                                                                    //       itemBuilder: ((context, indexx) {
+                                                                    //         String
+                                                                    //             date =
+                                                                    //             busPaid.busFeePaidList[indexx].billDate ?? '--';
+                                                                    //         var updatedDate =
+                                                                    //             DateFormat('yyyy-MM-dd').parse(date);
+                                                                    //         String
+                                                                    //             newDate =
+                                                                    //             updatedDate.toString();
+                                                                    //         String
+                                                                    //             finalDate =
+                                                                    //             newDate.replaceRange(10, 23, '');
+                                                                    //         print(updatedDate);
+                                                                    //         print(finalDate);
+                                                                    //         return ListView.builder(
+                                                                    //           shrinkWrap: true,
+                                                                    //           itemCount: busPaid.busFeePaidList[indexx].busFees!.isEmpty ? 0 : busPaid.busFeePaidList[indexx].busFees!.length,
+                                                                    //           itemBuilder: (context, index) {
+                                                                    //             return Table(
+                                                                    //               columnWidths: const {
+                                                                    //                 0: FlexColumnWidth(3),
+                                                                    //                 1: FlexColumnWidth(4),
+                                                                    //                 2: FlexColumnWidth(4),
+                                                                    //               },
+                                                                    //               children: [
+                                                                    //                 TableRow(
+                                                                    //                     decoration: BoxDecoration(
+                                                                    //                       //  border: Border.all(),
+                                                                    //                       color: Colors.white54,
+                                                                    //                     ),
+                                                                    //                     children: [
+                                                                    //                       SizedBox(
+                                                                    //                         height: 30,
+                                                                    //                         child: Center(
+                                                                    //                             child: Text(
+                                                                    //                           busPaid.busFeePaidList[indexx].busFees![index].installmentname ?? '--',
+                                                                    //                           style: TextStyle(fontWeight: FontWeight.w700),
+                                                                    //                         )),
+                                                                    //                       ),
+                                                                    //                       SizedBox(
+                                                                    //                         height: 30,
+                                                                    //                         child: Center(
+                                                                    //                             child: Text(
+                                                                    //                           busPaid.busFeePaidList[indexx].busFees![index].dueAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].dueAmount.toString(),
+                                                                    //                           style: TextStyle(fontWeight: FontWeight.w700),
+                                                                    //                         )),
+                                                                    //                       ),
+                                                                    //                       SizedBox(
+                                                                    //                         height: 30,
+                                                                    //                         child: Center(
+                                                                    //                             child: Text(
+                                                                    //                           busPaid.busFeePaidList[indexx].busFees![index].paidAmount == null ? '--' : busPaid.busFeePaidList[indexx].busFees![index].paidAmount.toString(),
+                                                                    //                           style: TextStyle(fontWeight: FontWeight.w700),
+                                                                    //                         )),
+                                                                    //                       ),
+                                                                    //                     ]),
+                                                                    //                 TableRow(
+                                                                    //                     decoration: BoxDecoration(
+                                                                    //                       //  border: Border.all(),
+                                                                    //                       color: Colors.white,
+                                                                    //                     ),
+                                                                    //                     children: [
+                                                                    //                       Padding(
+                                                                    //                         padding: const EdgeInsets.all(8.0),
+                                                                    //                         child: SizedBox(
+                                                                    //                           // height: 30,
+                                                                    //                           child: Center(
+                                                                    //                             child: Text(
+                                                                    //                               'Date: ${finalDate.isEmpty ? '--' : finalDate}',
+                                                                    //                               textAlign: TextAlign.center,
+                                                                    //                             ),
+                                                                    //                           ),
+                                                                    //                         ),
+                                                                    //                       ),
+                                                                    //                       Padding(
+                                                                    //                         padding: const EdgeInsets.all(8.0),
+                                                                    //                         child: SizedBox(
+                                                                    //                           //  height: 50,
+                                                                    //                           child: Center(
+                                                                    //                               child: Text(
+                                                                    //                             'Transaction ID: ${busPaid.busFeePaidList[indexx].billDate ?? '--'}',
+                                                                    //                             // style: TextStyle(
+                                                                    //                             //     fontWeight: FontWeight.w500),
+                                                                    //                           )),
+                                                                    //                         ),
+                                                                    //                       ),
+                                                                    //                       SizedBox(
+                                                                    //                         height: 30,
+                                                                    //                         child: Center(
+                                                                    //                             child: Text(
+                                                                    //                           '',
+                                                                    //                           // style: TextStyle(
+                                                                    //                           //     fontWeight: FontWeight.w500),
+                                                                    //                         )),
+                                                                    //                       ),
+                                                                    //                     ]),
+                                                                    //               ],
+                                                                    //             );
+                                                                    //           },
+                                                                    //         );
+                                                                    //       })),
+                                                                    // ),
+
+                                                                    ////////////////////////////////////////////////////////////////////
+                                                                  ],
+                                                                );
+                                                        },
+                                                      ),
+                                                      Container(
+                                                        width: size.width,
+                                                        height: 20,
+                                                        color: Color.fromARGB(
+                                                            255, 228, 227, 228),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Text(
+                                                              'Total PaidAmount :',
                                                               style: TextStyle(
                                                                   fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w900),
+                                                                          .w500),
                                                             ),
-                                                          ),
-                                                          kWidth,
-                                                          kWidth,
-                                                        ],
+                                                            kWidth,
+                                                            kWidth,
+                                                            Consumer<
+                                                                FeeDetailsProvider>(
+                                                              builder: (context,
+                                                                      value,
+                                                                      child) =>
+                                                                  Text(
+                                                                value.allPaidAmount ==
+                                                                        null
+                                                                    ? '--'
+                                                                    : value
+                                                                        .allPaidAmount
+                                                                        .toString(),
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w900),
+                                                              ),
+                                                            ),
+                                                            kWidth,
+                                                            kWidth,
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                },
-                              ),
-                              kheight20,
-                              kheight10
-                            ],
+                                              ],
+                                            ),
+                                          );
+                                  },
+                                ),
+                                kheight20,
+                                kheight10
+                              ],
+                            ),
                           );
                   },
                 );

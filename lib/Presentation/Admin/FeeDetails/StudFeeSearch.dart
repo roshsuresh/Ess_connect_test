@@ -9,16 +9,26 @@ import 'package:provider/provider.dart';
 import '../../../Constants.dart';
 import '../../../utils/constants.dart';
 
-class StudentFeeSearch extends StatelessWidget {
+class StudentFeeSearch extends StatefulWidget {
   StudentFeeSearch({Key? key}) : super(key: key);
 
+  @override
+  State<StudentFeeSearch> createState() => _StudentFeeSearchState();
+}
+
+class _StudentFeeSearchState extends State<StudentFeeSearch> {
   final textController = TextEditingController();
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<FeeDetailsProvider>(context, listen: false);
       p.clearStudentList();
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:Ess_test/Domain/Admin/schoolPhotoModel.dart';
 import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -14,13 +13,6 @@ class SchoolPhotoProviders with ChangeNotifier {
   bool get loading => _loading;
   setLoading(bool value) {
     _loading = value;
-    notifyListeners();
-  }
-
-  //len
-  int courseLen = 0;
-  len() {
-    courseLen = 0;
     notifyListeners();
   }
 
@@ -70,16 +62,10 @@ class SchoolPhotoProviders with ChangeNotifier {
       if (response.statusCode == 200) {
         print("corect");
         final data = json.decode(response.body);
-
-        //print(data);
         Map<String, dynamic> stl = data['studentReportInitialValues'];
-        // studReportinitvalues_stf = staffStudReportRespo!['sectionList'];
-        // print(studReportinitvalues_stf);
-        // print(staffStudReportRespo);
         List<StudReportSectionList> templist = List<StudReportSectionList>.from(
             stl["sectionList"].map((x) => StudReportSectionList.fromJson(x)));
         stdReportInitialValues.addAll(templist);
-
         dropDown = stdReportInitialValues.map((subjectdata) {
           return MultiSelectItem(subjectdata, subjectdata.text!);
         }).toList();
@@ -122,6 +108,42 @@ class SchoolPhotoProviders with ChangeNotifier {
   clearDivision() async {
     divisionDrop.clear();
     divisionlist.clear();
+    notifyListeners();
+  }
+
+  int sectionLen = 0;
+  sectionCounter(int len) async {
+    sectionLen = 0;
+    if (len == 0) {
+      sectionLen = 0;
+    } else {
+      sectionLen = len;
+    }
+
+    notifyListeners();
+  }
+
+  int courseLen = 0;
+  courseCounter(int len) async {
+    courseLen = 0;
+    if (len == 0) {
+      courseLen = 0;
+    } else {
+      courseLen = len;
+    }
+
+    notifyListeners();
+  }
+
+  int divisionLen = 0;
+  divisionCounter(int leng) async {
+    divisionLen = 0;
+    if (leng == 0) {
+      divisionLen = 0;
+    } else {
+      divisionLen = leng;
+    }
+
     notifyListeners();
   }
 
@@ -189,9 +211,6 @@ class SchoolPhotoProviders with ChangeNotifier {
     if (response.statusCode == 200) {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
-
-      //  log(data.toString());
-
       List<StudReportDivision> templist = List<StudReportDivision>.from(
           data["divisionbyCourse"].map((x) => StudReportDivision.fromJson(x)));
       divisionlist.addAll(templist);

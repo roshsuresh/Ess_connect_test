@@ -18,7 +18,7 @@ class Staff_Timetable extends StatelessWidget {
     var height = size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Table'),
+        title: Text('TimeTable'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -131,7 +131,7 @@ class PdfViewStaff extends StatelessWidget {
     return Consumer<StaffTimetableProvider>(
       builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: Text('Time Table'),
+            title: Text('TimeTable'),
             titleSpacing: 00.0,
             centerTitle: true,
             toolbarHeight: 50.2,

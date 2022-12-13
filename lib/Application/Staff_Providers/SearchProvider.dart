@@ -8,11 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Screen_Search_Providers with ChangeNotifier {
-  bool isLoading = false;
+  bool _loading = false;
+  bool get loading => _loading;
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   List<SearchStudReport> searchStudent = [];
   Future<bool> getSearch_View(String word) async {
-    isLoading = true;
     SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
 
     var headers = {
       'Content-Type': 'application/json',
@@ -36,9 +42,10 @@ class Screen_Search_Providers with ChangeNotifier {
       List<SearchStudReport> templist = List<SearchStudReport>.from(
           data["viewStudentReport"].map((x) => SearchStudReport.fromJson(x)));
       searchStudent.addAll(templist);
-      isLoading = false;
+      setLoading(false);
       notifyListeners();
     } else {
+      setLoading(false);
       print('Error in Search stf');
     }
     return true;

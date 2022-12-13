@@ -1,17 +1,12 @@
 import 'dart:convert';
-
-import 'package:Ess_test/Domain/Admin/DashboardModel.dart';
 import 'package:Ess_test/Domain/Admin/FlashNewsList.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class FlashNewsProviderAdmin with ChangeNotifier {
-  //upload Gallery
-
   Future flashNewsUpload(
     context,
     String entryDate,

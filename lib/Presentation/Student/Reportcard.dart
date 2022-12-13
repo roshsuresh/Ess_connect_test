@@ -39,6 +39,8 @@ class ReportCard extends StatelessWidget {
                   children: [
                     kheight20,
                     Table(
+                      border: TableBorder.all(
+                          color: Color.fromARGB(255, 245, 243, 243)),
                       columnWidths: const {
                         0: FlexColumnWidth(3),
                         1: FlexColumnWidth(5),
@@ -47,7 +49,6 @@ class ReportCard extends StatelessWidget {
                       children: const [
                         TableRow(
                             decoration: BoxDecoration(
-                              //  border: Border.all(),
                               color: UIGuide.light_black,
                             ),
                             children: [
@@ -99,6 +100,9 @@ class ReportCard extends StatelessWidget {
                                     reportResponse[index]['fileId'];
                                 print(reAttach);
                                 return Table(
+                                  border: TableBorder.all(
+                                      color:
+                                          Color.fromARGB(255, 245, 243, 243)),
                                   columnWidths: const {
                                     0: FlexColumnWidth(3),
                                     1: FlexColumnWidth(5),
@@ -114,7 +118,7 @@ class ReportCard extends StatelessWidget {
                                               Corect_tym == null
                                                   ? '---'
                                                   : Corect_tym,
-                                              style: TextStyle(fontSize: 12),
+                                              //   style: TextStyle(fontSize: 12),
                                             ),
                                           ),
                                           Text(
@@ -127,40 +131,65 @@ class ReportCard extends StatelessWidget {
                                                     .toString(),
                                             style: TextStyle(fontSize: 14),
                                           ),
-                                          Center(
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    final attch = await Provider
-                                                            .of<ReportCardProvider>(
-                                                                context,
-                                                                listen: false)
-                                                        .reportCardAttachment(
-                                                            reAttach);
-                                                    if (provider.extension
-                                                            .toString() ==
-                                                        '.pdf') {
-                                                      // final result =
-                                                      //     provider.url.toString();
-                                                      // final name =
-                                                      //     provider.name.toString();
-
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                PdfDownload()),
-                                                      );
-                                                    } else {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                const NoAttachmentScreen()),
-                                                      );
-                                                    }
-                                                  },
-                                                  icon: const Icon(Icons
-                                                      .remove_red_eye_outlined))),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              final attch = await Provider.of<
+                                                          ReportCardProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .reportCardAttachment(
+                                                      reAttach);
+                                              if (provider.extension
+                                                      .toString() ==
+                                                  '.pdf') {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PdfDownload()),
+                                                );
+                                              } else {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const NoAttachmentScreen()),
+                                                );
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.remove_red_eye_outlined,
+                                              size: 20,
+                                            ),
+                                          )
+                                          // IconButton(
+                                          //     onPressed: () async {
+                                          //       final attch = await Provider
+                                          //               .of<ReportCardProvider>(
+                                          //                   context,
+                                          //                   listen: false)
+                                          //           .reportCardAttachment(
+                                          //               reAttach);
+                                          //       if (provider.extension
+                                          //               .toString() ==
+                                          //           '.pdf') {
+                                          //         Navigator.push(
+                                          //           context,
+                                          //           MaterialPageRoute(
+                                          //               builder: (context) =>
+                                          //                   PdfDownload()),
+                                          //         );
+                                          //       } else {
+                                          //         Navigator.push(
+                                          //           context,
+                                          //           MaterialPageRoute(
+                                          //               builder: (context) =>
+                                          //                   const NoAttachmentScreen()),
+                                          //         );
+                                          //       }
+                                          //     },
+                                          //     icon: const Icon(Icons
+                                          //         .remove_red_eye_outlined)),
                                         ]),
                                   ],
                                 );
@@ -183,7 +212,6 @@ class PdfDownload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Provider.of<NoticeProvider>(context, listen: false).noticeAttachement('');
     return Consumer<ReportCardProvider>(
       builder: (context, value, child) => Scaffold(
           appBar: AppBar(

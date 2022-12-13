@@ -15,9 +15,9 @@ class PasswordChange extends StatefulWidget {
 }
 
 class _PasswordChangeState extends State<PasswordChange> {
-  bool _isObscure = false;
+  final bool _isObscure = false;
 
-  final _confirmpassword = TextEditingController();
+  // final _confirmpassword = TextEditingController();
 
   final _passwordNew = TextEditingController();
 
@@ -26,9 +26,9 @@ class _PasswordChangeState extends State<PasswordChange> {
   // String? oldPass;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  RegExp pass_valid = RegExp(r"(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W)");
+  //RegExp pass_valid = RegExp(r"(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W)");
 
-  bool _isVisible = false;
+  // bool _isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +178,15 @@ class _PasswordChangeState extends State<PasswordChange> {
                           print("MATCHED");
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  duration: Duration(seconds: 1),
+                                  margin: EdgeInsets.only(
+                                      bottom: 80, left: 30, right: 30),
+                                  behavior: SnackBarBehavior.floating,
                                   content: Text("Password is matched")));
                           value.visiblee();
                         },
@@ -222,6 +231,15 @@ class _PasswordChangeState extends State<PasswordChange> {
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                        ),
+                                        duration: Duration(seconds: 1),
+                                        margin: EdgeInsets.only(
+                                            bottom: 80, left: 30, right: 30),
+                                        behavior: SnackBarBehavior.floating,
                                         content:
                                             Text("Incorrect Old Password")));
                               }

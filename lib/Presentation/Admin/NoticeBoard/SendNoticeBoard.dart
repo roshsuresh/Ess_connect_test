@@ -3,16 +3,10 @@ import 'package:Ess_test/Constants.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
-import '../../../Application/Staff_Providers/NoticeboardSend.dart';
 import '../../../Domain/Admin/Course&DivsionList.dart';
 import '../../../utils/constants.dart';
 
@@ -50,6 +44,8 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
       p.courseList.clear();
       p.divisionList.clear();
       p.divisionDropDown.clear();
+      p.courseCounter(0);
+      p.divisionCounter(0);
       titleController.clear();
       attachmentid.clear();
     });
@@ -68,109 +64,118 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MaterialButton(
-                minWidth: size.width - 250,
-                color: Colors.white70,
-                child: Text('Date: ${datee.toString()}'),
-                onPressed: () async {
-                  return;
-                }),
             Spacer(),
-            SizedBox(
-              height: 50,
-              width: MediaQuery.of(context).size.width * 0.49,
-              child: Consumer<NoticeBoardAdminProvider>(
-                  builder: (context, snapshot, child) {
-                return InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                              child: Container(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: noticeCategoryAdmin!.length,
-                                    itemBuilder: (context, index) {
-                                      // print(snapshot
+            Container(
+              height: 41,
+              width: size.width * 0.44,
+              child: MaterialButton(
+                  //  minWidth: size.width - 250,
+                  color: Colors.white70,
+                  child: Text('Date: ${datee.toString()}'),
+                  onPressed: () async {
+                    return;
+                  }),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Container(
+                // decoration: BoxDecoration(
+                //     border: Border.all(color: UIGuide.light_Purple)),
+                height: 55,
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Consumer<NoticeBoardAdminProvider>(
+                    builder: (context, snapshot, child) {
+                  return InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                child: Container(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: noticeCategoryAdmin!.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          onTap: () async {
+                                            print(
+                                                {noticeCategoryAdmin![index]});
+                                            categoryvalueController.text =
+                                                await noticeCategoryAdmin![
+                                                        index]['value'] ??
+                                                    '--';
+                                            categoryvalueController1.text =
+                                                await noticeCategoryAdmin![
+                                                        index]['text'] ??
+                                                    '--';
 
-                                      //     .attendenceInitialValues.length);
-
-                                      // value.removeCourseAll();
-                                      return ListTile(
-                                        selectedTileColor: Colors.blue.shade100,
-                                        selectedColor: UIGuide.PRIMARY2,
-
-                                        // selected: snapshot.isCourseSelected(
-                                        //     attendecourse![index]),
-
-                                        onTap: () async {
-                                          print({noticeCategoryAdmin![index]});
-                                          categoryvalueController.text =
-                                              await noticeCategoryAdmin![index]
-                                                      ['value'] ??
-                                                  '--';
-                                          categoryvalueController1.text =
-                                              await noticeCategoryAdmin![index]
-                                                      ['text'] ??
-                                                  '--';
-
-                                          Navigator.of(context).pop();
-                                        },
-                                        title: Text(
-                                          noticeCategoryAdmin![index]['text'] ??
-                                              '--',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      );
-                                    }),
-                              ],
+                                            Navigator.of(context).pop();
+                                          },
+                                          title: Text(
+                                            noticeCategoryAdmin![index]
+                                                    ['text'] ??
+                                                '--',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        );
+                                      }),
+                                ],
+                              ),
+                            ));
+                          });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 2),
                             ),
-                          ));
-                        });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 40,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            controller: categoryvalueController1,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Color.fromARGB(255, 238, 237, 237),
-                              border: OutlineInputBorder(),
-                              labelText: "Select Category",
-                              hintText: "Category",
+                            height: 40,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: categoryvalueController1,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(left: 10, top: 15),
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                labelText: "  Select Category",
+                                labelStyle: TextStyle(color: UIGuide.BLACK),
+                              ),
+                              enabled: false,
                             ),
-                            enabled: false,
                           ),
-                        ),
-                        SizedBox(
-                          height: 0,
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            controller: categoryvalueController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Color.fromARGB(255, 238, 237, 237),
-                              border: OutlineInputBorder(),
-                              labelText: "",
-                              hintText: "",
+                          SizedBox(
+                            height: 0,
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller: categoryvalueController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color.fromARGB(255, 238, 237, 237),
+                                border: OutlineInputBorder(),
+                                labelText: "",
+                                hintText: "",
+                              ),
+                              enabled: false,
                             ),
-                            enabled: false,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           ],
         ),
@@ -182,13 +187,18 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             maxLines: 1,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
-              labelText: 'Title*',
-              hintText: 'Enter Title',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
-            ),
+                labelText: 'Title*',
+                labelStyle: TextStyle(color: UIGuide.light_Purple),
+                hintText: 'Enter Title',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: UIGuide.light_Purple, width: 2.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                )),
           ),
         ),
         Padding(
@@ -199,63 +209,74 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             maxLines: 5,
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
-              labelText: 'Matter*',
-              hintText: 'Enter Matter',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                labelText: 'Matter*',
+                labelStyle: TextStyle(color: UIGuide.light_Purple),
+                hintText: 'Enter Matter',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: UIGuide.light_Purple, width: 2.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                )),
+          ),
+        ),
+        Row(
+          children: [
+            Spacer(),
+            Center(
+              child: SizedBox(
+                width: 120,
+                child: MaterialButton(
+                  // minWidth: size.width - 200,
+                  child: Text(checkname.isEmpty ? 'Choose File' : checkname),
+
+                  color: Colors.white70,
+                  onPressed: (() async {
+                    final result = await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions: ['pdf', 'png', 'jpeg', 'jpg']);
+                    if (result == null) {
+                      return;
+                    }
+                    final file = result.files.first;
+                    print('Name: ${file.name}');
+                    print('Path: ${file.path}');
+                    print('Extension: ${file.extension}');
+
+                    int sizee = file.size;
+
+                    if (sizee <= 200000) {
+                      await Provider.of<NoticeBoardAdminProvider>(context,
+                              listen: false)
+                          .noticeImageSave(context, file.path.toString());
+                      //openFile(file);
+                      if (file.name.length >= 6) {
+                        setState(() {
+                          checkname =
+                              file.name.replaceRange(6, file.name.length, '');
+                        });
+
+                        print(checkname);
+                      }
+                    } else {
+                      print('Size Exceed');
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        "Size Exceed(Less than 200KB allowed)",
+                        textAlign: TextAlign.center,
+                      )));
+                    }
+                  }),
+                ),
               ),
             ),
-          ),
+            Spacer()
+          ],
         ),
-        Center(
-          child: SizedBox(
-            width: 120,
-            child: MaterialButton(
-              // minWidth: size.width - 200,
-              child: Text(checkname.isEmpty ? 'Choose File' : checkname),
-
-              color: Colors.white70,
-              onPressed: (() async {
-                final result = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['pdf', 'png', 'jpeg', 'jpg']);
-                if (result == null) {
-                  return;
-                }
-                final file = result.files.first;
-                print('Name: ${file.name}');
-                print('Path: ${file.path}');
-                print('Extension: ${file.extension}');
-
-                int sizee = file.size;
-
-                if (sizee <= 200000) {
-                  await Provider.of<NoticeBoardAdminProvider>(context,
-                          listen: false)
-                      .noticeImageSave(context, file.path.toString());
-                  //openFile(file);
-                  if (file.name.length >= 6) {
-                    setState(() {
-                      checkname =
-                          file.name.replaceRange(6, file.name.length, '');
-                    });
-
-                    print(checkname);
-                  }
-                } else {
-                  print('Size Exceed');
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                    "Size Exceed(Less than 200KB allowed)",
-                    textAlign: TextAlign.center,
-                  )));
-                }
-              }),
-            ),
-          ),
-        ),
-        Center(
+        const Center(
             child: Text(
           'Maximum allowed file size is 200 KB',
           style:
@@ -264,11 +285,12 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(),
             SizedBox(
               // height: 30,
-              // width: MediaQuery.of(context).size.width * 0.47,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: MaterialButton(
-                minWidth: size.width - 216,
+                // minWidth: size.width - 250,
                 child: Center(child: Text('From  $time')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -289,9 +311,9 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             //  kWidth, kWidth,
             SizedBox(
               // height: 30,
-              // width: MediaQuery.of(context).size.width * 0.47,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: MaterialButton(
-                minWidth: size.width - 216,
+                //   minWidth: size.width - 250,
                 child: Center(child: Text('To  ${timeNow}')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -309,10 +331,12 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 }),
               ),
             ),
+            Spacer()
           ],
         ),
         Row(
           children: [
+            Spacer(),
             Consumer<NoticeBoardAdminProvider>(
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -328,14 +352,14 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       style: TextStyle(color: Colors.black),
                     ),
                     // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -352,13 +376,21 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
-                      "Select Course",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
+                    buttonText: value.courseLen == 0
+                        ? const Text(
+                            "Select Course",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          )
+                        : Text(
+                            "   ${value.courseLen.toString()} Selected",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
                     chipDisplay: MultiSelectChipDisplay.none(),
                     onConfirm: (result) async {
                       courseData = [];
@@ -371,11 +403,17 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                         courseData.map((e) => data.courseId);
                         print("${courseData.map((e) => data.courseId)}");
                       }
+
                       print("courseData${courseData}");
                       course = courseData.join(',');
+
                       await Provider.of<NoticeBoardAdminProvider>(context,
                               listen: false)
-                          .divisionClear();
+                          .courseCounter(result.length);
+
+                      // await Provider.of<NoticeBoardAdminProvider>(context,
+                      //         listen: false)
+                      //     .divisionClear();
                       await Provider.of<NoticeBoardAdminProvider>(context,
                               listen: false)
                           .getDivisionList(course);
@@ -393,14 +431,12 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
-                    // height: 200,
                     items: value.divisionDropDown,
                     listType: MultiSelectListType.CHIP,
                     title: const Text(
                       "Select Division",
                       style: TextStyle(color: Colors.black),
                     ),
-                    // selectedColor: Color.fromARGB(255, 157, 232, 241),
                     selectedItemsTextStyle: TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
@@ -425,25 +461,27 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
-                      "Select Division",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
+                    buttonText: value.divisionLen == 0
+                        ? const Text(
+                            "Select Division",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          )
+                        : Text(
+                            "   ${value.divisionLen.toString()} Selected",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
                     chipDisplay: MultiSelectChipDisplay.none(),
-
                     onConfirm: (result) async {
                       //  result.clear();
                       int length = result.length;
-                      // result.removeRange(0, length);
+
                       print(result.length);
-                      // await result.remove(result.length);
-                      // result.remove(result);
-                      // // result.length = 0;
-                      // print(result.length);
-                      // divisionData.clear();
 
                       for (var a = 0; a < result.length; a++) {
                         DivisionListModel data = result[a] as DivisionListModel;
@@ -454,6 +492,9 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                         print("${divisionData.map((e) => data.value)}");
                       }
                       division = divisionData.join(',');
+                      await Provider.of<NoticeBoardAdminProvider>(context,
+                              listen: false)
+                          .divisionCounter(result.length);
 
                       print(divisionData.join(','));
 
@@ -462,7 +503,8 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   ),
                 ),
               ),
-            )
+            ),
+            Spacer()
           ],
         ),
         kheight10,
@@ -553,11 +595,11 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   print(mattercontroller);
                   print(categoryvalueController);
                   print(attachmentid);
-                  titleController.clear();
-                  mattercontroller.clear();
-                  categoryvalueController.clear();
-                  categoryvalueController1.clear();
-                  attachmentid.clear();
+                  // titleController.clear();
+                  // mattercontroller.clear();
+                  // categoryvalueController.clear();
+                  // categoryvalueController1.clear();
+                  // attachmentid.clear();
                 }
               }),
             ),

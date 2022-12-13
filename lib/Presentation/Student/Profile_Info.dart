@@ -86,6 +86,23 @@ class Profile_Info extends StatelessWidget {
                                         fontSize: 14),
                                   ),
                                   kheight10,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      // const Text('Class: ',
+                                      //     style: TextStyle(
+                                      //         fontSize: 14.0,
+                                      //         color: Colors.grey)),
+                                      Text(
+                                          provider.division == null
+                                              ? '--'
+                                              : provider.division.toString(),
+                                          style:
+                                              const TextStyle(fontSize: 16.0)),
+                                    ],
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Table(
@@ -95,21 +112,21 @@ class Profile_Info extends StatelessWidget {
                                           width: .5),
                                       children: [
                                         TableRow(children: [
-                                          Column(
-                                            children: [
-                                              const Text('Class',
-                                                  style: TextStyle(
-                                                      fontSize: 14.0,
-                                                      color: Colors.grey)),
-                                              Text(
-                                                  provider.division == null
-                                                      ? '--'
-                                                      : provider.division
-                                                          .toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 16.0)),
-                                            ],
-                                          ),
+                                          // Column(
+                                          //   children: [
+                                          //     const Text('Class',
+                                          //         style: TextStyle(
+                                          //             fontSize: 14.0,
+                                          //             color: Colors.grey)),
+                                          //     Text(
+                                          //         provider.division == null
+                                          //             ? '--'
+                                          //             : provider.division
+                                          //                 .toString(),
+                                          //         style: const TextStyle(
+                                          //             fontSize: 16.0)),
+                                          //   ],
+                                          // ),
                                           Column(
                                             children: [
                                               const Text('Roll No',
@@ -476,9 +493,13 @@ class Profile_Info extends StatelessWidget {
                                                 Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
-                                                  children: const [
+                                                  children: [
                                                     Text(
+                                                      // provider.classTeacher == null
+                                                      // ?
                                                       '--',
+                                                      // : provider.
+                                                      //     .toString(),
                                                       style: TextStyle(
                                                         color: UIGuide
                                                             .light_Purple,
@@ -509,7 +530,8 @@ class Profile_Info extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Color.fromARGB(255, 230, 237, 245),
+                                      color: const Color.fromARGB(
+                                          255, 230, 237, 245),
                                     ),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5))),
@@ -522,7 +544,7 @@ class Profile_Info extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        ' Permenent Address',
+                                        'Permanent Address',
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700),
@@ -568,14 +590,12 @@ class Profile_Info extends StatelessWidget {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(5))),
                           child: Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
                                 'Father (Guardian)',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(color: Colors.black),
                               ),
-                              //kheight10,
                               Center(
                                   child: Text(
                                 provider.fatherName == null
@@ -595,7 +615,6 @@ class Profile_Info extends StatelessWidget {
                                     size: 14,
                                   ),
                                   Flexible(
-                                    //overflow
                                     child: RichText(
                                       overflow: TextOverflow.ellipsis,
                                       strutStyle:
@@ -622,21 +641,19 @@ class Profile_Info extends StatelessWidget {
                                       height: 80,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          border: Border.all(
-                                              color: UIGuide.light_Purple,
-                                              width: .2),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(5))),
-                                      child: Image.network(
-                                        provider.fatherPhoto == null
-                                            ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
-                                            : provider.fatherPhoto.toString(),
-                                        // color: Color.fromARGB(255, 151, 148, 148)
-                                        //     .withOpacity(0.8),
-                                        // fit: BoxFit.fill,
-                                      ),
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                provider.fatherPhoto == null
+                                                    ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLGZsYc8h4Zds-CgwVk_T5ykObxIbZKfvHtQ&usqp=CAU'
+                                                    : provider.fatherPhoto
+                                                        .toString(),
+                                              )),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
                                     ),
                                   ),
+                                  kWidth,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -645,19 +662,23 @@ class Profile_Info extends StatelessWidget {
                                       kheight10,
                                       Row(
                                         children: [
-                                          Icon(Icons.phone_android_outlined),
+                                          const Icon(
+                                            Icons.phone_android_outlined,
+                                            size: 12,
+                                          ),
                                           Text(provider.fatherMobileno == null
-                                              ? '----'
-                                              : '+91 ${provider.fatherMobileno.toString()}')
+                                              ? '  +91----'
+                                              : '  +91 ${provider.fatherMobileno.toString()}')
                                         ],
                                       ),
                                       kheight10,
                                       Row(
-                                        // crossAxisAlignment: CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.start,
                                         children: const [
-                                          Icon(Icons.phone_android_outlined),
-                                          Text('+91 ----')
+                                          Icon(
+                                            Icons.phone_android_outlined,
+                                            size: 12,
+                                          ),
+                                          Text('  +91 ----')
                                         ],
                                       ),
                                     ],
@@ -679,7 +700,6 @@ class Profile_Info extends StatelessWidget {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(5))),
                           child: Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
                                 'Mother',
@@ -705,19 +725,13 @@ class Profile_Info extends StatelessWidget {
                                     Icons.email_outlined,
                                     size: 14,
                                   ),
-                                  // Text(
-                                  //   'Ravidranath@gmail.com',
-                                  //   textAlign: TextAlign.center,
-                                  //   style: TextStyle(fontSize: 12),
-                                  // )
-
                                   Flexible(
                                     child: RichText(
                                       overflow: TextOverflow.ellipsis,
                                       strutStyle:
                                           const StrutStyle(fontSize: 12.0),
                                       text: TextSpan(
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: UIGuide.light_Purple,
                                           ),
                                           text: provider.motherMailId == null
@@ -739,22 +753,19 @@ class Profile_Info extends StatelessWidget {
                                       height: 80,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          border: Border.all(
-                                              color: UIGuide.light_Purple,
-                                              width: .2),
+                                          image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                provider.motherPhoto == null
+                                                    ? 'https://www.techniquehow.com/wp-content/uploads/2021/09/random-DP-image.png'
+                                                    : provider.motherPhoto
+                                                        .toString(),
+                                              )),
                                           borderRadius: const BorderRadius.all(
-                                              Radius.circular(5))),
-                                      child: Image.network(
-                                        provider.motherPhoto == null
-                                            ? 'https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-09-512.png'
-                                            : provider.motherPhoto.toString(),
-                                        // color:
-                                        //     const Color.fromARGB(255, 151, 148, 148)
-                                        //         .withOpacity(0.8),
-                                        fit: BoxFit.fill,
-                                      ),
+                                              Radius.circular(10))),
                                     ),
                                   ),
+                                  kWidth,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -764,17 +775,22 @@ class Profile_Info extends StatelessWidget {
                                       Row(
                                         children: [
                                           const Icon(
-                                              Icons.phone_android_outlined),
+                                            Icons.phone_android_outlined,
+                                            size: 12,
+                                          ),
                                           Text(provider.motherMobileno == null
-                                              ? '+91 ----'
-                                              : '+91 ${provider.motherMobileno.toString()}')
+                                              ? '  +91 ----'
+                                              : '  +91 ${provider.motherMobileno.toString()}')
                                         ],
                                       ),
                                       kheight10,
                                       Row(
                                         children: const [
-                                          Icon(Icons.phone_android_outlined),
-                                          Text('+91 ----')
+                                          Icon(
+                                            Icons.phone_android_outlined,
+                                            size: 12,
+                                          ),
+                                          Text('  +91 ----')
                                         ],
                                       ),
                                     ],
@@ -789,9 +805,9 @@ class Profile_Info extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
                             image: const DecorationImage(
+                              //fit: BoxFit.fitHeight,
                               image: NetworkImage(
                                   "https://cdn.vectorstock.com/i/1000x1000/50/63/people-human-together-family-logo-icon-vector-32705063.webp"),
-                              //   fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
@@ -801,7 +817,6 @@ class Profile_Info extends StatelessWidget {
                         enlargeCenterPage: false,
                         autoPlay: true,
                         aspectRatio: 16 / 9,
-                        //  autoPlayCurve: Curves.fastOutSlowIn,
                         enableInfiniteScroll: true,
                         autoPlayAnimationDuration: Duration(milliseconds: 800),
                         viewportFraction: 0.8,

@@ -281,7 +281,6 @@ class NotificationToGuardian_Providers with ChangeNotifier {
         Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusernotification'));
     print(Uri.parse('${UIGuide.baseURL}/mobileapp/token/saveusernotification'));
     request.body = json.encode({
-      // "SchoolId": data["SchoolId"],
       "Title": body,
       "Body": content,
       "FromStaffId":
@@ -291,7 +290,6 @@ class NotificationToGuardian_Providers with ChangeNotifier {
       "IsSeen": false
     });
     print({
-      //"SchoolId": data["SchoolId"],
       "Title": body,
       "Body": content,
       "FromStaffId":

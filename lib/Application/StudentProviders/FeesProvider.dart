@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:Ess_test/Domain/Student/RazorPayModel.dart';
 import 'package:Ess_test/Domain/Student/TransactionModel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -249,9 +250,9 @@ class FeesProvider with ChangeNotifier {
     }
   }
 
-/////////////////////////////////////////////////////////////////////////////////
-//////////////////////////    get data  1 index   //////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////    get data  1 index  PAYTM    ///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
   String? mid1;
   String? txnorderId1;
@@ -329,9 +330,9 @@ class FeesProvider with ChangeNotifier {
     }
   }
 
-/////////////////////////////////////////////////////////////////////////////////
-//////////////////////////    get data  2 index   //////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////    get data  2 index PAYTM   //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 
   String? mid2;
   String? txnorderId2;
@@ -347,10 +348,6 @@ class FeesProvider with ChangeNotifier {
       String idBus, String busAmount, String amount, String gateName) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     setLoading(true);
-    // var headers = {
-    //   'Content-Type': 'application/json',
-    //   'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-    // };
 
     final http.Response response = await http.post(
       Uri.parse(
@@ -384,9 +381,7 @@ class FeesProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = await json.decode(response.body);
-      //  jsonDecode(await response.stream.bytesToString());
-      // print(jsonDecode(await response.stream.bytesToString()));
-      // print(await response.stream.bytesToString());
+
       print(data);
       TransactionModel txn = TransactionModel.fromJson(data);
       mid2 = txn.mid;
@@ -413,8 +408,179 @@ class FeesProvider with ChangeNotifier {
     }
   }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////               RAZORPAY         ///////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////    get data  1 index  RAZORPAY    ////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+  String? key1Razo;
+  String? amount1Razo;
+  String? name1Razo;
+  String? description1Razo;
+  String? customer1Razo;
+  String? email1Razo;
+  String? contact1Razo;
+  String? order1;
+  String? readableOrderid1;
+
+  Future getDataOneRAZORPAY(String fees, String idFee, String feeAmount,
+      String amount, String gateName) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+
+    final http.Response response = await http.post(
+      Uri.parse('${UIGuide.baseURL}/online-payment/razor-pay/get-data'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+      },
+      body: jsonEncode({
+        "Description": "Online Fees Payment",
+        "TransactionType": [
+          {"name": fees, "id": idFee, "amount": feeAmount}
+        ],
+        "ReturnUrl": "",
+        "Amount": amount,
+        "PaymentGateWay": gateName
+      }),
+    );
+
+    print(json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    }));
+
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = await json.decode(response.body);
+
+        print(data);
+        RazorPayModel raz = RazorPayModel.fromJson(data);
+        key1Razo = raz.key;
+        amount1Razo = raz.amount;
+        name1Razo = raz.name;
+        description1Razo = raz.description;
+        order1 = raz.orderId;
+
+        Map<String, dynamic> pre = data['prefill'];
+        Prefill info = Prefill.fromJson(pre);
+        customer1Razo = info.name;
+        email1Razo = info.email;
+        contact1Razo = info.contact;
+
+        Map<String, dynamic> note = data['notes'];
+        Notes inf = Notes.fromJson(note);
+        readableOrderid1 = inf.readableOrderid;
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  transaction index one RAZORPAY response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////    get data  2 index RAZORPAY   ///////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+  String? key2Razo;
+  String? amount2Razo;
+  String? name2Razo;
+  String? description2Razo;
+  String? order2;
+  String? customer2Razo;
+  String? email2Razo;
+  String? contact2Razo;
+  String? readableOrderid2;
+
+  Future getDataTwoRAZORPAY(
+      String fees,
+      String idFee,
+      String feeAmount,
+      String buss,
+      String idBus,
+      String busAmount,
+      String amount,
+      String gateName) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+
+    final http.Response response = await http.post(
+      Uri.parse('${UIGuide.baseURL}/online-payment/razor-pay/get-data'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+      },
+      body: jsonEncode({
+        "Description": "Online Fees Payment",
+        "TransactionType": [
+          {"name": fees, "id": idFee, "amount": feeAmount},
+          {"name": buss, "id": idBus, "amount": busAmount}
+        ],
+        "ReturnUrl": "",
+        "Amount": amount,
+        "PaymentGateWay": gateName
+      }),
+    );
+
+    print(json.encode({
+      "Description": "Online Fees Payment",
+      "TransactionType": [
+        {"name": fees, "id": idFee, "amount": feeAmount},
+        {"name": buss, "id": idBus, "amount": busAmount}
+      ],
+      "ReturnUrl": "",
+      "Amount": amount,
+      "PaymentGateWay": gateName
+    }));
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = await json.decode(response.body);
+
+      print(data);
+      RazorPayModel raz = RazorPayModel.fromJson(data);
+      key2Razo = raz.key;
+      amount2Razo = raz.amount;
+      name2Razo = raz.name;
+      description2Razo = raz.description;
+      order2 = raz.orderId;
+
+      Map<String, dynamic> pre = data['prefill'];
+      Prefill info = Prefill.fromJson(pre);
+      customer2Razo = info.name;
+      email2Razo = info.email;
+      contact2Razo = info.contact;
+
+      Map<String, dynamic> note = data['notes'];
+      Notes inf = Notes.fromJson(note);
+      readableOrderid2 = inf.readableOrderid;
+
+      notifyListeners();
+    } else {
+      setLoading(false);
+      print("Error in  transaction index TWO  response");
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////
+
   //////////////////////        gateway NAME          /////////////////////////
+
   ////////////////////////////////////////////////////////////////////////////
   String? gateway;
   Future gatewayName() async {
@@ -442,6 +608,42 @@ class FeesProvider with ChangeNotifier {
       } else {
         setLoading(false);
         print("Error in  status  response");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////       vendor Mapping          ////////////////////////
+
+  ////////////////////////////////////////////////////////////////////////////
+  bool? existMap;
+  Future vendorMapping() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setLoading(true);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
+    };
+    var response = await http.get(
+        Uri.parse("${UIGuide.baseURL}/vendor-mapping/exist-vendor-map"),
+        headers: headers);
+
+    try {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+
+        VendorMapModel ven = VendorMapModel.fromJson(data);
+
+        existMap = ven.existMap;
+        print('existMap  $existMap');
+
+        notifyListeners();
+      } else {
+        setLoading(false);
+        print("Error in  vendor Mapping   response");
       }
     } catch (e) {
       print(e);

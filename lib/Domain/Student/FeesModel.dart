@@ -375,3 +375,23 @@ class GateWayName {
     return data;
   }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////                     vendor mapping                              ///////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class VendorMapModel {
+  bool? existMap;
+
+  VendorMapModel({this.existMap});
+
+  VendorMapModel.fromJson(Map<String, dynamic> json) {
+    existMap = json['existMap'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['existMap'] = this.existMap;
+    return data;
+  }
+}

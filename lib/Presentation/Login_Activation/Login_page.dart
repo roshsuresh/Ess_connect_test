@@ -12,7 +12,7 @@ import 'package:Ess_test/Presentation/Student/Student_home.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:getwidget/getwidget.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Application/AdminProviders/NoticeBoardadmin.dart';
@@ -134,12 +134,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                   child: AnimateGradient(
                     primaryColors: const [
                       Color.fromARGB(255, 109, 173, 233),
-                      Color.fromARGB(255, 240, 241, 250),
-                      Color.fromARGB(255, 220, 220, 245),
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color.fromARGB(255, 255, 255, 255),
                     ],
                     secondaryColors: const [
-                      Color.fromARGB(255, 217, 217, 240),
-                      Color.fromARGB(255, 201, 205, 243),
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color.fromARGB(255, 255, 255, 255),
                       Color.fromARGB(255, 109, 173, 233),
                     ],
                     child: Stack(
@@ -153,9 +153,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         ),
                         Positioned(
                           top: size.height * .98,
-                          left: size.width * .06,
+                          left: size.width * .1,
                           child: CustomPaint(
-                            painter: MyPainter(animation4.value - 25),
+                            painter: MyPainter(animation4.value - 55),
                           ),
                         ),
                         // Positioned(
@@ -189,29 +189,28 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     left: 30.0, right: 30),
                                 child: TextFormField(
                                   cursorColor: UIGuide.light_Purple,
-                                  //  keyboardType: TextInputType.emailAddress,
                                   controller: _username,
                                   decoration: InputDecoration(
-                                    focusColor:
-                                        Color.fromARGB(255, 23, 92, 196),
+                                    focusColor: UIGuide.light_Purple,
                                     prefixIcon: const Icon(
                                       Icons.person_outline_outlined,
                                       color: UIGuide.light_Purple,
                                     ),
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
+                                          style: BorderStyle.solid,
                                           color: UIGuide.light_Purple,
-                                          width: 2.0),
+                                          width: 1.0),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: UIGuide.light_Purple,
-                                          width: 2.0),
+                                          width: 1),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     fillColor:
-                                        Color.fromARGB(255, 158, 158, 158),
+                                        Color.fromARGB(255, 255, 255, 255),
                                     hintText: "Enter Your Username",
                                     hintStyle: const TextStyle(
                                       color: Colors.grey,
@@ -226,7 +225,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20.0),
                                       borderSide: BorderSide(
                                         color: UIGuide.light_Purple,
-                                        width: 2.0,
+                                        width: 1,
                                       ),
                                     ),
                                   ),
@@ -247,8 +246,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                   obscureText: !_isObscure,
                                   controller: _password,
                                   decoration: InputDecoration(
-                                    focusColor: const Color.fromARGB(
-                                        255, 213, 215, 218),
+                                    focusColor:
+                                        Color.fromARGB(255, 255, 255, 255),
                                     prefixIcon: const Icon(
                                       Icons.password_sharp,
                                       color: UIGuide.light_Purple,
@@ -260,7 +259,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: UIGuide.light_Purple,
-                                          width: 2.0),
+                                          width: 1.0),
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     fillColor: Colors.grey,
@@ -291,7 +290,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                       borderRadius: BorderRadius.circular(20.0),
                                       borderSide: BorderSide(
                                         color: UIGuide.light_Purple,
-                                        width: 2.0,
+                                        width: 1.0,
                                       ),
                                     ),
                                   ),
@@ -319,8 +318,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                         onPressed: () async {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            checkLogin(
-                                                _username.text, _password.text);
+                                            checkLogin(_username.text.trim(),
+                                                _password.text.trim());
 
                                             print(_username);
                                             print(_password);
@@ -408,8 +407,18 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         //     context, MaterialPageRoute(builder: (context) => StudentHome()));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Invalid Username or Password")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          duration: Duration(seconds: 1),
+          margin: EdgeInsets.only(bottom: 45, left: 30, right: 30),
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            "Invalid Username or Password...!",
+            textAlign: TextAlign.center,
+          )));
     }
   }
 }
@@ -422,10 +431,11 @@ class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..shader = LinearGradient(
-              colors: [UIGuide.light_Purple, UIGuide.light_Purple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight)
+      ..shader = LinearGradient(colors: [
+        UIGuide.light_Purple, UIGuide.light_Purple,
+        Color.fromARGB(255, 173, 211, 245),
+        // UIGuide.light_Purple,
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight)
           .createShader(Rect.fromCircle(
         center: Offset(0, 0),
         radius: radius,

@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
-import 'package:Ess_test/Application/StudentProviders/PAYTM_provider.dart';
+import 'package:Ess_test/Application/StudentProviders/FinalStatusProvider.dart';
 import 'package:Ess_test/Presentation/Student/NoInternetScreen.dart';
 import 'package:Ess_test/Presentation/Student/PartialPay.dart';
 import 'package:Ess_test/Presentation/Student/Student_home.dart';
@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:pdfdownload/pdfdownload.dart';
 import 'package:provider/provider.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../Application/StudentProviders/FeesProvider.dart';
 import '../../Constants.dart';
@@ -35,7 +36,21 @@ class PayFee extends StatelessWidget {
               length: 2,
               child: Scaffold(
                   appBar: AppBar(
-                    title: Text('Payment'),
+                    title: Row(
+                      children: [
+                        Spacer(),
+                        Text('Payment'),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PayFee()));
+                            },
+                            icon: Icon(Icons.refresh_outlined))
+                      ],
+                    ),
                     titleSpacing: 00.0,
                     centerTitle: true,
                     toolbarHeight: 50.2,
@@ -67,7 +82,7 @@ class PayFee extends StatelessWidget {
                     ),
                   ),
                   body: TabBarView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       FeePayInstallment(),
                       Consumer<FeesProvider>(builder: ((context, snap, child) {
@@ -100,7 +115,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<FeesProvider>(context, listen: false);
-
+      p.vendorMapping();
       p.gatewayName();
       p.selecteCategorys.clear();
       p.selectedBusFee.clear();
@@ -114,88 +129,8 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   _controller2.dispose();
-  //   Provider.of<FeesProvider>(context, listen: false).dispose();
-  //   super.dispose();
-  // }
-
-  // void _selectAll(int index) {
-  //   _selecteCategorys.addAll(feeResponse![index]['installmentNetDue']);
-  // }
-
-  // void _onFeeSelected(bool selected, feeName, int index, feeNetDue) {
-  //   if (selected == true) {
-  //     //  setState(() {
-  //     _selecteCategorys.add(feeName);
-  //     print(index);
-  //     final double tot = feeNetDue;
-  //     print(feeName);
-  //     print(tot);
-  //     totalFees = tot + totalFees;
-  //     print(totalFees);
-  //     total = totalFees + totalBusFee;
-  //     print(total);
-  //     //  });
-  //   } else {
-  //     //  setState(() {
-  //     // _selecteCategorys.remove(fee_Name);
-  //     // print('removed  $fee_Name');
-  //     // final double tot = feeResponse![index]['installmentNetDue'];
-  //     // print(fee_Name);
-  //     // print(tot);
-  //     // totalFees = tot - totalFees;
-  //     // print('totalFees: $totalFees');
-  //     if (_selecteCategorys.remove(feeName)) {
-  //       final double tot = feeNetDue;
-  //       totalFees = totalFees - tot;
-  //       total = totalFees + totalBusFee;
-  //       print(total);
-  //     }
-  //     //   });
-  //   }
-  // }
-
-  //bus fee
-  // final List _selectedBusFee = [];
-
-  // double totalBusFee = 0;
-
-  // void _onBusSelected(bool selected, busfeeName, int index, feeNetDue) {
-  //   if (selected == true) {
-  //     //   setState(() {
-  //     _selectedBusFee.add(busfeeName);
-  //     print(index);
-  //     final double tot = feeNetDue;
-  //     print(busfeeName);
-  //     print(tot);
-  //     totalBusFee = tot + totalBusFee;
-  //     print(totalBusFee);
-  //     //  total = totalFees + totalBusFee;
-  //     print(total);
-  //     //  });
-  //   } else {
-  //     //   setState(() {
-  //     if (_selectedBusFee.remove(busfeeName)) {
-  //       final double tot = feeNetDue;
-  //       totalBusFee = totalBusFee - tot;
-  //       // total = totalFees + totalBusFee;
-  //       print(total);
-  //     }
-  //     //   });
-  //   }
-  // }
-
-  // double? total = 0;
-
-  // void totalFee() async {
-  //   //  setState(() {
-  //   // total = totalFees + totalBusFee;
-  //   print(total);
-  //   //  });
-  // }
+  String? orderidd;
+  String? readableid;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool enable = true;
   @override
@@ -252,11 +187,9 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                     ListView.builder(
                                         shrinkWrap: true,
                                         controller: _controller,
-                                        itemCount: value.feeList.length == null
+                                        itemCount: value.feeList.isEmpty
                                             ? 0
                                             : value.feeList.length,
-
-                                        // feeResponse == null ? 0 : feeResponse!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           print(value.feeList.length);
@@ -266,17 +199,11 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                             checkColor: UIGuide.light_Purple,
                                             selectedTileColor:
                                                 UIGuide.light_Purple,
-                                            value: value.selecteCategorys.contains(
-                                                value.feeList[index]
+                                            value: value.selecteCategorys
+                                                .contains(value.feeList[index]
                                                         .installmentName ??
-                                                    '--'
-                                                // feeResponse![index]['installmentName']
-                                                ),
+                                                    '--'),
                                             onChanged: (bool? selected) async {
-                                              // selected == true;
-
-                                              //if (index == 1 && enable == false) {
-                                              //  enable = true;
                                               value.onFeeSelected(
                                                   selected!,
                                                   value.feeList[index]
@@ -636,6 +563,16 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                                             color:
                                                                 Colors.orange),
                                                       );
+                                                    } else if (stats ==
+                                                        "Pending") {
+                                                      return const Text(
+                                                        "Pending",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Colors.orange),
+                                                      );
                                                     } else {
                                                       return const Text(
                                                         "--",
@@ -788,184 +725,480 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                     // ),
                     height: 50,
                     onPressed: () async {
-                      if (trans.lastOrderStatus == 'Success' ||
-                          trans.lastOrderStatus == 'Failed') {
-                        if (trans.total != 0) {
-                          /////////////////////////////////////////////////////////////////////////
-                          ////////////////////   get data of one             //////////////////////
-                          /////////////////////////////////////////////////////////////////////////
+                      if (trans.gateway == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            duration: Duration(seconds: 1),
+                            margin: EdgeInsets.only(
+                                bottom: 80, left: 30, right: 30),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              'Payment Gateway not exist..! \n Please contact your School...',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      } else {
+                        if (trans.existMap == true) {
+                          if (trans.lastOrderStatus == 'Success' ||
+                              trans.lastOrderStatus == 'Failed' ||
+                              trans.lastOrderStatus == 'Cancelled' ||
+                              // trans.lastOrderStatus == 'Processing' ||
+                              trans.lastOrderStatus == null) {
+                            if (trans.total != 0) {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////                        get data of one             /////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                          if (trans.transactionList.length == 1) {
-                            print('1111111111111111');
-                            String transType =
-                                trans.transactionList[0].name ?? '--';
-                            String transId1 =
-                                trans.transactionList[0].id ?? '--';
-                            String gateWay = trans.gateway ?? '--';
-                            print(transType);
-                            print(transId1);
+                              if (trans.transactionList.length == 1) {
+                                print('1111111111111111');
+                                String transType =
+                                    trans.transactionList[0].name ?? '--';
+                                String transId1 =
+                                    trans.transactionList[0].id ?? '--';
+                                String gateWay = trans.gateway ?? '--';
+                                print(transType);
+                                print(transId1);
 
-                            await Provider.of<FeesProvider>(context,
-                                    listen: false)
-                                .getDataOne(
-                                    transType,
-                                    transId1,
-                                    trans.totalFees.toString(),
-                                    trans.total.toString(),
-                                    gateWay);
+                                await AwesomeDialog(
+                                  context: cont,
+                                  animType: AnimType.scale,
+                                  dialogType: DialogType.info,
+                                  title: 'Do you want to continue the payment',
+                                  desc:
+                                      "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
+                                  btnOkOnPress: () async {
+                                    ///////////////////         PAYTM         ////////////////////////
 
-                            await AwesomeDialog(
-                              context: cont,
-                              animType: AnimType.scale,
-                              dialogType: DialogType.info,
-                              title: 'Do you want to continue the payment',
-                              desc:
-                                  "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
-                              btnOkOnPress: () async {
-                                String mid1 = trans.mid1 ?? '--';
-                                String orderId1 = trans.txnorderId1 ?? '--';
-                                String amount1 = trans.txnAmount1 ?? '--';
-                                String txntoken = trans.txnToken1 ?? '';
-                                print(txntoken);
-                                String callbackURL1 =
-                                    trans.callbackUrl1 ?? '--';
-                                bool staging1 = trans.isStaging1 ?? true;
+                                    if (trans.gateway == 'Paytm') {
+                                      await Provider.of<FeesProvider>(context,
+                                              listen: false)
+                                          .getDataOne(
+                                              transType,
+                                              transId1,
+                                              trans.totalFees.toString(),
+                                              trans.total.toString(),
+                                              gateWay);
 
-                                if (txntoken.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      elevation: 10,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                      ),
-                                      duration: Duration(seconds: 1),
-                                      margin: EdgeInsets.only(
-                                          bottom: 80, left: 30, right: 30),
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text(
-                                        'Something went wrong...',
-                                        textAlign: TextAlign.center,
-                                      ),
+                                      String mid1 = trans.mid1 ?? '--';
+                                      String orderId1 =
+                                          trans.txnorderId1 ?? '--';
+                                      String amount1 = trans.txnAmount1 ?? '--';
+                                      String txntoken = trans.txnToken1 ?? '';
+                                      print(txntoken);
+                                      String callbackURL1 =
+                                          trans.callbackUrl1 ?? '--';
+                                      bool staging1 = trans.isStaging1 ?? true;
+
+                                      if (txntoken.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            elevation: 10,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            margin: EdgeInsets.only(
+                                                bottom: 80,
+                                                left: 30,
+                                                right: 30),
+                                            behavior: SnackBarBehavior.floating,
+                                            content: Text(
+                                              'Something went wrong...',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        await _startTransaction(
+                                            txntoken,
+                                            mid1,
+                                            orderId1,
+                                            amount1,
+                                            callbackURL1,
+                                            staging1);
+                                      }
+                                    }
+                                    ///////////////////         RazorPay         ////////////////////////
+                                    else if (trans.gateway == 'RazorPay') {
+                                      await Provider.of<FeesProvider>(context,
+                                              listen: false)
+                                          .getDataOneRAZORPAY(
+                                              transType,
+                                              transId1,
+                                              trans.totalFees.toString(),
+                                              trans.total.toString(),
+                                              gateWay);
+
+                                      String key1 = trans.key1Razo ?? '--';
+                                      String orede1 = trans.order1 ?? '--';
+
+                                      String amount1R =
+                                          trans.amount1Razo ?? '--';
+                                      String name1 = trans.name1Razo ?? '';
+                                      String description1 =
+                                          trans.description1Razo ?? '';
+                                      String customer1 =
+                                          trans.customer1Razo ?? '';
+                                      String email1 = trans.email1Razo ?? '';
+                                      String contact1 =
+                                          trans.contact1Razo ?? '';
+                                      orderidd = trans.order1;
+                                      readableid = trans.readableOrderid1;
+
+                                      print(key1);
+
+                                      if (key1.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            elevation: 10,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            margin: EdgeInsets.only(
+                                                bottom: 80,
+                                                left: 30,
+                                                right: 30),
+                                            behavior: SnackBarBehavior.floating,
+                                            content: Text(
+                                              'Something went wrong...',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        await _startRazorpay(
+                                            key1,
+                                            amount1R,
+                                            name1,
+                                            description1,
+                                            customer1,
+                                            email1,
+                                            contact1,
+                                            orede1);
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          elevation: 10,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                          ),
+                                          duration: Duration(seconds: 1),
+                                          margin: EdgeInsets.only(
+                                              bottom: 80, left: 30, right: 30),
+                                          behavior: SnackBarBehavior.floating,
+                                          content: Text(
+                                            'Payment Gateway Not Provided...',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  btnCancelOnPress: () {
+                                    Navigator.of(_scaffoldKey.currentContext!)
+                                        .pop();
+                                    //      Navigator.pop(context);
+                                  },
+                                ).show();
+                              }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////              get data of two             ////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                              else if (trans.transactionList.length == 2) {
+                                print(
+                                    '-------------22222222-------------------');
+
+                                String transType1 =
+                                    trans.transactionList[0].name ?? '--';
+                                String transType2 =
+                                    trans.transactionList[1].name ?? '--';
+                                String transID1 =
+                                    trans.transactionList[0].id ?? '--';
+                                String transID2 =
+                                    trans.transactionList[1].id ?? '--';
+                                String gateway = trans.gateway ?? '--';
+                                print(transType1);
+                                print(transType2);
+
+                                await AwesomeDialog(
+                                  context: context,
+                                  animType: AnimType.scale,
+                                  dialogType: DialogType.info,
+                                  title: 'Do you want to continue the payment',
+                                  desc:
+                                      "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
+                                  btnOkOnPress: () async {
+                                    if (trans.gateway == 'Paytm') {
+                                      await Provider.of<FeesProvider>(context,
+                                              listen: false)
+                                          .getDataTwo(
+                                              transType1,
+                                              transID1,
+                                              trans.totalFees.toString(),
+                                              transType2,
+                                              transID2,
+                                              trans.totalBusFee.toString(),
+                                              trans.total.toString(),
+                                              gateway.toString());
+
+                                      String mid2 = await trans.mid2 ?? '--';
+                                      String orderId2 =
+                                          trans.txnorderId2 ?? '--';
+                                      String amount2 = trans.txnAmount2 ?? '--';
+                                      String txntoken = trans.txnToken2 ?? '';
+                                      print(txntoken);
+                                      String callbackURL2 =
+                                          trans.callbackUrl2 ?? '--';
+                                      bool staging2 = trans.isStaging2 ?? true;
+
+                                      if (txntoken.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            elevation: 10,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20)),
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            margin: EdgeInsets.only(
+                                                bottom: 80,
+                                                left: 30,
+                                                right: 30),
+                                            behavior: SnackBarBehavior.floating,
+                                            content: Text(
+                                              'Something went wrong...',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        await _startTransaction(
+                                            txntoken,
+                                            mid2,
+                                            orderId2,
+                                            amount2,
+                                            callbackURL2,
+                                            staging2);
+                                      }
+                                    }
+
+                                    ///////////////////         RazorPay         ////////////////////////
+                                    else if (trans.gateway == 'RazorPay') {
+                                      await Provider.of<FeesProvider>(context,
+                                              listen: false)
+                                          .getDataTwoRAZORPAY(
+                                              transType1,
+                                              transID1,
+                                              trans.totalFees.toString(),
+                                              transType2,
+                                              transID2,
+                                              trans.totalBusFee.toString(),
+                                              trans.total.toString(),
+                                              gateway.toString());
+
+                                      String key2 = trans.key2Razo ?? '--';
+                                      String orede2 = trans.order2 ?? '--';
+
+                                      String amount2R =
+                                          trans.amount2Razo ?? '--';
+                                      String name2 = trans.name2Razo ?? '';
+                                      String description2 =
+                                          trans.description2Razo ?? '';
+                                      String customer2 =
+                                          trans.customer2Razo ?? '';
+                                      String email2 = trans.email2Razo ?? '';
+                                      String contact2 =
+                                          trans.contact2Razo ?? '';
+                                      orderidd = trans.order2;
+                                      readableid = trans.readableOrderid2;
+
+                                      print(key2);
+
+                                      if (key2.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            elevation: 10,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10)),
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            margin: EdgeInsets.only(
+                                                bottom: 80,
+                                                left: 30,
+                                                right: 30),
+                                            behavior: SnackBarBehavior.floating,
+                                            content: Text(
+                                              'Something went wrong...',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        await _startRazorpay(
+                                            key2,
+                                            amount2R,
+                                            name2,
+                                            description2,
+                                            customer2,
+                                            email2,
+                                            contact2,
+                                            orede2);
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          elevation: 10,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                          ),
+                                          duration: Duration(seconds: 1),
+                                          margin: EdgeInsets.only(
+                                              bottom: 80, left: 30, right: 30),
+                                          behavior: SnackBarBehavior.floating,
+                                          content: Text(
+                                            'Payment Gateway Not Provided...',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  btnCancelOnPress: () {
+                                    Navigator.of(_scaffoldKey.currentContext!)
+                                        .pop();
+                                  },
+                                ).show();
+                              } else if (trans.transactionList.length == 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
-                                  );
-                                } else {
-                                  await _startTransaction(
-                                      txntoken,
-                                      mid1,
-                                      orderId1,
-                                      amount1,
-                                      callbackURL1,
-                                      staging1);
-                                }
-                              },
-                              btnCancelOnPress: () {
-                                Navigator.of(_scaffoldKey.currentContext!)
-                                    .pop();
-                                //      Navigator.pop(context);
-                              },
-                            ).show();
-                          }
-
-                          /////////////////////////////////////////////////////////////////////////
-                          ////////////////////   get data of two             //////////////////////
-                          /////////////////////////////////////////////////////////////////////////
-
-                          else if (trans.transactionList.length == 2) {
-                            print('-------------22222222-------------------');
-
-                            String transType1 =
-                                trans.transactionList[0].name ?? '--';
-                            String transType2 =
-                                trans.transactionList[1].name ?? '--';
-                            String transID1 =
-                                trans.transactionList[0].id ?? '--';
-                            String transID2 =
-                                trans.transactionList[1].id ?? '--';
-                            String gateway = trans.gateway ?? '--';
-                            print(transType1);
-                            print(transType2);
-                            await Provider.of<FeesProvider>(context,
-                                    listen: false)
-                                .getDataTwo(
-                                    transType1,
-                                    transID1,
-                                    trans.totalFees.toString(),
-                                    transType2,
-                                    transID2,
-                                    trans.totalBusFee.toString(),
-                                    trans.total.toString(),
-                                    gateway.toString());
-
-                            await AwesomeDialog(
-                              context: context,
-                              animType: AnimType.scale,
-                              dialogType: DialogType.info,
-                              title: 'Do you want to continue the payment',
-                              desc:
-                                  "Please don't go 𝐁𝐚𝐜𝐤 once the payment has been initialized!",
-                              btnOkOnPress: () async {
-                                String mid2 = trans.mid2 ?? '--';
-                                String orderId2 = trans.txnorderId2 ?? '--';
-                                String amount2 = trans.txnAmount2 ?? '--';
-                                String txntoken = trans.txnToken2 ?? '';
-                                print(txntoken);
-                                String callbackURL2 =
-                                    trans.callbackUrl2 ?? '--';
-                                bool staging2 = trans.isStaging2 ?? true;
-
-                                if (txntoken.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      elevation: 10,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                      ),
-                                      duration: Duration(seconds: 1),
-                                      margin: EdgeInsets.only(
-                                          bottom: 80, left: 30, right: 30),
-                                      behavior: SnackBarBehavior.floating,
-                                      content: Text(
-                                        'Something went wrong...',
-                                        textAlign: TextAlign.center,
-                                      ),
+                                    duration: Duration(seconds: 1),
+                                    margin: EdgeInsets.only(
+                                        bottom: 80, left: 30, right: 30),
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                      'Something Went Wrong.....!',
+                                      textAlign: TextAlign.center,
                                     ),
-                                  );
-                                } else {
-                                  await _startTransaction(
-                                      txntoken,
-                                      mid2,
-                                      orderId2,
-                                      amount2,
-                                      callbackURL2,
-                                      staging2);
-                                }
-                              },
-                              btnCancelOnPress: () {
-                                Navigator.of(_scaffoldKey.currentContext!)
-                                    .pop();
-                                //      Navigator.pop(context);
-                              },
-                            ).show();
-                          } else if (trans.transactionList.length == 0) {
+                                  ),
+                                );
+                              } else {
+                                print(
+                                  trans.transactionList.length,
+                                );
+                                print('Something Went wrong');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                    margin: EdgeInsets.only(
+                                        bottom: 80, left: 30, right: 30),
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                      'Something Went Wrong.....!',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  duration: Duration(seconds: 1),
+                                  margin: EdgeInsets.only(
+                                      bottom: 80, left: 30, right: 30),
+                                  behavior: SnackBarBehavior.floating,
+                                  content: Text(
+                                    'Select Fees.....!',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            }
+                          } else if (trans.lastOrderStatus == 'Processing') {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                duration: Duration(seconds: 5),
+                                margin: EdgeInsets.only(
+                                    bottom: 80, left: 30, right: 30),
+                                behavior: SnackBarBehavior.floating,
                                 content: Text(
-                                  'Something Went Wrong.....!',
+                                  'Please wait for 30 minutes...\n Your payment is under 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            );
+                          } else if (trans.lastOrderStatus == 'Pending') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                duration: Duration(seconds: 5),
+                                margin: EdgeInsets.only(
+                                    bottom: 80, left: 30, right: 30),
+                                behavior: SnackBarBehavior.floating,
+                                content: Text(
+                                  'Please wait for 30 minutes...\n Your payment is under 𝐏𝐞𝐧𝐝𝐢𝐧𝐠',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
                             );
                           } else {
-                            print(
-                              trans.transactionList.length,
-                            );
-                            print('Something Went wrong');
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
+                                duration: Duration(seconds: 5),
+                                margin: EdgeInsets.only(
+                                    bottom: 80, left: 30, right: 30),
+                                behavior: SnackBarBehavior.floating,
                                 content: Text(
-                                  'Something Went Wrong.....!',
+                                  'Please wait for 30 minutes...\n Your payment is under 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠 / 𝐒𝐮𝐜𝐜𝐞𝐬𝐬 / 𝐅𝐚𝐢𝐥𝐞𝐝 / 𝐂𝐚𝐧𝐜𝐞𝐥𝐥𝐞𝐝',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -979,53 +1212,17 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                               ),
-                              duration: Duration(seconds: 1),
+                              duration: Duration(seconds: 5),
                               margin: EdgeInsets.only(
                                   bottom: 80, left: 30, right: 30),
                               behavior: SnackBarBehavior.floating,
                               content: Text(
-                                'Select Fees.....!',
+                                'Issue in Vendor Mapping..!,\n Please contact School...',
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           );
                         }
-                      } else if (trans.lastOrderStatus == 'Processing') {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                            duration: Duration(seconds: 5),
-                            margin: EdgeInsets.only(
-                                bottom: 80, left: 30, right: 30),
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              'Please wait for 30 minutes...\n Your payment is under 𝗣𝗿𝗼𝗰𝗲𝘀𝘀𝗶𝗻𝗴',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                            duration: Duration(seconds: 5),
-                            margin: EdgeInsets.only(
-                                bottom: 80, left: 30, right: 30),
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              'Please wait for 30 minutes...\n Your payment is under 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠 / 𝐒𝐮𝐜𝐜𝐞𝐬𝐬 / 𝐅𝐚𝐢𝐥𝐞𝐝 / 𝐂𝐚𝐧𝐜𝐞𝐥𝐥𝐞𝐝',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
                       }
                     },
                     child: const Text(
@@ -1046,6 +1243,7 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
     );
   }
 
+/////////////////////////////////////////////  paytm   //////////////////////////////////////////////////////////
   String result = "";
   bool restrictAppInvoke = true;
 
@@ -1107,12 +1305,12 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
 
   void _showAlert(BuildContext context, String orderID) async {
     var size = MediaQuery.of(context).size;
-    await Provider.of<PaytmFinalStatusProvider>(context, listen: false)
+    await Provider.of<FinalStatusProvider>(context, listen: false)
         .transactionStatus(orderID);
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Consumer<PaytmFinalStatusProvider>(
+        builder: (context) => Consumer<FinalStatusProvider>(
               builder: (context, paytm, child) {
                 if (paytm.reponseCode == '01') {
                   return AlertDialog(
@@ -1412,71 +1610,507 @@ class _FeePayInstallmentState extends State<FeePayInstallment> {
                     ),
                   );
                 }
-                return Center(
-                  child: Container(
-                    child: Text('Something went wrong'),
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  content: Container(
+                    height: size.height / 4.5,
+                    width: size.width * 3,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: size.height / 10,
+                            ),
+                            const Text(
+                              "Something went wrong",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20,
+                                  color: UIGuide.light_Purple),
+                            ),
+                            kheight20,
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                UIGuide.light_Purple),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        StudentHome()),
+                                                (Route<dynamic> route) =>
+                                                    false);
+                                      },
+                                      child: const Text(
+                                        'Back to Home',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 18,
+                                            color: UIGuide.WHITE),
+                                      ))
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        const Positioned(
+                          top: -80,
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundColor: Colors.orange,
+                            child: Icon(
+                              Icons.warning,
+                              size: 80,
+                              color: UIGuide.BLACK,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ));
+  }
+/////////////////////////////////////////////////////
+
+  _startRazorpay(String key, String amount, String name, String description,
+      String nameP, String email, String contact, String orderId) async {
+    Razorpay razorpay = Razorpay();
+    var options = {
+      'key': key,
+      'amount': amount,
+      'order_id': orderId,
+      'name': name,
+      'description': description,
+      'prefill': {"name": nameP, "email": email, "contact": contact},
+      'modal': {
+        "confirm_close": true,
+        "animation": true,
+        "handleback": true,
+        "escape": true,
+      }
+    };
+    print({
+      'key': key,
+      'amount': amount,
+      'order_id': orderId,
+      'name': name,
+      'description': description,
+      'prefill': {"name": nameP, "email": email, "contact": contact},
+      'modal': {
+        "confirm_close": true,
+        "animation": true,
+        "handleback": true,
+        "escape": true,
+      }
+    });
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentErrorResponse);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
+    // razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWalletSelected);
+    razorpay.open(options);
+  }
+
+  void handlePaymentErrorResponse(PaymentFailureResponse response) async {
+    print('------------------Failed-----------------------------');
+  }
+
+  void handlePaymentSuccessResponse(
+    PaymentSuccessResponse response,
+  ) async {
+    print('------------------Success-----------------------------');
+  }
+
+///////////////////////////////////////////////
+  _showAlertRazorPay(
+    BuildContext context,
+    String readable,
+    String orderID,
+  ) async {
+    var size = MediaQuery.of(context).size;
+    String order = (readable + "_" + orderID);
+    await Provider.of<FinalStatusProvider>(context, listen: false)
+        .transactionStatusRazorPay(order);
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Consumer<FinalStatusProvider>(
+              builder: (context, razor, child) {
+                if (razor.reponseMsgRazor == 'captured') {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    content: Container(
+                      height: size.height / 4.5,
+                      width: size.width * 3,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: size.height / 10,
+                              ),
+                              const Text(
+                                "TRANSACTION SUCCESS",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20,
+                                    color: UIGuide.light_Purple),
+                              ),
+                              kheight20,
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  UIGuide.light_Purple),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder:
+                                                          (context) =>
+                                                              StudentHome()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                        },
+                                        child: const Text(
+                                          'Back to Home',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 18,
+                                              color: UIGuide.WHITE),
+                                        ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Positioned(
+                            top: -80,
+                            child: CircleAvatar(
+                                radius: 70,
+                                backgroundColor: Colors.white,
+                                child: SvgPicture.asset(UIGuide.success)),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                } else if (razor.reponseMsgRazor == 'failed') {
+                  return AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    content: Container(
+                      height: size.height / 4.5,
+                      width: size.width * 3,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: size.height / 10,
+                              ),
+                              const Text(
+                                "TRANSACTION FAILED",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20,
+                                    color: UIGuide.light_Purple),
+                              ),
+                              kheight20,
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  UIGuide.light_Purple),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder:
+                                                          (context) =>
+                                                              StudentHome()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                        },
+                                        child: const Text(
+                                          'Back to Home',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 18,
+                                              color: UIGuide.WHITE),
+                                        ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Positioned(
+                            top: -80,
+                            child: CircleAvatar(
+                                radius: 70,
+                                backgroundColor: Colors.white,
+                                child: SvgPicture.asset(UIGuide.failed)),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                } else if (razor.reponseCode == null) {
+                  AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    content: Container(
+                      height: size.height / 4.5,
+                      width: size.width * 3,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: size.height / 10,
+                              ),
+                              const Text(
+                                "TRANSACTION PENDING",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20,
+                                    color: UIGuide.light_Purple),
+                              ),
+                              kheight20,
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  UIGuide.light_Purple),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder:
+                                                          (context) =>
+                                                              StudentHome()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                        },
+                                        child: const Text(
+                                          'Back to Home',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 18,
+                                              color: UIGuide.WHITE),
+                                        ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Positioned(
+                            top: -90,
+                            child: CircleAvatar(
+                                radius: 80,
+                                backgroundColor: Colors.transparent,
+                                child: SvgPicture.asset(UIGuide.pending)),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  AlertDialog(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    content: Container(
+                      height: size.height / 4.5,
+                      width: size.width * 3,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: size.height / 10,
+                              ),
+                              const Text(
+                                "Something went wrong",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 20,
+                                    color: UIGuide.light_Purple),
+                              ),
+                              kheight20,
+                              Expanded(
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  UIGuide.light_Purple),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder:
+                                                          (context) =>
+                                                              StudentHome()),
+                                                  (Route<dynamic> route) =>
+                                                      false);
+                                        },
+                                        child: const Text(
+                                          'Back to Home',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 18,
+                                              color: UIGuide.WHITE),
+                                        ))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Positioned(
+                            top: -90,
+                            child: CircleAvatar(
+                                radius: 80,
+                                backgroundColor: Colors.transparent,
+                                child: SvgPicture.asset(
+                                    UIGuide.somethingWentWrong)),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  content: Container(
+                    height: size.height / 4.5,
+                    width: size.width * 3,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: size.height / 10,
+                            ),
+                            const Text(
+                              "Something went wrong",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20,
+                                  color: UIGuide.light_Purple),
+                            ),
+                            kheight20,
+                            Expanded(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                UIGuide.light_Purple),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        StudentHome()),
+                                                (Route<dynamic> route) =>
+                                                    false);
+                                      },
+                                      child: const Text(
+                                        'Back to Home',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 18,
+                                            color: UIGuide.WHITE),
+                                      ))
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Positioned(
+                          top: -90,
+                          child: CircleAvatar(
+                              radius: 80,
+                              backgroundColor: Colors.transparent,
+                              child:
+                                  SvgPicture.asset(UIGuide.somethingWentWrong)),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
             ));
   }
 }
-//   Future<void> _startTransaction(
-//     String txnToken,
-//     String mid,
-//     String orderId,
-//     String amount,
-//     String callbackUrl,
-//     bool isStaging,
-//   ) async {
-//     if (txnToken.isEmpty) {
-//       return;
-//     }
-//     // var sendMap = <String, dynamic>{
-//     //   "mid": mid,
-//     //   "orderId": orderId,
-//     //   "amount": amount,
-//     //   "txnToken": txnToken,
-//     //   "callbackUrl": callbackUrl,
-//     //   "isStaging": isStaging,
-//     //   "restrictAppInvoke": restrictAppInvoke,
-//     // };
-//     // print(sendMap);
-//     print('sendMap');
-
-//     try {
-//       var response = AllInOneSdk.startTransaction(
-//         mid,
-//         orderId,
-//         amount,
-//         txnToken,
-//         "",
-//         isStaging,
-//         restrictAppInvoke,
-//       );
-//       response.then((value) {
-//         print(value);
-//         setState(() {
-//           result = value.toString();
-//         });
-//       }).catchError((onError) {
-//         if (onError is PlatformException) {
-//           setState(() {
-//             result = onError.message.toString() +
-//                 " \n  " +
-//                 onError.details.toString();
-//           });
-//         } else {
-//           setState(() {
-//             result = onError.toString();
-//           });
-//         }
-//       });
-//     } catch (err) {
-//       result = err.toString();
-//     }
-//   }
-// }
 
 // //pdf download
 

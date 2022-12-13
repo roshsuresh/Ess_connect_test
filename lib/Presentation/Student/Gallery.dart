@@ -8,15 +8,26 @@ import '../../Constants.dart';
 import '../../utils/LoadingIndication.dart';
 import '../../utils/constants.dart';
 
-class Gallery extends StatelessWidget {
+class Gallery extends StatefulWidget {
   Gallery({Key? key}) : super(key: key);
+
+  @override
+  State<Gallery> createState() => _GalleryState();
+}
+
+class _GalleryState extends State<Gallery> {
   bool isLoading = false;
   @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+  void initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +45,7 @@ class Gallery extends StatelessWidget {
       ),
       body: Consumer<GalleryProvider>(
         builder: (context, value, child) => value.loading
-            ? spinkitLoader()
+            ? const spinkitLoader()
             : ListView(
                 children: [
                   ListView.builder(
@@ -181,7 +192,7 @@ class GalleryonTap extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.black12,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                  const BorderRadius.all(Radius.circular(10)),
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
@@ -192,10 +203,7 @@ class GalleryonTap extends StatelessWidget {
                   onTap: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewImageOntap(
-                                inde: index,
-                              )),
+                      MaterialPageRoute(builder: (context) => ViewImageOntap()),
                     );
                   },
                 );
@@ -209,13 +217,14 @@ class GalleryonTap extends StatelessWidget {
 }
 
 class ViewImageOntap extends StatelessWidget {
-  ViewImageOntap({Key? key, required int inde}) : super(key: key);
+  ViewImageOntap({Key? key}) : super(key: key);
   bool isLoading = false;
-  int? indee;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GalleryProvider>(
       builder: (context, value, child) => PhotoViewGallery.builder(
+          backgroundDecoration: BoxDecoration(color: UIGuide.WHITE),
           scrollPhysics: const BouncingScrollPhysics(),
           enableRotation: false,
           itemCount: value.galleryList == null ? 0 : value.galleryList.length,

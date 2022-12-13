@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:Ess_test/utils/constants.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +78,30 @@ class NoticeBoardAdminProvider with ChangeNotifier {
     } else {
       print("Error in Course response");
     }
+  }
+
+  int courseLen = 0;
+  courseCounter(int len) async {
+    courseLen = 0;
+    if (len == 0) {
+      courseLen = 0;
+    } else {
+      courseLen = len;
+    }
+
+    notifyListeners();
+  }
+
+  int divisionLen = 0;
+  divisionCounter(int leng) async {
+    divisionLen = 0;
+    if (leng == 0) {
+      divisionLen = 0;
+    } else {
+      divisionLen = leng;
+    }
+
+    notifyListeners();
   }
 
   //Division

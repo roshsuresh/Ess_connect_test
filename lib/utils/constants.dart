@@ -27,6 +27,7 @@ class UIGuide {
   static const String success = "assets/success.svg";
   static const String failed = "assets/failed.svg";
   static const String pending = "assets/pending.svg";
+  static const String somethingWentWrong = "assets/somethingWentWrong.svg";
 
   static const Color WHITE = Colors.white;
   static const Color BLACK = Colors.black;
@@ -45,7 +46,6 @@ class UIGuide {
     height: 20,
   );
 
-  // ignore: use_full_hex_values_for_flutter_colors
   static const Color FACEBOOK_COLOR = Color(0xfff3b5998);
 }
 

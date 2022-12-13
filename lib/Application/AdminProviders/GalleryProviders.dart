@@ -27,7 +27,7 @@ class GalleryProviderAdmin with ChangeNotifier {
 
     var request = http.Request(
         'GET', Uri.parse('${UIGuide.baseURL}/mobileapp/common/courselist'));
-    // request.body = json.encode({"SchoolId": _pref.getString('schoolId')});
+
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
@@ -50,6 +50,29 @@ class GalleryProviderAdmin with ChangeNotifier {
     }
   }
 
+  int courseLen = 0;
+  courseCounter(int len) async {
+    courseLen = 0;
+    if (len == 0) {
+      courseLen = 0;
+    } else {
+      courseLen = len;
+    }
+
+    notifyListeners();
+  }
+
+  int divisionLen = 0;
+  divisionCounter(int leng) async {
+    divisionLen = 0;
+    if (leng == 0) {
+      divisionLen = 0;
+    } else {
+      divisionLen = leng;
+    }
+
+    notifyListeners();
+  }
   //Division
 
   List<DivisionListModel> divisionList = [];

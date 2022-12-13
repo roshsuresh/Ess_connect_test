@@ -43,7 +43,6 @@ class Stud_Notification extends StatelessWidget {
             : Scrollbar(
                 child: AnimationLimiter(
                   child: ListView.builder(
-                    // padding: EdgeInsets.all(size.width / 30),
                     physics: const BouncingScrollPhysics(
                         parent: AlwaysScrollableScrollPhysics()),
                     itemCount: value.notificationstud?.length == null
@@ -102,7 +101,7 @@ class Stud_Notification extends StatelessWidget {
                                     Row(
                                       children: [
                                         const Text(
-                                          'Date',
+                                          'Date: ',
                                           style: TextStyle(
                                               color: Colors.grey, fontSize: 12),
                                         ),

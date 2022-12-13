@@ -35,10 +35,6 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
       p.attendenceCourseStaff();
       p.removeDivisionAll();
       p.clearStudentList();
-      // p.getstudentsAttendenceView(
-      //     "2022-09-23", 'da8f4f98-f340-4975-8e53-8939b09f52c6');
-
-      // p.getMarkEnrtyPartValues(courseId, divisionId);
     });
   }
 
@@ -55,8 +51,6 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
 
   @override
   Widget build(BuildContext context) {
-    //date = DateFormat('yyyy-MM-dd').format(DateTime.now());
-//dateFinal = dateController1;
     String dateFinal =
         Provider.of<AttendenceStaffProvider>(context, listen: false)
             .timeNew
@@ -71,7 +65,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Attendence Entry',
+          'Attendance Entry',
           //style: TextStyle(fontSize: 20),
         ),
         titleSpacing: 00.0,
@@ -184,16 +178,24 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: UIGuide.light_Purple, width: 1),
+                              ),
                               height: 40,
                               child: TextField(
                                 textAlign: TextAlign.center,
                                 controller: markEntryInitialValuesController1,
                                 decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.only(left: 0, top: 0),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
                                   filled: true,
                                   fillColor: Color.fromARGB(255, 238, 237, 237),
                                   border: OutlineInputBorder(),
-                                  labelText: "Select Course",
+                                  labelText: "  Select Course",
                                   hintText: "Course",
                                 ),
                                 enabled: false,
@@ -306,16 +308,24 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: UIGuide.light_Purple, width: 1),
+                              ),
                               height: 40,
                               child: TextField(
                                 textAlign: TextAlign.center,
                                 controller: markEntryDivisionListController1,
                                 decoration: const InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.only(left: 0, top: 0),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
                                   filled: true,
                                   fillColor: Color.fromARGB(255, 238, 237, 237),
                                   border: OutlineInputBorder(),
-                                  labelText: "Select Division",
+                                  labelText: "  Select Division",
                                   hintText: "Division",
                                 ),
                                 enabled: false,
@@ -346,46 +356,64 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MaterialButton(
-                    color: const Color.fromARGB(255, 172, 170, 170),
-                    child: const Text('View'),
-                    onPressed: () async {
-                      print(dateFinal);
-                      print(divisionId);
-                      dateFinal = Provider.of<AttendenceStaffProvider>(context,
-                                  listen: false)
-                              .timeNew ??
-                          date.toString();
-                      if (dateFinal.isEmpty) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(
-                                content: Text(
-                          "Select Date..!",
-                          textAlign: TextAlign.center,
-                        )));
-                      }
-
-                      setState(() {
+                SizedBox(
+                  width: 150,
+                  child: MaterialButton(
+                      color: UIGuide.light_Purple,
+                      child: const Text(
+                        'View',
+                        style: TextStyle(
+                            color: UIGuide.WHITE, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        print(dateFinal);
+                        print(divisionId);
                         dateFinal = Provider.of<AttendenceStaffProvider>(
-                                context,
-                                listen: false)
-                            .timeNew
-                            .toString();
-                      });
+                                    context,
+                                    listen: false)
+                                .timeNew ??
+                            date.toString();
+                        if (dateFinal.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                            ),
+                            duration: Duration(seconds: 1),
+                            margin: EdgeInsets.only(
+                                bottom: 80, left: 30, right: 30),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Select Date..!",
+                              textAlign: TextAlign.center,
+                            ),
+                          ));
+                        }
 
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .clearStudentList();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .divisionClear();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .removeDivisionAll();
-                      await Provider.of<AttendenceStaffProvider>(context,
-                              listen: false)
-                          .getstudentsAttendenceView(dateFinal, divisionId);
-                    }),
+                        setState(() {
+                          dateFinal = Provider.of<AttendenceStaffProvider>(
+                                  context,
+                                  listen: false)
+                              .timeNew
+                              .toString();
+                        });
+
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .clearStudentList();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .divisionClear();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .removeDivisionAll();
+                        await Provider.of<AttendenceStaffProvider>(context,
+                                listen: false)
+                            .getstudentsAttendenceView(dateFinal, divisionId);
+                      }),
+                ),
               ],
             ),
             kheight10,
@@ -494,7 +522,7 @@ class AttendenceviewWidget extends StatelessWidget {
                               height: 30,
                               child: Center(
                                   child: Text(
-                                'Attendence',
+                                'Attendance',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 12),
                               )),

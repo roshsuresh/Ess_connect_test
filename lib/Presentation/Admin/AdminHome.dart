@@ -1,5 +1,6 @@
 import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
+import 'package:Ess_test/Application/Module%20Providers.dart/Module.dart';
 import 'package:Ess_test/Presentation/Admin/Communication/ToGuardian.dart';
 import 'package:Ess_test/Presentation/Admin/Communication/ToStaff.dart';
 import 'package:Ess_test/Presentation/Admin/FlashNews/FlashnewsScreen.dart';
@@ -35,6 +36,7 @@ class AdminHome extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ConnectivityProvider>(context, listen: false);
+      Provider.of<ModuleProviders>(context, listen: false).getModuleDetails();
     });
 
     var size = MediaQuery.of(context).size;
@@ -476,165 +478,129 @@ class AdminHomeContent extends StatelessWidget {
                 ],
               ),
               kheight10,
-              Row(children: <Widget>[
-                Expanded(
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                      child: const Divider(
-                        color: Colors.black45,
-                        height: 36,
-                      )),
-                ),
-                const Text(
-                  "Attendence",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
-                ),
-                Expanded(
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                      child: const Divider(
-                        color: Colors.black45,
-                        height: 36,
-                      )),
-                ),
-              ]),
-              kheight10,
-              kheight20,
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const NotificationHistory()),
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Reportcard.png',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            kheight10,
-                            const Text(
-                              'Notification\nHistory',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ReportCard()),
-                          );
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                  opacity: 20,
-                                  image: AssetImage(
-                                    'assets/Reportcard.png',
-                                  ),
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            kheight10,
-                            const Text(
-                              'Taken or Not\nTaken Report',
-                              style: TextStyle(
-                                  fontSize: 11, color: Colors.black38),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/Profile.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          kheight10,
-                          const Text(
-                            '     Absent & \nPresent Report',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            height: 50,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                opacity: 20,
-                                image: AssetImage(
-                                  'assets/Profile.png',
-                                ),
-                              ),
-                            ),
-                          ),
-                          kheight10,
-                          const Text(
-                            '    Staff \nAttendence',
-                            style:
-                                TextStyle(fontSize: 11, color: Colors.black38),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Row(children: <Widget>[
+              //   Expanded(
+              //     child: Container(
+              //         margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+              //         child: const Divider(
+              //           color: Colors.black45,
+              //           height: 36,
+              //         )),
+              //   ),
+              //   const Text(
+              //     "Attendance",
+              //     textAlign: TextAlign.left,
+              //     style: TextStyle(
+              //         color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
+              //   ),
+              //   Expanded(
+              //     child: Container(
+              //         margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+              //         child: const Divider(
+              //           color: Colors.black45,
+              //           height: 36,
+              //         )),
+              //   ),
+              // ]),
+              // kheight10,
+              // kheight20,
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 10, right: 10),
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Navigator.push(
+              //               context,
+              //               MaterialPageRoute(
+              //                   builder: (context) => const ReportCard()),
+              //             );
+              //           },
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //             children: [
+              //               Container(
+              //                 height: 50,
+              //                 width: 40,
+              //                 decoration: BoxDecoration(
+              //                   image: const DecorationImage(
+              //                     opacity: 20,
+              //                     image: AssetImage(
+              //                       'assets/Reportcard.png',
+              //                     ),
+              //                   ),
+              //                   borderRadius: BorderRadius.circular(10),
+              //                 ),
+              //               ),
+              //               kheight10,
+              //               const Text(
+              //                 'Taken or Not\nTaken Report',
+              //                 style: TextStyle(
+              //                     fontSize: 11, color: Colors.black38),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 10, right: 10),
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //           children: [
+              //             Container(
+              //               height: 50,
+              //               width: 40,
+              //               decoration: const BoxDecoration(
+              //                 image: DecorationImage(
+              //                   opacity: 20,
+              //                   image: AssetImage(
+              //                     'assets/Profile.png',
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             kheight10,
+              //             const Text(
+              //               '     Absent & \nPresent Report',
+              //               style:
+              //                   TextStyle(fontSize: 11, color: Colors.black38),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 10, right: 10),
+              //         child: Column(
+              //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //           children: [
+              //             Container(
+              //               height: 50,
+              //               width: 40,
+              //               decoration: const BoxDecoration(
+              //                 image: DecorationImage(
+              //                   opacity: 20,
+              //                   image: AssetImage(
+              //                     'assets/Profile.png',
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             kheight10,
+              //             const Text(
+              //               '    Staff \nAttendance',
+              //               style:
+              //                   TextStyle(fontSize: 11, color: Colors.black38),
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               kheight10,
               Row(children: <Widget>[
                 Expanded(
@@ -735,16 +701,51 @@ class AdminHomeContent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScreenTimeTable()),
-                        );
-                      },
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => ScreenTimeTable()),
+                  //       );
+                  //     },
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //       children: [
+                  //         Container(
+                  //           height: 50,
+                  //           width: 40,
+                  //           decoration: const BoxDecoration(
+                  //             image: DecorationImage(
+                  //               opacity: 20,
+                  //               image: AssetImage(
+                  //                 'assets/Profile.png',
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         kheight10,
+                  //         const Text(
+                  //           '   Upload\nTimetable',
+                  //           style:
+                  //               TextStyle(fontSize: 11, color: Colors.black38),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NotificationHistory()),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -755,14 +756,14 @@ class AdminHomeContent extends StatelessWidget {
                               image: DecorationImage(
                                 opacity: 20,
                                 image: AssetImage(
-                                  'assets/Profile.png',
+                                  'assets/Reportcard.png',
                                 ),
                               ),
                             ),
                           ),
                           kheight10,
                           const Text(
-                            '   Upload\nTimetable',
+                            'Notification\nHistory',
                             style:
                                 TextStyle(fontSize: 11, color: Colors.black38),
                           )
@@ -893,7 +894,7 @@ class AdminHomeContent extends StatelessWidget {
                       )),
                 ),
                 const Text(
-                  "Password Change / SignOut",
+                  "Change Password/ SignOut",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: UIGuide.light_Purple, fontWeight: FontWeight.w900),
@@ -1014,7 +1015,7 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
                   : SingleChildScrollView(
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'Student Info',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -1026,14 +1027,14 @@ class _AdminProfileTopState extends State<AdminProfileTop> {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Total Strength:  ',
                                 ),
                                 Text(
                                   value.totalStudentStrength == null
                                       ? '--'
                                       : value.totalStudentStrength.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: UIGuide.light_Purple,
                                       fontWeight: FontWeight.bold),
                                 ),

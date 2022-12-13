@@ -20,7 +20,7 @@ class AdminGalleryView extends StatelessWidget {
     });
     return Consumer<GalleryProviderAdmin>(
       builder: (context, value, child) => value.loading
-          ? spinkitLoader()
+          ? const spinkitLoader()
           : ListView(
               children: [
                 ListView.builder(

@@ -12,7 +12,21 @@ class NoticeBoardAdnin extends StatelessWidget {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Notice Board'),
+              title: Row(
+                children: [
+                  Spacer(),
+                  const Text('Notice Board'),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NoticeBoardAdnin()));
+                      },
+                      icon: Icon(Icons.refresh_outlined))
+                ],
+              ),
               titleSpacing: 20.0,
               centerTitle: true,
               toolbarHeight: 30.2,

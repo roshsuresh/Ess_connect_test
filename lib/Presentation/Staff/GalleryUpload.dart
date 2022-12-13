@@ -44,7 +44,7 @@ class StaffGallery extends StatelessWidget {
               ),
               backgroundColor: UIGuide.light_Purple,
             ),
-            body: TabBarView(children: [
+            body: const TabBarView(children: [
               StaffGalleryView(),
               StaffGalleryUPload(),
               GalleryListStaff()
@@ -94,7 +94,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
       p.divisionClear();
       p.removeCourseAll();
       p.removeDivisionAll();
-      titleController.clear();
+      // titleController.clear();
     });
     return ListView(
       children: [
@@ -119,10 +119,16 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
+              labelStyle: TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Title',
               hintStyle: TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: UIGuide.light_Purple, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ),
@@ -168,10 +174,18 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 } else {
                   print('Size Exceed');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                    "Size Exceed(Less than 200KB allowed)",
-                    textAlign: TextAlign.center,
-                  )));
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    duration: Duration(seconds: 1),
+                    margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(
+                      "Size Exceed(Less than 200KB allowed)",
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
                 }
               }),
             ),
@@ -185,49 +199,59 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
         )),
         Row(
           children: [
-            MaterialButton(
-              minWidth: size.width - 216,
-              child: Center(child: Text('From  $time')),
-              color: Colors.white,
-              onPressed: (() async {
-                _mydatetimeFrom = await showDatePicker(
-                    context: context,
-                    initialDate: _mydatetimeFrom ?? DateTime.now(),
-                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
-                    lastDate: DateTime(2030));
-                setState(() {
-                  time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
-                  print(time);
-                });
-              }),
+            Spacer(),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.45,
+              child: MaterialButton(
+                // minWidth: size.width - 216,
+                child: Center(child: Text('From  $time')),
+                color: Colors.white,
+                onPressed: (() async {
+                  _mydatetimeFrom = await showDatePicker(
+                      context: context,
+                      initialDate: _mydatetimeFrom ?? DateTime.now(),
+                      firstDate:
+                          DateTime.now().subtract(const Duration(days: 0)),
+                      lastDate: DateTime(2030));
+                  setState(() {
+                    time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
+                    print(time);
+                  });
+                }),
+              ),
             ),
             Spacer(),
-            MaterialButton(
-              minWidth: size.width - 216,
-              child: Center(child: Text('To  $timeNow')),
-              color: Colors.white,
-              onPressed: (() async {
-                _mydatetimeTo = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 0)),
-                  lastDate: DateTime(2100),
-                );
-                // _mydatetimeTo = await showDatePicker(
-                //     context: context,
-                //     initialDate: _mydatetimeTo ?? DateTime.now(),
-                //     firstDate: DateTime(2022),
-                //     lastDate: DateTime(2030));
-                setState(() {
-                  timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
-                  print(timeNow);
-                });
-              }),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.45,
+              child: MaterialButton(
+                //  minWidth: size.width - 216,
+                child: Center(child: Text('To  $timeNow')),
+                color: Colors.white,
+                onPressed: (() async {
+                  _mydatetimeTo = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2100),
+                  );
+                  // _mydatetimeTo = await showDatePicker(
+                  //     context: context,
+                  //     initialDate: _mydatetimeTo ?? DateTime.now(),
+                  //     firstDate: DateTime(2022),
+                  //     lastDate: DateTime(2030));
+                  setState(() {
+                    timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
+                    print(timeNow);
+                  });
+                }),
+              ),
             ),
+            Spacer()
           ],
         ),
         Row(
           children: [
+            Spacer(),
             SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width * 0.49,
@@ -301,16 +325,23 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: UIGuide.light_Purple, width: 1),
+                          ),
                           height: 40,
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController1,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 0, top: 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
-                              labelText: "Select Course",
+                              labelText: "  Select Course",
                               hintText: "Course",
                             ),
                             enabled: false,
@@ -401,16 +432,23 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: UIGuide.light_Purple, width: 1),
+                          ),
                           height: 40,
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController1,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 0, top: 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
-                              labelText: "Select Division",
+                              labelText: "  Select Division",
                               hintText: "Division",
                             ),
                             enabled: false,
@@ -437,6 +475,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 );
               }),
             ),
+            Spacer()
           ],
         ),
         kheight20,
@@ -455,6 +494,36 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
               ),
               color: UIGuide.light_Purple,
               onPressed: (() async {
+                if (attachmentid.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    duration: Duration(seconds: 1),
+                    margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(
+                      'Select Image..',
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                }
+                if (titleController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    duration: Duration(seconds: 1),
+                    margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(
+                      'Enter Title..',
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                }
                 if (titleController.text.isNotEmpty &&
                     coursevalueController.text.isNotEmpty &&
                     divisionvalueController.text.isNotEmpty &&
@@ -498,25 +567,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 await Provider.of<GallerySendProvider_Stf>(context,
                         listen: false)
                     .divisionClear();
-
-                if (attachmentid.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      'Select Image..',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: Duration(seconds: 1),
-                  ));
-                }
-                if (titleController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      'Enter Title..',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: Duration(seconds: 1),
-                  ));
-                }
               }),
             ),
           ),

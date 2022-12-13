@@ -3,9 +3,7 @@ import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class NoticeBoardListAdmin extends StatelessWidget {
@@ -28,6 +26,12 @@ class NoticeBoardListAdmin extends StatelessWidget {
                     ? 0
                     : provider.noticeList.length,
                 itemBuilder: (context, index) {
+                  String createddate =
+                      provider.noticeList[index].createdAt ?? '--';
+                  var updatedDate = DateFormat('yyyy-MM-dd').parse(createddate);
+                  String newDate = updatedDate.toString();
+                  String finalCreatedDate = newDate.replaceRange(10, 23, '');
+
                   String even = provider.noticeList[index].id.toString();
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -46,8 +50,10 @@ class NoticeBoardListAdmin extends StatelessWidget {
                               children: [
                                 Text('Created Date: '),
                                 Text(
-                                  provider.noticeList[index].createdAt ?? '--',
-                                  style: TextStyle(
+                                  finalCreatedDate == null
+                                      ? '--'
+                                      : finalCreatedDate,
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13),
                                 ),
@@ -58,7 +64,6 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                             context,
                                             listen: false)
                                         .editNoticeList(even);
-                                    //  await provider.editNoticeList(eventt);
                                     showDialog(
                                         context: context,
                                         builder: (context) {
@@ -81,7 +86,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                             8.0),
                                                     child: Row(
                                                       children: [
-                                                        Text(
+                                                        const Text(
                                                           'Entry Date: ',
                                                           style: TextStyle(
                                                               fontSize: 16,
@@ -94,7 +99,8 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                         Text(
                                                           snap.createdDate ??
                                                               '--',
-                                                          style: TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 16,
@@ -109,7 +115,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                             8.0),
                                                     child: Row(
                                                       children: [
-                                                        Text(
+                                                        const Text(
                                                           'Title: ',
                                                           style: TextStyle(
                                                               fontSize: 16,
@@ -130,7 +136,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                                         13),
                                                             maxLines: 1,
                                                             text: TextSpan(
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         15,
                                                                     color: Color
@@ -153,7 +159,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                             8.0),
                                                     child: Row(
                                                       children: [
-                                                        Text(
+                                                        const Text(
                                                           'Matter: ',
                                                           style: TextStyle(
                                                               fontSize: 16,
@@ -174,7 +180,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                                         13),
                                                             maxLines: 3,
                                                             text: TextSpan(
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
                                                                     fontSize:
                                                                         15,
                                                                     color: Color
@@ -239,7 +245,8 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                         Text(
                                                           snap.displayEndDate ??
                                                               '--',
-                                                          style: TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 16,
@@ -263,11 +270,6 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                                           onPressed: () async {
                                                             Navigator.pop(
                                                                 context);
-                                                            // provider.noticeList
-                                                            //     .clear();
-                                                            // await provider
-                                                            //     .getNoticeListView(
-                                                            //         context);
                                                           },
                                                           child: Text('Cancel'),
                                                           color: Colors.orange,
@@ -303,7 +305,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                     provider.noticeList.clear();
                                     await provider.getNoticeListView(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.mode_edit_outline_outlined,
                                     color: UIGuide.light_Purple,
                                   ),
@@ -318,7 +320,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                     provider.noticeList.clear();
                                     await provider.getNoticeListView(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.delete_forever_outlined,
                                     color: Colors.red,
                                   ),
@@ -327,11 +329,11 @@ class NoticeBoardListAdmin extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text('Title: '),
+                                const Text('Title: '),
                                 Flexible(
                                   child: Text(
                                     provider.noticeList[index].title ?? '--',
-                                    overflow: TextOverflow.clip,
+                                    overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
@@ -341,14 +343,14 @@ class NoticeBoardListAdmin extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text('Created By: '),
+                                const Text('Created By: '),
                                 Flexible(
                                   child: Text(
                                     provider.noticeList[index]
                                             .createStaffName ??
                                         '--',
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
                                   ),
@@ -361,7 +363,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                     value.noticeList[index].cancelled ==
                                         false) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Approved',
@@ -377,7 +379,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                         false &&
                                     value.noticeList[index].cancelled == true) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Cancelled',
@@ -391,7 +393,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                   );
                                 } else {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Pending',
@@ -406,7 +408,7 @@ class NoticeBoardListAdmin extends StatelessWidget {
                                 }
                               },
                               child: Row(
-                                children: [
+                                children: const [
                                   Text('Status : '),
                                   Text(
                                     'Approved',

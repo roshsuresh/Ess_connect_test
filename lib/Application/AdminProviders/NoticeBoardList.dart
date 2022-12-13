@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:Ess_test/Domain/Admin/NoticeBoardEdit.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';

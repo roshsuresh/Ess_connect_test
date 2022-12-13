@@ -8,7 +8,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +25,22 @@ class AdminToGuardian extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Communication to Guardian',
+          title: Row(
+            children: [
+              Spacer(),
+              const Text(
+                'Communication to Guardian',
+              ),
+              Spacer(),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AdminToGuardian()));
+                  },
+                  icon: Icon(Icons.refresh_outlined))
+            ],
           ),
           titleSpacing: 00.0,
           centerTitle: true,
@@ -108,6 +121,9 @@ class _Notification_AdminToGuardainState
       p.stdReportInitialValues.clear();
       p.courselist.clear();
       p.divisionlist.clear();
+      p.courseCounter(0);
+      p.divisionCounter(0);
+      p.sectionCounter(0);
       await Provider.of<NotificationToGuardianAdmin>(context, listen: false)
           .clearStudentList();
     });
@@ -161,13 +177,21 @@ class _Notification_AdminToGuardainState
                         Icons.arrow_drop_down_outlined,
                         color: Colors.grey,
                       ),
-                      buttonText: Text(
-                        "Select Section",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                      buttonText: value.sectionLen == 0
+                          ? const Text(
+                              "Select Section",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              "   ${value.sectionLen.toString()} Selected",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
                       chipDisplay: MultiSelectChipDisplay.none(),
                       onConfirm: (results) async {
                         subjectData = [];
@@ -183,7 +207,10 @@ class _Notification_AdminToGuardainState
                         section = subjectData.join(',');
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
-                            .clearCourse();
+                            .sectionCounter(results.length);
+                        // await Provider.of<SchoolPhotoProviders>(context,
+                        //         listen: false)
+                        //     .clearCourse();
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
                             .getCourseList(section);
@@ -237,13 +264,21 @@ class _Notification_AdminToGuardainState
                         Icons.arrow_drop_down_outlined,
                         color: Colors.grey,
                       ),
-                      buttonText: Text(
-                        "Select Course",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                      buttonText: value.courseLen == 0
+                          ? const Text(
+                              "Select Course",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              "   ${value.courseLen.toString()} Selected",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
                       chipDisplay: MultiSelectChipDisplay.none(),
                       onConfirm: (results) async {
                         diviData = [];
@@ -271,7 +306,10 @@ class _Notification_AdminToGuardainState
                         // value.divisionDrop.clear();
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
-                            .clearDivision();
+                            .courseCounter(results.length);
+                        // await Provider.of<SchoolPhotoProviders>(context,
+                        //         listen: false)
+                        //     .clearDivision();
 
                         await Provider.of<SchoolPhotoProviders>(context,
                                 listen: false)
@@ -326,16 +364,21 @@ class _Notification_AdminToGuardainState
                         Icons.arrow_drop_down_outlined,
                         color: Colors.grey,
                       ),
-                      buttonText: Text(
-                        // value.courseLen == 0
-                        //     ?
-                        "Select Division",
-                        //  : "${value.courseLen.toString()}  Selected",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                      buttonText: value.divisionLen == 0
+                          ? const Text(
+                              "Select Division",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            )
+                          : Text(
+                              "   ${value.divisionLen.toString()} Selected",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
                       chipDisplay: MultiSelectChipDisplay.none(),
                       onConfirm: (results) {
                         courseData = [];
@@ -354,6 +397,9 @@ class _Notification_AdminToGuardainState
                         // });
 
                         division = courseData.join(',');
+                        Provider.of<SchoolPhotoProviders>(context,
+                                listen: false)
+                            .divisionCounter(results.length);
                         // Provider.of<SchoolPhotoProviders>(context, listen: false)
                         //     .getCourseList(div);
 

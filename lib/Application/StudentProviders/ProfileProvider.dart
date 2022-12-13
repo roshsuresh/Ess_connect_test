@@ -111,17 +111,13 @@ class ProfileProvider with ChangeNotifier {
     }
   }
 
-  List<FlashNewsModelStud> flashnew = [];
-  Future flashNewsProvider(context) async {
-    late FlashNewsModel flashNewsModel;
-    Map<String, dynamic> data = await parseJWT();
-    setLoading(true);
+  String? flashnews;
+  Future flashNewsProvider() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    setLoading(true);
 
     try {
       final response = await http.get(
@@ -129,14 +125,10 @@ class ProfileProvider with ChangeNotifier {
           headers: headers);
 
       if (response.statusCode == 200) {
-        setLoading(true);
         final data = json.decode(response.body.toString());
-        dataRsponse = data['flashNews'];
-        List<FlashNewsModelStud> templist = List<FlashNewsModelStud>.from(
-            data["flashNews"].map((x) => FlashNewsModelStud.fromJson(x)));
-        flashnew.addAll(templist);
-        flashNewsModel = FlashNewsModel.fromJson(data);
-        setLoading(false);
+        FlashNewsMode flash = FlashNewsMode.fromJson(data);
+        flashnews = flash.flashNews;
+
         notifyListeners();
       } else {
         print("Something went wrong in flashnews");

@@ -4,7 +4,6 @@ import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:provider/provider.dart';
 
 class GalleryListAdmin extends StatelessWidget {
@@ -21,7 +20,7 @@ class GalleryListAdmin extends StatelessWidget {
     return Consumer<GalleryProviderAdmin>(
       builder: (context, provider, child) {
         return provider.loading
-            ? spinkitLoader()
+            ? const spinkitLoader()
             : ListView.builder(
                 itemCount: provider.galleryViewList.isEmpty
                     ? 0
@@ -42,11 +41,11 @@ class GalleryListAdmin extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text('Created Date: '),
+                                const Text('Created Date: '),
                                 Text(
                                   provider.galleryViewList[index].createdAt ??
                                       '--',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13),
                                 ),
@@ -82,7 +81,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   .all(8.0),
                                                           child: Row(
                                                             children: [
-                                                              Text(
+                                                              const Text(
                                                                 'Entry Date: ',
                                                                 style: TextStyle(
                                                                     fontSize:
@@ -97,7 +96,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                 provider.entryDate ??
                                                                     '--',
                                                                 style:
-                                                                    TextStyle(
+                                                                    const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -113,7 +112,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   .all(8.0),
                                                           child: Row(
                                                             children: [
-                                                              Text(
+                                                              const Text(
                                                                 'Title: ',
                                                                 style: TextStyle(
                                                                     fontSize:
@@ -135,7 +134,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                               13),
                                                                   maxLines: 3,
                                                                   text: TextSpan(
-                                                                      style: TextStyle(
+                                                                      style: const TextStyle(
                                                                           fontSize:
                                                                               15,
                                                                           color: Color.fromARGB(
@@ -152,7 +151,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                           ),
                                                         ),
                                                         provider.load
-                                                            ? spinkitLoader()
+                                                            ? const spinkitLoader()
                                                             : GridView.count(
                                                                 shrinkWrap:
                                                                     true,
@@ -187,7 +186,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   .all(8.0),
                                                           child: Row(
                                                             children: [
-                                                              Text(
+                                                              const Text(
                                                                 'Start Date: ',
                                                                 style: TextStyle(
                                                                     fontSize:
@@ -202,7 +201,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                 provider.displayStartDate ??
                                                                     '--',
                                                                 style:
-                                                                    TextStyle(
+                                                                    const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -218,7 +217,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   .all(8.0),
                                                           child: Row(
                                                             children: [
-                                                              Text(
+                                                              const Text(
                                                                 'Start Date: ',
                                                                 style: TextStyle(
                                                                     fontSize:
@@ -233,7 +232,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                 provider.displayEndDate ??
                                                                     '--',
                                                                 style:
-                                                                    TextStyle(
+                                                                    const TextStyle(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -261,7 +260,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   Navigator.pop(
                                                                       context);
                                                                 },
-                                                                child: Text(
+                                                                child: const Text(
                                                                     'Cancel'),
                                                                 color: Colors
                                                                     .orange,
@@ -282,7 +281,7 @@ class GalleryListAdmin extends StatelessWidget {
                                                                   await provider
                                                                       .galleryViewListAdmin();
                                                                 },
-                                                                child: Text(
+                                                                child: const Text(
                                                                     'Approve'),
                                                                 color: Colors
                                                                     .green,
@@ -306,7 +305,7 @@ class GalleryListAdmin extends StatelessWidget {
                                     await provider.galleryViewListAdmin();
                                     //Navigator.pop(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.mode_edit_outline_outlined,
                                     color: UIGuide.light_Purple,
                                   ),
@@ -323,7 +322,7 @@ class GalleryListAdmin extends StatelessWidget {
                                     provider.galleryViewList.clear();
                                     await provider.galleryViewListAdmin();
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.delete_forever_outlined,
                                     color: Colors.red,
                                   ),
@@ -354,7 +353,7 @@ class GalleryListAdmin extends StatelessWidget {
                                             .createStaffName ??
                                         '--',
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
                                   ),
@@ -368,7 +367,7 @@ class GalleryListAdmin extends StatelessWidget {
                                     value.galleryViewList[index].cancelled ==
                                         false) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Approved',
@@ -386,7 +385,7 @@ class GalleryListAdmin extends StatelessWidget {
                                     value.galleryViewList[index].cancelled ==
                                         true) {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Cancelled',
@@ -400,7 +399,7 @@ class GalleryListAdmin extends StatelessWidget {
                                   );
                                 } else {
                                   return Row(
-                                    children: [
+                                    children: const [
                                       Text('Status : '),
                                       Text(
                                         'Pending',
@@ -415,7 +414,7 @@ class GalleryListAdmin extends StatelessWidget {
                                 }
                               },
                               child: Row(
-                                children: [
+                                children: const [
                                   Text('Status : '),
                                   Text(
                                     'Approved',

@@ -55,7 +55,7 @@ class NoticeBoard extends StatelessWidget {
             : AnimationLimiter(
                 child: ListView.builder(
                   //  padding: EdgeInsets.all(width / 30),
-                  physics: BouncingScrollPhysics(
+                  physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
                   itemCount:
                       noticeresponse == null ? 0 : noticeresponse!.length,
@@ -100,7 +100,7 @@ class NoticeBoard extends StatelessWidget {
                                                 strutStyle:
                                                     StrutStyle(fontSize: 14.0),
                                                 text: TextSpan(
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: UIGuide
                                                             .light_Purple,
                                                         fontWeight:
@@ -122,10 +122,10 @@ class NoticeBoard extends StatelessWidget {
                                         child: Container(
                                           width: width - 15,
                                           decoration: BoxDecoration(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 236, 237, 245),
                                               border: Border.all(
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 215, 207, 236)),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4))),
@@ -210,7 +210,8 @@ class NoticeBoard extends StatelessWidget {
                                                 }
                                               },
                                               child: const Icon(
-                                                  Icons.file_download))
+                                                  Icons.remove_red_eye)),
+                                          kWidth,
                                         ],
                                       )
                                     ],

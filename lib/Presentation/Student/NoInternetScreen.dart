@@ -24,13 +24,6 @@ class NoInternetConnection extends StatelessWidget {
                 image: AssetImage("assets/wifi copy.png"),
                 fit: BoxFit.fill,
               ))),
-          // ElevatedButton(
-          //     onPressed: () async {
-          //       await Provider.of<ConnectivityProvider>(context, listen: false);
-          //     },
-          //     child: Row(
-          //       children: [Text('Try Again '), Icon(Icons.replay_outlined)],
-          //     ))
         ],
       ),
     );

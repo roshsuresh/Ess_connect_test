@@ -15,7 +15,7 @@ class Attendence extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Attendence'),
+          title: Text('Attendance'),
           titleSpacing: 00.0,
           centerTitle: true,
           toolbarHeight: 60.2,
@@ -47,31 +47,39 @@ class Attendence extends StatelessWidget {
                               return Column(
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      kWidth,
                                       Text(
                                           'Working Days : ${provider.workDays == null ? '--' : provider.workDays.toString()}'),
-                                      const Divider(),
-                                      const Divider(),
+                                      // const Divider(),
+                                      // const Divider(),
+                                      Spacer(),
                                       Text(
-                                          'Days Present :  ${provider.presentDays == null ? '--' : provider.presentDays.toString()}')
+                                          'Days Present :  ${provider.presentDays == null ? '--' : provider.presentDays.toString()}'),
+                                      kWidth,
+                                      kWidth
                                     ],
                                   ),
                                   kheight10,
                                   kheight10,
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      kWidth,
                                       Text(
                                           'Days Absent : ${provider.absentDays == null ? '--' : provider.absentDays.toString()}'),
-                                      const Divider(),
-                                      const Divider(),
-                                      const Divider(),
-                                      const Divider(),
+                                      Spacer(),
+                                      // const Divider(),
+                                      // const Divider(),
+                                      // const Divider(),
+                                      // const Divider(),
                                       Text(
-                                          'Percentage % : ${provider.attendancePercentage == null ? '--' : provider.attendancePercentage.toString()}')
+                                          'Percentage % : ${provider.attendancePercentage == null ? '--' : provider.attendancePercentage.toString()}'),
+                                      kWidth,
+                                      kWidth
                                     ],
                                   ),
                                 ],
@@ -124,6 +132,10 @@ class Attendence extends StatelessWidget {
                             itemBuilder: ((context, index) {
                               String percentage =
                                   attend![index]['percentage'].toString();
+                              if (percentage.length >= 5) {
+                                percentage.replaceRange(
+                                    6, percentage.length, '');
+                              }
 
                               return Table(
                                 border: TableBorder.all(
@@ -131,32 +143,32 @@ class Attendence extends StatelessWidget {
                                 children: [
                                   TableRow(children: [
                                     Text(
-                                      '${attend![index]['month'].toString()} \n',
-                                      style: TextStyle(
+                                      '${attend![index]['month'] == null ? '--' : attend![index]['month'].toString()} \n',
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
                                       '${attend![index]['totalWorkingDays'].toString()} \n',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
                                       '${attend![index]['daysPresent'].toString()} \n',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
                                       '${attend![index]['daysAbsent'].toString()} \n',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),
                                     Text(
                                       '$percentage \n ',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),

@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'package:Ess_test/Domain/Staff/SearchStudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../Domain/Admin/StaffReportModel.dart';
 
 class SearchStaffProviders with ChangeNotifier {
@@ -47,7 +44,7 @@ class SearchStaffProviders with ChangeNotifier {
     return true;
   }
 
-  clearStudentList() {
+  clearStaffList() {
     staffReportList.clear();
     notifyListeners();
   }

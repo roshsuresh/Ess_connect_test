@@ -72,7 +72,7 @@ class PaymentHistory extends StatelessWidget {
                               )),
                               Center(
                                   child: Text(
-                                'Payment \nGateway',
+                                'Payment \n  Mode',
                                 style: TextStyle(fontWeight: FontWeight.w700),
                               )),
                               Center(
@@ -89,95 +89,98 @@ class PaymentHistory extends StatelessWidget {
                       ],
                     ),
                   ),
-                  ListView.builder(
-                      itemCount: value.historyList.length == null
-                          ? 0
-                          : value.historyList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        String newtime =
-                            value.historyList[index].billDate.toString();
+                  LimitedBox(
+                    maxHeight: size.height - 150,
+                    child: ListView.builder(
+                        itemCount: value.historyList.length == null
+                            ? 0
+                            : value.historyList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          String newtime =
+                              value.historyList[index].billDate.toString();
 
-                        var updatedDate =
-                            DateFormat('yyyy-MM-dd').parse(newtime);
-                        String newDate = updatedDate.toString();
-                        String finalCreatedDate =
-                            newDate.replaceRange(10, 23, '');
+                          var updatedDate =
+                              DateFormat('yyyy-MM-dd').parse(newtime);
+                          String newDate = updatedDate.toString();
+                          String finalCreatedDate =
+                              newDate.replaceRange(10, 23, '');
 
-                        return Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Table(
-                            columnWidths: const {
-                              0: FlexColumnWidth(.5),
-                              1: FlexColumnWidth(2.1),
-                              2: FlexColumnWidth(2.3),
-                              3: FlexColumnWidth(2.2),
-                              4: FlexColumnWidth(1.2)
-                            },
-                            //  border: TableBorder.all(),
-                            children: [
-                              TableRow(
-                                  decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 238, 235, 235),
-                                  ),
-                                  children: [
-                                    Text(
-                                      "\n${(index + 1).toString()}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 13),
+                          return Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Table(
+                              columnWidths: const {
+                                0: FlexColumnWidth(.5),
+                                1: FlexColumnWidth(2.1),
+                                2: FlexColumnWidth(2.3),
+                                3: FlexColumnWidth(2.2),
+                                4: FlexColumnWidth(1.2)
+                              },
+                              //  border: TableBorder.all(),
+                              children: [
+                                TableRow(
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromARGB(255, 238, 235, 235),
                                     ),
-                                    Center(
-                                        child: Text(
-                                      '\n${finalCreatedDate.toString()}',
-                                      style: TextStyle(fontSize: 13),
-                                    )),
-                                    Center(
-                                        child: Text(
-                                      '\n${value.historyList[index].paymentGateWay}',
-                                      style: TextStyle(fontSize: 13),
-                                    )),
-                                    Center(
-                                        child: Text(
-                                      '\n${value.historyList[index].billAmount}',
-                                      style: TextStyle(fontSize: 13),
-                                    )),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.remove_red_eye,
-                                        size: 20,
+                                    children: [
+                                      Text(
+                                        "\n${(index + 1).toString()}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 13),
                                       ),
-                                      onPressed: () async {
-                                        String reAttach = value
-                                            .historyList[index].orderId
-                                            .toString();
-                                        await Provider.of<
-                                                    PaymentHistoryProvider>(
-                                                context,
-                                                listen: false)
-                                            .feeHistoryAttachment(reAttach);
-                                        if (value.extension.toString() ==
-                                            '.pdf') {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PdfDownloadFee()),
-                                          );
-                                        } else {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const NoAttachmentScreenFee()),
-                                          );
-                                        }
-                                      },
-                                    )
-                                  ]),
-                            ],
-                          ),
-                        );
-                      })
+                                      Center(
+                                          child: Text(
+                                        '\n${finalCreatedDate.toString()}',
+                                        style: TextStyle(fontSize: 13),
+                                      )),
+                                      Center(
+                                          child: Text(
+                                        '\n${value.historyList[index].paymentMode}',
+                                        style: TextStyle(fontSize: 13),
+                                      )),
+                                      Center(
+                                          child: Text(
+                                        '\n${value.historyList[index].billAmount}',
+                                        style: TextStyle(fontSize: 13),
+                                      )),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.remove_red_eye,
+                                          size: 20,
+                                        ),
+                                        onPressed: () async {
+                                          String reAttach = value
+                                              .historyList[index].orderId
+                                              .toString();
+                                          await Provider.of<
+                                                      PaymentHistoryProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .feeHistoryAttachment(reAttach);
+                                          if (value.extension.toString() ==
+                                              '.pdf') {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PdfDownloadFee()),
+                                            );
+                                          } else {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const NoAttachmentScreenFee()),
+                                            );
+                                          }
+                                        },
+                                      )
+                                    ]),
+                              ],
+                            ),
+                          );
+                        }),
+                  )
                 ],
               );
       }),

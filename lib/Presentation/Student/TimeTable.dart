@@ -18,7 +18,7 @@ class Timetable extends StatelessWidget {
     var height = size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Table'),
+        title: Text('TimeTable'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -86,7 +86,7 @@ class Timetable extends StatelessWidget {
                                 children: [
                                   Center(
                                     child: Text(
-                                      '${value.name.toString() == null ? '--' : value.name.toString()}',
+                                      '${value.name == null ? '--' : value.name.toString()}',
                                       style: TextStyle(fontSize: 15),
                                     ),
                                   ),
@@ -133,7 +133,7 @@ class PdfDownloader extends StatelessWidget {
     return Consumer<Timetableprovider>(
       builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: const Text('Time Table'),
+            title: const Text('TimeTable'),
             titleSpacing: 00.0,
             centerTitle: true,
             toolbarHeight: 50.2,

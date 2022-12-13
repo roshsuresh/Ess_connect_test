@@ -180,17 +180,25 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController1,
                               decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(left: 1, top: 0),
                                 filled: true,
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
-                                labelText: "Select Section",
+                                labelText: "  Select Section",
                                 hintText: "Section",
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                               ),
                               enabled: false,
                             ),
@@ -298,16 +306,24 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportcourseController1,
                               decoration: const InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 1, top: 0),
                                 fillColor: UIGuide.light_black,
                                 border: OutlineInputBorder(),
-                                labelText: "Select Course",
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                labelText: "  Select Course",
                                 hintText: "Course",
                               ),
                               enabled: false,
@@ -409,16 +425,24 @@ class _StudCurrentStudyingState extends State<StudCurrentStudying> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportDivisionController1,
                               decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(left: 1, top: 0),
                                 filled: true,
                                 fillColor: UIGuide.light_black,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 border: OutlineInputBorder(),
-                                labelText: "Select Division",
+                                labelText: "  Select Division",
                                 hintText: "Division",
                               ),
                               enabled: false,
@@ -949,13 +973,6 @@ class StudProfileView_Staff extends StatelessWidget {
                     ),
                     radius: 65,
                     backgroundColor: UIGuide.WHITE,
-                    // child: Image(
-                    //   image: NetworkImage(
-                    //     value.viewStudReportListt[indexx].studentPhoto ??
-                    //         'https://png.pngtree.com/element_our/png/20181129/male-student-icon-png_251938.jpg',
-                    //   ),
-                    //   // fit: BoxFit.fill,
-                    // ),
                   ),
                 )
               ],
@@ -966,12 +983,12 @@ class StudProfileView_Staff extends StatelessWidget {
                 height: 170,
                 width: size.width,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 238, 234, 234),
+                    color: const Color.fromARGB(255, 238, 234, 234),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Color.fromARGB(255, 238, 234, 234),
                       ),
                       width: size.width,
@@ -1205,16 +1222,24 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Section",
+                                labelText: "  Select Section",
                                 hintText: "Section",
                               ),
                               enabled: false,
@@ -1332,16 +1357,24 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportcourseController1,
                               decoration: InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Course",
+                                labelText: "  Select Course",
                                 hintText: "Course",
                               ),
                               enabled: false,
@@ -1438,16 +1471,24 @@ class _StudRelievedStaffState extends State<StudRelievedStaff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportDivisionController1,
                               decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Division",
+                                labelText: "  Select Division",
                                 hintText: "Division",
                               ),
                               enabled: false,
@@ -1935,16 +1976,24 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: studReportInitialValuesController1,
                               decoration: const InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Section",
+                                labelText: "  Select Section",
                                 hintText: "Section",
                               ),
                               enabled: false,
@@ -2060,16 +2109,24 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportcourseController1,
                               decoration: const InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Course",
+                                labelText: "  Select Course",
                                 hintText: "Course",
                               ),
                               enabled: false,
@@ -2165,16 +2222,24 @@ class _StudentReportBoth_StaffState extends State<StudentReportBoth_Staff> {
                       padding: const EdgeInsets.all(5.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: UIGuide.light_Purple, width: 1),
+                            ),
                             height: 40,
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: StudReportDivisionController1,
                               decoration: const InputDecoration(
                                 filled: true,
+                                contentPadding:
+                                    EdgeInsets.only(left: 0, top: 0),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
-                                labelText: "Select Division",
+                                labelText: " Select Division",
                                 hintText: "Division",
                               ),
                               enabled: false,

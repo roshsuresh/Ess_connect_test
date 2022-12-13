@@ -16,6 +16,7 @@ import 'package:Ess_test/Application/AdminProviders/StudstattiticsProvider.dart'
 import 'package:Ess_test/Application/AdminProviders/TimeTableProviders.dart';
 import 'package:Ess_test/Application/AdminProviders/TimeTableStaff.dart';
 import 'package:Ess_test/Application/AdminProviders/dashboardProvider.dart';
+import 'package:Ess_test/Application/Module%20Providers.dart/Module.dart';
 import 'package:Ess_test/Application/Staff_Providers/Attendencestaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/GallerySendProviderStaff.dart';
 import 'package:Ess_test/Application/Staff_Providers/MarkReportProvider.dart';
@@ -28,12 +29,10 @@ import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
 import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
-import 'package:Ess_test/Application/StudentProviders/PAYTM_provider.dart';
+import 'package:Ess_test/Application/StudentProviders/FinalStatusProvider.dart';
 import 'package:Ess_test/Application/StudentProviders/PaymentHistory.dart';
-import 'package:Ess_test/Domain/Student/TransactionModel.dart';
 import 'package:Ess_test/routes.dart';
 import 'package:Ess_test/utils/constants.dart';
-import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -230,7 +229,8 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => FeeDetailsProvider()),
         ChangeNotifierProvider(create: (context) => StudStatiticsProvider()),
         ChangeNotifierProvider(create: (context) => ConnectivityProvider()),
-        ChangeNotifierProvider(create: (context) => PaytmFinalStatusProvider())
+        ChangeNotifierProvider(create: (context) => FinalStatusProvider()),
+        ChangeNotifierProvider(create: (context) => ModuleProviders()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',

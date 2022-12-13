@@ -124,13 +124,18 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MaterialButton(
-                minWidth: size.width - 250,
-                color: Colors.white70,
-                child: Text('Date: ${datee.toString()}'),
-                onPressed: () async {
-                  return;
-                }),
+            Spacer(),
+            Container(
+              height: 41,
+              width: size.width * 0.44,
+              child: MaterialButton(
+                  //  minWidth: size.width - 250,
+                  color: Colors.white70,
+                  child: Text('Date: ${datee.toString()}'),
+                  onPressed: () async {
+                    return;
+                  }),
+            ),
             Spacer(),
             SizedBox(
               height: 50,
@@ -151,18 +156,15 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                                     shrinkWrap: true,
                                     itemCount: noticeCategoryStf!.length,
                                     itemBuilder: (context, index) {
-                                      // print(snapshot
-
-                                      //     .attendenceInitialValues.length);
-
-                                      // value.removeCourseAll();
+// print(snapshot
+//     .attendenceInitialValues.length);
+// value.removeCourseAll();
                                       return ListTile(
                                         selectedTileColor: Colors.blue.shade100,
                                         selectedColor: UIGuide.PRIMARY2,
 
                                         // selected: snapshot.isCourseSelected(
                                         //     attendecourse![index]),
-
                                         onTap: () async {
                                           print({noticeCategoryStf![index]});
                                           categoryvalueController.text =
@@ -205,16 +207,23 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: UIGuide.light_Purple, width: 2),
+                          ),
                           height: 40,
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: categoryvalueController1,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 0, top: 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
-                              labelText: "Select Category",
+                              labelText: "  Select Category",
                               hintText: "Category",
                             ),
                             enabled: false,
@@ -241,6 +250,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 );
               }),
             ),
+            Spacer(),
           ],
         ),
         Padding(
@@ -252,10 +262,16 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
+              labelStyle: TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Title',
               hintStyle: TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: UIGuide.light_Purple, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ),
@@ -269,10 +285,16 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Matter*',
+              labelStyle: TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Matter',
               hintStyle: TextStyle(color: Colors.grey),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    const BorderSide(color: UIGuide.light_Purple, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
           ),
@@ -316,10 +338,18 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 } else {
                   print('Size Exceed');
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                    "Size Exceed(Less than 200KB allowed)",
-                    textAlign: TextAlign.center,
-                  )));
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    duration: Duration(seconds: 1),
+                    margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+                    behavior: SnackBarBehavior.floating,
+                    content: Text(
+                      "Size Exceed(Less than 200KB allowed)",
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
                 }
               }),
             ),
@@ -334,11 +364,12 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Spacer(),
             SizedBox(
               // height: 30,
-              // width: MediaQuery.of(context).size.width * 0.47,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: MaterialButton(
-                minWidth: size.width - 216,
+                // minWidth: size.width - 250,
                 child: Center(child: Text('From  $time')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -356,12 +387,9 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
               ),
             ),
             Spacer(),
-            //  kWidth, kWidth,
             SizedBox(
-              // height: 30,
-              // width: MediaQuery.of(context).size.width * 0.47,
+              width: MediaQuery.of(context).size.width * 0.45,
               child: MaterialButton(
-                minWidth: size.width - 216,
                 child: Center(child: Text('To  ${timeNow}')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -383,10 +411,12 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 }),
               ),
             ),
+            Spacer()
           ],
         ),
         Row(
           children: [
+            Spacer(),
             SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width * 0.49,
@@ -462,16 +492,23 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: UIGuide.light_Purple, width: 1),
+                          ),
                           height: 40,
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController1,
                             decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 0, top: 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
-                              labelText: "Select Course",
+                              labelText: "  Select Course",
                               hintText: "Course",
                             ),
                             enabled: false,
@@ -558,16 +595,23 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     padding: const EdgeInsets.all(5.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: UIGuide.light_Purple, width: 1),
+                          ),
                           height: 40,
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController1,
                             decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 0, top: 0),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
-                              labelText: "Select Division",
+                              labelText: "  Select Division",
                               hintText: "Division",
                             ),
                             enabled: false,
@@ -594,6 +638,7 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                 );
               }),
             ),
+            Spacer()
           ],
         ),
         kheight20,

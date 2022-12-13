@@ -41,21 +41,22 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
 
   String? checkname;
   final titleController = TextEditingController();
-
   final attachmentid = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<GalleryProviderAdmin>(context, listen: false);
       p.getCourseList();
-
       p.courseDropDown.clear();
       p.courseList.clear();
       p.divisionList.clear();
       p.divisionDropDown.clear();
       titleController.clear();
       attachmentid.clear();
+      p.divisionCounter(0);
+      p.courseCounter(0);
     });
   }
 
@@ -65,7 +66,6 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     datee = DateFormat('dd/MMM/yyyy').format(DateTime.now());
-
     return ListView(
       children: [
         Row(
@@ -78,7 +78,6 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 onPressed: () async {
                   return;
                 }),
-            // Spacer(),
           ],
         ),
         Padding(
@@ -92,8 +91,8 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               labelText: 'Title*',
               labelStyle: TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Title',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
+              hintStyle: const TextStyle(color: Colors.grey),
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               focusedBorder: OutlineInputBorder(
@@ -116,7 +115,6 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               onPressed: (() async {
                 final result = await FilePicker.platform.pickFiles(
                     type: FileType.custom,
-                    allowMultiple: true,
                     allowedExtensions: ['png', 'jpeg', 'jpg']);
                 if (result == null) {
                   return;
@@ -132,7 +130,6 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                   await Provider.of<GalleryProviderAdmin>(context,
                           listen: false)
                       .galleryImageSave(context, file.path.toString());
-                  //openFile(file);
                   if (file.name.length >= 6) {
                     setState(() {
                       checkname =
@@ -153,7 +150,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
             ),
           ),
         ),
-        Center(
+        const Center(
             child: Text(
           'Maximum allowed file size is 200 KB',
           style:
@@ -162,11 +159,12 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
         kheight10,
         Row(
           children: [
+            Spacer(),
             SizedBox(
               width: size.width * .45,
               height: 35,
               child: MaterialButton(
-                minWidth: size.width - 216,
+                //  minWidth: size.width - 216,
                 child: Center(child: Text('From  $time')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -188,7 +186,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
               width: size.width * .45,
               height: 35,
               child: MaterialButton(
-                minWidth: size.width - 216,
+                //  minWidth: size.width - 216,
                 child: Center(child: Text('To  $timeNow')),
                 color: Colors.white,
                 onPressed: (() async {
@@ -206,10 +204,12 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 }),
               ),
             ),
+            Spacer()
           ],
         ),
         Row(
           children: [
+            Spacer(),
             Consumer<GalleryProviderAdmin>(
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -249,13 +249,21 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
-                      "Select Course",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
+                    buttonText: value.courseLen == 0
+                        ? const Text(
+                            "Select Course",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          )
+                        : Text(
+                            "   ${value.courseLen.toString()} Selected",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
                     chipDisplay: MultiSelectChipDisplay.none(),
                     onConfirm: (results) async {
                       courseData = [];
@@ -269,9 +277,12 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       }
                       print("courseData${courseData}");
                       course = courseData.join(',');
+                      // await Provider.of<GalleryProviderAdmin>(context,
+                      //         listen: false)
+                      //     .divisionClear();
                       await Provider.of<GalleryProviderAdmin>(context,
                               listen: false)
-                          .divisionClear();
+                          .courseCounter(results.length);
                       await Provider.of<GalleryProviderAdmin>(context,
                               listen: false)
                           .getDivisionList(course);
@@ -320,13 +331,21 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
-                      "Select Division",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
+                    buttonText: value.divisionLen == 0
+                        ? const Text(
+                            "Select Division",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          )
+                        : Text(
+                            "   ${value.divisionLen.toString()} Selected",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
                     chipDisplay: MultiSelectChipDisplay.none(),
                     onConfirm: (results) async {
                       divisionData = [];
@@ -340,14 +359,17 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                         print("${divisionData.map((e) => data.value)}");
                       }
                       division = divisionData.join(',');
-
+                      await Provider.of<GalleryProviderAdmin>(context,
+                              listen: false)
+                          .divisionCounter(results.length);
                       print(divisionData.join(','));
                       attach = value.id.toString();
                     },
                   ),
                 ),
               ),
-            )
+            ),
+            Spacer()
           ],
         ),
         kheight10,

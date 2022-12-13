@@ -10,10 +10,24 @@ class AdminGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Gallery'),
+              title: Row(
+                children: [
+                  Spacer(),
+                  const Text('Gallery'),
+                  Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminGallery()));
+                      },
+                      icon: Icon(Icons.refresh))
+                ],
+              ),
               titleSpacing: 20.0,
               centerTitle: true,
               toolbarHeight: 40,
@@ -28,7 +42,7 @@ class AdminGallery extends StatelessWidget {
                 indicatorColor: Colors.white,
                 indicatorWeight: 5,
                 tabs: [
-                  Tab(text: "Received"),
+                  // Tab(text: "Received"),
                   Tab(
                     text: "Send",
                   ),
@@ -40,7 +54,7 @@ class AdminGallery extends StatelessWidget {
               backgroundColor: UIGuide.light_Purple,
             ),
             body: TabBarView(children: [
-              AdminGalleryView(),
+              // AdminGalleryView(),
               AdminGalleryUpload(),
               GalleryListAdmin()
             ])));

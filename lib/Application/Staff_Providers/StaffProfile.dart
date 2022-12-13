@@ -22,7 +22,7 @@ class StaffProfileProvider with ChangeNotifier {
   String? address;
   String? staffRole;
   String? photo;
-  
+
   bool _loading = false;
   bool get loading => _loading;
   setLoading(bool value) {
@@ -38,7 +38,6 @@ class StaffProfileProvider with ChangeNotifier {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
     setLoading(true);
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/staff/profile"),
@@ -64,13 +63,8 @@ class StaffProfileProvider with ChangeNotifier {
         address = stf.address;
         gender = stf.gender;
         setLoading(false);
-        print(name);
 
-        // print(studName);
-        // print("corect2..........");
         notifyListeners();
-
-        // print(response.body);
       } else {
         print("Error in Staff Profile Response");
       }

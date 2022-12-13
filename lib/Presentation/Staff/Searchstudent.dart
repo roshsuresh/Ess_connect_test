@@ -2,23 +2,31 @@ import 'package:Ess_test/Application/Staff_Providers/SearchProvider.dart';
 import 'package:Ess_test/Constants.dart';
 import 'package:Ess_test/Domain/Staff/SearchStudReport.dart';
 import 'package:Ess_test/utils/constants.dart';
+import 'package:Ess_test/utils/spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SearchStudent_stf extends StatelessWidget {
+class SearchStudent_stf extends StatefulWidget {
   SearchStudent_stf({Key? key}) : super(key: key);
 
+  @override
+  State<SearchStudent_stf> createState() => _SearchStudent_stfState();
+}
+
+class _SearchStudent_stfState extends State<SearchStudent_stf> {
   TextEditingController clearValue = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var p = Provider.of<Screen_Search_Providers>(context, listen: false);
+      p.clearStudentList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var p = Provider.of<Screen_Search_Providers>(context, listen: false);
-
-      p.clearStudentList();
-    });
-
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -137,227 +145,254 @@ class SearchStudent_stf extends StatelessWidget {
                     ],
                   );
                 }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: provider.searchStudent.isEmpty
-                      ? 0
-                      : provider.searchStudent.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        kheight10,
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      StudProfileViewBySearch_Staff(
-                                        stud: provider.searchStudent[index],
-                                      )),
-                            );
-                          },
-                          child: Container(
-                            width: size.width - 15,
-                            height: 82,
-                            decoration: const BoxDecoration(
-                                color: UIGuide.light_black,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                kWidth,
-                                Center(
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                        color: UIGuide.light_black,
-                                        image: DecorationImage(
-                                            image: NetworkImage(provider
-                                                    .searchStudent[index]
-                                                    .studentPhoto ??
-                                                'https://img.myloview.com/canvas-prints/default-avatar-profile-icon-social-media-user-symbol-image-400-251200038.jpg')),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10))),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
+                return provider.loading
+                    ? const spinkitLoader()
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: provider.searchStudent.isEmpty
+                            ? 0
+                            : provider.searchStudent.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              kheight10,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            StudProfileViewBySearch_Staff(
+                                              stud:
+                                                  provider.searchStudent[index],
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  width: size.width - 15,
+                                  height: 82,
+                                  decoration: const BoxDecoration(
+                                      color: UIGuide.light_black,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Name : ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 13),
-                                          ),
-                                          RichText(
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            strutStyle:
-                                                const StrutStyle(fontSize: 8.0),
-                                            text: TextSpan(
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black,
-                                                ),
-                                                text: provider
-                                                        .searchStudent[index]
-                                                        .name ??
-                                                    '---'),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Roll No : ',
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 13),
-                                          ),
-                                          RichText(
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            strutStyle:
-                                                const StrutStyle(fontSize: 8.0),
-                                            text: TextSpan(
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                              ),
-                                              text: provider
+                                      kWidth,
+                                      Center(
+                                        child: Container(
+                                          width: 60,
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                              color: UIGuide.light_black,
+                                              image: DecorationImage(
+                                                  image: NetworkImage(provider
                                                           .searchStudent[index]
-                                                          .rollNo ==
-                                                      null
-                                                  ? '---'
-                                                  : provider
-                                                      .searchStudent[index]
-                                                      .rollNo
-                                                      .toString(),
-                                            ),
-                                          ),
-                                          kWidth,
-                                          kWidth,
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                'Division : ',
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 13),
-                                              ),
-                                              RichText(
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                strutStyle: const StrutStyle(
-                                                    fontSize: 8.0),
-                                                text: TextSpan(
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.black,
-                                                  ),
-                                                  text: provider
-                                                          .searchStudent[index]
-                                                          .division ??
-                                                      '---',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            'Adm No : ',
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 13),
-                                          ),
-                                          RichText(
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            strutStyle:
-                                                const StrutStyle(fontSize: 8.0),
-                                            text: TextSpan(
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                              ),
-                                              text: provider
-                                                      .searchStudent[index]
-                                                      .admnNo ??
-                                                  '---',
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          String phn = provider
-                                                      .searchStudent[index]
-                                                      .mobNo ==
-                                                  null
-                                              ? '--'
-                                              : provider
-                                                  .searchStudent[index].mobNo
-                                                  .toString();
-
-                                          _makingPhoneCall(phn.toString());
-                                        },
-                                        child: Row(
-                                          children: [
-                                            const Text(
-                                              'Phone : ',
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 13),
-                                            ),
-                                            RichText(
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              strutStyle: const StrutStyle(
-                                                  fontSize: 8.0),
-                                              text: TextSpan(
-                                                style: const TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.black,
-                                                ),
-                                                text: provider
-                                                        .searchStudent[index]
-                                                        .mobNo ??
-                                                    '---',
-                                              ),
-                                            ),
-                                            const Icon(
-                                              Icons.phone,
-                                              size: 17,
-                                            )
-                                          ],
+                                                          .studentPhoto ??
+                                                      'https://img.myloview.com/canvas-prints/default-avatar-profile-icon-social-media-user-symbol-image-400-251200038.jpg')),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10))),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  'Name : ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 13),
+                                                ),
+                                                RichText(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  strutStyle: const StrutStyle(
+                                                      fontSize: 8.0),
+                                                  text: TextSpan(
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black,
+                                                      ),
+                                                      text: provider
+                                                              .searchStudent[
+                                                                  index]
+                                                              .name ??
+                                                          '---'),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  'Roll No : ',
+                                                  textAlign: TextAlign.start,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 13),
+                                                ),
+                                                RichText(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  strutStyle: const StrutStyle(
+                                                      fontSize: 8.0),
+                                                  text: TextSpan(
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.black,
+                                                    ),
+                                                    text: provider
+                                                                .searchStudent[
+                                                                    index]
+                                                                .rollNo ==
+                                                            null
+                                                        ? '---'
+                                                        : provider
+                                                            .searchStudent[
+                                                                index]
+                                                            .rollNo
+                                                            .toString(),
+                                                  ),
+                                                ),
+                                                kWidth,
+                                                kWidth,
+                                                Row(
+                                                  children: [
+                                                    const Text(
+                                                      'Division : ',
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 13),
+                                                    ),
+                                                    RichText(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      strutStyle:
+                                                          const StrutStyle(
+                                                              fontSize: 8.0),
+                                                      text: TextSpan(
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.black,
+                                                        ),
+                                                        text: provider
+                                                                .searchStudent[
+                                                                    index]
+                                                                .division ??
+                                                            '---',
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  'Adm No : ',
+                                                  textAlign: TextAlign.start,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 13),
+                                                ),
+                                                RichText(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  strutStyle: const StrutStyle(
+                                                      fontSize: 8.0),
+                                                  text: TextSpan(
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.black,
+                                                    ),
+                                                    text: provider
+                                                            .searchStudent[
+                                                                index]
+                                                            .admnNo ??
+                                                        '---',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                String phn = provider
+                                                            .searchStudent[
+                                                                index]
+                                                            .mobNo ==
+                                                        null
+                                                    ? '--'
+                                                    : provider
+                                                        .searchStudent[index]
+                                                        .mobNo
+                                                        .toString();
+
+                                                _makingPhoneCall(
+                                                    phn.toString());
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  const Text(
+                                                    'Phone : ',
+                                                    textAlign: TextAlign.start,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13),
+                                                  ),
+                                                  RichText(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    strutStyle:
+                                                        const StrutStyle(
+                                                            fontSize: 8.0),
+                                                    text: TextSpan(
+                                                      style: const TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors.black,
+                                                      ),
+                                                      text: provider
+                                                              .searchStudent[
+                                                                  index]
+                                                              .mobNo ??
+                                                          '---',
+                                                    ),
+                                                  ),
+                                                  const Icon(
+                                                    Icons.phone,
+                                                    size: 17,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
               }),
             ),
           ],

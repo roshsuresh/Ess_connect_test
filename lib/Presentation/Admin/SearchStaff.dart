@@ -21,8 +21,7 @@ class _SearchStaffState extends State<SearchStaff> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var p = Provider.of<SearchStaffProviders>(context, listen: false);
-
-      p.clearStudentList();
+      p.clearStaffList();
     });
   }
 
@@ -69,7 +68,7 @@ class _SearchStaffState extends State<SearchStaff> {
                                         clearValue.text.toString());
                                 Provider.of<SearchStaffProviders>(context,
                                         listen: false)
-                                    .clearStudentList();
+                                    .clearStaffList();
                               }),
                             ),
                             IconButton(
@@ -144,7 +143,9 @@ class _SearchStaffState extends State<SearchStaff> {
                       ? const Center(child: spinkitLoader())
                       : ListView.builder(
                           shrinkWrap: true,
-                          itemCount: value.staffReportList.length,
+                          itemCount: value.staffReportList.length == null
+                              ? 0
+                              : value.staffReportList.length,
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
@@ -176,7 +177,7 @@ class _SearchStaffState extends State<SearchStaff> {
                                             width: 70,
                                             height: 70,
                                             decoration: BoxDecoration(
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 236, 233, 233),
                                                 image: DecorationImage(
                                                     image: NetworkImage(value
@@ -185,13 +186,11 @@ class _SearchStaffState extends State<SearchStaff> {
                                                                 .staffPhoto ==
                                                             null
                                                         ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhwaLDKaK49tsHmdMGOrmTdns5qiw080F2Yw&usqp=CAU'
-                                                        : value
-                                                            .staffReportList[
-                                                                index]
-                                                            .staffPhoto
+                                                        : value.staffReportList[index].staffPhoto
                                                             .toString())),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10))),
                                           ),
                                         ),
                                         Padding(
