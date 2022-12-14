@@ -10,12 +10,15 @@ class Attendence extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AttendenceProvider>(context, listen: false).attendenceList();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AttendenceProvider>(context, listen: false).attendenceList();
+    });
+
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Attendance'),
+          title: const Text('Attendance'),
           titleSpacing: 00.0,
           centerTitle: true,
           toolbarHeight: 60.2,

@@ -142,11 +142,23 @@ class _FlashNewsUploadState extends State<FlashNewsUpload> {
                 color: Colors.white,
                 onPressed: (() async {
                   _mydatetimeFrom = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetimeFrom ?? DateTime.now(),
-                      firstDate:
-                          DateTime.now().subtract(const Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                    context: context,
+                    initialDate: _mydatetimeFrom ?? DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
+                  );
                   setState(() {
                     time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
                     print(time);
@@ -168,6 +180,18 @@ class _FlashNewsUploadState extends State<FlashNewsUpload> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
                   );
 
                   setState(() {

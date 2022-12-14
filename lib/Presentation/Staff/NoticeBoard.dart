@@ -366,19 +366,29 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
           children: [
             Spacer(),
             SizedBox(
-              // height: 30,
               width: MediaQuery.of(context).size.width * 0.45,
               child: MaterialButton(
-                // minWidth: size.width - 250,
                 child: Center(child: Text('From  $time')),
                 color: Colors.white,
                 onPressed: (() async {
                   _mydatetimeFrom = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetimeFrom ?? DateTime.now(),
-                      firstDate:
-                          DateTime.now().subtract(const Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                    context: context,
+                    initialDate: _mydatetimeFrom ?? DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
+                  );
                   setState(() {
                     time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
                     print(time);
@@ -398,12 +408,20 @@ class _StaffNoticeBoard_sentState extends State<StaffNoticeBoard_sent> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
                   );
-                  // _mydatetimeTo = await showDatePicker(
-                  //     context: context,
-                  //     initialDate: _mydatetimeTo ?? DateTime.now(),
-                  //     firstDate: DateTime(2022),
-                  //     lastDate: DateTime(2030));
+
                   setState(() {
                     timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
                     print(timeNow);

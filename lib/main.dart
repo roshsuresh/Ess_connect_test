@@ -27,6 +27,7 @@ import 'package:Ess_test/Application/Staff_Providers/StaffFlashnews.dart';
 import 'package:Ess_test/Application/Staff_Providers/StaffNotificationScreen.dart';
 import 'package:Ess_test/Application/Staff_Providers/TextSMS_ToGuardian.dart';
 import 'package:Ess_test/Application/Staff_Providers/TimetableProvider.dart';
+import 'package:Ess_test/Application/StudentProviders/CurriculamProviders.dart';
 import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Application/StudentProviders/NotificationReceived.dart';
 import 'package:Ess_test/Application/StudentProviders/FinalStatusProvider.dart';
@@ -231,6 +232,7 @@ class _GjInfoTechState extends State<GjInfoTech> {
         ChangeNotifierProvider(create: (context) => ConnectivityProvider()),
         ChangeNotifierProvider(create: (context) => FinalStatusProvider()),
         ChangeNotifierProvider(create: (context) => ModuleProviders()),
+        ChangeNotifierProvider(create: (context) => Curriculamprovider()),
       ],
       child: MaterialApp(
         title: 'Ess Connect',
@@ -378,14 +380,14 @@ class _SplashFuturePageState extends State<SplashFuturePage>
       });
     });
 
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       setState(() {
         _containerSize = 2;
         _containerOpacity = 1;
       });
     });
 
-    Timer(Duration(seconds: 4), () async {
+    Timer(const Duration(seconds: 4), () async {
       await _checkSession();
     });
   }
@@ -408,11 +410,11 @@ class _SplashFuturePageState extends State<SplashFuturePage>
           Column(
             children: [
               AnimatedContainer(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: _height / _fontSize),
               AnimatedOpacity(
-                duration: Duration(milliseconds: 1000),
+                duration: const Duration(milliseconds: 1000),
                 opacity: _textOpacity,
                 child: Text(
                   'ESS CONNECT',
@@ -427,11 +429,11 @@ class _SplashFuturePageState extends State<SplashFuturePage>
           ),
           Center(
             child: AnimatedOpacity(
-              duration: Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 2000),
               curve: Curves.fastLinearToSlowEaseIn,
               opacity: _containerOpacity,
               child: AnimatedContainer(
-                  duration: Duration(milliseconds: 2000),
+                  duration: const Duration(milliseconds: 2000),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: _width / _containerSize,
                   width: _width / _containerSize,
@@ -455,7 +457,7 @@ class PageTransition extends PageRouteBuilder {
   PageTransition(this.page)
       : super(
           pageBuilder: (context, animation, anotherAnimation) => page,
-          transitionDuration: Duration(milliseconds: 2000),
+          transitionDuration: const Duration(milliseconds: 2000),
           transitionsBuilder: (context, animation, anotherAnimation, child) {
             animation = CurvedAnimation(
               curve: Curves.fastLinearToSlowEaseIn,

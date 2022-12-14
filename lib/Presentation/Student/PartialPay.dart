@@ -1070,7 +1070,7 @@ class _FeePartialPaymentState extends State<FeePartialPayment> {
                                                 behavior:
                                                     SnackBarBehavior.floating,
                                                 content: Text(
-                                                  'Payment Gateway Not Provided...',
+                                                  'Payment Gateway Not Provided...!',
                                                   textAlign: TextAlign.center,
                                                 ),
                                               ),
@@ -1085,8 +1085,8 @@ class _FeePartialPaymentState extends State<FeePartialPayment> {
                                       ).show();
                                     }
 
-                                    /////////            _busController.text.isEmpty                  /////////////////////
-                                    ///////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////            _busController.text.isEmpty                  /////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                     else if (_feeController.text.isNotEmpty &&
                                         _busController.text.isEmpty) {
                                       String busZero = '0';
@@ -1161,7 +1161,8 @@ class _FeePartialPaymentState extends State<FeePartialPayment> {
                                                   callbackURL2,
                                                   staging2);
                                             }
-                                          } ///////////////////         RazorPay         ////////////////////////
+                                          }
+///////////////////----------------------         RazorPay         -------------------////////////////////////
                                           else if (trans.gateway ==
                                               'RazorPay') {
                                             await Provider.of<FeesProvider>(

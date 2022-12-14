@@ -53,17 +53,19 @@ class _FeeReportState extends State<FeeReport> {
       appBar: AppBar(
         title: Row(
           children: [
-            Spacer(),
+            const Spacer(),
             const Text(
               'Fee Collection Report',
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => FeeReport()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FeeReport()));
                 },
-                icon: Icon(Icons.refresh_outlined))
+                icon: const Icon(Icons.refresh_outlined))
           ],
         ),
         titleSpacing: 00.0,
@@ -82,7 +84,7 @@ class _FeeReportState extends State<FeeReport> {
         children: [
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               Consumer<SchoolPhotoProviders>(
                 builder: (context, value, child) => Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -98,14 +100,14 @@ class _FeeReportState extends State<FeeReport> {
                         "Select Section",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      selectedItemsTextStyle: TextStyle(
+                      selectedItemsTextStyle: const TextStyle(
                           fontWeight: FontWeight.w900,
                           color: UIGuide.light_Purple),
-                      confirmText: Text(
+                      confirmText: const Text(
                         'OK',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
-                      cancelText: Text(
+                      cancelText: const Text(
                         'Cancel',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
@@ -166,7 +168,7 @@ class _FeeReportState extends State<FeeReport> {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Consumer<SchoolPhotoProviders>(
                 builder: (context, value, child) => Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -182,14 +184,14 @@ class _FeeReportState extends State<FeeReport> {
                         style: TextStyle(color: Colors.black),
                       ),
                       // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                      selectedItemsTextStyle: TextStyle(
+                      selectedItemsTextStyle: const TextStyle(
                           fontWeight: FontWeight.w900,
                           color: UIGuide.light_Purple),
-                      confirmText: Text(
+                      confirmText: const Text(
                         'OK',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
-                      cancelText: Text(
+                      cancelText: const Text(
                         'Cancel',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
@@ -248,10 +250,10 @@ class _FeeReportState extends State<FeeReport> {
                   ),
                 ),
               ),
-              Spacer()
+              const Spacer()
             ],
           ),
-          Text(
+          const Text(
             'From Date and To date should not exceed 30 days',
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -260,7 +262,7 @@ class _FeeReportState extends State<FeeReport> {
           ),
           Row(
             children: [
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 width: size.width * .42,
                 child: MaterialButton(
@@ -269,10 +271,23 @@ class _FeeReportState extends State<FeeReport> {
                   color: Colors.white,
                   onPressed: (() async {
                     _mydatetimeFrom = await showDatePicker(
-                        context: context,
-                        initialDate: _mydatetimeFrom ?? DateTime.now(),
-                        firstDate: DateTime(2022),
-                        lastDate: DateTime(2030));
+                      context: context,
+                      initialDate: _mydatetimeFrom ?? DateTime.now(),
+                      firstDate: DateTime(2022),
+                      lastDate: DateTime(2030),
+                      builder: (context, child) {
+                        return Theme(
+                            data: ThemeData.light().copyWith(
+                              primaryColor: UIGuide.light_Purple,
+                              colorScheme: const ColorScheme.light(
+                                primary: UIGuide.light_Purple,
+                              ),
+                              buttonTheme: const ButtonThemeData(
+                                  textTheme: ButtonTextTheme.primary),
+                            ),
+                            child: child!);
+                      },
+                    );
                     setState(() {
                       time = DateFormat('dd-MMM-yyyy').format(_mydatetimeFrom!);
                       print(time);
@@ -280,7 +295,7 @@ class _FeeReportState extends State<FeeReport> {
                   }),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 width: size.width * .42,
                 child: MaterialButton(
@@ -289,10 +304,23 @@ class _FeeReportState extends State<FeeReport> {
                   color: Colors.white,
                   onPressed: (() async {
                     _mydatetimeTo = await showDatePicker(
-                        context: context,
-                        initialDate: _mydatetimeTo ?? DateTime.now(),
-                        firstDate: DateTime(2022),
-                        lastDate: DateTime(2030));
+                      context: context,
+                      initialDate: _mydatetimeTo ?? DateTime.now(),
+                      firstDate: DateTime(2022),
+                      lastDate: DateTime(2030),
+                      builder: (context, child) {
+                        return Theme(
+                            data: ThemeData.light().copyWith(
+                              primaryColor: UIGuide.light_Purple,
+                              colorScheme: const ColorScheme.light(
+                                primary: UIGuide.light_Purple,
+                              ),
+                              buttonTheme: const ButtonThemeData(
+                                  textTheme: ButtonTextTheme.primary),
+                            ),
+                            child: child!);
+                      },
+                    );
                     setState(() {
                       timeNow =
                           DateFormat('dd-MMM-yyyy').format(_mydatetimeTo!);
@@ -301,7 +329,7 @@ class _FeeReportState extends State<FeeReport> {
                   }),
                 ),
               ),
-              Spacer()
+              const Spacer()
             ],
           ),
           Row(
@@ -310,7 +338,7 @@ class _FeeReportState extends State<FeeReport> {
               SizedBox(
                 width: 120,
                 child: TextButton(
-                  child: Text(
+                  child: const Text(
                     'View',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -339,15 +367,15 @@ class _FeeReportState extends State<FeeReport> {
           Padding(
             padding: const EdgeInsets.only(left: 6, right: 6),
             child: Table(
-              columnWidths: {
+              columnWidths: const {
                 0: FlexColumnWidth(0.8),
                 1: FlexColumnWidth(1),
                 2: FlexColumnWidth(2.5),
                 3: FlexColumnWidth(2),
                 4: FlexColumnWidth(1),
               },
-              border:
-                  TableBorder.all(color: Color.fromARGB(255, 216, 214, 214)),
+              border: TableBorder.all(
+                  color: const Color.fromARGB(255, 216, 214, 214)),
               children: const [
                 TableRow(
                     decoration: BoxDecoration(
@@ -424,7 +452,8 @@ class _FeeReportState extends State<FeeReport> {
                               padding: const EdgeInsets.all(1.0),
                               child: Table(
                                 border: TableBorder.all(
-                                    color: Color.fromARGB(255, 245, 243, 243)),
+                                    color: const Color.fromARGB(
+                                        255, 245, 243, 243)),
                                 columnWidths: const {
                                   0: FlexColumnWidth(0.8),
                                   1: FlexColumnWidth(1),
@@ -438,16 +467,14 @@ class _FeeReportState extends State<FeeReport> {
                                       child: Text(
                                         (index + 1).toString(),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                     Center(
                                       child: Text(
-                                        newdate.isEmpty ? '----' : newdate
-                                        // value.collectionList[index].remittedDate ??
-                                        ,
-                                        style: TextStyle(
+                                        newdate.isEmpty ? '----' : newdate,
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
@@ -455,7 +482,7 @@ class _FeeReportState extends State<FeeReport> {
                                       child: Text(
                                         value.collectionList[index].name ??
                                             '--',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
@@ -468,7 +495,7 @@ class _FeeReportState extends State<FeeReport> {
                                             : value.collectionList[index]
                                                 .remittedFees
                                                 .toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
@@ -499,7 +526,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Name: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -511,11 +538,11 @@ class _FeeReportState extends State<FeeReport> {
                                                                         .ellipsis,
                                                                 maxLines: 2,
                                                                 strutStyle:
-                                                                    StrutStyle(
+                                                                    const StrutStyle(
                                                                         fontSize:
                                                                             13.0),
                                                                 text: TextSpan(
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         color: UIGuide
                                                                             .light_Purple,
                                                                         fontSize:
@@ -537,7 +564,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Adm No: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -545,7 +572,7 @@ class _FeeReportState extends State<FeeReport> {
                                                             Text(
                                                               value.admissionNo ??
                                                                   '---',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 15,
                                                                   fontWeight:
                                                                       FontWeight
@@ -562,7 +589,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Division: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -570,7 +597,7 @@ class _FeeReportState extends State<FeeReport> {
                                                             Text(
                                                               value.division ??
                                                                   '---',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 15,
                                                                   fontWeight:
                                                                       FontWeight
@@ -587,7 +614,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Date: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -595,7 +622,7 @@ class _FeeReportState extends State<FeeReport> {
                                                             Text(
                                                               value.transactionDate ??
                                                                   '---',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 15,
                                                                   fontWeight:
                                                                       FontWeight
@@ -612,7 +639,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Order Id: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -624,11 +651,11 @@ class _FeeReportState extends State<FeeReport> {
                                                                         .ellipsis,
                                                                 maxLines: 2,
                                                                 strutStyle:
-                                                                    StrutStyle(
+                                                                    const StrutStyle(
                                                                         fontSize:
                                                                             13.0),
                                                                 text: TextSpan(
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         color: UIGuide
                                                                             .light_Purple,
                                                                         fontSize:
@@ -650,7 +677,7 @@ class _FeeReportState extends State<FeeReport> {
                                                                 .all(4.0),
                                                         child: Row(
                                                           children: [
-                                                            Text(
+                                                            const Text(
                                                               'Transaction Id: ',
                                                               style: TextStyle(
                                                                   fontSize: 15),
@@ -662,11 +689,11 @@ class _FeeReportState extends State<FeeReport> {
                                                                         .ellipsis,
                                                                 maxLines: 2,
                                                                 strutStyle:
-                                                                    StrutStyle(
+                                                                    const StrutStyle(
                                                                         fontSize:
                                                                             13.0),
                                                                 text: TextSpan(
-                                                                    style: TextStyle(
+                                                                    style: const TextStyle(
                                                                         color: UIGuide
                                                                             .light_Purple,
                                                                         fontSize:
@@ -741,19 +768,19 @@ class _FeeReportState extends State<FeeReport> {
                                                                                     padding: const EdgeInsets.only(left: 16.0),
                                                                                     child: Text(
                                                                                       value.generalList[index].installmentname ?? '--',
-                                                                                      style: TextStyle(color: UIGuide.light_Purple),
+                                                                                      style: const TextStyle(color: UIGuide.light_Purple),
                                                                                     ),
                                                                                   ),
                                                                                   ListTile(
-                                                                                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                                                                    title: Text('Amount to be Paid'),
+                                                                                    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                                                                    title: const Text('Amount to be Paid'),
                                                                                     trailing: Text(
                                                                                       value.generalList[index].netDue.toString(),
                                                                                     ),
                                                                                   ),
                                                                                   ListTile(
-                                                                                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                                                                    title: Text('Paid Amount'),
+                                                                                    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                                                                    title: const Text('Paid Amount'),
                                                                                     trailing: Text(
                                                                                       value.generalList[index].paidAmount.toString(),
                                                                                     ),
@@ -768,7 +795,8 @@ class _FeeReportState extends State<FeeReport> {
                                                               ),
                                                             );
                                                           }
-                                                          return Text(' ');
+                                                          return const Text(
+                                                              ' ');
                                                         },
                                                       ),
                                                       kheight10,
@@ -829,20 +857,20 @@ class _FeeReportState extends State<FeeReport> {
                                                                                     padding: const EdgeInsets.only(left: 16.0),
                                                                                     child: Text(
                                                                                       value.busFeeList[index].installmentname.toString(),
-                                                                                      style: TextStyle(color: UIGuide.light_Purple),
+                                                                                      style: const TextStyle(color: UIGuide.light_Purple),
                                                                                     ),
                                                                                   ),
                                                                                   ListTile(
-                                                                                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                                                                    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                                                                                     horizontalTitleGap: 0,
-                                                                                    title: Text('Amount to be Paid'),
+                                                                                    title: const Text('Amount to be Paid'),
                                                                                     trailing: Text(
                                                                                       value.busFeeList[index].netDue.toString(),
                                                                                     ),
                                                                                   ),
                                                                                   ListTile(
-                                                                                    visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                                                                    title: Text('Paid Amount'),
+                                                                                    visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                                                                                    title: const Text('Paid Amount'),
                                                                                     trailing: Text(
                                                                                       value.busFeeList[index].paidAmount.toString(),
                                                                                     ),
@@ -857,7 +885,8 @@ class _FeeReportState extends State<FeeReport> {
                                                               ),
                                                             );
                                                           }
-                                                          return Text(' ');
+                                                          return const Text(
+                                                              ' ');
                                                         },
                                                       ),
                                                       Row(
@@ -901,8 +930,8 @@ class _FeeReportState extends State<FeeReport> {
                                                 ));
                                               });
                                         },
-                                        child: Icon(
-                                          Icons.receipt,
+                                        child: const Icon(
+                                          Icons.remove_red_eye,
                                           size: 18,
                                         ),
                                       ),
@@ -920,13 +949,14 @@ class _FeeReportState extends State<FeeReport> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
+                const Text(
                   "Total:  ",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                 ),
                 Text(
                   value.allTotal == null ? '0.00' : value.allTotal.toString(),
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 16),
                 ),
                 kWidth
               ],

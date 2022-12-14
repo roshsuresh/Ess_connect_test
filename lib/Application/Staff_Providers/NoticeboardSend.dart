@@ -147,8 +147,19 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
       NoticeImageId idd = NoticeImageId.fromJson(data);
       id = idd.id;
       print('...............   $id');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Uploaded Successfully',
+          textAlign: TextAlign.center,
+        ),
+      ));
     } else {
       print(response.reasonPhrase);
     }
@@ -226,8 +237,19 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
               btnOkColor: Colors.green)
           .show();
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print('Error Response notice send stf');
     }
   }
@@ -236,52 +258,20 @@ class StaffNoticeboardSendProviders with ChangeNotifier {
 
   List<NoticeBoardReceivedstaff> noticeBoard = [];
 
-  // Future<bool> noticeBoardREceived() async {
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-
-  //   var headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
-  //   };
-  //   var request = http.Request('GET',
-  //       Uri.parse('${UIGuide.baseURL}/mobileapp/staffdet/noticeBoard/view'));
-  //   request.headers.addAll(headers);
-
-  //   http.StreamedResponse response = await request.send();
-
-  //   if (response.statusCode == 200) {
-  //     Map<String, dynamic> data =
-  //         jsonDecode(await response.stream.bytesToString());
-
-  //     log(data.toString());
-
-  //     List<NoticeBoardReceivedstaff> templist =
-  //         List<NoticeBoardReceivedstaff>.from(data["noticeBoardView"]
-  //             .map((x) => NoticeBoardReceivedstaff.fromJson(x)));
-  //     noticeBoard.addAll(templist);
-
-  //     notifyListeners();
-  //   } else {
-  //     print('Error in NoticeReceived stf');
-  //   }
-  //   return true;
-  // }
-
   Future getnoticeList() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${_pref.getString('accesstoken')}'
     };
-    // print(headers);
+
     var response = await http.get(
         Uri.parse("${UIGuide.baseURL}/mobileapp/staffdet/noticeBoard/view"),
         headers: headers);
     try {
       if (response.statusCode == 200) {
-        // print("corect");
         final data = json.decode(response.body);
-        //  print(data);
+
         staffNoticeView = data["noticeBoardView"];
         notifyListeners();
       } else {

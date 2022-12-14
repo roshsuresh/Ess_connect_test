@@ -56,11 +56,17 @@ class FlashNewsProviderAdmin with ChangeNotifier {
     } else {
       print('Error in gallery save respo');
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
         content: Text(
           'Something Went Wrong....',
           textAlign: TextAlign.center,
         ),
-        duration: Duration(seconds: 1),
       ));
     }
   }
@@ -125,8 +131,19 @@ class FlashNewsProviderAdmin with ChangeNotifier {
     if (response.statusCode == 204) {
       print(await response.stream.bytesToString());
       print('correct');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Deleted Successfully")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Deleted Succesfully',
+          textAlign: TextAlign.center,
+        ),
+      ));
 
       notifyListeners();
     } else {

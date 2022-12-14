@@ -38,7 +38,6 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
     });
   }
 
-  void attende(bool selected, att) {}
   String courseId = '';
   String partId = '';
   String subjectId = '';
@@ -66,7 +65,6 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
       appBar: AppBar(
         title: const Text(
           'Attendance Entry',
-          //style: TextStyle(fontSize: 20),
         ),
         titleSpacing: 00.0,
         centerTitle: true,
@@ -87,10 +85,13 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
               children: [
                 MaterialButton(
                     color: Colors.white,
-                    child: Text(Provider.of<AttendenceStaffProvider>(context,
-                                listen: false)
-                            .timeNew ??
-                        'select date'),
+                    child: Text(
+                      Provider.of<AttendenceStaffProvider>(context,
+                                  listen: false)
+                              .timeNew ??
+                          'select date',
+                      style: TextStyle(color: UIGuide.light_Purple),
+                    ),
                     onPressed: () async {
                       await Provider.of<AttendenceStaffProvider>(context,
                               listen: false)
@@ -119,20 +120,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                         shrinkWrap: true,
                                         itemCount: attendecourse!.length,
                                         itemBuilder: (context, index) {
-                                          // print(snapshot
-
-                                          //     .attendenceInitialValues.length);
-
-                                          // snapshot.clearStudentList();
-
                                           return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-
-                                            // selected: snapshot.isCourseSelected(
-                                            //     attendecourse![index]),
-
                                             onTap: () async {
                                               print(
                                                   'guh.....${attendecourse![index]}');
@@ -151,9 +139,12 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                       .text
                                                       .toString();
 
-                                              // snapshot.addSelectedCourse(
-                                              //     attendecourse![index]);
                                               print(courseId);
+                                              await Provider.of<
+                                                          AttendenceStaffProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .divisionClear();
                                               await Provider.of<
                                                           AttendenceStaffProvider>(
                                                       context,
@@ -246,15 +237,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                           print(snapshot
                                               .attendenceDivisionList.length);
 
-                                          // value.removeDivisionAll();
                                           return ListTile(
-                                            selectedTileColor:
-                                                Colors.blue.shade100,
-                                            selectedColor: UIGuide.PRIMARY2,
-                                            // selected: snapshot
-                                            //     .isDivisonSelected(snapshot
-                                            //             .attendenceDivisionList[
-                                            //         index]),
                                             onTap: () async {
                                               print(snapshot
                                                   .attendenceDivisionList
@@ -271,10 +254,7 @@ class _AttendenceEntryState extends State<AttendenceEntry> {
                                                           index]
                                                       .text ??
                                                   '---';
-                                              // snapshot.addSelectedDivision(
-                                              //     snapshot.attendenceDivisionList[
-                                              //         index]);
-                                              print('jfrhrkjfr');
+
                                               print(
                                                   markEntryDivisionListController
                                                       .text);

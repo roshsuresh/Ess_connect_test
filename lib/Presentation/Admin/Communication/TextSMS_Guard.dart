@@ -2,7 +2,6 @@ import 'package:Ess_test/Application/AdminProviders/SchoolPhotoProviders.dart';
 import 'package:Ess_test/Domain/Staff/StudentReport_staff.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -37,14 +36,14 @@ class TextSMSGuardian extends StatelessWidget {
                       "Select Section",
                       style: TextStyle(color: Colors.grey),
                     ),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -62,7 +61,7 @@ class TextSMSGuardian extends StatelessWidget {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
+                    buttonText: const Text(
                       "Select Section",
                       style: TextStyle(
                         color: Colors.black,
@@ -93,7 +92,7 @@ class TextSMSGuardian extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Consumer<SchoolPhotoProviders>(
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -109,14 +108,14 @@ class TextSMSGuardian extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -133,7 +132,7 @@ class TextSMSGuardian extends StatelessWidget {
                       Icons.arrow_drop_down_outlined,
                       color: Colors.grey,
                     ),
-                    buttonText: Text(
+                    buttonText: const Text(
                       "Select Course",
                       style: TextStyle(
                         color: Colors.black,
@@ -180,14 +179,14 @@ class TextSMSGuardian extends StatelessWidget {
                       style: TextStyle(color: Colors.grey),
                     ),
                     // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -224,8 +223,7 @@ class TextSMSGuardian extends StatelessWidget {
                         print("${courseData.map((e) => data.value)}");
                       }
                       String div = courseData.join('&');
-                      // Provider.of<SchoolPhotoProviders>(context, listen: false)
-                      //     .getCourseList(div);
+
                       print("data $courseData");
 
                       print(courseData.join('&'));
@@ -234,18 +232,18 @@ class TextSMSGuardian extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10),
               child: SizedBox(
                 width: size.width * .42,
                 height: 44,
                 child: MaterialButton(
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   onPressed: () {},
                   color: UIGuide.THEME_LIGHT,
-                  child: Text('View'),
+                  child: const Text('View'),
                 ),
               ),
             )

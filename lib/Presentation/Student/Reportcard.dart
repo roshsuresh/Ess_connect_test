@@ -206,7 +206,7 @@ class ReportCard extends StatelessWidget {
 }
 
 class PdfDownload extends StatelessWidget {
-  PdfDownload({
+  const PdfDownload({
     Key? key,
   }) : super(key: key);
 
@@ -226,19 +226,15 @@ class PdfDownload extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: DownloandPdf(
                   isUseIcon: true,
-                  pdfUrl: value.url.toString() == null
-                      ? '--'
-                      : value.url.toString(),
-                  fileNames: value.name.toString() == null
-                      ? '---'
-                      : value.name.toString(),
+                  pdfUrl: value.url == null ? '--' : value.url.toString(),
+                  fileNames: value.name == null ? '---' : value.name.toString(),
                   color: Colors.white,
                 ),
               ),
             ],
           ),
           body: SfPdfViewer.network(
-            value.url.toString() == null ? '--' : value.url.toString(),
+            value.url == null ? '--' : value.url.toString(),
           )),
     );
   }
@@ -249,7 +245,7 @@ class NoAttachmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text('Invalid attachment'),
       ),

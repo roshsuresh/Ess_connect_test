@@ -1,17 +1,13 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Domain/Student/TimeTableModel.dart';
-import '../../utils/constants.dart';
 
-Map? timetableRespo;
+import '../../Domain/Student/CurriculamModel.dart';
 
-class Timetableprovider with ChangeNotifier {
-  String? url;
-  String? createdAt;
-  String? extension;
-  String? name;
+class Curriculamprovider with ChangeNotifier {
+  String? token;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -20,7 +16,7 @@ class Timetableprovider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getTimeTable(String divId) async {
+  Future getCuriculamtoken() async {
     setLoading(true);
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var headers = {
@@ -29,22 +25,20 @@ class Timetableprovider with ChangeNotifier {
     };
     setLoading(true);
     var response = await http.get(
-        Uri.parse(
-            "${UIGuide.baseURL}/mobileapp/parent/class-timetable-download/$divId"),
+        Uri.parse("https://api.esstestonline.in/curriculum"),
         headers: headers);
     setLoading(true);
     try {
       if (response.statusCode == 200) {
         print("corect");
-        final data = json.decode(response.body);
-        timetableRespo = data['timeTablepreview'];
-        TimeTablepreviewModel prev =
-            TimeTablepreviewModel.fromJson(data['timeTablepreview']);
-        url = prev.url;
-        createdAt = prev.createdAt;
-        name = prev.name;
-        extension = prev.extension;
-        print(name);
+        Map<String, dynamic> data = json.decode(response.body);
+        print("daaaata:,$data");
+        //Map<String,dynamic> token= data['results'];
+
+        CurriculamModel prev = CurriculamModel.fromJson(data);
+        token = prev.results;
+
+        print(token);
         setLoading(false);
         notifyListeners();
       } else {

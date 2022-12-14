@@ -147,8 +147,17 @@ class NotificationToGuardianAdmin with ChangeNotifier {
         notificationView.where((element) => element.selected == true).toList();
     if (selectedList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Select Any Student..'),
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
         duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Select any student...',
+          textAlign: TextAlign.center,
+        ),
       ));
     } else {
       print('selected.....');

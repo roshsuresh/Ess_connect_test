@@ -23,11 +23,10 @@ class FlashNewsHistory extends StatelessWidget {
     return Consumer<FlashNewsProviderAdmin>(
       builder: (context, provider, child) {
         return provider.loading
-            ? spinkitLoader()
+            ? const spinkitLoader()
             : ListView.builder(
-                itemCount: provider.flashlist.length == null
-                    ? 0
-                    : provider.flashlist.length,
+                itemCount:
+                    provider.flashlist.isEmpty ? 0 : provider.flashlist.length,
                 itemBuilder: (context, index) {
                   //created date
                   String createddate =
@@ -71,16 +70,16 @@ class FlashNewsHistory extends StatelessWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
-                                  Text('Created Date: '),
+                                  const Text('Created Date: '),
                                   Text(
                                     finalCreatedDate.isEmpty
                                         ? '--'
                                         : finalCreatedDate,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 13),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   kWidth,
                                   GestureDetector(
                                     onTap: () async {
@@ -93,7 +92,7 @@ class FlashNewsHistory extends StatelessWidget {
                                       provider.flashlist.clear();
                                       await provider.getFlashnewsList();
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.delete_forever_outlined,
                                       color: Colors.red,
                                     ),
@@ -105,7 +104,7 @@ class FlashNewsHistory extends StatelessWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
-                                  Text('News: '),
+                                  const Text('News: '),
                                   Flexible(
                                     child: Text(
                                       provider.flashlist[index].news ?? '--',
@@ -123,14 +122,14 @@ class FlashNewsHistory extends StatelessWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
-                                  Text('Start Date: '),
+                                  const Text('Start Date: '),
                                   Flexible(
                                     child: Text(
                                       finalStartDate.isEmpty
                                           ? '--'
                                           : finalStartDate,
                                       overflow: TextOverflow.clip,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 13),
                                     ),
@@ -142,14 +141,14 @@ class FlashNewsHistory extends StatelessWidget {
                               padding: const EdgeInsets.all(2.0),
                               child: Row(
                                 children: [
-                                  Text('End Date: '),
+                                  const Text('End Date: '),
                                   Flexible(
                                     child: Text(
                                       finalendDate.isEmpty
                                           ? '--'
                                           : finalendDate,
                                       overflow: TextOverflow.clip,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 13),
                                     ),

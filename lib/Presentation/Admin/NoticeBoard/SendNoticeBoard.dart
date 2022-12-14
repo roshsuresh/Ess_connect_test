@@ -64,7 +64,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Container(
               height: 41,
               width: size.width * 0.44,
@@ -76,7 +76,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                     return;
                   }),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Container(
@@ -141,7 +141,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: categoryvalueController1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 contentPadding:
                                     EdgeInsets.only(left: 10, top: 15),
                                 filled: true,
@@ -160,7 +160,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: categoryvalueController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Color.fromARGB(255, 238, 237, 237),
                                 border: OutlineInputBorder(),
@@ -188,9 +188,9 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
                 labelText: 'Title*',
-                labelStyle: TextStyle(color: UIGuide.light_Purple),
+                labelStyle: const TextStyle(color: UIGuide.light_Purple),
                 hintText: 'Enter Title',
-                hintStyle: TextStyle(color: Colors.grey),
+                hintStyle: const TextStyle(color: Colors.grey),
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
@@ -210,10 +210,10 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
                 labelText: 'Matter*',
-                labelStyle: TextStyle(color: UIGuide.light_Purple),
+                labelStyle: const TextStyle(color: UIGuide.light_Purple),
                 hintText: 'Enter Matter',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -225,7 +225,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         ),
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Center(
               child: SizedBox(
                 width: 120,
@@ -273,7 +273,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 ),
               ),
             ),
-            Spacer()
+            const Spacer()
           ],
         ),
         const Center(
@@ -285,7 +285,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             SizedBox(
               // height: 30,
               width: MediaQuery.of(context).size.width * 0.45,
@@ -295,11 +295,23 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 color: Colors.white,
                 onPressed: (() async {
                   _mydatetimeFrom = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetimeFrom ?? DateTime.now(),
-                      firstDate:
-                          DateTime.now().subtract(const Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                    context: context,
+                    initialDate: _mydatetimeFrom ?? DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
+                  );
                   setState(() {
                     time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
                     print(time);
@@ -307,7 +319,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 }),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             //  kWidth, kWidth,
             SizedBox(
               // height: 30,
@@ -322,6 +334,18 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
                   );
 
                   setState(() {
@@ -331,12 +355,12 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 }),
               ),
             ),
-            Spacer()
+            const Spacer()
           ],
         ),
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Consumer<NoticeBoardAdminProvider>(
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -344,14 +368,12 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                   width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
-                    // height: 200,
                     items: value.courseDropDown,
                     listType: MultiSelectListType.CHIP,
                     title: const Text(
                       "Select Course",
                       style: TextStyle(color: Colors.black),
                     ),
-                    // selectedColor: Color.fromARGB(255, 157, 232, 241),
                     selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
@@ -423,7 +445,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Consumer<NoticeBoardAdminProvider>(
               builder: (context, value, child) => Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -437,14 +459,14 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                       "Select Division",
                       style: TextStyle(color: Colors.black),
                     ),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -504,13 +526,13 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
                 ),
               ),
             ),
-            Spacer()
+            const Spacer()
           ],
         ),
         kheight10,
         Center(
           child: ToggleSwitch(
-            labels: ['All', "Students", 'Staff'],
+            labels: const ['All', "Students", 'Staff'],
             onToggle: (index) {
               print('Swiched index $index');
               if (index == 0) {
@@ -527,7 +549,7 @@ class _SendNoticeBoardAdminState extends State<SendNoticeBoardAdmin> {
             fontSize: 14,
             minHeight: 30,
             minWidth: 150,
-            activeBgColor: [UIGuide.light_Purple],
+            activeBgColor: const [UIGuide.light_Purple],
           ),
         ),
         kheight20,

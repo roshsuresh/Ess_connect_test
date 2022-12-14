@@ -205,12 +205,34 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
       GalleryImageId idd = GalleryImageId.fromJson(data);
       id = idd.id;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Uploaded Successfully',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print('...............   $id');
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something went Wrong")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print(response.reasonPhrase);
     }
   }
@@ -255,8 +277,19 @@ class GallerySendProvider_Stf with ChangeNotifier {
     if (response.statusCode == 200 || response.statusCode == 204) {
       print('Correct...______________________________');
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Uploaded Successfully")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Uploaded Successfully',
+          textAlign: TextAlign.center,
+        ),
+      ));
       return AwesomeDialog(
               context: context,
               dialogType: DialogType.success,
@@ -271,8 +304,19 @@ class GallerySendProvider_Stf with ChangeNotifier {
 
       //print(await response.stream.bytesToString());
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Something went wrong...")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print('Error in gallery save respo');
     }
   }
@@ -315,8 +359,19 @@ class GallerySendProvider_Stf with ChangeNotifier {
       notifyListeners();
     } else {
       setLoading(false);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print('Error in galleryViewList stf');
     }
     return true;
@@ -340,12 +395,34 @@ class GallerySendProvider_Stf with ChangeNotifier {
     if (response.statusCode == 204) {
       print(await response.stream.bytesToString());
       print('correct');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Deleted Successfully")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Deleted Successfully',
+          textAlign: TextAlign.center,
+        ),
+      ));
       notifyListeners();
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Something went wrong")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Something Went Wrong....',
+          textAlign: TextAlign.center,
+        ),
+      ));
       print('Error in galleryDelete stf');
     }
   }

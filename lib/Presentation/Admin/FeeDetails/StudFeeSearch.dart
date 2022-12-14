@@ -1,11 +1,9 @@
 import 'package:Ess_test/Application/AdminProviders/FeeDetailsProvider.dart';
-import 'package:Ess_test/Domain/Staff/SearchStudReport.dart';
 import 'package:Ess_test/Presentation/Admin/FeeDetails/StudFeeDetails.dart';
 import 'package:Ess_test/utils/spinkit.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../Constants.dart';
 import '../../../utils/constants.dart';
 
@@ -55,7 +53,7 @@ class _StudentFeeSearchState extends State<StudentFeeSearch> {
               color: UIGuide.THEME_LIGHT,
               autoFocus: true,
               animationDurationInMilli: 900,
-              suffixIcon: Icon(
+              suffixIcon: const Icon(
                 Icons.search_sharp,
                 color: UIGuide.light_Purple,
               ),
@@ -78,7 +76,7 @@ class _StudentFeeSearchState extends State<StudentFeeSearch> {
                     : provider.searchStudent.length,
                 itemBuilder: (context, index) {
                   return provider.loading
-                      ? Center(child: spinkitLoader())
+                      ? const Center(child: spinkitLoader())
                       : Column(
                           children: [
                             kheight10,
@@ -135,8 +133,9 @@ class _StudentFeeSearchState extends State<StudentFeeSearch> {
                                                         .searchStudent[index]
                                                         .studentPhoto ??
                                                     'https://img.myloview.com/canvas-prints/default-avatar-profile-icon-social-media-user-symbol-image-400-251200038.jpg')),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10))),
                                       ),
                                     ),
                                     Padding(
@@ -186,7 +185,7 @@ class _StudentFeeSearchState extends State<StudentFeeSearch> {
                                                 strutStyle: const StrutStyle(
                                                     fontSize: 8.0),
                                                 text: TextSpan(
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.black,
                                                   ),

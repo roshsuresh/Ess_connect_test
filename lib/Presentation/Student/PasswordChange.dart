@@ -17,24 +17,14 @@ class PasswordChange extends StatefulWidget {
 class _PasswordChangeState extends State<PasswordChange> {
   final bool _isObscure = false;
 
-  // final _confirmpassword = TextEditingController();
-
   final _passwordNew = TextEditingController();
 
   final _password = TextEditingController();
 
-  // String? oldPass;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
-  //RegExp pass_valid = RegExp(r"(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W)");
-
-  // bool _isVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var height = size.height;
-    var width = size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text('Change Password'),
@@ -98,20 +88,14 @@ class _PasswordChangeState extends State<PasswordChange> {
                             fontWeight: FontWeight.w400,
                           ),
                           labelText: 'Current Password',
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                             color: UIGuide.light_Purple,
                           )),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter old password';
                         }
-                        // else {
-                        //   if (!regEx.hasMatch(value)) {
-                        //     return 'Enter ____ password';
-                        //   } else {
                         return null;
-                        //   }
-                        // }
                       },
                     ),
                   ),
@@ -127,7 +111,6 @@ class _PasswordChangeState extends State<PasswordChange> {
                               Icons.key_outlined,
                               color: Colors.grey,
                             ),
-                            //errorText: "Please enter valid username",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
@@ -145,7 +128,7 @@ class _PasswordChangeState extends State<PasswordChange> {
                               fontWeight: FontWeight.w400,
                             ),
                             labelText: 'New Password',
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                               color: UIGuide.light_Purple,
                             )),
                         validator: (PassCurrentValue) {
@@ -197,7 +180,7 @@ class _PasswordChangeState extends State<PasswordChange> {
                     ),
                   ),
                   kheight20,
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                   Consumer<PasswordChangeprovider>(

@@ -168,20 +168,32 @@ class NoticeBoardAdminProvider with ChangeNotifier {
       NoticeImageId idd = NoticeImageId.fromJson(data);
       id = idd.id;
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'Uploaded Successfully...',
-          textAlign: TextAlign.center,
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
+        content: Text(
+          'Uploaded Successfully',
+          textAlign: TextAlign.center,
+        ),
       ));
       print('...............   $id');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
         content: Text(
           'Something Went Wrong....',
           textAlign: TextAlign.center,
         ),
-        duration: Duration(seconds: 1),
       ));
       print(response.reasonPhrase);
     }
@@ -261,11 +273,17 @@ class NoticeBoardAdminProvider with ChangeNotifier {
           .show();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        duration: Duration(seconds: 1),
+        margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+        behavior: SnackBarBehavior.floating,
         content: Text(
           'Something Went Wrong....',
           textAlign: TextAlign.center,
         ),
-        duration: Duration(seconds: 1),
       ));
       print('Error Response notice send admin');
     }

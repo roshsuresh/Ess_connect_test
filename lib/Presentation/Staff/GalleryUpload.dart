@@ -119,10 +119,10 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               labelText: 'Title*',
-              labelStyle: TextStyle(color: UIGuide.light_Purple),
+              labelStyle: const TextStyle(color: UIGuide.light_Purple),
               hintText: 'Enter Title',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
+              hintStyle: const TextStyle(color: Colors.grey),
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               focusedBorder: OutlineInputBorder(
@@ -162,7 +162,6 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                   await Provider.of<GallerySendProvider_Stf>(context,
                           listen: false)
                       .galleryImageSave(context, file.path.toString());
-                  //openFile(file);
                   if (file.name.length >= 6) {
                     setState(() {
                       checkname =
@@ -191,7 +190,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
             ),
           ),
         ),
-        Center(
+        const Center(
             child: Text(
           'Maximum allowed file size is 200 KB',
           style:
@@ -208,11 +207,23 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                 color: Colors.white,
                 onPressed: (() async {
                   _mydatetimeFrom = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetimeFrom ?? DateTime.now(),
-                      firstDate:
-                          DateTime.now().subtract(const Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                    context: context,
+                    initialDate: _mydatetimeFrom ?? DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
+                  );
                   setState(() {
                     time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
                     print(time);
@@ -233,12 +244,20 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
                   );
-                  // _mydatetimeTo = await showDatePicker(
-                  //     context: context,
-                  //     initialDate: _mydatetimeTo ?? DateTime.now(),
-                  //     firstDate: DateTime(2022),
-                  //     lastDate: DateTime(2030));
+
                   setState(() {
                     timeNow = DateFormat('dd/MMM/yyyy').format(_mydatetimeTo!);
                     print(timeNow);
@@ -277,10 +296,8 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                                     shrinkWrap: true,
                                     itemCount: snapshot.courselistt.length,
                                     itemBuilder: (context, index) {
-                                      print('hii');
                                       print(snapshot.courselistt[index].value);
-                                      print('hii');
-                                      //snapshot.removeCourseAll();
+
                                       return ListTile(
                                         selectedTileColor: Colors.blue.shade100,
                                         selectedColor: UIGuide.PRIMARY2,
@@ -334,7 +351,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController1,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.only(left: 0, top: 0),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
@@ -352,7 +369,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: coursevalueController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),
@@ -389,14 +406,9 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                                     shrinkWrap: true,
                                     itemCount: snapshot.divisionlistt.length,
                                     itemBuilder: (context, index) {
-                                      // print(snapshot
-                                      //     .attendenceInitialValues.length);
-                                      // value.removeCourseAll();
                                       return ListTile(
                                         selectedTileColor: Colors.blue.shade100,
                                         selectedColor: UIGuide.PRIMARY2,
-                                        // selected: snapshot.isDivisionSelected(
-                                        //     snapshot.noticeDivision[index]),
                                         onTap: () async {
                                           divisionvalueController.text =
                                               snapshot.divisionlistt[index]
@@ -441,7 +453,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController1,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.only(left: 0, top: 0),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
@@ -459,7 +471,7 @@ class _StaffGalleryUPloadState extends State<StaffGalleryUPload> {
                           child: TextField(
                             textAlign: TextAlign.center,
                             controller: divisionvalueController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               filled: true,
                               fillColor: Color.fromARGB(255, 238, 237, 237),
                               border: OutlineInputBorder(),

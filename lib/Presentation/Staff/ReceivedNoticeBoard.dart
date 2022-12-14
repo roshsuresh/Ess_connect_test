@@ -132,33 +132,31 @@ class StaffNoticeBoardReceived extends StatelessWidget {
                           //kWidth
                           Spacer(),
                           GestureDetector(
-                              onTap: () async {
-                                await Provider.of<
-                                            StaffNoticeboardSendProviders>(
-                                        context,
-                                        listen: false)
-                                    .staffNoticeBoardAttach(
-                                        noticeattach.toString());
-                                if (value.extension.toString() == '.pdf') {
-                                  final result = value.url.toString();
-                                  final name = value.name.toString();
+                            onTap: () async {
+                              await Provider.of<StaffNoticeboardSendProviders>(
+                                      context,
+                                      listen: false)
+                                  .staffNoticeBoardAttach(
+                                      noticeattach.toString());
+                              if (value.extension.toString() == '.pdf') {
+                                final result = value.url.toString();
+                                final name = value.name.toString();
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PDFDownloadStaff()),
-                                  );
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PdfViewPageStaff()),
-                                  );
-                                }
-                              },
-                              child: const Icon(Icons.file_download))
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PDFDownloadStaff()),
+                                );
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PdfViewPageStaff()),
+                                );
+                              }
+                            },
+                            child: const Icon(Icons.remove_red_eye_outlined),
+                          ),
                         ],
                       )
                     ],

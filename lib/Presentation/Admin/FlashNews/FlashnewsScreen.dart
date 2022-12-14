@@ -37,7 +37,7 @@ class ScreenFlashNews extends StatelessWidget {
           backgroundColor: UIGuide.light_Purple,
         ),
         body: TabBarView(
-          children: [FlashNewsUpload(), FlashNewsHistory()],
+          children: [FlashNewsUpload(), const FlashNewsHistory()],
         ),
       ),
     );

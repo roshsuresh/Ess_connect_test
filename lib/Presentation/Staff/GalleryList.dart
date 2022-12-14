@@ -39,7 +39,7 @@ class GalleryListStaff extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Text('Created Date: '),
+                                const Text('Created Date: '),
                                 Text(
                                   provider.galleryViewList[index].createdAt ??
                                       '--',

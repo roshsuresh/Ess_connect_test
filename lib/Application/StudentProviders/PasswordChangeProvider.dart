@@ -61,12 +61,34 @@ class PasswordChangeprovider with ChangeNotifier {
                 btnOkOnPress: () {},
                 btnOkColor: Colors.green)
             .show();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Password Changed")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          duration: Duration(seconds: 1),
+          margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            'Password Changed',
+            textAlign: TextAlign.center,
+          ),
+        ));
         notifyListeners();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Something Went Wrong")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          duration: Duration(seconds: 1),
+          margin: EdgeInsets.only(bottom: 80, left: 30, right: 30),
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            'Something Went Wrong....',
+            textAlign: TextAlign.center,
+          ),
+        ));
         print(response.reasonPhrase);
       }
     } catch (e) {

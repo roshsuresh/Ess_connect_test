@@ -90,8 +90,8 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
       p.dropDown.clear();
       p.stdReportInitialValues.clear();
 
-      // Provider.of<NotificationToStaffAdminProviders>(context, listen: false)
-      //     .clearStudentList();
+      Provider.of<NotificationToStaffAdminProviders>(context, listen: false)
+          .clearStaffList();
     });
   }
 
@@ -215,12 +215,11 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
             },
             children: [
               TableRow(children: [
-                Text(
+                const Text(
                   '   NO.',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  //   textAlign: TextAlign.center,
                 ),
-                Text(
+                const Text(
                   'Name',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
@@ -237,7 +236,7 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
                                 color: UIGuide.light_Purple,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               'Select All',
                               style: TextStyle(
                                   fontSize: 15,
@@ -253,10 +252,10 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
               return value.loading
                   ? LimitedBox(
                       maxHeight: size.height - 300,
-                      child: Center(child: spinkitLoader()),
+                      child: const Center(child: spinkitLoader()),
                     )
                   : LimitedBox(
-                      maxHeight: size.height - 300,
+                      maxHeight: size.height - 315,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: value.stafflist.isEmpty
@@ -272,6 +271,8 @@ class _AdminToStaffNotificationState extends State<AdminToStaffNotification> {
                     );
             },
           ),
+          kheight10,
+          kheight10
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -319,7 +320,7 @@ class Notification_StudListAdmin extends StatelessWidget {
           onTap: () {
             value.selectItem(viewStud);
           },
-          selectedTileColor: Color.fromARGB(255, 10, 27, 141),
+          selectedTileColor: const Color.fromARGB(255, 10, 27, 141),
           title: Text(viewStud.name == null ? '---' : viewStud.name),
           subtitle:
               Text(viewStud.staffRole.isEmpty ? '---' : viewStud.staffRole),
@@ -380,8 +381,8 @@ class Text_Matter_NotificationAdminToStaff extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Title*',
                   hintText: 'Enter Title',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -407,8 +408,8 @@ class Text_Matter_NotificationAdminToStaff extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Matter*',
                   hintText: 'Enter Matter',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -432,7 +433,7 @@ class Text_Matter_NotificationAdminToStaff extends StatelessWidget {
                         matterController.text, toList,
                         sentTo: type);
               },
-              child: Text(
+              child: const Text(
                 'Send',
                 style: TextStyle(color: Colors.white),
               ),

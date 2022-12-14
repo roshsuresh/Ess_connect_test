@@ -296,10 +296,23 @@ class AttendenceStaffProvider with ChangeNotifier {
 
   getDate(BuildContext context) async {
     _mydatetime = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2100));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+            data: ThemeData.light().copyWith(
+              primaryColor: UIGuide.light_Purple,
+              colorScheme: const ColorScheme.light(
+                primary: UIGuide.light_Purple,
+              ),
+              buttonTheme:
+                  const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            ),
+            child: child!);
+      },
+    );
 
     timeNew = DateFormat('yyyy-MM-dd').format(_mydatetime!) == null
         ? timee

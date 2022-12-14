@@ -8,14 +8,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 
-// class Demo extends StatefulWidget {
-//   Demo({Key? key}) : super(key: key);
-
-//   @override
-//   State<Demo> createState() => _DemoState();
-// }
-
-// class _DemoState extends State<Demo> with TickerProviderStateMixin {
 class Demo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -39,50 +31,10 @@ class _DemoState extends State<Demo> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // Card(
-        //   child: SingleChildScrollView(
-        //     child: Container(
-        //       margin: EdgeInsets.all(8),
-        //       child:
-        Scaffold(
+    return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // EditText('Merchant ID', mid, onChange: (val) => mid = val),
-          // EditText('Order ID', orderId, onChange: (val) => orderId = val),
-          // EditText('Amount', amount, onChange: (val) => amount = val),
-          // EditText('Transaction Token', txnToken,
-          //     onChange: (val) => txnToken = val),
-          // Row(
-          //   children: <Widget>[
-          //     Checkbox(
-          //         activeColor: Theme.of(context).buttonColor,
-          //         value: isStaging,
-          //         onChanged: (bool? val) {
-          //           setState(() {
-          //             isStaging = val!;
-          //           });
-          //         }),
-          //     Text("Staging")
-          //   ],
-          // ),
-          // Row(
-          //   children: <Widget>[
-          //     Checkbox(
-          //         activeColor: Theme.of(context).buttonColor,
-          //         value: restrictAppInvoke,
-          //         onChanged: (bool? val) {
-          //           setState(() {
-          //             restrictAppInvoke = val!;
-          //           });
-          //         }),
-          //     Text("Restrict AppInvoke")
-          //   ],
-          // // ),
-          // Container(
-          //   margin: EdgeInsets.all(16),
-          //   child:
           ElevatedButton(
             onPressed: () {
               _startTransaction();
@@ -100,15 +52,9 @@ class _DemoState extends State<Demo> {
         ],
       ),
     );
-    //     ),
-    //   ),
-    // );
   }
 
   Future<void> _startTransaction() async {
-    // if (txnToken.isEmpty) {
-    //   return;
-    // }
     var sendMap = <String, dynamic>{
       "mid": mid,
       "orderId": orderId,
@@ -117,7 +63,6 @@ class _DemoState extends State<Demo> {
       "callbackUrl": callbackUrl,
       "isStaging": isStaging,
       "restrictAppInvoke": restrictAppInvoke,
-      // "enableAssist": enableAssist
     };
     print(sendMap);
     try {

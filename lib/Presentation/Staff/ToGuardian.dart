@@ -23,11 +23,11 @@ class Staff_ToGuardian extends StatelessWidget {
         appBar: AppBar(
           title: Row(
             children: [
-              Spacer(),
+              const Spacer(),
               const Text(
                 'Communication to Guardian',
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -35,7 +35,7 @@ class Staff_ToGuardian extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => Staff_ToGuardian()));
                   },
-                  icon: Icon(Icons.refresh_outlined))
+                  icon: const Icon(Icons.refresh_outlined))
             ],
           ),
           titleSpacing: 00.0,
@@ -96,7 +96,7 @@ class Staff_ToGuardian extends StatelessWidget {
             Consumer<NotificationToGuardian_Providers>(
               builder: (context, value, child) {
                 if (value.isClassTeacher != false) {
-                  return TextSMS_staff();
+                  return const TextSMS_staff();
                 } else {
                   return Container(
                     child: Center(
@@ -184,7 +184,7 @@ class _Notification_StaffToGuardainState
     return Scaffold(
       body: ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 3,
           ),
           Row(
@@ -312,7 +312,7 @@ class _Notification_StaffToGuardainState
                   );
                 }),
               ),
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.49,
@@ -546,7 +546,7 @@ class _Notification_StaffToGuardainState
               return value.loading
                   ? LimitedBox(
                       maxHeight: widget.size.height - 330,
-                      child: Center(child: spinkitLoader()),
+                      child: const Center(child: spinkitLoader()),
                     )
                   : LimitedBox(
                       maxHeight: widget.size.height - 330,
@@ -612,7 +612,7 @@ class Notification_StudList extends StatelessWidget {
           onTap: () {
             value.selectItem(viewStud);
           },
-          selectedTileColor: Color.fromARGB(255, 10, 27, 141),
+          selectedTileColor: const Color.fromARGB(255, 10, 27, 141),
           title: Text(viewStud.name == null ? '---' : viewStud.name),
           subtitle: Text(viewStud.admnNo ?? '---'),
           trailing: viewStud.selected != null && viewStud.selected!
@@ -642,7 +642,7 @@ class Text_Matter_Notification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Send Notification'),
+        title: const Text('Send Notification'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -671,8 +671,8 @@ class Text_Matter_Notification extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Title*',
                   hintText: 'Enter Title',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -698,8 +698,8 @@ class Text_Matter_Notification extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Matter*',
                   hintText: 'Enter Matter',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -723,7 +723,7 @@ class Text_Matter_Notification extends StatelessWidget {
                         matterController.text, toList,
                         sentTo: type);
               },
-              child: Text(
+              child: const Text(
                 'Send',
                 style: TextStyle(color: Colors.white),
               ),

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:Ess_test/Application/Module%20Providers.dart/Module.dart';
+import 'package:Ess_test/Application/StudentProviders/CurriculamProviders.dart';
 import 'package:Ess_test/Application/StudentProviders/InternetConnection.dart';
 import 'package:Ess_test/Constants.dart';
+import 'package:Ess_test/Presentation/Student/CurriculamScreen.dart';
 import 'package:Ess_test/Presentation/Student/NoInternetScreen.dart';
 import 'package:Ess_test/Presentation/Student/feedemo.dart';
 import 'package:Ess_test/utils/constants.dart';
@@ -55,8 +57,6 @@ class _StudentHomeState extends State<StudentHome> {
 
   @override
   Widget build(BuildContext context) {
-    //  Provider.of<GalleryProvider>(context, listen: false).getGalleyList();
-
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
@@ -69,7 +69,7 @@ class _StudentHomeState extends State<StudentHome> {
     return Scaffold(
       body: Consumer<ConnectivityProvider>(
         builder: (context, connection, child) => connection.isOnline == false
-            ? NoInternetConnection()
+            ? const NoInternetConnection()
             : ListView(
                 children: [
                   ProfileHome(kheight20: kheight20, kheight: kheight),
@@ -135,14 +135,25 @@ class _StudentHomeState extends State<StudentHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Profilee.png',
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Profilee.png',
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -151,7 +162,9 @@ class _StudentHomeState extends State<StudentHome> {
                                     const Text(
                                       'Profile',
                                       style: TextStyle(
-                                          fontSize: 11, color: Colors.black38),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -173,24 +186,38 @@ class _StudentHomeState extends State<StudentHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/notificationnew.png',
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/notificationnew.png',
+                                              ),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                         ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     kheight,
                                     const Text(
                                       'Notification',
                                       style: TextStyle(
-                                          fontSize: 11, color: Colors.black38),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -211,14 +238,25 @@ class _StudentHomeState extends State<StudentHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      height: 50,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Noticeboard.png',
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Noticeboard.png',
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -227,7 +265,59 @@ class _StudentHomeState extends State<StudentHome> {
                                     const Text(
                                       'Notice Board',
                                       style: TextStyle(
-                                          fontSize: 11, color: Colors.black38),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NoticeBoard()),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Noticeboard.png',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    kheight,
+                                    const Text(
+                                      'Diary',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
                                     )
                                   ],
                                 ),
@@ -238,7 +328,7 @@ class _StudentHomeState extends State<StudentHome> {
                         kheight20,
                         kheight20,
                         Container(
-                          color: Color.fromARGB(255, 236, 237, 245),
+                          color: const Color.fromARGB(255, 236, 237, 245),
                           height: 150,
                           width: width,
                           child: Column(
@@ -281,15 +371,31 @@ class _StudentHomeState extends State<StudentHome> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: [
-                                                  Container(
-                                                    height: 50,
-                                                    width: 40,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      image: DecorationImage(
-                                                        opacity: 20,
-                                                        image: AssetImage(
-                                                          'assets/payNew.png',
+                                                  Card(
+                                                    elevation: 10,
+                                                    color: Colors.white,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Container(
+                                                        height: 38,
+                                                        width: 38,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            opacity: 20,
+                                                            image: AssetImage(
+                                                              'assets/payNew.png',
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -298,8 +404,10 @@ class _StudentHomeState extends State<StudentHome> {
                                                   const Text(
                                                     'Pay Fee',
                                                     style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
                                                         fontSize: 11,
-                                                        color: Colors.black38),
+                                                        color: Colors.black),
                                                   )
                                                 ],
                                               ),
@@ -317,15 +425,31 @@ class _StudentHomeState extends State<StudentHome> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: [
-                                                  Container(
-                                                    height: 50,
-                                                    width: 40,
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      image: DecorationImage(
-                                                        //  opacity: 0.3,
-                                                        image: AssetImage(
-                                                          'assets/payNew.png',
+                                                  Card(
+                                                    elevation: 10,
+                                                    color: Colors.white,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Container(
+                                                        height: 38,
+                                                        width: 38,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            //  opacity: 0.3,
+                                                            image: AssetImage(
+                                                              'assets/payNew.png',
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -334,8 +458,10 @@ class _StudentHomeState extends State<StudentHome> {
                                                   const Text(
                                                     'Pay Fee',
                                                     style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w400,
                                                         fontSize: 11,
-                                                        color: Colors.black38),
+                                                        color: Colors.black),
                                                   )
                                                 ],
                                               ),
@@ -357,26 +483,41 @@ class _StudentHomeState extends State<StudentHome> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Container(
-                                              height: 50,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                image: const DecorationImage(
-                                                  opacity: 20,
-                                                  image: AssetImage(
-                                                    'assets/Reportcard.png',
+                                            Card(
+                                              elevation: 10,
+                                              color: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 38,
+                                                  width: 38,
+                                                  decoration: BoxDecoration(
+                                                    image:
+                                                        const DecorationImage(
+                                                      opacity: 20,
+                                                      image: AssetImage(
+                                                        'assets/Reportcard.png',
+                                                      ),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
                                               ),
                                             ),
                                             kheight,
                                             const Text(
                                               'Report Card',
                                               style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
                                                   fontSize: 11,
-                                                  color: Colors.black38),
+                                                  color: Colors.black),
                                             )
                                           ],
                                         ),
@@ -398,26 +539,41 @@ class _StudentHomeState extends State<StudentHome> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Container(
-                                              height: 50,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                image: const DecorationImage(
-                                                  opacity: 20,
-                                                  image: AssetImage(
-                                                    'assets/Payment History.png',
+                                            Card(
+                                              elevation: 10,
+                                              color: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 38,
+                                                  width: 38,
+                                                  decoration: BoxDecoration(
+                                                    image:
+                                                        const DecorationImage(
+                                                      opacity: 20,
+                                                      image: AssetImage(
+                                                        'assets/Payment History.png',
+                                                      ),
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
                                               ),
                                             ),
                                             kheight,
                                             const Text(
                                               'Payment \n History',
                                               style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
                                                   fontSize: 11,
-                                                  color: Colors.black38),
+                                                  color: Colors.black),
                                             )
                                           ],
                                         ),
@@ -479,30 +635,42 @@ class _StudentHomeState extends State<StudentHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      height: 60,
-                                      width: 50,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Attendancee.png',
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Attendancee.png',
+                                              ),
+                                            ),
+                                            // borderRadius: BorderRadius.circular(10),
                                           ),
                                         ),
-                                        // borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     kheight,
                                     const Text(
                                       'Attendance',
                                       style: TextStyle(
-                                          fontSize: 11, color: Colors.black38),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
                                     )
                                   ],
                                 ),
                               ),
                             ),
-
                             Consumer<ProfileProvider>(
                               builder: (context, value, child) {
                                 return GestureDetector(
@@ -528,14 +696,25 @@ class _StudentHomeState extends State<StudentHome> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Container(
-                                          height: 60,
-                                          width: 50,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                              opacity: 20,
-                                              image: AssetImage(
-                                                'assets/timetable-icon.png',
+                                        Card(
+                                          elevation: 10,
+                                          color: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              height: 38,
+                                              width: 38,
+                                              decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                  opacity: 20,
+                                                  image: AssetImage(
+                                                    'assets/timetable-icon.png',
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -544,8 +723,9 @@ class _StudentHomeState extends State<StudentHome> {
                                         const Text(
                                           'Timetable',
                                           style: TextStyle(
+                                              fontWeight: FontWeight.w400,
                                               fontSize: 11,
-                                              color: Colors.black38),
+                                              color: Colors.black),
                                         )
                                       ],
                                     ),
@@ -568,67 +748,104 @@ class _StudentHomeState extends State<StudentHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Container(
-                                      height: 60,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                          opacity: 20,
-                                          image: AssetImage(
-                                            'assets/Gallery.png',
+                                    Card(
+                                      elevation: 10,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 38,
+                                          width: 38,
+                                          decoration: BoxDecoration(
+                                            image: const DecorationImage(
+                                              opacity: 20,
+                                              image: AssetImage(
+                                                'assets/Gallery.png',
+                                              ),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                         ),
-                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     kheight,
                                     const Text(
                                       'Gallery',
                                       style: TextStyle(
-                                          fontSize: 11, color: Colors.black38),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 11,
+                                          color: Colors.black),
                                     )
                                   ],
                                 ),
                               ),
                             ),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(left: 10, right: 10),
-                            //   child: GestureDetector(
-                            //     onTap: () {
-                            //       Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>  FeeDemo()),
-                            //       );
-                            //     },
-                            //     child: Column(
-                            //       mainAxisAlignment:
-                            //           MainAxisAlignment.spaceEvenly,
-                            //       children: [
-                            //         Container(
-                            //           height: 50,
-                            //           width: 40,
-                            //           decoration: BoxDecoration(
-                            //             image: const DecorationImage(
-                            //               opacity: 20,
-                            //               image: AssetImage(
-                            //                 'assets/Gallery.png',
-                            //               ),
-                            //             ),
-                            //             borderRadius: BorderRadius.circular(10),
-                            //           ),
-                            //         ),
-                            //         kheight,
-                            //         const Text(
-                            //           'Gallery',
-                            //           style: TextStyle(
-                            //               fontSize: 11, color: Colors.black38),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
+                            Consumer<Curriculamprovider>(
+                              builder: (context, curri, child) =>
+                                  GestureDetector(
+                                onTap: () async {
+                                  await Provider.of<Curriculamprovider>(context,
+                                          listen: false)
+                                      .getCuriculamtoken();
+                                  String token = await curri.token.toString();
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CurriculamPage(
+                                              token: token,
+                                            )),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Card(
+                                        elevation: 10,
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            height: 38,
+                                            width: 38,
+                                            decoration: BoxDecoration(
+                                              image: const DecorationImage(
+                                                opacity: 20,
+                                                image: AssetImage(
+                                                  'assets/Curriculum.png',
+                                                ),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      kheight,
+                                      const Text(
+                                        'Curriculum',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11,
+                                            color: Colors.black),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         kheight,
@@ -666,6 +883,7 @@ class _StudentHomeState extends State<StudentHome> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             MaterialButton(
+                                elevation: 10,
                                 minWidth: 50,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
@@ -681,6 +899,7 @@ class _StudentHomeState extends State<StudentHome> {
                                   color: UIGuide.light_Purple,
                                 )),
                             MaterialButton(
+                                elevation: 10,
                                 minWidth: 50,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(

@@ -29,8 +29,6 @@ class StudStatiticsProvider with ChangeNotifier {
       Map<String, dynamic> data =
           jsonDecode(await response.stream.bytesToString());
 
-      // log(data.toString());
-
       List<StatisticsData> templist = List<StatisticsData>.from(
           data["statisticsData"].map((x) => StatisticsData.fromJson(x)));
       statiticsList.addAll(templist);

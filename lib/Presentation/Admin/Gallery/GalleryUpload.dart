@@ -169,11 +169,23 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 color: Colors.white,
                 onPressed: (() async {
                   _mydatetimeFrom = await showDatePicker(
-                      context: context,
-                      initialDate: _mydatetimeFrom ?? DateTime.now(),
-                      firstDate:
-                          DateTime.now().subtract(const Duration(days: 0)),
-                      lastDate: DateTime(2030));
+                    context: context,
+                    initialDate: _mydatetimeFrom ?? DateTime.now(),
+                    firstDate: DateTime.now().subtract(const Duration(days: 0)),
+                    lastDate: DateTime(2030),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
+                  );
                   setState(() {
                     time = DateFormat('dd/MMM/yyyy').format(_mydatetimeFrom!);
                     print(time);
@@ -195,6 +207,18 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now().subtract(const Duration(days: 0)),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                          data: ThemeData.light().copyWith(
+                            primaryColor: UIGuide.light_Purple,
+                            colorScheme: const ColorScheme.light(
+                              primary: UIGuide.light_Purple,
+                            ),
+                            buttonTheme: const ButtonThemeData(
+                                textTheme: ButtonTextTheme.primary),
+                          ),
+                          child: child!);
+                    },
                   );
 
                   setState(() {
@@ -225,14 +249,14 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       style: TextStyle(color: Colors.black),
                     ),
                     // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -277,9 +301,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                       }
                       print("courseData${courseData}");
                       course = courseData.join(',');
-                      // await Provider.of<GalleryProviderAdmin>(context,
-                      //         listen: false)
-                      //     .divisionClear();
+
                       await Provider.of<GalleryProviderAdmin>(context,
                               listen: false)
                           .courseCounter(results.length);
@@ -299,22 +321,20 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                   width: size.width * .43,
                   height: 50,
                   child: MultiSelectDialogField(
-                    // height: 200,
                     items: value.divisionDropDown,
                     listType: MultiSelectListType.CHIP,
                     title: const Text(
                       "Select Division",
                       style: TextStyle(color: Colors.black),
                     ),
-                    // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                    selectedItemsTextStyle: TextStyle(
+                    selectedItemsTextStyle: const TextStyle(
                         fontWeight: FontWeight.w900,
                         color: UIGuide.light_Purple),
-                    confirmText: Text(
+                    confirmText: const Text(
                       'OK',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
-                    cancelText: Text(
+                    cancelText: const Text(
                       'Cancel',
                       style: TextStyle(color: UIGuide.light_Purple),
                     ),
@@ -375,7 +395,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
         kheight10,
         Center(
           child: ToggleSwitch(
-            labels: ['All', "Students", 'Staff'],
+            labels: const ['All', "Students", 'Staff'],
             onToggle: (index) {
               print('Swiched index $index');
               if (index == 0) {
@@ -392,7 +412,7 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
             fontSize: 14,
             minHeight: 30,
             minWidth: 150,
-            activeBgColor: [UIGuide.light_Purple],
+            activeBgColor: const [UIGuide.light_Purple],
           ),
         ),
         kheight20,
@@ -415,6 +435,24 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                   attachmentid.clear();
                 } else {
                   attachmentid.text = attach;
+                }
+                if (attachmentid.toString().isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Select Image..',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: Duration(seconds: 1),
+                  ));
+                }
+                if (titleController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Enter Title..',
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: Duration(seconds: 1),
+                  ));
                 }
                 if (titleController.text.isNotEmpty &&
                     course.toString().isNotEmpty &&
@@ -451,34 +489,11 @@ class _AdminGalleryUploadState extends State<AdminGalleryUpload> {
                 courseData.clear();
                 divisionData.clear();
                 attachmentid.clear();
-
-                if (attachmentid.toString().isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      'Select Image..',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: Duration(seconds: 1),
-                  ));
-                }
-                if (titleController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                      'Enter Title..',
-                      textAlign: TextAlign.center,
-                    ),
-                    duration: Duration(seconds: 1),
-                  ));
-                }
               }),
             ),
           ),
         ),
       ],
     );
-  }
-
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path);
   }
 }

@@ -4,13 +4,11 @@ import 'package:Ess_test/Domain/Staff/ToGuardian.dart';
 import 'package:Ess_test/Presentation/Admin/Communication/TextSMS_Guard.dart';
 import 'package:Ess_test/utils/constants.dart';
 import 'package:Ess_test/utils/spinkit.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../../Application/AdminProviders/SchoolPhotoProviders.dart';
 import '../../../Domain/Staff/StudentReport_staff.dart';
 
@@ -64,15 +62,7 @@ class AdminToGuardian extends StatelessWidget {
           backgroundColor: UIGuide.light_Purple,
         ),
         body: TabBarView(
-          children: [
-            // Consumer<NotificationToGuardianAdmin>(
-            //   builder: (context, value, child) {
-            //     if (value.isClassTeacher != false) {
-            //       return
-            Notification_AdminToGuardain(),
-
-            TextSMSGuardian()
-          ],
+          children: [Notification_AdminToGuardain(), TextSMSGuardian()],
         ),
       ),
     );
@@ -151,14 +141,14 @@ class _Notification_AdminToGuardainState
                         "Select Section",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      selectedItemsTextStyle: TextStyle(
+                      selectedItemsTextStyle: const TextStyle(
                           fontWeight: FontWeight.w900,
                           color: UIGuide.light_Purple),
-                      confirmText: Text(
+                      confirmText: const Text(
                         'OK',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
-                      cancelText: Text(
+                      cancelText: const Text(
                         'Cancel',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
@@ -230,14 +220,12 @@ class _Notification_AdminToGuardainState
                     width: size.width * .43,
                     height: 50,
                     child: MultiSelectDialogField(
-                      // height: 200,
                       items: value.courseDrop,
                       listType: MultiSelectListType.CHIP,
                       title: const Text(
                         "Select Course",
                         style: TextStyle(color: Colors.black),
                       ),
-                      // selectedColor: Color.fromARGB(255, 157, 232, 241),
                       selectedItemsTextStyle: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
@@ -286,9 +274,6 @@ class _Notification_AdminToGuardainState
                         for (var a = 0; a < results.length; a++) {
                           StudReportCourse data =
                               results[a] as StudReportCourse;
-                          // print(data.value);
-                          // print(data.text);
-                          // print(i);
                           diviData.add(data.value);
                           diviData.map((e) => data.value);
                           print("${diviData.map((e) => data.value)}");
@@ -297,7 +282,6 @@ class _Notification_AdminToGuardainState
                         course = '';
                         course = diviData.join(',');
 
-                        // courseDiv = diviData.join(',');
                         // await Provider.of<NotificationToGuardianAdmin>(context,
                         //         listen: false)
                         //     .clearStudentList();
@@ -334,19 +318,18 @@ class _Notification_AdminToGuardainState
                     child: MultiSelectDialogField(
                       items: value.divisionDrop,
                       listType: MultiSelectListType.CHIP,
-                      title: Text(
+                      title: const Text(
                         "Select Division",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      // selectedColor: Color.fromARGB(255, 157, 232, 241),
-                      selectedItemsTextStyle: TextStyle(
+                      selectedItemsTextStyle: const TextStyle(
                           fontWeight: FontWeight.w900,
                           color: UIGuide.light_Purple),
-                      confirmText: Text(
+                      confirmText: const Text(
                         'OK',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
-                      cancelText: Text(
+                      cancelText: const Text(
                         'Cancel',
                         style: TextStyle(color: UIGuide.light_Purple),
                       ),
@@ -391,10 +374,6 @@ class _Notification_AdminToGuardainState
                           courseData.map((e) => data.value);
                           print("${courseData.map((e) => data.value)}");
                         }
-                        // setState(() {
-                        //   value.courseLen = courseData.length;
-                        //   print("length   $length");
-                        // });
 
                         division = courseData.join(',');
                         Provider.of<SchoolPhotoProviders>(context,
@@ -404,8 +383,6 @@ class _Notification_AdminToGuardainState
                         //     .getCourseList(div);
 
                         print("data div  $division");
-
-                        //   print(courseData.join(','));
                       },
                     ),
                   ),
@@ -418,7 +395,7 @@ class _Notification_AdminToGuardainState
                   width: size.width * .43,
                   height: 44,
                   child: MaterialButton(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     onPressed: () async {
                       // var p = await Provider.of<SchoolPhotoProviders>(context,
@@ -436,31 +413,9 @@ class _Notification_AdminToGuardainState
                               listen: false)
                           .getNotificationView(
                               course.toLowerCase(), division.toLowerCase());
-
-                      //    p.stdReportSectionStaff();
-                      // p.courseDrop.clear();
-                      // p.divisionDrop.clear();
-
-                      //  p.dropDown.clear();
-                      // subjectData.clear();
-                      // courseData.clear();
-                      // diviData.clear();
-                      // var p = await Provider.of<SchoolPhotoProviders>(context,
-                      //     listen: false);
-                      // //p.stdReportSectionStaff();
-                      // p.courseDrop.clear();
-                      // p.divisionDrop.clear();
-                      // // p.dropDown.clear();
-                      // // p.stdReportInitialValues.clear();
-                      // p.courselist.clear();
-                      // p.divisionlist.clear();
-                      // p.dropDown.clear();
-                      // p.stdReportInitialValues.clear();
-                      // p.courselist.clear();
-                      // p.divisionlist.clear();
                     },
                     color: UIGuide.THEME_LIGHT,
-                    child: Text('View'),
+                    child: const Text('View'),
                   ),
                 ),
               )
@@ -475,12 +430,11 @@ class _Notification_AdminToGuardainState
             },
             children: [
               TableRow(children: [
-                Text(
+                const Text(
                   '   NO.',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  //   textAlign: TextAlign.center,
                 ),
-                Text(
+                const Text(
                   'Name',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
@@ -497,7 +451,7 @@ class _Notification_AdminToGuardainState
                                 color: UIGuide.light_Purple,
                               ),
                             )
-                          : Text(
+                          : const Text(
                               'Select All',
                               style: TextStyle(
                                   fontSize: 15,
@@ -513,10 +467,10 @@ class _Notification_AdminToGuardainState
               return value.loading
                   ? LimitedBox(
                       maxHeight: size.height - 330,
-                      child: Center(child: spinkitLoader()),
+                      child: const Center(child: spinkitLoader()),
                     )
                   : LimitedBox(
-                      maxHeight: size.height - 330,
+                      maxHeight: size.height - 350,
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: value.notificationView.isEmpty
@@ -609,7 +563,7 @@ class Text_Matter_NotificationAdmin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Send Notification'),
+        title: const Text('Send Notification'),
         titleSpacing: 00.0,
         centerTitle: true,
         toolbarHeight: 60.2,
@@ -638,8 +592,8 @@ class Text_Matter_NotificationAdmin extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Title*',
                   hintText: 'Enter Title',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -665,8 +619,8 @@ class Text_Matter_NotificationAdmin extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Matter*',
                   hintText: 'Enter Matter',
-                  labelStyle: TextStyle(color: UIGuide.light_Purple),
-                  hintStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: UIGuide.light_Purple),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -689,7 +643,7 @@ class Text_Matter_NotificationAdmin extends StatelessWidget {
                         matterController.text, toList,
                         sentTo: type);
               },
-              child: Text(
+              child: const Text(
                 'Send',
                 style: TextStyle(color: Colors.white),
               ),
